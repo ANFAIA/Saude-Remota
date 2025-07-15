@@ -1,4 +1,4 @@
-# Saúde Renota
+# Saúde Remota
 
 ## 🩺 Descripción general
 

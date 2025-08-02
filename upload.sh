@@ -1,5 +1,32 @@
 #!/bin/bash
 
+# -----------------------------------------------------------------------------
+#  @file upload.sh
+#  @brief Script Bash para cargar automáticamente archivos .py a un dispositivo
+#         MicroPython/ESP32 mediante **adafruit‑ampy**.
+#
+#  El script realiza estas tareas:
+#    1. Verifica que `ampy` esté instalado en el sistema.
+#    2. Comprueba que se haya proporcionado el puerto serie.
+#    3. Elimina recursivamente todo el contenido existente en el sistema de
+#       archivos del dispositivo (excepto *boot.py*).
+#    4. Sube todos los archivos *.py* presentes en el directorio actual y sus
+#       sub‑carpetas, creando la jerarquía remota necesaria.
+#    5. Muestra al final un árbol de archivos resultante.
+#
+#  @usage
+#    ./upload.sh <PUERTO_SERIAL>
+#  @example
+#    ./upload.sh /dev/ttyUSB0
+#
+#  @dependencies adafruit‑ampy ≥ 1.1.0 (pip install adafruit‑ampy)
+#  @author Alejandro Fernández Rodríguez
+#  @contact github.com/afernandez13Uclm
+#  @version 1.0.0
+#  @date 2025‑08‑02
+#  @license MIT
+# -----------------------------------------------------------------------------
+
 if ! command -v ampy &> /dev/null; then
   echo "El comando 'ampy' no está instalado."
   echo "Puedes instalarlo con pip ejecutando:"

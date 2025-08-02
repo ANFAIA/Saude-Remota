@@ -1,3 +1,46 @@
+## @file oxygen.py
+#  @brief Algoritmo en MicroPython para estimar la saturación de oxígeno (SpO2)
+#         y la frecuencia cardiaca usando señales IR y RED provenientes del
+#         sensor MAX30105 (u otros fotopletismógrafos similares).
+#  
+#  Implementa la clase :pyclass:`OxygenSaturation`, basada en el famoso
+#  algoritmo de “Maxim Integrated AN-6595”, adaptado para su uso en
+#  micro-controladores con recursos limitados.  Incluye detección de valles en
+#  la señal IR, cálculo de pulsos por minuto (bpm) y estimación de SpO2 a partir
+#  de la relación de amplitudes AC/DC de las señales RED e IR.
+#  
+#  @author Alejandro Fernández Rodríguez
+#  @contact github.com/afernandez13Uclm
+#  @version 1.0.0
+#  @date 2025-08-02
+#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez
+#  @license MIT — Consulte el archivo LICENSE para más información.
+#  
+#  ---- Ejemplo de uso --------------------------------------------------------
+#  @code{.py}
+#  from oxygen import OxygenSaturation
+#  from max30105 import MAX30105
+#  
+#  # Suponiendo sensor es una instancia MAX30105 configurada previamente
+#  oxi = OxygenSaturation()
+#  ir_buf  = []  # rellenar con muestras IR
+#  red_buf = []  # rellenar con muestras RED
+#  spo2, spo2_ok, hr, hr_ok = oxi.calculate_spo2_and_heart_rate(ir_buf, red_buf)
+#  if spo2_ok:
+#      print("SpO2:", spo2, "%")
+#  if hr_ok:
+#      print("HR:", hr, "bpm")
+#  @endcode
+#  ---------------------------------------------------------------------------
+
+## @class OxygenSaturation
+#  @brief Clase para calcular la saturación de oxygeno en sangre a partir de los datos del sensor MAX30105.
+#
+#  Obrece una api pública para calcular SpO2 y ritmo cardiaco (bpm) a partir de
+#  muestras de luz infrarroja (IR) y roja (RED). Utiliza un algoritmo
+#  basado en el AN-6595 de Maxim Integrated, adaptado para micro-controladores.
+#  Incluye detección de picos, filtrado y estimación de SpO2 mediante
+#  la relación de amplitudes AC/DC de las señales IR y RED.
 class OxygenSaturation:
     FreqS = 25
     BUFFER_SIZE = FreqS * 4
@@ -30,12 +73,27 @@ class OxygenSaturation:
                 max_val = v
                 max_idx = i
         return max_val, max_idx
-
+    
+    # ------------------------------------------------------------------
+    # >> API pública
+    # ------------------------------------------------------------------
+    ## @brief Calcula SpO2 (%) y ritmo cardiaco (bpm).
+    #  
+    #  @param ir_buffer  Lista con muestras de infrarrojo (enteros sin signo).
+    #  @param red_buffer Lista con muestras de rojo.
+    #  @return Tupla ``(spo2, spo2_valid, heart_rate, hr_valid)`` donde:
+    #          - *spo2*      Saturación estimada 0‑100 %.  ``-999`` si inválido.
+    #          - *spo2_valid* ``1`` si la estimación es válida, ``0`` si no.
+    #          - *heart_rate* Frecuencia cardiaca (bpm). ``-999`` si inválida.
+    #          - *hr_valid*  ``1`` si *heart_rate* es válida.
     def calculate_spo2_and_heart_rate(self, ir_buffer, red_buffer):
-        """
-        Calcula SpO2 y heart rate a partir de los buffers IR y RED.
-        Devuelve: (spo2, spo2_valid, heart_rate, hr_valid)
-        """
+        """Algoritmo completo descrito en AN‑6595; vermente implementa:
+        1. Eliminación de componente DC e inversión de señal IR.
+        2. Suavizado con media móvil de 4 puntos.
+        3. Cálculo de umbral dinámico y detección de valles.
+        4. Estimación de bpm mediante intervalos entre valles.
+        5. Estimación de SpO2 usando relación AC/DC y la tabla ``SPO2_TABLE``.
+        Consulte el código para detalle de cálculos intermedios."""
         # Verificar que los buffers tengan la misma longitud y sean válidos
         if len(ir_buffer) != len(red_buffer) or len(ir_buffer) < 4:
             return -999, 0, -999, 0
@@ -141,7 +199,12 @@ class OxygenSaturation:
             spo2_valid = 0
 
         return spo2, spo2_valid, heart_rate, hr_valid
-
+    
+    # ------------------------------------------------------------------
+    # >> Detección de picos (funciones auxiliares)
+    # ------------------------------------------------------------------
+    ## @brief Encuentra hasta *max_num* picos en *x* mayores que *min_height* y separados al menos *min_distance*.
+    #  @return Lista de índices de picos."""
     def _find_peaks(self, x, min_height, min_distance, max_num):
         """
         Encuentra hasta max_num picos en x mayores que min_height y separados al menos min_distance.
@@ -169,6 +232,11 @@ class OxygenSaturation:
         peaks = peaks[:max_num]
         return peaks
 
+    # ------------------------------------------------------------------
+    # >> Detección de picos (funciones auxiliares)
+    # ------------------------------------------------------------------
+    ## @brief Encuentra hasta *max_num* picos en *x* mayores que *min_height* y separados al menos *min_distance*.
+    #  @return Lista de índices de picos."""
     def _remove_close_peaks(self, x, peaks, min_distance):
         """
         Ordena los picos por altura descendente y elimina los que estén demasiado cerca.

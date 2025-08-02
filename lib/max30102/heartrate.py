@@ -1,3 +1,18 @@
+## @file heartrate.py
+#  @brief Librería en MicroPython para calcular los latidos por minuto del corazón.
+#
+#  Librería para procesar señales de un sensor óptico de frecuencia cardíaca y detectar latidos.
+#  Utiliza un estimador de componente DC y un filtro FIR de paso bajo para aislar la señal AC. La detección de latidos
+#  se basa en el análisis de flancos de cruce por cero y umbrales dinámicos.
+#
+#  @author Alejandro Fernández Rodríguez
+#  @contact github.com/afernandez13Uclm
+#  @version 1.0.0
+#  @date 2025-08-02
+#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez
+#  @license MIT — Consulte el archivo LICENSE para más información.
+#
+#  ---------------------------------------------------------------------------
 import time
 
 ## @class HeartRate

@@ -2,8 +2,8 @@ import pandas as pd
 from sklearn.utils import shuffle
 
 #Cargar los dos archivos
-demo = pd.read_csv("mimic_demo_riesgo.csv")
-riesgo_1 = pd.read_csv("datos_sinteticos_riesgo_1.csv")
+demo = pd.read_csv("lib/predictionModel/dataset/mimic_demo_riesgo.csv")
+riesgo_1 = pd.read_csv("lib/predictionModel/dataset/datos_sinteticos_riesgo_1.csv")
 
 #Renombrar columnas si hace falta
 demo = demo.rename(columns={

@@ -1,4 +1,3 @@
-
 # FirebaseRawSender
 
 Pequeña librería de ayuda para enviar lecturas de dispositivos (IoT, wearables, sensores médicos, etc.) a **Firebase Realtime Database** de forma sencilla y segura.
@@ -23,6 +22,31 @@ pip install requests
 ```
 
 Clona este repositorio o copia `firebase_raw_sender.py` a tu proyecto.
+
+---
+
+## Configuración de Firebase Realtime Database
+
+1. Accede a [Firebase Console](https://console.firebase.google.com/) y crea un **nuevo proyecto** (o usa uno existente).
+2. En el menú de la izquierda selecciona **Build ▸ Realtime Database** y pulsa **Create Database**.  
+   - Elige la ubicación más cercana a tus usuarios.  
+   - Selecciona el modo **Locked** (*Start in locked mode*) para que se apliquen reglas de seguridad.
+3. Anota la **Database URL** que aparece en la parte superior (formato `https://<TU-PROYECTO>.firebaseio.com`); la necesitarás como `database_url`.
+4. Abre la pestaña **Rules** y sustituye el contenido por:
+
+```json
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth.uid === '<YOUR_AUTH_ID>'"
+  }
+}
+```
+
+   - Reemplaza `<YOUR_AUTH_ID>` por el `uid` del usuario autorizado a escribir.  
+     Puedes obtener tu `uid` desde **Build ▸ Authentication ▸ Users** después de crear el usuario.
+5. En **Build ▸ Authentication ▸ Sign‑in method** habilita **Email/Password** y crea el usuario que utilizarás desde tu dispositivo o aplicación.
+6. Dirígete a **Project settings ▸ General** y copia el valor **Web API key** para usarlo como `api_key` en el código.
 
 ---
 

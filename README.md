@@ -19,16 +19,26 @@ Y los muestra a través de una pantalla OLED I2C (SSD1306), si está conectada.
 .
 ├── lib/
 │   ├── max30102/
-│   │   ├── __init__.py         # Inicialización del paquete del sensor
-│   │   ├── heartrate.py        # Cálculo de BPM a partir de las muestras del sensor
-│   │   ├── max30102.py         # Controlador del sensor MAX30102
-│   │   └── oxygen.py           # Estimación de SpO₂ (saturación de oxígeno)
-│   └── ssd1306/
-│       ├── __init__.py         # Inicialización del paquete OLED
-│       └── ssd1306.py          # Controlador de la pantalla OLED (basado en MicroPython)
-├── main.py                     # Script principal de ejecución en el ESP32
-├── upload.sh                   # Script Bash para subir automáticamente los archivos al ESP32
-├── README.md                   # Este archivo
+│   │   ├── __init__.py             # Inicialización del paquete del sensor
+│   │   ├── heartrate.py            # Cálculo de BPM a partir de las muestras del sensor
+│   │   ├── max30102.py             # Controlador del sensor MAX30102
+│   │   ├── oxygen.py               # Estimación de SpO₂ (saturación de oxígeno)
+│   │   ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la libreria
+│   │   └── LICENSE                 # Archivo de licencia de la libreria
+│   │── ssd1306/
+│   │   ├── __init__.py             # Inicialización del paquete OLED
+│   │   │── ssd1306.py              # Controlador de la pantalla OLED (basado en MicroPython)
+│   │   ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la libreria
+│   │   └── LICENSE                 # Archivo de licencia de la libreria
+│   └── firebase_data_send/
+│       ├── __init__.py             # Inicialización del paquete de envio de datos a Firebase
+│       └── FirebaseRawSender.py    # Clase con funciones para enviar los datos a Firebase
+│       ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la libreria
+│       └── LICENSE                 # Archivo de licencia de la libreria
+├── main.py                         # Script principal de ejecución en el ESP32
+├── upload.sh                       # Script Bash para subir automáticamente los archivos al ESP32
+├── LICENSE                         # Archivo de licencia del proyecto
+├── README.md                       # Este archivo
 ```
 
 ---

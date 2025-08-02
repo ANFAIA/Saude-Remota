@@ -10,7 +10,7 @@
 #  de la relación de amplitudes AC/DC de las señales RED e IR.
 #  
 #  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandez13Uclm
+#  @contact github.com/afernandezLuc
 #  @version 1.0.0
 #  @date 2025-08-02
 #  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez

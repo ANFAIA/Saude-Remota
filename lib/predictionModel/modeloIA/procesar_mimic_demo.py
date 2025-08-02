@@ -1,8 +1,8 @@
 import pandas as pd
 #Importa la librería pandas, que sirve para manipular datos tabulares (como los csv)
-items = pd.read_csv("mimic-iv-clinical-database-demo-2.2/icu/d_items.csv.gz", compression="gzip")
-chartevents = pd.read_csv("mimic-iv-clinical-database-demo-2.2/icu/chartevents.csv.gz", compression="gzip")
-patients = pd.read_csv("mimic-iv-clinical-database-demo-2.2/hosp/patients.csv.gz", compression="gzip")
+items = pd.read_csv("lib/predictionModel/dataset/mimic-iv-clinical-database-demo-2.2/icu/d_items.csv.gz", compression="gzip")
+chartevents = pd.read_csv("lib/predictionModel/dataset/mimic-iv-clinical-database-demo-2.2/icu/chartevents.csv.gz", compression="gzip")
+patients = pd.read_csv("lib/predictionModel/dataset/mimic-iv-clinical-database-demo-2.2/hosp/patients.csv.gz", compression="gzip")
 #Carga tres archivos del dataset MIMIC-IV demo: chartevents.csv (contiene miles de registros de signos vitales por paciente), d_items.csv y patients.csv (tiene datos básicos por paciente)
 ITEMID_MAP = {
     220045: 'heart_rate',      

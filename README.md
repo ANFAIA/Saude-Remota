@@ -71,6 +71,8 @@ Y los muestra a través de una pantalla OLED I2C (SSD1306), si está conectada.
    ```
 
 ---
+## 🛜 Configuracion de tu red wifi
+En el archivo main.py añade las credenciales de tu red para conectarte a la red wifi disponible
 
 ## 🚀 Instalación en el ESP32
 

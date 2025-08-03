@@ -54,12 +54,16 @@ Clona este repositorio o copia `firebase_raw_sender.py` a tu proyecto.
 
 ```python
 from firebase_raw_sender import FirebaseRawSender
-
+config = {
+    "ssid": "YOUR_WIFI_SSID",
+    "password": "YOUR_WIFI_PASSWORD"
+}
 sender = FirebaseRawSender(
     email="usuario@ejemplo.com",
     password="TU_PASSWORD",
     api_key="TU_API_KEY_DE_FIREBASE",
     database_url="https://<TU-PROYECTO>.firebaseio.com",
+    wifi_config=config,
 )
 
 # Envía una medición concreta
@@ -69,6 +73,7 @@ sender.send_measurement(temperature=36.6, bmp=72, spo2=98, modelPreccision = 90.
 sender.send_raw({"pressure": 1011, "nota": "prueba"})
 ```
 
+### Nota: Si no se proporciona la configuracion wifi se asume que la conexion ya se ha realizado
 ---
 
 ## Ejemplos avanzados

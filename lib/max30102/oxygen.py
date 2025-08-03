@@ -42,9 +42,9 @@
 #  Incluye detección de picos, filtrado y estimación de SpO2 mediante
 #  la relación de amplitudes AC/DC de las señales IR y RED.
 class OxygenSaturation:
-    FreqS = 25
-    BUFFER_SIZE = FreqS * 4
-    MA4_SIZE = 4
+    #FreqS = 25
+    #BUFFER_SIZE = FreqS * 4
+    #MA4_SIZE = 4
 
     SPO2_TABLE = [
         95, 95, 95, 96, 96, 96, 97, 97, 97, 97, 97, 98, 98, 98, 98, 98, 99, 99, 99, 99,
@@ -59,7 +59,10 @@ class OxygenSaturation:
         3, 2, 1
     ]
 
-    def __init__(self):
+    def __init__(self, sample_rate_hz=400):
+        self.FreqS = sample_rate_hz
+        self.BUFFER_SIZE = self.FreqS * 4        # 4 s de señal
+        self.MA4_SIZE = sample_rate_hz/10    # 100 ms de media móvil
         pass
 
     def _mean(self, arr):
@@ -113,7 +116,11 @@ class OxygenSaturation:
         n_th1 = max(30, min(n_th1, 60))
 
         # 4. Detección de valles (picos en señal invertida)
-        an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, 4, 15)
+        # mínimo 160 ms entre valles  ⇒ muestras = FreqS * 0.16
+        min_gap = self.FreqS // 6          # ≈0.166 s
+        an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)
+        #an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, 4, 15)
+
         n_npks = len(an_ir_valley_locs)
 
         # 5. Heart rate

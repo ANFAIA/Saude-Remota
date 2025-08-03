@@ -3,6 +3,7 @@
 #
 #  Esta clase permite autenticarse con Firebase mediante correo y contraseña,
 #  y enviar mediciones o datos arbitrarios a la ruta `raw/` de la base de datos.
+#  Soporta conexión a Wi-Fi para dispositivos ESP32.
 #
 #  @author Alejandro Fernández Rodríguez
 #  @contact github.com/afernandezLuc
@@ -15,32 +16,56 @@
 import ujson as json
 import urequests as requests
 import time
+import network
 
 
 class FirebaseRawSender:
     """
     @class FirebaseRawSender
-    @brief Cliente para enviar datos a Firebase Realtime Database usando REST API.
-    
-    Este cliente permite autenticar con Firebase Auth (correo/contraseña),
-    y enviar lecturas a una ruta de tiempo (`/raw/timestamp.json`).
+    @brief Cliente para enviar datos a Firebase Realtime Database con soporte de conexión Wi-Fi.
     """
 
-    def __init__(self, email, password, api_key, database_url):
+    def __init__(self, email, password, api_key, database_url, wifi_config=None):
         """
         @brief Constructor de la clase.
 
-        @param email Correo electrónico del usuario de Firebase.
+        @param email Correo electrónico del usuario Firebase.
         @param password Contraseña del usuario.
-        @param api_key Clave de API del proyecto de Firebase.
+        @param api_key Clave de API del proyecto Firebase.
         @param database_url URL de la base de datos Realtime (sin `/` al final).
+        @param wifi_config Diccionario opcional con {'ssid': str, 'password': str}
         """
+        if wifi_config:
+            self._connect_wifi(wifi_config.get('ssid'), wifi_config.get('password'))
+
         self.email = email
         self.password = password
         self.api_key = api_key
         self.database_url = database_url.rstrip("/")
         self.id_token = None
         self._authenticate()
+
+    def _connect_wifi(self, ssid, password):
+        """
+        @brief Conecta el ESP32 a la red Wi-Fi especificada.
+        @param ssid Nombre de la red Wi-Fi.
+        @param password Contraseña de la red Wi-Fi.
+        """
+        sta = network.WLAN(network.STA_IF)
+        if not sta.isconnected():
+            print(f"Conectando a Wi-Fi '{ssid}'...")
+            sta.active(True)
+            sta.connect(ssid, password)
+
+            for _ in range(10):  # Esperar hasta 10 segundos
+                if sta.isconnected():
+                    break
+                time.sleep(1)
+
+        if sta.isconnected():
+            print("✔ Wi-Fi conectado. IP:", sta.ifconfig()[0])
+        else:
+            raise RuntimeError("No se pudo conectar al Wi-Fi.")
 
     def send_measurement(self, temperature, bmp, spo2, modelPreccision=0.0, riskScore=0.0, timestamp_ms=None):
         """
@@ -79,8 +104,7 @@ class FirebaseRawSender:
         url = f"{self.database_url}/raw/{timestamp_ms}.json?auth={self.id_token}"
 
         try:
-            headers = {'Content-Type': 'application/json'}
-            res = requests.put(url, data=json.dumps(data), headers=headers)
+            res = requests.put(url, data=json.dumps(data))
             res.close()
         except Exception as e:
             print("Error al escribir en Firebase:", e)
@@ -101,6 +125,7 @@ class FirebaseRawSender:
             res = requests.post(url, data=json.dumps(payload), headers=headers)
             if res.status_code == 200:
                 self.id_token = res.json().get("idToken")
+                print("✔ Autenticado con Firebase.")
             else:
                 print("Error de autenticación:", res.text)
             res.close()

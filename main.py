@@ -22,7 +22,6 @@ con salida en una pantalla OLED. Añadido un "kill‑switch" dual:
 
 Ambos mecanismos provocan la salida limpia al prompt >>>
 """
-
 import time
 import sys
 from machine import I2C, Pin
@@ -62,14 +61,22 @@ display = SSD1306(i2c=i2c)
 
 # Inicializa los algoritmos de ritmo cardiaco y saturación O2
 hr = HeartRate()
-ox = OxygenSaturation(sample_rate_hz=SAMPLE_RATE)  # Tasa de muestreo de 400 Hz
+ox = OxygenSaturation(sample_rate_hz=SAMPLE_RATE)
 
 # Inicializa el sender de Firebase
+# ----------------------- AÑADE AQUÍ TUS CREDENCIALES WIFI-----------------------   
+config = {
+    "ssid": "YOUR_WIFI_SSID",
+    "password": "YOUR_WIFI_PASSWORD"
+}
+
+# ----------------------- AÑADE AQUÍ TUS CREDENCIALES DE FIREBASE-----------------------   
 sender = FirebaseRawSender(
     email="rawdata@sauderemota.com",
     password="rawdata2025",
     api_key="AIzaSyCZPe0DeM15cQiU7tzpQ5qsI6XtUqXvJ7E",
-    database_url="https://saude-remota-default-rtdb.europe-west1.firebasedatabase.app/",
+    database_url="https://saude-remota-default-rtdb.europe-west1.firebasedatabase.app",
+    wifi_config=config
 )
 
 # Variables de estado
@@ -259,9 +266,11 @@ try:
                     print(f"Temperatura: {temperature:.2f}°C")
                     if spo2_valid:
                         print(f"SpO2: {spo2}%")
-                if bpm_valid and spo2_valid: #<------------------- IRENE GALLARDO
+                if bpm_valid and spo2_valid: # aqui seria conveniente crear una variable que diga cuando la salida del modelo esta lista<------------------- IRENE GALLARDO
                     #TODO: enviar a Firebase AQUI LA SALIDA DE PREDICCIÓN DEL MODELO!!!!!!!!!!!!!!!!!!!!!!!!! <------------------- IRENE GALLARDO
-                    sender.send_measurement(temperature=temperature, bmp=bpm, spo2=spo2, modelPreccision = 0, riskScore = 0)
+                    if printSerial:
+                        print("Enviando datos a Firebase...")
+                    sender.send_measurement(temperature=temperature, bmp=bpm, spo2=spo2, modelPrecision = 0, riskScore = 0)
         # ---------------------- Dedo retirado -------------------------------
         else:
             if finger_present:

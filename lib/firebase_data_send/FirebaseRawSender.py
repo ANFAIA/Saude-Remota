@@ -8,7 +8,7 @@ class FirebaseRawSender:
     Envía lecturas a la ruta `raw/` de una Realtime Database de Firebase.
     Uso típico:
         sender = FirebaseRawSender(...credenciales...)
-        sender.send_measurement(36.5, 78, 98)          # ← datos en Firebase
+        sender.send_measurement(36.5, 78, 98, 90.8, 0.3)          # ← datos en Firebase
     """
     def __init__(self,
                  email: str,
@@ -30,6 +30,8 @@ class FirebaseRawSender:
                          temperature: float,
                          bmp: float,
                          spo2: float,
+                         modelPreccision: float = 0.0,
+                         riskScore: float = 0.0,
                          timestamp_ms: int | None = None) -> None:
         """
         Construye el payload con tus valores *y lo envía de inmediato*.
@@ -37,12 +39,17 @@ class FirebaseRawSender:
         :param temperature: Temperatura en °C
         :param bmp: Pulsaciones por minuto
         :param spo2: Saturación de O₂ %
+        :param modelPreccision: Precision de los resultados del modelo
+        :param riskScore: Nivel de riesgo calculado
         :param timestamp_ms: Época en milisegundos; si se omite se usa "ahora"
+        
         """
         payload = {
             "temperature": round(float(temperature), 2),
             "bmp": round(float(bmp), 2),
             "spo2": round(float(spo2), 2),
+            "modelPreccision": round(float(modelPreccision), 2),
+            "riskScore": round(float(riskScore), 2),
         }
         self.send_raw(payload, timestamp_ms)
 

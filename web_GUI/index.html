@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saúde remota</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/colors.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body class="rs-body">
+  <section class="rs-body__header">
+    <h1 class="rs-body__header__title">Monitor de saúde remota</h1>
+    <p class="rs-body__header__status">Estado:
+      <span id="remota-saude-conection-status"></span>
+      <span id="remota-saude-conection-animation"></span>
+    </p>
+  </section>
+
+  <main class="rs-body__wrapper">
+    <section class="rs-body__risk">
+        <h2 class="rs-body__risk__title">Predicción de riesgo</h2>
+      <div class="rs-body__risk__color-wrapper">
+        <p class="rs-body__risk__data">
+          <span id="remota-saude-last-risk-received">-</span>
+          <span class="unit">%</span>
+        </p>
+      </div>
+        <p class="rs-body__risk__accuracy">
+          Con una precisión del
+          <span id="remota-saude-last-accuracy-received">-</span>
+          %
+        </p>
+    </section>
+
+    <section class="rs-body__instant-data">
+      <div class="rs-body__instant-data__title-container">
+        <h2 class="rs-body__instant-data__title-container__title">Datos instantáneos</h2>
+        <p class="rs-body__instant-data__title-container__last-data">
+          Último dato recibido hace
+          <span id="remota-saude-last-data-received"></span>
+        </p>
+      </div>
+
+      <ul class="rs-body__instant-data__data-container">
+        <li class="rs-body__instant-data__data-container__element">
+          <h3 class="rs-body__instant-data__data-container__element__title">
+            Temperatura
+          </h3>
+          <p class="rs-body__instant-data__data-container__element__value">
+            <span id="remota-saude-last-temperature-received">-</span>
+            <span class="unit">ºC</span>
+          </p>
+        </li>
+        <li class="rs-body__instant-data__data-container__element">
+          <h3 class="rs-body__instant-data__data-container__element__title">
+            Pulsaciones por minuto
+          </h3>
+          <p id="remota-saude-last-bpm-received" class="rs-body__instant-data__data-container__element__value">
+            -
+          </p>
+        </li>
+        <li class="rs-body__instant-data__data-container__element">
+          <h3 class="rs-body__instant-data__data-container__element__title">
+            Saturación de oxígeno en sangre
+          </h3>
+          <p class="rs-body__instant-data__data-container__element__value">
+            <span id="remota-saude-last-spo2-received">-</span>
+            <span class="unit">%</span>
+          </p>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <script defer type="module" src="/js/utils.js"></script>
+</body>
+
+</html>

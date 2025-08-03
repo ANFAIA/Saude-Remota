@@ -94,10 +94,23 @@ Este script:
 
 ---
 
+## 🔧 Conexion con el sensor
+
+```
+ESP32                     MAX30102
+┌───────────┐             ┌─────────┐
+│ 3V3  ───────────────► VCC │
+│ GND  ───────────────► GND │
+│ GPIO21 (SDA) ───────► SDA │
+│ GPIO22 (SCL) ───────► SCL │
+└───────────┘             └─────────┘
+
+```
+
 ## 🩺 Uso
 
 1. Conecta el sensor Max30102 a los pines I2C del ESP32 (por defecto SDA: GPIO21, SCL: GPIO22).
-2. (Opcional) Conecta la pantalla OLED SSD1306 por I2C.
+2. (Opcional) Conecta la pantalla OLED SSD1306 al mismo bus I2C.
 3. Abre un monitor serial:
    ```bash
    screen /dev/tty.usbserial-0001 115200

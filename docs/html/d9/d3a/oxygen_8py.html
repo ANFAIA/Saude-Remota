@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Referencia del archivo lib/max30102/oxygen.py</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d9/d3a/oxygen_8py.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Clases</a> &#124;
+<a href="#namespaces">Espacios de nombres</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo oxygen.py</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Algoritmo en MicroPython para estimar la saturación de oxígeno (SpO2) y la frecuencia cardiaca usando señales IR y RED provenientes del sensor MAX30105 (u otros fotopletismógrafos similares).  
+<a href="#details">Más...</a></p>
+
+<p><a href="../../d9/d3a/oxygen_8py_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Clases</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d9e/classmax30102_1_1oxygen_1_1_oxygen_saturation.html">max30102.oxygen.OxygenSaturation</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clase para calcular la saturación de oxygeno en sangre a partir de los datos del sensor <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>.  <a href="../../d7/d9e/classmax30102_1_1oxygen_1_1_oxygen_saturation.html#details">Más...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espacios de nombres</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/d5b/namespacemax30102.html">max30102</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dd1/namespacemax30102_1_1oxygen.html">max30102.oxygen</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Algoritmo en MicroPython para estimar la saturación de oxígeno (SpO2) y la frecuencia cardiaca usando señales IR y RED provenientes del sensor MAX30105 (u otros fotopletismógrafos similares). </p>
+<p>Implementa la clase :pyclass:<code>OxygenSaturation</code>, basada en el famoso algoritmo de “Maxim Integrated AN-6595”, adaptado para su uso en micro-controladores con recursos limitados. Incluye detección de valles en la señal IR, cálculo de pulsos por minuto (bpm) y estimación de SpO2 a partir de la relación de amplitudes AC/DC de las señales RED e IR.</p>
+<dl class="section author"><dt>Autor</dt><dd>Alejandro Fernández Rodríguez @contact github.com/afernandezLuc </dd></dl>
+<dl class="section version"><dt>Versión</dt><dd>1.0.0 </dd></dl>
+<dl class="section date"><dt>Fecha</dt><dd>2025-08-02 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2025 Alejandro Fernández Rodríguez @license MIT — Consulte el archivo LICENSE para más información.</dd></dl>
+<p>-&mdash; Ejemplo de uso -----------------------------------------------------&mdash; </p>
+<h2><a class="anchor" id="autotoc_md19"></a>
+autotoc_md19</h2>
+<div class="fragment"><div class="line"><span class="keyword">from</span> oxygen <span class="keyword">import</span> OxygenSaturation</div>
+<div class="line"><span class="keyword">from</span> max30105 <span class="keyword">import</span> MAX30105</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># Suponiendo sensor es una instancia MAX30105 configurada previamente</span></div>
+<div class="line">oxi = OxygenSaturation()</div>
+<div class="line">ir_buf  = []  <span class="comment"># rellenar con muestras IR</span></div>
+<div class="line">red_buf = []  <span class="comment"># rellenar con muestras RED</span></div>
+<div class="line">spo2, spo2_ok, hr, hr_ok = oxi.calculate_spo2_and_heart_rate(ir_buf, red_buf)</div>
+<div class="line"><span class="keywordflow">if</span> spo2_ok:</div>
+<div class="line">    print(<span class="stringliteral">&quot;SpO2:&quot;</span>, spo2, <span class="stringliteral">&quot;%&quot;</span>)</div>
+<div class="line"><span class="keywordflow">if</span> hr_ok:</div>
+<div class="line">    print(<span class="stringliteral">&quot;HR:&quot;</span>, hr, <span class="stringliteral">&quot;bpm&quot;</span>)</div>
+</div><!-- fragment --> 
+<p class="definition">Definición en el archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="../../dir_ab5000dc0eaa3848e6199d57e8c34589.html">max30102</a></li><li class="navelem"><a class="el" href="../../d9/d3a/oxygen_8py.html">oxygen.py</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

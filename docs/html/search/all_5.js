@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['early_5fstop_0',['early_stop',['../d0/db9/namespaceentrenar__modelo.html#a95031693b02a0a3002784e1735af02d8',1,'entrenar_modelo']]],
+  ['ejemplo_20rápido_1',['Ejemplo rápido',['..//Users/alejandro/lucernaRepo/Saude-Remota/lib/max30102/README.md#autotoc_md28',1,'']]],
+  ['ejemplos_20avanzados_2',['Ejemplos avanzados',['..//Users/alejandro/lucernaRepo/Saude-Remota/lib/firebase_data_send/README.MD#autotoc_md10',1,'']]],
+  ['el_20archivo_20license_20para_20más_20información_3',['@license MIT — Consulte el archivo LICENSE para más información.',['../d6/dbb/_firebase_raw_sender_8py.html#autotoc_md0',1,'']]],
+  ['el_20esp32_4',['🚀 Instalación en el ESP32',['../d3/dcc/md__r_e_a_d_m_e.html#autotoc_md50',1,'']]],
+  ['el_20sensor_5',['🔧 Conexion con el sensor',['../d3/dcc/md__r_e_a_d_m_e.html#autotoc_md52',1,'']]],
+  ['email_6',['email',['../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a5485a8c2784a70e29d78a9f70779e3f9',1,'firebase_data_send::FirebaseRawSender::FirebaseRawSender']]],
+  ['en_20el_20esp32_7',['🚀 Instalación en el ESP32',['../d3/dcc/md__r_e_a_d_m_e.html#autotoc_md50',1,'']]],
+  ['en_20pc_8',['Software en PC',['../d3/dcc/md__r_e_a_d_m_e.html#autotoc_md45',1,'']]],
+  ['enable_5fproximity_9',['enable_proximity',['../d2/dc1/namespacemain.html#a9bf09706e53c7ecadb43e633cc379246',1,'main']]],
+  ['enableafull_10',['enableAFULL',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#ac966ca726faf52d1acf61de8011eec12',1,'max30102::max30102::MAX30105']]],
+  ['enablealcovf_11',['enableALCOVF',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a4d34695f4634644150f5657de1c2da6f',1,'max30102::max30102::MAX30105']]],
+  ['enabledatardy_12',['enableDATARDY',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#abf54fe6e3b3f0b61a100c67c3057e45f',1,'max30102::max30102::MAX30105']]],
+  ['enabledietemprdy_13',['enableDIETEMPRDY',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#af6924747b3ad49ebaf45615216d489aa',1,'max30102::max30102::MAX30105']]],
+  ['enablefiforollover_14',['enableFIFORollover',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a53bd0f6e8517abcc312b576c7e6bf55f',1,'max30102::max30102::MAX30105']]],
+  ['enableproxint_15',['enablePROXINT',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a6d9ad784eb7a85143d583d1efbd6ca46',1,'max30102::max30102::MAX30105']]],
+  ['enableslot_16',['enableSlot',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a0e0699289e71dbbfe1c9f8398c2fe4bd',1,'max30102::max30102::MAX30105']]],
+  ['entorno_20de_20desarrollo_17',['⚙️ Preparación del entorno de desarrollo',['../d3/dcc/md__r_e_a_d_m_e.html#autotoc_md47',1,'']]],
+  ['entorno_20opcional_18',['Variables de entorno (opcional)',['..//Users/alejandro/lucernaRepo/Saude-Remota/lib/firebase_data_send/README.MD#autotoc_md12',1,'']]],
+  ['entrenar_5fmodelo_19',['entrenar_modelo',['../d0/db9/namespaceentrenar__modelo.html',1,'']]],
+  ['entrenar_5fmodelo_2epy_20',['entrenar_modelo.py',['../d9/d0d/entrenar__modelo_8py.html',1,'']]],
+  ['epochs_21',['epochs',['../d0/db9/namespaceentrenar__modelo.html#abf2ac56649bd8fa6dc1e5ff549f53203',1,'entrenar_modelo']]],
+  ['esp32_22',['🚀 Instalación en el ESP32',['../d3/dcc/md__r_e_a_d_m_e.html#autotoc_md50',1,'']]],
+  ['estructura_20del_20proyecto_23',['📁 Estructura del proyecto',['../d3/dcc/md__r_e_a_d_m_e.html#autotoc_md41',1,'']]]
+];

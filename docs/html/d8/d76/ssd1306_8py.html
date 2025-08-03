@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Referencia del archivo lib/ssd1306/ssd1306.py</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d8/d76/ssd1306_8py.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Clases</a> &#124;
+<a href="#namespaces">Espacios de nombres</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo ssd1306.py</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><a href="../../d8/d76/ssd1306_8py_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Clases</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/df6/classssd1306_1_1ssd1306_1_1_s_s_d1306.html">ssd1306.ssd1306.SSD1306</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espacios de nombres</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d73/namespacessd1306.html">ssd1306</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html">ssd1306.ssd1306</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aa73957ebd7b9f626b058bc4b13b99154" id="r_aa73957ebd7b9f626b058bc4b13b99154"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#aa73957ebd7b9f626b058bc4b13b99154">ssd1306.ssd1306.SSD1306_I2C_ADDRESS</a> = 0x3C</td></tr>
+<tr class="separator:aa73957ebd7b9f626b058bc4b13b99154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78b4d7f2ac5220efb2fbddad58ed2fae" id="r_a78b4d7f2ac5220efb2fbddad58ed2fae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a78b4d7f2ac5220efb2fbddad58ed2fae">ssd1306.ssd1306.SSD1306_SETCONTRAST</a> = 0x81</td></tr>
+<tr class="separator:a78b4d7f2ac5220efb2fbddad58ed2fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c600163d13b3956d8c91b0dedbe458d" id="r_a3c600163d13b3956d8c91b0dedbe458d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a3c600163d13b3956d8c91b0dedbe458d">ssd1306.ssd1306.SSD1306_DISPLAYALLON_RESUME</a> = 0xA4</td></tr>
+<tr class="separator:a3c600163d13b3956d8c91b0dedbe458d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2776e4b87fd7e065a2a31704cad3eaf0" id="r_a2776e4b87fd7e065a2a31704cad3eaf0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a2776e4b87fd7e065a2a31704cad3eaf0">ssd1306.ssd1306.SSD1306_DISPLAYALLON</a> = 0xA5</td></tr>
+<tr class="separator:a2776e4b87fd7e065a2a31704cad3eaf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a364f611e72bb930d92d9963bc34718df" id="r_a364f611e72bb930d92d9963bc34718df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a364f611e72bb930d92d9963bc34718df">ssd1306.ssd1306.SSD1306_NORMALDISPLAY</a> = 0xA6</td></tr>
+<tr class="separator:a364f611e72bb930d92d9963bc34718df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad344d0f5267b5bf9c14621063bb1c238" id="r_ad344d0f5267b5bf9c14621063bb1c238"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#ad344d0f5267b5bf9c14621063bb1c238">ssd1306.ssd1306.SSD1306_INVERTDISPLAY</a> = 0xA7</td></tr>
+<tr class="separator:ad344d0f5267b5bf9c14621063bb1c238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2e687845211d35b2f7b7380501b034c" id="r_aa2e687845211d35b2f7b7380501b034c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#aa2e687845211d35b2f7b7380501b034c">ssd1306.ssd1306.SSD1306_DISPLAYOFF</a> = 0xAE</td></tr>
+<tr class="separator:aa2e687845211d35b2f7b7380501b034c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedf9cd44f98376c2bb24b15651057af4" id="r_aedf9cd44f98376c2bb24b15651057af4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#aedf9cd44f98376c2bb24b15651057af4">ssd1306.ssd1306.SSD1306_DISPLAYON</a> = 0xAF</td></tr>
+<tr class="separator:aedf9cd44f98376c2bb24b15651057af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3baf0e90205573ab7edf72db142cf63" id="r_ad3baf0e90205573ab7edf72db142cf63"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#ad3baf0e90205573ab7edf72db142cf63">ssd1306.ssd1306.SSD1306_SETDISPLAYOFFSET</a> = 0xD3</td></tr>
+<tr class="separator:ad3baf0e90205573ab7edf72db142cf63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07adeab65c8f8608144b350cc7e7e1e2" id="r_a07adeab65c8f8608144b350cc7e7e1e2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a07adeab65c8f8608144b350cc7e7e1e2">ssd1306.ssd1306.SSD1306_SETCOMPINS</a> = 0xDA</td></tr>
+<tr class="separator:a07adeab65c8f8608144b350cc7e7e1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb93c102df9e3008271fec1ec22e9a9c" id="r_adb93c102df9e3008271fec1ec22e9a9c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#adb93c102df9e3008271fec1ec22e9a9c">ssd1306.ssd1306.SSD1306_SETVCOMDETECT</a> = 0xDB</td></tr>
+<tr class="separator:adb93c102df9e3008271fec1ec22e9a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a502661cc9530e4271ecd44370fc68468" id="r_a502661cc9530e4271ecd44370fc68468"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a502661cc9530e4271ecd44370fc68468">ssd1306.ssd1306.SSD1306_SETDISPLAYCLOCKDIV</a> = 0xD5</td></tr>
+<tr class="separator:a502661cc9530e4271ecd44370fc68468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae248573988dc829d26edef4b926caab1" id="r_ae248573988dc829d26edef4b926caab1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#ae248573988dc829d26edef4b926caab1">ssd1306.ssd1306.SSD1306_SETPRECHARGE</a> = 0xD9</td></tr>
+<tr class="separator:ae248573988dc829d26edef4b926caab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08bf627874086d8477c6625b2f26de71" id="r_a08bf627874086d8477c6625b2f26de71"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a08bf627874086d8477c6625b2f26de71">ssd1306.ssd1306.SSD1306_SETMULTIPLEX</a> = 0xA8</td></tr>
+<tr class="separator:a08bf627874086d8477c6625b2f26de71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad22b5858ec9b78662bd9f9446985027" id="r_aad22b5858ec9b78662bd9f9446985027"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#aad22b5858ec9b78662bd9f9446985027">ssd1306.ssd1306.SSD1306_SETLOWCOLUMN</a> = 0x00</td></tr>
+<tr class="separator:aad22b5858ec9b78662bd9f9446985027"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbc155f5b670681c6f93fae9a1ac7ca7" id="r_abbc155f5b670681c6f93fae9a1ac7ca7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#abbc155f5b670681c6f93fae9a1ac7ca7">ssd1306.ssd1306.SSD1306_SETHIGHCOLUMN</a> = 0x10</td></tr>
+<tr class="separator:abbc155f5b670681c6f93fae9a1ac7ca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb96c6e85e10a83f018b547a0cafd1ef" id="r_acb96c6e85e10a83f018b547a0cafd1ef"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#acb96c6e85e10a83f018b547a0cafd1ef">ssd1306.ssd1306.SSD1306_SETSTARTLINE</a> = 0x40</td></tr>
+<tr class="separator:acb96c6e85e10a83f018b547a0cafd1ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24814941cf1a9c8fe389f9e9d90226ca" id="r_a24814941cf1a9c8fe389f9e9d90226ca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a24814941cf1a9c8fe389f9e9d90226ca">ssd1306.ssd1306.SSD1306_MEMORYMODE</a> = 0x20</td></tr>
+<tr class="separator:a24814941cf1a9c8fe389f9e9d90226ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac222042973185b0231cd991b74e9b649" id="r_ac222042973185b0231cd991b74e9b649"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#ac222042973185b0231cd991b74e9b649">ssd1306.ssd1306.SSD1306_COLUMNADDR</a> = 0x21</td></tr>
+<tr class="separator:ac222042973185b0231cd991b74e9b649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b3392f15a967b3bb1a17d9f84a66a32" id="r_a5b3392f15a967b3bb1a17d9f84a66a32"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a5b3392f15a967b3bb1a17d9f84a66a32">ssd1306.ssd1306.SSD1306_PAGEADDR</a> = 0x22</td></tr>
+<tr class="separator:a5b3392f15a967b3bb1a17d9f84a66a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc17560c5971d159b61be49135110e8c" id="r_adc17560c5971d159b61be49135110e8c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#adc17560c5971d159b61be49135110e8c">ssd1306.ssd1306.SSD1306_COMSCANINC</a> = 0xC0</td></tr>
+<tr class="separator:adc17560c5971d159b61be49135110e8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbfdb46e2855754cfeafd52c2eec35b6" id="r_acbfdb46e2855754cfeafd52c2eec35b6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#acbfdb46e2855754cfeafd52c2eec35b6">ssd1306.ssd1306.SSD1306_COMSCANDEC</a> = 0xC8</td></tr>
+<tr class="separator:acbfdb46e2855754cfeafd52c2eec35b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62ddca37432072223cb6005ae4a04bde" id="r_a62ddca37432072223cb6005ae4a04bde"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a62ddca37432072223cb6005ae4a04bde">ssd1306.ssd1306.SSD1306_SEGREMAP</a> = 0xA0</td></tr>
+<tr class="separator:a62ddca37432072223cb6005ae4a04bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f9986157d5dea3306e1afe9a42e08df" id="r_a4f9986157d5dea3306e1afe9a42e08df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a4f9986157d5dea3306e1afe9a42e08df">ssd1306.ssd1306.SSD1306_CHARGEPUMP</a> = 0x8D</td></tr>
+<tr class="separator:a4f9986157d5dea3306e1afe9a42e08df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c4800c58f605be3a08d2cd34c641a9f" id="r_a1c4800c58f605be3a08d2cd34c641a9f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#a1c4800c58f605be3a08d2cd34c641a9f">ssd1306.ssd1306.SSD1306_EXTERNALVCC</a> = 0x1</td></tr>
+<tr class="separator:a1c4800c58f605be3a08d2cd34c641a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5f4d17803c284466057d76144bb65f6" id="r_ac5f4d17803c284466057d76144bb65f6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#ac5f4d17803c284466057d76144bb65f6">ssd1306.ssd1306.SSD1306_SWITCHCAPVCC</a> = 0x2</td></tr>
+<tr class="separator:ac5f4d17803c284466057d76144bb65f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="../../dir_e7784db00689c22bcab1935a4e0f926b.html">ssd1306</a></li><li class="navelem"><a class="el" href="../../d8/d76/ssd1306_8py.html">ssd1306.py</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

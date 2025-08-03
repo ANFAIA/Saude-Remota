@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Referencia del archivo main.py</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('dc/dba/main_8py.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#namespaces">Espacios de nombres</a> &#124;
+<a href="#func-members">Funciones</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo main.py</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Programa principal para medir frecuencia cardíaca, SpO2 y temperatura con un MAX30102.  
+<a href="#details">Más...</a></p>
+
+<p><a href="../../dc/dba/main_8py_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espacios de nombres</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html">main</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:ac7c05b9f1c015bcafa89cb0e30654b40" id="r_ac7c05b9f1c015bcafa89cb0e30654b40"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#ac7c05b9f1c015bcafa89cb0e30654b40">main._button_handler</a> (pin)</td></tr>
+<tr class="separator:ac7c05b9f1c015bcafa89cb0e30654b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf595d4c146feb75ea1461186c40ad5d" id="r_aaf595d4c146feb75ea1461186c40ad5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#aaf595d4c146feb75ea1461186c40ad5d">main.leds_on</a> ()</td></tr>
+<tr class="separator:aaf595d4c146feb75ea1461186c40ad5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67091977ac8b5dbb034f9507acfbfa01" id="r_a67091977ac8b5dbb034f9507acfbfa01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a67091977ac8b5dbb034f9507acfbfa01">main.leds_off</a> ()</td></tr>
+<tr class="separator:a67091977ac8b5dbb034f9507acfbfa01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bf09706e53c7ecadb43e633cc379246" id="r_a9bf09706e53c7ecadb43e633cc379246"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a9bf09706e53c7ecadb43e633cc379246">main.enable_proximity</a> ()</td></tr>
+<tr class="separator:a9bf09706e53c7ecadb43e633cc379246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a540309554f24807aea032d79bd6d97fc" id="r_a540309554f24807aea032d79bd6d97fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a540309554f24807aea032d79bd6d97fc">main.disable_proximity</a> ()</td></tr>
+<tr class="separator:a540309554f24807aea032d79bd6d97fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35edb632cc6251c920fc8df619f8b1e6" id="r_a35edb632cc6251c920fc8df619f8b1e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a35edb632cc6251c920fc8df619f8b1e6">main.optimized_bpm_calculation</a> ()</td></tr>
+<tr class="separator:a35edb632cc6251c920fc8df619f8b1e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a0eb63637dd43cbaba986f6619b4f981a" id="r_a0eb63637dd43cbaba986f6619b4f981a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a0eb63637dd43cbaba986f6619b4f981a">main.printSerial</a> = True</td></tr>
+<tr class="separator:a0eb63637dd43cbaba986f6619b4f981a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf58d49f0cda6a83a3c315ca6a4efca2" id="r_acf58d49f0cda6a83a3c315ca6a4efca2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#acf58d49f0cda6a83a3c315ca6a4efca2">main.BUTTON_PIN</a> = 0</td></tr>
+<tr class="separator:acf58d49f0cda6a83a3c315ca6a4efca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12d20e4ad1e72e02b374ef279275a836" id="r_a12d20e4ad1e72e02b374ef279275a836"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a12d20e4ad1e72e02b374ef279275a836">main.LED_POWER</a> = 0x7F</td></tr>
+<tr class="separator:a12d20e4ad1e72e02b374ef279275a836"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a285c0808f4688b6a985f0ff0bd05119b" id="r_a285c0808f4688b6a985f0ff0bd05119b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a285c0808f4688b6a985f0ff0bd05119b">main.LED_OFF</a> = 0x00</td></tr>
+<tr class="separator:a285c0808f4688b6a985f0ff0bd05119b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9917aaf8668d0f97dc275bed5eb1746" id="r_aa9917aaf8668d0f97dc275bed5eb1746"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#aa9917aaf8668d0f97dc275bed5eb1746">main.PROX_LED</a> = 0x10</td></tr>
+<tr class="separator:aa9917aaf8668d0f97dc275bed5eb1746"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5414f1e2b98c5b9f4eda2c0324ade21f" id="r_a5414f1e2b98c5b9f4eda2c0324ade21f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a5414f1e2b98c5b9f4eda2c0324ade21f">main.PROX_THRESH</a> = 0x20</td></tr>
+<tr class="separator:a5414f1e2b98c5b9f4eda2c0324ade21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3505c83652e69f316cc4d04b26b8e26" id="r_ae3505c83652e69f316cc4d04b26b8e26"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#ae3505c83652e69f316cc4d04b26b8e26">main.stop_flag</a> = False</td></tr>
+<tr class="separator:ae3505c83652e69f316cc4d04b26b8e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add921649e94a376d1fd46ff8cc63d4ad" id="r_add921649e94a376d1fd46ff8cc63d4ad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#add921649e94a376d1fd46ff8cc63d4ad">main.SAMPLE_RATE</a> = 400</td></tr>
+<tr class="separator:add921649e94a376d1fd46ff8cc63d4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2bba10cbf0946121616503df3750664" id="r_ab2bba10cbf0946121616503df3750664"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#ab2bba10cbf0946121616503df3750664">main.i2c</a> = I2C(0, scl=Pin(22), sda=Pin(21), freq=400000)</td></tr>
+<tr class="separator:ab2bba10cbf0946121616503df3750664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86cc0c2d3b40e8d33d8dd98b459621a2" id="r_a86cc0c2d3b40e8d33d8dd98b459621a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a86cc0c2d3b40e8d33d8dd98b459621a2">main.sensor</a> = MAX30105(<a class="el" href="../../d2/dc1/namespacemain.html#ab2bba10cbf0946121616503df3750664">i2c</a>)</td></tr>
+<tr class="separator:a86cc0c2d3b40e8d33d8dd98b459621a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f762bf1574b3ae8a3077c2aeaf78898" id="r_a6f762bf1574b3ae8a3077c2aeaf78898"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a6f762bf1574b3ae8a3077c2aeaf78898">main.display</a> = SSD1306(<a class="el" href="../../d2/dc1/namespacemain.html#ab2bba10cbf0946121616503df3750664">i2c</a>=<a class="el" href="../../d2/dc1/namespacemain.html#ab2bba10cbf0946121616503df3750664">i2c</a>)</td></tr>
+<tr class="separator:a6f762bf1574b3ae8a3077c2aeaf78898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f3b9ba1ff624f0c001cb65682c3401a" id="r_a1f3b9ba1ff624f0c001cb65682c3401a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a1f3b9ba1ff624f0c001cb65682c3401a">main.hr</a> = HeartRate()</td></tr>
+<tr class="separator:a1f3b9ba1ff624f0c001cb65682c3401a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6b72209d1393ae40c05a28639834c7c" id="r_af6b72209d1393ae40c05a28639834c7c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#af6b72209d1393ae40c05a28639834c7c">main.ox</a> = OxygenSaturation(sample_rate_hz=<a class="el" href="../../d2/dc1/namespacemain.html#add921649e94a376d1fd46ff8cc63d4ad">SAMPLE_RATE</a>)</td></tr>
+<tr class="separator:af6b72209d1393ae40c05a28639834c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0896ee4d4ad1b0ed50c8ed53e82f896e" id="r_a0896ee4d4ad1b0ed50c8ed53e82f896e"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a0896ee4d4ad1b0ed50c8ed53e82f896e">main.config</a></td></tr>
+<tr class="separator:a0896ee4d4ad1b0ed50c8ed53e82f896e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5daeb9ec4f9c30fcc2ad82a987a3ca6" id="r_ae5daeb9ec4f9c30fcc2ad82a987a3ca6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#ae5daeb9ec4f9c30fcc2ad82a987a3ca6">main.sender</a></td></tr>
+<tr class="separator:ae5daeb9ec4f9c30fcc2ad82a987a3ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af20c85639320cf1c2a82bed32a32d43d" id="r_af20c85639320cf1c2a82bed32a32d43d"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#af20c85639320cf1c2a82bed32a32d43d">main.beat_times</a> = []</td></tr>
+<tr class="separator:af20c85639320cf1c2a82bed32a32d43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b692819f4ac81fd4e30b205649ba81f" id="r_a1b692819f4ac81fd4e30b205649ba81f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a1b692819f4ac81fd4e30b205649ba81f">main.last_beat_time</a> = 0</td></tr>
+<tr class="separator:a1b692819f4ac81fd4e30b205649ba81f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8330312f757cd18c9b25320855949a3" id="r_ab8330312f757cd18c9b25320855949a3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#ab8330312f757cd18c9b25320855949a3">main.bpm</a> = 0</td></tr>
+<tr class="separator:ab8330312f757cd18c9b25320855949a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2da508918f7f70c7c44e56fc03c14d10" id="r_a2da508918f7f70c7c44e56fc03c14d10"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a2da508918f7f70c7c44e56fc03c14d10">main.spo2</a> = 0</td></tr>
+<tr class="separator:a2da508918f7f70c7c44e56fc03c14d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f488103e6ad776858c9fc2ef9798669" id="r_a8f488103e6ad776858c9fc2ef9798669"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a8f488103e6ad776858c9fc2ef9798669">main.temperature</a> = 0</td></tr>
+<tr class="separator:a8f488103e6ad776858c9fc2ef9798669"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a902d3ed8ae899827266120668ee1ff53" id="r_a902d3ed8ae899827266120668ee1ff53"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a902d3ed8ae899827266120668ee1ff53">main.stable_count</a> = 0</td></tr>
+<tr class="separator:a902d3ed8ae899827266120668ee1ff53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a452647d1fefb4c900c1be81b6fd30164" id="r_a452647d1fefb4c900c1be81b6fd30164"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a452647d1fefb4c900c1be81b6fd30164">main.finger_present</a> = False</td></tr>
+<tr class="separator:a452647d1fefb4c900c1be81b6fd30164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abacd8e6177edd28b9912fb2d521a8f35" id="r_abacd8e6177edd28b9912fb2d521a8f35"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#abacd8e6177edd28b9912fb2d521a8f35">main.min_ir</a> = 100000</td></tr>
+<tr class="separator:abacd8e6177edd28b9912fb2d521a8f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65bd4f3b3fd6c04ece524b7b7dea9fe8" id="r_a65bd4f3b3fd6c04ece524b7b7dea9fe8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a65bd4f3b3fd6c04ece524b7b7dea9fe8">main.last_update_time</a> = 0</td></tr>
+<tr class="separator:a65bd4f3b3fd6c04ece524b7b7dea9fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2606377c65cc554deffac9eb04325789" id="r_a2606377c65cc554deffac9eb04325789"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a2606377c65cc554deffac9eb04325789">main.reset_threshold</a> = 50000</td></tr>
+<tr class="separator:a2606377c65cc554deffac9eb04325789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ea40f5f1e0c10c3faa1c0daf535868a" id="r_a9ea40f5f1e0c10c3faa1c0daf535868a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a9ea40f5f1e0c10c3faa1c0daf535868a">main.spo2_valid</a> = False</td></tr>
+<tr class="separator:a9ea40f5f1e0c10c3faa1c0daf535868a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43558646d9a4f9166b34ab4997297152" id="r_a43558646d9a4f9166b34ab4997297152"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a43558646d9a4f9166b34ab4997297152">main.bpm_valid</a> = False</td></tr>
+<tr class="separator:a43558646d9a4f9166b34ab4997297152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd4157ea4bb9b23c83124b9180d14c16" id="r_abd4157ea4bb9b23c83124b9180d14c16"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#abd4157ea4bb9b23c83124b9180d14c16">main.spo2_ir_buf</a> = []</td></tr>
+<tr class="separator:abd4157ea4bb9b23c83124b9180d14c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20597ba7dc6b19fb08855acef5a4bead" id="r_a20597ba7dc6b19fb08855acef5a4bead"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a20597ba7dc6b19fb08855acef5a4bead">main.spo2_red_buf</a> = []</td></tr>
+<tr class="separator:a20597ba7dc6b19fb08855acef5a4bead"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ac534690b874c7915a131860ace8c2f" id="r_a3ac534690b874c7915a131860ace8c2f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a3ac534690b874c7915a131860ace8c2f">main.SPO2_BUF_SIZE</a> = ox.BUFFER_SIZE</td></tr>
+<tr class="separator:a3ac534690b874c7915a131860ace8c2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59c02841f8abf9bd4c95b6f38ce36862" id="r_a59c02841f8abf9bd4c95b6f38ce36862"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a59c02841f8abf9bd4c95b6f38ce36862">main.button</a> = Pin(<a class="el" href="../../d2/dc1/namespacemain.html#acf58d49f0cda6a83a3c315ca6a4efca2">BUTTON_PIN</a>, Pin.IN, Pin.PULL_UP)</td></tr>
+<tr class="separator:a59c02841f8abf9bd4c95b6f38ce36862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a023d85f49267f9b94aef708038ba0d15" id="r_a023d85f49267f9b94aef708038ba0d15"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a023d85f49267f9b94aef708038ba0d15">main.trigger</a></td></tr>
+<tr class="separator:a023d85f49267f9b94aef708038ba0d15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a560f6a10d8e88f44cdccd638c6723de3" id="r_a560f6a10d8e88f44cdccd638c6723de3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a560f6a10d8e88f44cdccd638c6723de3">main.IRQ_FALLING</a></td></tr>
+<tr class="separator:a560f6a10d8e88f44cdccd638c6723de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a642c6a76c58f70bc94a9d872f96ee282" id="r_a642c6a76c58f70bc94a9d872f96ee282"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a642c6a76c58f70bc94a9d872f96ee282">main.handler</a></td></tr>
+<tr class="separator:a642c6a76c58f70bc94a9d872f96ee282"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a23197d7c482adb7afd773ec9586f0b" id="r_a3a23197d7c482adb7afd773ec9586f0b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a3a23197d7c482adb7afd773ec9586f0b">main.powerLevel</a></td></tr>
+<tr class="separator:a3a23197d7c482adb7afd773ec9586f0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaddcfe535167b2156f22b243071300d" id="r_afaddcfe535167b2156f22b243071300d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#afaddcfe535167b2156f22b243071300d">main.sampleAverage</a></td></tr>
+<tr class="separator:afaddcfe535167b2156f22b243071300d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c1cb3f5519372224e78088a612f5465" id="r_a6c1cb3f5519372224e78088a612f5465"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a6c1cb3f5519372224e78088a612f5465">main.ledMode</a></td></tr>
+<tr class="separator:a6c1cb3f5519372224e78088a612f5465"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16ed5f15ed5c57fd7458acea7bc20075" id="r_a16ed5f15ed5c57fd7458acea7bc20075"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a16ed5f15ed5c57fd7458acea7bc20075">main.sampleRate</a></td></tr>
+<tr class="separator:a16ed5f15ed5c57fd7458acea7bc20075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe2760a60a649334335440c5a1478472" id="r_afe2760a60a649334335440c5a1478472"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#afe2760a60a649334335440c5a1478472">main.pulseWidth</a></td></tr>
+<tr class="separator:afe2760a60a649334335440c5a1478472"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0497a99c3a7a62aba3e293db3491c9d6" id="r_a0497a99c3a7a62aba3e293db3491c9d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a0497a99c3a7a62aba3e293db3491c9d6">main.adcRange</a></td></tr>
+<tr class="separator:a0497a99c3a7a62aba3e293db3491c9d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29cdf5a6de1e46e4afceb8f4a27460cc" id="r_a29cdf5a6de1e46e4afceb8f4a27460cc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a29cdf5a6de1e46e4afceb8f4a27460cc">main.current_time</a> = time.ticks_ms()</td></tr>
+<tr class="separator:a29cdf5a6de1e46e4afceb8f4a27460cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5facba94cdee114cc032ea45580935e7" id="r_a5facba94cdee114cc032ea45580935e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a5facba94cdee114cc032ea45580935e7">main.ir</a> = sensor.getIR()</td></tr>
+<tr class="separator:a5facba94cdee114cc032ea45580935e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44d2fa87b5fa52cb16167e644dfd1c41" id="r_a44d2fa87b5fa52cb16167e644dfd1c41"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a44d2fa87b5fa52cb16167e644dfd1c41">main.red</a> = sensor.getRed()</td></tr>
+<tr class="separator:a44d2fa87b5fa52cb16167e644dfd1c41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9147bb2ad914b5ae9242cdb4d9440d7e" id="r_a9147bb2ad914b5ae9242cdb4d9440d7e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a9147bb2ad914b5ae9242cdb4d9440d7e">main.signal_strength</a> = <a class="el" href="../../d2/dc1/namespacemain.html#a5facba94cdee114cc032ea45580935e7">ir</a> - <a class="el" href="../../d2/dc1/namespacemain.html#abacd8e6177edd28b9912fb2d521a8f35">min_ir</a></td></tr>
+<tr class="separator:a9147bb2ad914b5ae9242cdb4d9440d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a575747e498d4a2cadd2c8a58eb75c9ec" id="r_a575747e498d4a2cadd2c8a58eb75c9ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a575747e498d4a2cadd2c8a58eb75c9ec">main.icon</a></td></tr>
+<tr class="separator:a575747e498d4a2cadd2c8a58eb75c9ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3945442bc50afcf93a707b8cdff0701" id="r_ac3945442bc50afcf93a707b8cdff0701"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#ac3945442bc50afcf93a707b8cdff0701">main.bmp</a></td></tr>
+<tr class="separator:ac3945442bc50afcf93a707b8cdff0701"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa6d35d13687462f043bf6d7564e7a96" id="r_aaa6d35d13687462f043bf6d7564e7a96"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#aaa6d35d13687462f043bf6d7564e7a96">main.modelPrecision</a></td></tr>
+<tr class="separator:aaa6d35d13687462f043bf6d7564e7a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8699552d04ef7d2b683e656fc7138451" id="r_a8699552d04ef7d2b683e656fc7138451"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc1/namespacemain.html#a8699552d04ef7d2b683e656fc7138451">main.riskScore</a></td></tr>
+<tr class="separator:a8699552d04ef7d2b683e656fc7138451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Programa principal para medir frecuencia cardíaca, SpO2 y temperatura con un MAX30102. </p>
+<p>Librería para medir la frecuencia cardíaca, saturación de oxígeno y temperatura, enviarlos a Firebase, mostrar en una pantalla OLED y permitir parada limpia del programa. Se utiliza un modelo de IA para calcular la precisión de los resultados y un nivel de riesgo.</p>
+<dl class="section author"><dt>Autor</dt><dd>Alejandro Fernández Rodríguez @contact github.com/afernandezLuc </dd></dl>
+<dl class="section version"><dt>Versión</dt><dd>1.0.0 </dd></dl>
+<dl class="section date"><dt>Fecha</dt><dd>2025-08-02 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2025 Alejandro Fernández Rodríguez @license MIT — Consulte el archivo LICENSE para más información.</dd></dl>
+<hr  />
+ 
+<p class="definition">Definición en el archivo <a class="el" href="../../dc/dba/main_8py_source.html">main.py</a>.</p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dc/dba/main_8py.html">main.py</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

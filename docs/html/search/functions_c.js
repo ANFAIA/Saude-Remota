@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['safecheck_0',['safeCheck',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#ad1b6c9caefaae3b046d1218d66895734',1,'max30102::max30102::MAX30105']]],
+  ['send_5fmeasurement_1',['send_measurement',['../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#af7004499a7283fd3eda48aba350cc80b',1,'firebase_data_send::FirebaseRawSender::FirebaseRawSender']]],
+  ['send_5fraw_2',['send_raw',['../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a2cd4464be0046a59248a4592841e76d0',1,'firebase_data_send::FirebaseRawSender::FirebaseRawSender']]],
+  ['setadcrange_3',['setADCRange',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#ac9a6f335afa222d7c8e609d627e832f6',1,'max30102::max30102::MAX30105']]],
+  ['setfifoalmostfull_4',['setFIFOAlmostFull',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a3ea2aea6e32c0ba88391d46b21ca3cb1',1,'max30102::max30102::MAX30105']]],
+  ['setfifoaverage_5',['setFIFOAverage',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a9f644fc601a68048a4fb03b2496063f0',1,'max30102::max30102::MAX30105']]],
+  ['setledmode_6',['setLEDMode',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a4c667bc5eeb8fcb668671d6ae2552d57',1,'max30102::max30102::MAX30105']]],
+  ['setproximitythreshold_7',['setProximityThreshold',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a36cde58a66c80e77792764df845fa5ae',1,'max30102::max30102::MAX30105']]],
+  ['setpulseamplitudegreen_8',['setPulseAmplitudeGreen',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#ab80843efb337b8d12f423dfd83059417',1,'max30102::max30102::MAX30105']]],
+  ['setpulseamplitudeir_9',['setPulseAmplitudeIR',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a7fdf2fe79151839e1900f5c9ee409ff9',1,'max30102::max30102::MAX30105']]],
+  ['setpulseamplitudeproximity_10',['setPulseAmplitudeProximity',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#ae31cbca9d43f0a70f818874177044f72',1,'max30102::max30102::MAX30105']]],
+  ['setpulseamplitudered_11',['setPulseAmplitudeRed',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a891cc377f701a3c608ba9df4497a098d',1,'max30102::max30102::MAX30105']]],
+  ['setpulsewidth_12',['setPulseWidth',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a4fca6e114dc71274fbd44f2628d6f03e',1,'max30102::max30102::MAX30105']]],
+  ['setsamplerate_13',['setSampleRate',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a2d2101d270fdcceede75972a74e93df0',1,'max30102::max30102::MAX30105']]],
+  ['setup_14',['setup',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#aa2708c4f948aeedbdb55e1e4e378fea2',1,'max30102::max30102::MAX30105']]],
+  ['show_15',['show',['../d3/df6/classssd1306_1_1ssd1306_1_1_s_s_d1306.html#aa55d058eb4974bd86ca53fdd02dea3c7',1,'ssd1306::ssd1306::SSD1306']]],
+  ['shutdown_16',['shutDown',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a6edc55e72ffe6e24978338328cba27a4',1,'max30102::max30102::MAX30105']]],
+  ['softreset_17',['softReset',['../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html#a8354e586ceb9fefeb546ace71253cf45',1,'max30102::max30102::MAX30105']]]
+];

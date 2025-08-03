@@ -1,0 +1,773 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Referencia de la clase max30102.heartrate.HeartRate</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d3/d68/classmax30102_1_1heartrate_1_1_heart_rate.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Métodos públicos</a> &#124;
+<a href="#pub-attribs">Atributos públicos</a> &#124;
+<a href="#pub-static-attribs">Atributos públicos estáticos</a> &#124;
+<a href="#pro-methods">Métodos protegidos</a> &#124;
+<a href="#pro-static-methods">Métodos protegidos estáticos</a> &#124;
+<a href="../../d5/d86/classmax30102_1_1heartrate_1_1_heart_rate-members.html">Lista de todos los miembros</a>  </div>
+  <div class="headertitle"><div class="title">Referencia de la clase max30102.heartrate.HeartRate</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Clase para procesar señales de un sensor óptico de frecuencia cardíaca y detectar latidos.  
+ <a href="#details">Más...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:ada628cef85b544229d415bdfe5840764" id="r_ada628cef85b544229d415bdfe5840764"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada628cef85b544229d415bdfe5840764">__init__</a> (self)</td></tr>
+<tr class="memdesc:ada628cef85b544229d415bdfe5840764"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor de la clase.  <br /></td></tr>
+<tr class="separator:ada628cef85b544229d415bdfe5840764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0372ce78ad7a54bdd003df38966aa4f6" id="r_a0372ce78ad7a54bdd003df38966aa4f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0372ce78ad7a54bdd003df38966aa4f6">check_for_beat</a> (self, sample)</td></tr>
+<tr class="memdesc:a0372ce78ad7a54bdd003df38966aa4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evalúa si una nueva muestra IR contiene un latido.  <br /></td></tr>
+<tr class="separator:a0372ce78ad7a54bdd003df38966aa4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Atributos públicos</h2></td></tr>
+<tr class="memitem:ace2ceaf925db39a414efd8d936a2566f" id="r_ace2ceaf925db39a414efd8d936a2566f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace2ceaf925db39a414efd8d936a2566f">IR_AC_Max</a> = 20</td></tr>
+<tr class="memdesc:ace2ceaf925db39a414efd8d936a2566f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valor máximo actual de la señal AC IR.  <br /></td></tr>
+<tr class="separator:ace2ceaf925db39a414efd8d936a2566f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53b33403b65c7e8519ce881793d37e41" id="r_a53b33403b65c7e8519ce881793d37e41"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53b33403b65c7e8519ce881793d37e41">IR_AC_Min</a> = -20</td></tr>
+<tr class="memdesc:a53b33403b65c7e8519ce881793d37e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valor mínimo actual de la señal AC IR.  <br /></td></tr>
+<tr class="separator:a53b33403b65c7e8519ce881793d37e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5835a769cd7448d7f02faefa99349d39" id="r_a5835a769cd7448d7f02faefa99349d39"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5835a769cd7448d7f02faefa99349d39">IR_AC_Signal_Current</a> = 0</td></tr>
+<tr class="memdesc:a5835a769cd7448d7f02faefa99349d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valor actual de la señal AC filtrada.  <br /></td></tr>
+<tr class="separator:a5835a769cd7448d7f02faefa99349d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b3e9387689012b40c5b113d39532478" id="r_a8b3e9387689012b40c5b113d39532478"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b3e9387689012b40c5b113d39532478">IR_AC_Signal_Previous</a> = 0</td></tr>
+<tr class="memdesc:a8b3e9387689012b40c5b113d39532478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valor previo de la señal AC filtrada.  <br /></td></tr>
+<tr class="separator:a8b3e9387689012b40c5b113d39532478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d1a8b361fd5cd515a7dfbcaf1968b61" id="r_a6d1a8b361fd5cd515a7dfbcaf1968b61"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d1a8b361fd5cd515a7dfbcaf1968b61">IR_AC_Signal_min</a> = 0</td></tr>
+<tr class="memdesc:a6d1a8b361fd5cd515a7dfbcaf1968b61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mínimo local detectado durante la fase negativa.  <br /></td></tr>
+<tr class="separator:a6d1a8b361fd5cd515a7dfbcaf1968b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02d01cf98070af9b4d7fa5909a7ec0b0" id="r_a02d01cf98070af9b4d7fa5909a7ec0b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02d01cf98070af9b4d7fa5909a7ec0b0">IR_AC_Signal_max</a> = 0</td></tr>
+<tr class="memdesc:a02d01cf98070af9b4d7fa5909a7ec0b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Máximo local detectado durante la fase positiva.  <br /></td></tr>
+<tr class="separator:a02d01cf98070af9b4d7fa5909a7ec0b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81851206606c4aac65e3fee79b9fabd5" id="r_a81851206606c4aac65e3fee79b9fabd5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a81851206606c4aac65e3fee79b9fabd5">ir_avg_reg</a> = 0</td></tr>
+<tr class="memdesc:a81851206606c4aac65e3fee79b9fabd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registro de media móvil exponencial para estimar la componente DC.  <br /></td></tr>
+<tr class="separator:a81851206606c4aac65e3fee79b9fabd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0c3e883dca96415eff8b5412f80f905" id="r_aa0c3e883dca96415eff8b5412f80f905"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0c3e883dca96415eff8b5412f80f905">IR_Average_Estimated</a> = 0</td></tr>
+<tr class="memdesc:aa0c3e883dca96415eff8b5412f80f905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valor actual estimado del componente DC.  <br /></td></tr>
+<tr class="separator:aa0c3e883dca96415eff8b5412f80f905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4b05eeedab8af20377ad2c4bef13adc" id="r_ac4b05eeedab8af20377ad2c4bef13adc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac4b05eeedab8af20377ad2c4bef13adc">positiveEdge</a> = False</td></tr>
+<tr class="memdesc:ac4b05eeedab8af20377ad2c4bef13adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag para indicar flanco ascendente.  <br /></td></tr>
+<tr class="separator:ac4b05eeedab8af20377ad2c4bef13adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba80bd3b83499806b5ba460d6eff55b4" id="r_aba80bd3b83499806b5ba460d6eff55b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba80bd3b83499806b5ba460d6eff55b4">negativeEdge</a> = False</td></tr>
+<tr class="memdesc:aba80bd3b83499806b5ba460d6eff55b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag para indicar flanco descendente.  <br /></td></tr>
+<tr class="separator:aba80bd3b83499806b5ba460d6eff55b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1581cc5679adeabdff18032aff894df2" id="r_a1581cc5679adeabdff18032aff894df2"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1581cc5679adeabdff18032aff894df2">cbuf</a> = [0] * self.BUF_SIZE</td></tr>
+<tr class="memdesc:a1581cc5679adeabdff18032aff894df2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer circular de muestras para el FIR.  <br /></td></tr>
+<tr class="separator:a1581cc5679adeabdff18032aff894df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fcc506a9ffd04af58733e87b0d042b0" id="r_a5fcc506a9ffd04af58733e87b0d042b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fcc506a9ffd04af58733e87b0d042b0">offset</a> = 0</td></tr>
+<tr class="memdesc:a5fcc506a9ffd04af58733e87b0d042b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Índice actual del buffer circular.  <br /></td></tr>
+<tr class="separator:a5fcc506a9ffd04af58733e87b0d042b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Atributos públicos estáticos</h2></td></tr>
+<tr class="memitem:a183eef6f60f416f62a77b2ed067e75e4" id="r_a183eef6f60f416f62a77b2ed067e75e4"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a183eef6f60f416f62a77b2ed067e75e4">FIR_COEFFS</a> = [172, 321, 579, 927, 1360, 1858, 2390, 2916, 3391, 3768, 4012, 4096]</td></tr>
+<tr class="memdesc:a183eef6f60f416f62a77b2ed067e75e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Coeficientes del filtro FIR (12 taps simétricos).  <br /></td></tr>
+<tr class="separator:a183eef6f60f416f62a77b2ed067e75e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70c5fd71c38ca7cb7cbbcd72ca5446b8" id="r_a70c5fd71c38ca7cb7cbbcd72ca5446b8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70c5fd71c38ca7cb7cbbcd72ca5446b8">BUF_SIZE</a> = 32</td></tr>
+<tr class="memdesc:a70c5fd71c38ca7cb7cbbcd72ca5446b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tamaño del buffer circular para el FIR.  <br /></td></tr>
+<tr class="separator:a70c5fd71c38ca7cb7cbbcd72ca5446b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Métodos protegidos</h2></td></tr>
+<tr class="memitem:af300a84b75fefa022f9c92dd402ceade" id="r_af300a84b75fefa022f9c92dd402ceade"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af300a84b75fefa022f9c92dd402ceade">_average_dc_estimator</a> (self, x)</td></tr>
+<tr class="memdesc:af300a84b75fefa022f9c92dd402ceade"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimador de componente DC utilizando media móvil exponencial.  <br /></td></tr>
+<tr class="separator:af300a84b75fefa022f9c92dd402ceade"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ac5823e6a0e8c36d137cf0d4b45cbd2" id="r_a6ac5823e6a0e8c36d137cf0d4b45cbd2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ac5823e6a0e8c36d137cf0d4b45cbd2">_lowpass_fir_filter</a> (self, din)</td></tr>
+<tr class="memdesc:a6ac5823e6a0e8c36d137cf0d4b45cbd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filtro FIR pasa bajos simétrico con buffer circular.  <br /></td></tr>
+<tr class="separator:a6ac5823e6a0e8c36d137cf0d4b45cbd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
+Métodos protegidos estáticos</h2></td></tr>
+<tr class="memitem:a88c082456a863ae6c53c4f9926f13f94" id="r_a88c082456a863ae6c53c4f9926f13f94"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88c082456a863ae6c53c4f9926f13f94">_mul16</a> (x, y)</td></tr>
+<tr class="memdesc:a88c082456a863ae6c53c4f9926f13f94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplicación de enteros de 16 bits.  <br /></td></tr>
+<tr class="separator:a88c082456a863ae6c53c4f9926f13f94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Clase para procesar señales de un sensor óptico de frecuencia cardíaca y detectar latidos. </p>
+<p>Utiliza un estimador de componente DC y un filtro FIR de paso bajo para aislar la señal AC. La detección de latidos se basa en el análisis de flancos de cruce por cero y umbrales dinámicos. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00023">23</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+</div><h2 class="groupheader">Documentación de constructores y destructores</h2>
+<a id="ada628cef85b544229d415bdfe5840764" name="ada628cef85b544229d415bdfe5840764"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada628cef85b544229d415bdfe5840764">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.heartrate.HeartRate.__init__ </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor de la clase. </p>
+<p>Inicializa todos los registros y buffers necesarios. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00031">31</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   31</span>    <span class="keyword">def </span>__init__(self):</div>
+<div class="line"><span class="lineno">   32</span>        </div>
+<div class="line"><span class="lineno">   33</span>        self.IR_AC_Max = 20</div>
+<div class="line"><span class="lineno">   34</span>        </div>
+<div class="line"><span class="lineno">   35</span>        self.IR_AC_Min = -20</div>
+<div class="line"><span class="lineno">   36</span> </div>
+<div class="line"><span class="lineno">   37</span>        </div>
+<div class="line"><span class="lineno">   38</span>        self.IR_AC_Signal_Current = 0</div>
+<div class="line"><span class="lineno">   39</span>        </div>
+<div class="line"><span class="lineno">   40</span>        self.IR_AC_Signal_Previous = 0</div>
+<div class="line"><span class="lineno">   41</span>        </div>
+<div class="line"><span class="lineno">   42</span>        self.IR_AC_Signal_min = 0</div>
+<div class="line"><span class="lineno">   43</span>        </div>
+<div class="line"><span class="lineno">   44</span>        self.IR_AC_Signal_max = 0</div>
+<div class="line"><span class="lineno">   45</span> </div>
+<div class="line"><span class="lineno">   46</span>        </div>
+<div class="line"><span class="lineno">   47</span>        self.ir_avg_reg = 0</div>
+<div class="line"><span class="lineno">   48</span>        </div>
+<div class="line"><span class="lineno">   49</span>        self.IR_Average_Estimated = 0</div>
+<div class="line"><span class="lineno">   50</span> </div>
+<div class="line"><span class="lineno">   51</span>        </div>
+<div class="line"><span class="lineno">   52</span>        self.positiveEdge = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">   53</span>        </div>
+<div class="line"><span class="lineno">   54</span>        self.negativeEdge = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">   55</span> </div>
+<div class="line"><span class="lineno">   56</span>        </div>
+<div class="line"><span class="lineno">   57</span>        self.cbuf = [0] * self.BUF_SIZE</div>
+<div class="line"><span class="lineno">   58</span>        </div>
+<div class="line"><span class="lineno">   59</span>        self.offset = 0</div>
+<div class="line"><span class="lineno">   60</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones miembro</h2>
+<a id="af300a84b75fefa022f9c92dd402ceade" name="af300a84b75fefa022f9c92dd402ceade"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af300a84b75fefa022f9c92dd402ceade">&#9670;&#160;</a></span>_average_dc_estimator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.heartrate.HeartRate._average_dc_estimator </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Estimador de componente DC utilizando media móvil exponencial. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Muestra IR actual. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>Valor estimado de la componente DC.</dd></dl>
+<pre class="fragment">Estimador DC por media móvil exponencial:
+p += ((x&lt;&lt;15) - p) &gt;&gt; 4
+devuelve p&gt;&gt;15
+</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00110">110</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  110</span>    <span class="keyword">def </span>_average_dc_estimator(self, x):</div>
+<div class="line"><span class="lineno">  111</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  112</span><span class="stringliteral">        Estimador DC por media móvil exponencial:</span></div>
+<div class="line"><span class="lineno">  113</span><span class="stringliteral">        p += ((x&lt;&lt;15) - p) &gt;&gt; 4</span></div>
+<div class="line"><span class="lineno">  114</span><span class="stringliteral">        devuelve p&gt;&gt;15</span></div>
+<div class="line"><span class="lineno">  115</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  116</span>        <span class="comment"># Emula entero de 32 bits con desplazamientos</span></div>
+<div class="line"><span class="lineno">  117</span>        self.ir_avg_reg += (((x &lt;&lt; 15) - self.ir_avg_reg) &gt;&gt; 4)</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">return</span> self.ir_avg_reg &gt;&gt; 15</div>
+<div class="line"><span class="lineno">  119</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6ac5823e6a0e8c36d137cf0d4b45cbd2" name="a6ac5823e6a0e8c36d137cf0d4b45cbd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ac5823e6a0e8c36d137cf0d4b45cbd2">&#9670;&#160;</a></span>_lowpass_fir_filter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.heartrate.HeartRate._lowpass_fir_filter </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>din</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Filtro FIR pasa bajos simétrico con buffer circular. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">din</td><td>Valor de entrada (señal AC sin DC). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>Valor filtrado.</dd></dl>
+<pre class="fragment">Filtro FIR pasa bajos simétrico de 12 coeficientes con buffer circular de 32.
+</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00123">123</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  123</span>    <span class="keyword">def </span>_lowpass_fir_filter(self, din):</div>
+<div class="line"><span class="lineno">  124</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  125</span><span class="stringliteral">        Filtro FIR pasa bajos simétrico de 12 coeficientes con buffer circular de 32.</span></div>
+<div class="line"><span class="lineno">  126</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  127</span>        <span class="comment"># Almacena la muestra en buffer</span></div>
+<div class="line"><span class="lineno">  128</span>        self.cbuf[self.offset] = din</div>
+<div class="line"><span class="lineno">  129</span> </div>
+<div class="line"><span class="lineno">  130</span>        <span class="comment"># Contribución central (coef[11])</span></div>
+<div class="line"><span class="lineno">  131</span>        z = self._mul16(self.FIR_COEFFS[11],</div>
+<div class="line"><span class="lineno">  132</span>                        self.cbuf[(self.offset - 11) &amp; (self.BUF_SIZE-1)])</div>
+<div class="line"><span class="lineno">  133</span> </div>
+<div class="line"><span class="lineno">  134</span>        <span class="comment"># Suma simétrica de pares</span></div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(11):</div>
+<div class="line"><span class="lineno">  136</span>            a = self.cbuf[(self.offset - i) &amp; (self.BUF_SIZE-1)]</div>
+<div class="line"><span class="lineno">  137</span>            b = self.cbuf[(self.offset - 22 + i) &amp; (self.BUF_SIZE-1)]</div>
+<div class="line"><span class="lineno">  138</span>            z += self._mul16(self.FIR_COEFFS[i], a + b)</div>
+<div class="line"><span class="lineno">  139</span> </div>
+<div class="line"><span class="lineno">  140</span>        <span class="comment"># Avanza y envuelve el offset</span></div>
+<div class="line"><span class="lineno">  141</span>        self.offset = (self.offset + 1) % self.BUF_SIZE</div>
+<div class="line"><span class="lineno">  142</span> </div>
+<div class="line"><span class="lineno">  143</span>        <span class="comment"># Escala de vuelta</span></div>
+<div class="line"><span class="lineno">  144</span>        <span class="keywordflow">return</span> z &gt;&gt; 15</div>
+<div class="line"><span class="lineno">  145</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a88c082456a863ae6c53c4f9926f13f94" name="a88c082456a863ae6c53c4f9926f13f94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88c082456a863ae6c53c4f9926f13f94">&#9670;&#160;</a></span>_mul16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.heartrate.HeartRate._mul16 </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Multiplicación de enteros de 16 bits. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Primer operando (int). </td></tr>
+    <tr><td class="paramname">y</td><td>Segundo operando (int). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>Resultado de x * y como entero de 32 bits.</dd></dl>
+<pre class="fragment">Multiplicación de enteros de 16 bits, resultado en 32 bits.
+</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00151">151</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  151</span>    <span class="keyword">def </span>_mul16(x, y):</div>
+<div class="line"><span class="lineno">  152</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  153</span><span class="stringliteral">        Multiplicación de enteros de 16 bits, resultado en 32 bits.</span></div>
+<div class="line"><span class="lineno">  154</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  155</span>        <span class="keywordflow">return</span> x * y</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0372ce78ad7a54bdd003df38966aa4f6" name="a0372ce78ad7a54bdd003df38966aa4f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0372ce78ad7a54bdd003df38966aa4f6">&#9670;&#160;</a></span>check_for_beat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.heartrate.HeartRate.check_for_beat </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sample</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Evalúa si una nueva muestra IR contiene un latido. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sample</td><td>Valor de intensidad IR actual. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>True si se detecta un latido; False en caso contrario.</dd></dl>
+<pre class="fragment">Procesa un nuevo valor IR (`sample`) y devuelve True si detecta un latido.
+</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00064">64</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   64</span>    <span class="keyword">def </span>check_for_beat(self, sample):</div>
+<div class="line"><span class="lineno">   65</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   66</span><span class="stringliteral">        Procesa un nuevo valor IR (`sample`) y devuelve True si detecta un latido.</span></div>
+<div class="line"><span class="lineno">   67</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   68</span>        beatDetected = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">   69</span> </div>
+<div class="line"><span class="lineno">   70</span>        <span class="comment"># Guarda el estado anterior</span></div>
+<div class="line"><span class="lineno">   71</span>        self.IR_AC_Signal_Previous = self.IR_AC_Signal_Current</div>
+<div class="line"><span class="lineno">   72</span> </div>
+<div class="line"><span class="lineno">   73</span>        <span class="comment"># Estima el componente DC y calcula la señal AC</span></div>
+<div class="line"><span class="lineno">   74</span>        self.IR_Average_Estimated = self._average_dc_estimator(sample)</div>
+<div class="line"><span class="lineno">   75</span>        self.IR_AC_Signal_Current = self._lowpass_fir_filter(sample - self.IR_Average_Estimated)</div>
+<div class="line"><span class="lineno">   76</span> </div>
+<div class="line"><span class="lineno">   77</span>        <span class="comment"># Detecta cruce positivo por cero (flanco ascendente)</span></div>
+<div class="line"><span class="lineno">   78</span>        <span class="keywordflow">if</span> (self.IR_AC_Signal_Previous &lt; 0) <span class="keywordflow">and</span> (self.IR_AC_Signal_Current &gt;= 0):</div>
+<div class="line"><span class="lineno">   79</span>            <span class="comment"># Ajusta máximos y mínimos</span></div>
+<div class="line"><span class="lineno">   80</span>            self.IR_AC_Max = self.IR_AC_Signal_max</div>
+<div class="line"><span class="lineno">   81</span>            self.IR_AC_Min = self.IR_AC_Signal_min</div>
+<div class="line"><span class="lineno">   82</span> </div>
+<div class="line"><span class="lineno">   83</span>            self.positiveEdge = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">   84</span>            self.negativeEdge = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">   85</span>            self.IR_AC_Signal_max = 0</div>
+<div class="line"><span class="lineno">   86</span> </div>
+<div class="line"><span class="lineno">   87</span>            delta = self.IR_AC_Max - self.IR_AC_Min</div>
+<div class="line"><span class="lineno">   88</span>            <span class="keywordflow">if</span> 20 &lt; delta &lt; 1000:</div>
+<div class="line"><span class="lineno">   89</span>                beatDetected = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">   90</span> </div>
+<div class="line"><span class="lineno">   91</span>        <span class="comment"># Detecta cruce negativo por cero (flanco descendente)</span></div>
+<div class="line"><span class="lineno">   92</span>        <span class="keywordflow">if</span> (self.IR_AC_Signal_Previous &gt; 0) <span class="keywordflow">and</span> (self.IR_AC_Signal_Current &lt;= 0):</div>
+<div class="line"><span class="lineno">   93</span>            self.positiveEdge = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">   94</span>            self.negativeEdge = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">   95</span>            self.IR_AC_Signal_min = 0</div>
+<div class="line"><span class="lineno">   96</span> </div>
+<div class="line"><span class="lineno">   97</span>        <span class="comment"># Busca máximo en ciclo positivo</span></div>
+<div class="line"><span class="lineno">   98</span>        <span class="keywordflow">if</span> self.positiveEdge <span class="keywordflow">and</span> (self.IR_AC_Signal_Current &gt; self.IR_AC_Signal_Previous):</div>
+<div class="line"><span class="lineno">   99</span>            self.IR_AC_Signal_max = self.IR_AC_Signal_Current</div>
+<div class="line"><span class="lineno">  100</span> </div>
+<div class="line"><span class="lineno">  101</span>        <span class="comment"># Busca mínimo en ciclo negativo</span></div>
+<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">if</span> self.negativeEdge <span class="keywordflow">and</span> (self.IR_AC_Signal_Current &lt; self.IR_AC_Signal_Previous):</div>
+<div class="line"><span class="lineno">  103</span>            self.IR_AC_Signal_min = self.IR_AC_Signal_Current</div>
+<div class="line"><span class="lineno">  104</span> </div>
+<div class="line"><span class="lineno">  105</span>        <span class="keywordflow">return</span> beatDetected</div>
+<div class="line"><span class="lineno">  106</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Documentación de datos miembro</h2>
+<a id="a70c5fd71c38ca7cb7cbbcd72ca5446b8" name="a70c5fd71c38ca7cb7cbbcd72ca5446b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70c5fd71c38ca7cb7cbbcd72ca5446b8">&#9670;&#160;</a></span>BUF_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.heartrate.HeartRate.BUF_SIZE = 32</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tamaño del buffer circular para el FIR. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00028">28</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="a1581cc5679adeabdff18032aff894df2" name="a1581cc5679adeabdff18032aff894df2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1581cc5679adeabdff18032aff894df2">&#9670;&#160;</a></span>cbuf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">list max30102.heartrate.HeartRate.cbuf = [0] * self.BUF_SIZE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Buffer circular de muestras para el FIR. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00057">57</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="a183eef6f60f416f62a77b2ed067e75e4" name="a183eef6f60f416f62a77b2ed067e75e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a183eef6f60f416f62a77b2ed067e75e4">&#9670;&#160;</a></span>FIR_COEFFS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">list max30102.heartrate.HeartRate.FIR_COEFFS = [172, 321, 579, 927, 1360, 1858, 2390, 2916, 3391, 3768, 4012, 4096]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Coeficientes del filtro FIR (12 taps simétricos). </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00025">25</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="ace2ceaf925db39a414efd8d936a2566f" name="ace2ceaf925db39a414efd8d936a2566f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace2ceaf925db39a414efd8d936a2566f">&#9670;&#160;</a></span>IR_AC_Max</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.heartrate.HeartRate.IR_AC_Max = 20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Valor máximo actual de la señal AC IR. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00033">33</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="a53b33403b65c7e8519ce881793d37e41" name="a53b33403b65c7e8519ce881793d37e41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53b33403b65c7e8519ce881793d37e41">&#9670;&#160;</a></span>IR_AC_Min</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.heartrate.HeartRate.IR_AC_Min = -20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Valor mínimo actual de la señal AC IR. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00035">35</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="a5835a769cd7448d7f02faefa99349d39" name="a5835a769cd7448d7f02faefa99349d39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5835a769cd7448d7f02faefa99349d39">&#9670;&#160;</a></span>IR_AC_Signal_Current</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.heartrate.HeartRate.IR_AC_Signal_Current = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Valor actual de la señal AC filtrada. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00038">38</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="a02d01cf98070af9b4d7fa5909a7ec0b0" name="a02d01cf98070af9b4d7fa5909a7ec0b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02d01cf98070af9b4d7fa5909a7ec0b0">&#9670;&#160;</a></span>IR_AC_Signal_max</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.heartrate.HeartRate.IR_AC_Signal_max = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Máximo local detectado durante la fase positiva. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00044">44</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="a6d1a8b361fd5cd515a7dfbcaf1968b61" name="a6d1a8b361fd5cd515a7dfbcaf1968b61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d1a8b361fd5cd515a7dfbcaf1968b61">&#9670;&#160;</a></span>IR_AC_Signal_min</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.heartrate.HeartRate.IR_AC_Signal_min = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mínimo local detectado durante la fase negativa. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00042">42</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="a8b3e9387689012b40c5b113d39532478" name="a8b3e9387689012b40c5b113d39532478"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b3e9387689012b40c5b113d39532478">&#9670;&#160;</a></span>IR_AC_Signal_Previous</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.heartrate.HeartRate.IR_AC_Signal_Previous = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Valor previo de la señal AC filtrada. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00040">40</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="aa0c3e883dca96415eff8b5412f80f905" name="aa0c3e883dca96415eff8b5412f80f905"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0c3e883dca96415eff8b5412f80f905">&#9670;&#160;</a></span>IR_Average_Estimated</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.heartrate.HeartRate.IR_Average_Estimated = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Valor actual estimado del componente DC. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00049">49</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="a81851206606c4aac65e3fee79b9fabd5" name="a81851206606c4aac65e3fee79b9fabd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81851206606c4aac65e3fee79b9fabd5">&#9670;&#160;</a></span>ir_avg_reg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.heartrate.HeartRate.ir_avg_reg = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registro de media móvil exponencial para estimar la componente DC. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00047">47</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="aba80bd3b83499806b5ba460d6eff55b4" name="aba80bd3b83499806b5ba460d6eff55b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba80bd3b83499806b5ba460d6eff55b4">&#9670;&#160;</a></span>negativeEdge</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool max30102.heartrate.HeartRate.negativeEdge = False</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag para indicar flanco descendente. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00054">54</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="a5fcc506a9ffd04af58733e87b0d042b0" name="a5fcc506a9ffd04af58733e87b0d042b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fcc506a9ffd04af58733e87b0d042b0">&#9670;&#160;</a></span>offset</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.heartrate.HeartRate.offset = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Índice actual del buffer circular. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00059">59</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<a id="ac4b05eeedab8af20377ad2c4bef13adc" name="ac4b05eeedab8af20377ad2c4bef13adc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4b05eeedab8af20377ad2c4bef13adc">&#9670;&#160;</a></span>positiveEdge</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool max30102.heartrate.HeartRate.positiveEdge = False</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag para indicar flanco ascendente. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../df/dd3/heartrate_8py_source.html#l00052">52</a> del archivo <a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a>.</p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<li>lib/max30102/<a class="el" href="../../df/dd3/heartrate_8py_source.html">heartrate.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../d2/d5b/namespacemax30102.html">max30102</a></li><li class="navelem"><a class="el" href="../../d9/d6d/namespacemax30102_1_1heartrate.html">heartrate</a></li><li class="navelem"><a class="el" href="../../d3/d68/classmax30102_1_1heartrate_1_1_heart_rate.html">HeartRate</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

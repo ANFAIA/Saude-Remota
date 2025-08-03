@@ -1,0 +1,1077 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Referencia de la clase ssd1306.ssd1306.SSD1306</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d3/df6/classssd1306_1_1ssd1306_1_1_s_s_d1306.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Métodos públicos</a> &#124;
+<a href="#pub-attribs">Atributos públicos</a> &#124;
+<a href="#pro-methods">Métodos protegidos</a> &#124;
+<a href="../../df/dfe/classssd1306_1_1ssd1306_1_1_s_s_d1306-members.html">Lista de todos los miembros</a>  </div>
+  <div class="headertitle"><div class="title">Referencia de la clase ssd1306.ssd1306.SSD1306</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:a5f4ad9c809fb37b9b3b2679460cd318f" id="r_a5f4ad9c809fb37b9b3b2679460cd318f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f4ad9c809fb37b9b3b2679460cd318f">__init__</a> (self, <a class="el" href="#afd0f15768a60cdccba491a36a58ac87c">width</a>=128, <a class="el" href="#a868fda033c723aa6dcffadc81f540a24">height</a>=64, <a class="el" href="#a6ebe192e21523c83455df8d8aa8ab46d">i2c</a>=None, <a class="el" href="#ac6ecac79125aae723fc7e078b44f2b4f">addr</a>=<a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#aa73957ebd7b9f626b058bc4b13b99154">SSD1306_I2C_ADDRESS</a>)</td></tr>
+<tr class="separator:a5f4ad9c809fb37b9b3b2679460cd318f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24ca1072418a3a36d6d9238a71741bbf" id="r_a24ca1072418a3a36d6d9238a71741bbf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24ca1072418a3a36d6d9238a71741bbf">is_connected</a> (self)</td></tr>
+<tr class="separator:a24ca1072418a3a36d6d9238a71741bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd6eb9c59d13c889bf4dcf5d0fc2911d" id="r_abd6eb9c59d13c889bf4dcf5d0fc2911d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abd6eb9c59d13c889bf4dcf5d0fc2911d">write_cmd</a> (self, cmd)</td></tr>
+<tr class="separator:abd6eb9c59d13c889bf4dcf5d0fc2911d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f24a7dcd439e62569c471b03a791045" id="r_a5f24a7dcd439e62569c471b03a791045"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f24a7dcd439e62569c471b03a791045">write_data</a> (self, buf)</td></tr>
+<tr class="separator:a5f24a7dcd439e62569c471b03a791045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b9fd4c82fdcd00575e05bca6ae13f89" id="r_a6b9fd4c82fdcd00575e05bca6ae13f89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b9fd4c82fdcd00575e05bca6ae13f89">clear</a> (self)</td></tr>
+<tr class="separator:a6b9fd4c82fdcd00575e05bca6ae13f89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa55d058eb4974bd86ca53fdd02dea3c7" id="r_aa55d058eb4974bd86ca53fdd02dea3c7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa55d058eb4974bd86ca53fdd02dea3c7">show</a> (self)</td></tr>
+<tr class="separator:aa55d058eb4974bd86ca53fdd02dea3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3343c6e884619364b72d890bdc0388" id="r_a5e3343c6e884619364b72d890bdc0388"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e3343c6e884619364b72d890bdc0388">text</a> (self, string, x, y, color=1)</td></tr>
+<tr class="separator:a5e3343c6e884619364b72d890bdc0388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a0534f768fde4d5f32ec589b23cd275" id="r_a4a0534f768fde4d5f32ec589b23cd275"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a0534f768fde4d5f32ec589b23cd275">text_scaled</a> (self, string, x, y, scale=1, color=1)</td></tr>
+<tr class="separator:a4a0534f768fde4d5f32ec589b23cd275"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1426fed71b68a0c0863abebf610c2d48" id="r_a1426fed71b68a0c0863abebf610c2d48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1426fed71b68a0c0863abebf610c2d48">draw_heart</a> (self, x, y, size=1, color=1)</td></tr>
+<tr class="separator:a1426fed71b68a0c0863abebf610c2d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaca8744115adbe608ec63395dde4122a" id="r_aaca8744115adbe608ec63395dde4122a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaca8744115adbe608ec63395dde4122a">display_parameter</a> (self, param_name, value, unit, icon=None)</td></tr>
+<tr class="separator:aaca8744115adbe608ec63395dde4122a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace60966c9eb262ecff26a24bc117c65d" id="r_ace60966c9eb262ecff26a24bc117c65d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace60966c9eb262ecff26a24bc117c65d">draw_thermometer</a> (self, x, y)</td></tr>
+<tr class="separator:ace60966c9eb262ecff26a24bc117c65d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa495cbc4a55d5d3ec54586df6b10a18e" id="r_aa495cbc4a55d5d3ec54586df6b10a18e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa495cbc4a55d5d3ec54586df6b10a18e">draw_oxygen</a> (self, x, y)</td></tr>
+<tr class="separator:aa495cbc4a55d5d3ec54586df6b10a18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71a0a586e40e4b04fada108ac5ae2f1a" id="r_a71a0a586e40e4b04fada108ac5ae2f1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71a0a586e40e4b04fada108ac5ae2f1a">display_finger_message</a> (self)</td></tr>
+<tr class="separator:a71a0a586e40e4b04fada108ac5ae2f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54765628f82bec418830e49d1439bd4e" id="r_a54765628f82bec418830e49d1439bd4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54765628f82bec418830e49d1439bd4e">display_weak_signal</a> (self)</td></tr>
+<tr class="separator:a54765628f82bec418830e49d1439bd4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Atributos públicos</h2></td></tr>
+<tr class="memitem:afd0f15768a60cdccba491a36a58ac87c" id="r_afd0f15768a60cdccba491a36a58ac87c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd0f15768a60cdccba491a36a58ac87c">width</a> = width</td></tr>
+<tr class="separator:afd0f15768a60cdccba491a36a58ac87c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a868fda033c723aa6dcffadc81f540a24" id="r_a868fda033c723aa6dcffadc81f540a24"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a868fda033c723aa6dcffadc81f540a24">height</a> = height</td></tr>
+<tr class="separator:a868fda033c723aa6dcffadc81f540a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3935157f8b24425c54860958191b64a3" id="r_a3935157f8b24425c54860958191b64a3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3935157f8b24425c54860958191b64a3">pages</a> = <a class="el" href="#a868fda033c723aa6dcffadc81f540a24">height</a> // 8</td></tr>
+<tr class="separator:a3935157f8b24425c54860958191b64a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6ecac79125aae723fc7e078b44f2b4f" id="r_ac6ecac79125aae723fc7e078b44f2b4f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6ecac79125aae723fc7e078b44f2b4f">addr</a> = addr</td></tr>
+<tr class="separator:ac6ecac79125aae723fc7e078b44f2b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ebe192e21523c83455df8d8aa8ab46d" id="r_a6ebe192e21523c83455df8d8aa8ab46d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ebe192e21523c83455df8d8aa8ab46d">i2c</a> = I2C(0, scl=Pin(22), sda=Pin(21), freq=400_000)</td></tr>
+<tr class="separator:a6ebe192e21523c83455df8d8aa8ab46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91737d91ad4144ac89ae269612f27674" id="r_a91737d91ad4144ac89ae269612f27674"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91737d91ad4144ac89ae269612f27674">connected</a> = self._detect_display()</td></tr>
+<tr class="separator:a91737d91ad4144ac89ae269612f27674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd7cec69df8f76ce23f1a7a832df9a01" id="r_acd7cec69df8f76ce23f1a7a832df9a01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd7cec69df8f76ce23f1a7a832df9a01">buffer</a> = bytearray(self.pages * self.width)</td></tr>
+<tr class="separator:acd7cec69df8f76ce23f1a7a832df9a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8e748901ad118a472d3568a1aca2971" id="r_ab8e748901ad118a472d3568a1aca2971"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8e748901ad118a472d3568a1aca2971">framebuf</a></td></tr>
+<tr class="separator:ab8e748901ad118a472d3568a1aca2971"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af35cd3159a78bea48f5c90f041528024" id="r_af35cd3159a78bea48f5c90f041528024"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af35cd3159a78bea48f5c90f041528024">write_cmd</a> = self._noop</td></tr>
+<tr class="separator:af35cd3159a78bea48f5c90f041528024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9069ff0c07183c6a2ed4c9f76a2b93e4" id="r_a9069ff0c07183c6a2ed4c9f76a2b93e4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9069ff0c07183c6a2ed4c9f76a2b93e4">write_data</a> = self._noop</td></tr>
+<tr class="separator:a9069ff0c07183c6a2ed4c9f76a2b93e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cbd31e4a42f56879222037d39afaf4e" id="r_a5cbd31e4a42f56879222037d39afaf4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5cbd31e4a42f56879222037d39afaf4e">show</a> = self._noop</td></tr>
+<tr class="separator:a5cbd31e4a42f56879222037d39afaf4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Métodos protegidos</h2></td></tr>
+<tr class="memitem:a94e47d5e3cf30fd8d859ff8d4c5e918b" id="r_a94e47d5e3cf30fd8d859ff8d4c5e918b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a94e47d5e3cf30fd8d859ff8d4c5e918b">_detect_display</a> (self)</td></tr>
+<tr class="separator:a94e47d5e3cf30fd8d859ff8d4c5e918b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c008981acb3b14c9d27c495cd2ff87c" id="r_a5c008981acb3b14c9d27c495cd2ff87c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c008981acb3b14c9d27c495cd2ff87c">_noop</a> (self, *_, **__)</td></tr>
+<tr class="separator:a5c008981acb3b14c9d27c495cd2ff87c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab57f9ee8e2d074ff533f6e8b74592c5d" id="r_ab57f9ee8e2d074ff533f6e8b74592c5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab57f9ee8e2d074ff533f6e8b74592c5d">_init_display</a> (self)</td></tr>
+<tr class="separator:ab57f9ee8e2d074ff533f6e8b74592c5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><pre class="fragment">Controlador SSD1306 con autochequeo de presencia.
+
+• self.connected  -&gt; True si la pantalla respondió.
+• is_connected()  -&gt; Método auxiliar.
+• Si no hay pantalla, las funciones de dibujo no hacen nada.
+</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00034">34</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+</div><h2 class="groupheader">Documentación de constructores y destructores</h2>
+<a id="a5f4ad9c809fb37b9b3b2679460cd318f" name="a5f4ad9c809fb37b9b3b2679460cd318f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f4ad9c809fb37b9b3b2679460cd318f">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.__init__ </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>width</em></span><span class="paramdefsep"> = </span><span class="paramdefval">128</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>height</em></span><span class="paramdefsep"> = </span><span class="paramdefval">64</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>i2c</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>addr</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html#aa73957ebd7b9f626b058bc4b13b99154">SSD1306_I2C_ADDRESS</a></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00041">41</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>    <span class="keyword">def </span>__init__(self, width=128, height=64, i2c=None, addr=SSD1306_I2C_ADDRESS):</div>
+<div class="line"><span class="lineno">   42</span>        self.width     = width</div>
+<div class="line"><span class="lineno">   43</span>        self.height    = height</div>
+<div class="line"><span class="lineno">   44</span>        self.pages     = height // 8</div>
+<div class="line"><span class="lineno">   45</span>        self.addr      = addr</div>
+<div class="line"><span class="lineno">   46</span> </div>
+<div class="line"><span class="lineno">   47</span>        <span class="comment"># --- I²C ---</span></div>
+<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">if</span> i2c <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   49</span>            self.i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400_000)</div>
+<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">   51</span>            self.i2c = i2c</div>
+<div class="line"><span class="lineno">   52</span> </div>
+<div class="line"><span class="lineno">   53</span>        <span class="comment"># --- ¿Pantalla presente? ---</span></div>
+<div class="line"><span class="lineno">   54</span>        self.connected = self._detect_display()</div>
+<div class="line"><span class="lineno">   55</span> </div>
+<div class="line"><span class="lineno">   56</span>        <span class="comment"># Buffer y framebuf se crean siempre; así el código que escribe</span></div>
+<div class="line"><span class="lineno">   57</span>        <span class="comment"># texto/dibujos no revienta, aunque luego no se envíe a HW</span></div>
+<div class="line"><span class="lineno">   58</span>        self.buffer   = bytearray(self.pages * self.width)</div>
+<div class="line"><span class="lineno">   59</span>        self.framebuf = framebuf.FrameBuffer(self.buffer, self.width,</div>
+<div class="line"><span class="lineno">   60</span>                                             self.height, framebuf.MONO_VLSB)</div>
+<div class="line"><span class="lineno">   61</span> </div>
+<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">if</span> self.connected:</div>
+<div class="line"><span class="lineno">   63</span>            self._init_display()</div>
+<div class="line"><span class="lineno">   64</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">   65</span>            <span class="comment"># Convertir llamadas críticas en NOP</span></div>
+<div class="line"><span class="lineno">   66</span>            self.write_cmd  = self._noop</div>
+<div class="line"><span class="lineno">   67</span>            self.write_data = self._noop</div>
+<div class="line"><span class="lineno">   68</span>            self.show       = self._noop</div>
+<div class="line"><span class="lineno">   69</span>            <span class="comment"># Opcional: avisar 1 sola vez</span></div>
+<div class="line"><span class="lineno">   70</span>            print(<span class="stringliteral">&quot;[SSD1306] Pantalla no detectada; se omitirá salida gráfica.&quot;</span>)</div>
+<div class="line"><span class="lineno">   71</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones miembro</h2>
+<a id="a94e47d5e3cf30fd8d859ff8d4c5e918b" name="a94e47d5e3cf30fd8d859ff8d4c5e918b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94e47d5e3cf30fd8d859ff8d4c5e918b">&#9670;&#160;</a></span>_detect_display()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306._detect_display </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Escanea el bus para ver si la dirección existe.</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00073">73</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>    <span class="keyword">def </span>_detect_display(self):</div>
+<div class="line"><span class="lineno">   74</span>        <span class="stringliteral">&quot;&quot;&quot;Escanea el bus para ver si la dirección existe.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   76</span>            <span class="keywordflow">return</span> self.addr <span class="keywordflow">in</span> self.i2c.scan()</div>
+<div class="line"><span class="lineno">   77</span>        <span class="keywordflow">except</span> OSError:</div>
+<div class="line"><span class="lineno">   78</span>            <span class="comment"># Por ejemplo, si el bus no existe todavía</span></div>
+<div class="line"><span class="lineno">   79</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">   80</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab57f9ee8e2d074ff533f6e8b74592c5d" name="ab57f9ee8e2d074ff533f6e8b74592c5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab57f9ee8e2d074ff533f6e8b74592c5d">&#9670;&#160;</a></span>_init_display()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306._init_display </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00090">90</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   90</span>    <span class="keyword">def </span>_init_display(self):</div>
+<div class="line"><span class="lineno">   91</span>        cmds = [</div>
+<div class="line"><span class="lineno">   92</span>            SSD1306_DISPLAYOFF,</div>
+<div class="line"><span class="lineno">   93</span>            SSD1306_SETDISPLAYCLOCKDIV, 0x80,</div>
+<div class="line"><span class="lineno">   94</span>            SSD1306_SETMULTIPLEX, self.height - 1,</div>
+<div class="line"><span class="lineno">   95</span>            SSD1306_SETDISPLAYOFFSET, 0x00,</div>
+<div class="line"><span class="lineno">   96</span>            SSD1306_SETSTARTLINE | 0x00,</div>
+<div class="line"><span class="lineno">   97</span>            SSD1306_CHARGEPUMP, 0x14,</div>
+<div class="line"><span class="lineno">   98</span>            SSD1306_MEMORYMODE, 0x00,</div>
+<div class="line"><span class="lineno">   99</span>            SSD1306_SEGREMAP | 0x01,</div>
+<div class="line"><span class="lineno">  100</span>            SSD1306_COMSCANDEC,</div>
+<div class="line"><span class="lineno">  101</span>            SSD1306_SETCOMPINS, 0x12 <span class="keywordflow">if</span> self.height == 64 <span class="keywordflow">else</span> 0x02,</div>
+<div class="line"><span class="lineno">  102</span>            SSD1306_SETCONTRAST, 0xCF,</div>
+<div class="line"><span class="lineno">  103</span>            SSD1306_SETPRECHARGE, 0xF1,</div>
+<div class="line"><span class="lineno">  104</span>            SSD1306_SETVCOMDETECT, 0x40,</div>
+<div class="line"><span class="lineno">  105</span>            SSD1306_DISPLAYALLON_RESUME,</div>
+<div class="line"><span class="lineno">  106</span>            SSD1306_NORMALDISPLAY,</div>
+<div class="line"><span class="lineno">  107</span>            SSD1306_DISPLAYON</div>
+<div class="line"><span class="lineno">  108</span>        ]</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">for</span> cmd <span class="keywordflow">in</span> cmds:</div>
+<div class="line"><span class="lineno">  110</span>            self.write_cmd(cmd)</div>
+<div class="line"><span class="lineno">  111</span>        self.clear()</div>
+<div class="line"><span class="lineno">  112</span>        self.show()</div>
+<div class="line"><span class="lineno">  113</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5c008981acb3b14c9d27c495cd2ff87c" name="a5c008981acb3b14c9d27c495cd2ff87c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c008981acb3b14c9d27c495cd2ff87c">&#9670;&#160;</a></span>_noop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306._noop </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*</td>          <td class="paramname"><span class="paramname"><em>_</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**</td>          <td class="paramname"><span class="paramname"><em>__</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Función vacía para sustituir I/O cuando no hay pantalla.</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00081">81</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>    <span class="keyword">def </span>_noop(self, *_, **__):</div>
+<div class="line"><span class="lineno">   82</span>        <span class="stringliteral">&quot;&quot;&quot;Función vacía para sustituir I/O cuando no hay pantalla.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   83</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">   84</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6b9fd4c82fdcd00575e05bca6ae13f89" name="a6b9fd4c82fdcd00575e05bca6ae13f89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b9fd4c82fdcd00575e05bca6ae13f89">&#9670;&#160;</a></span>clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.clear </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00135">135</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  135</span>    <span class="keyword">def </span>clear(self):</div>
+<div class="line"><span class="lineno">  136</span>        self.framebuf.fill(0)</div>
+<div class="line"><span class="lineno">  137</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a71a0a586e40e4b04fada108ac5ae2f1a" name="a71a0a586e40e4b04fada108ac5ae2f1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71a0a586e40e4b04fada108ac5ae2f1a">&#9670;&#160;</a></span>display_finger_message()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.display_finger_message </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Mensaje para colocar dedo</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00243">243</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  243</span>    <span class="keyword">def </span>display_finger_message(self):</div>
+<div class="line"><span class="lineno">  244</span>        <span class="stringliteral">&quot;&quot;&quot;Mensaje para colocar dedo&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  245</span>        self.clear()</div>
+<div class="line"><span class="lineno">  246</span>        self.text_scaled(<span class="stringliteral">&quot;Coloque su&quot;</span>, 10, 0, scale=2)</div>
+<div class="line"><span class="lineno">  247</span>        self.text_scaled(<span class="stringliteral">&quot;DEDO&quot;</span>, 40, 20, scale=2)</div>
+<div class="line"><span class="lineno">  248</span>        self.text_scaled(<span class="stringliteral">&quot;en el sensor&quot;</span>, 10, 50, scale=2)</div>
+<div class="line"><span class="lineno">  249</span>        self.show()</div>
+<div class="line"><span class="lineno">  250</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aaca8744115adbe608ec63395dde4122a" name="aaca8744115adbe608ec63395dde4122a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaca8744115adbe608ec63395dde4122a">&#9670;&#160;</a></span>display_parameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.display_parameter </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>param_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>value</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>unit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>icon</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Muestra parámetro con diseño mejorado</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00191">191</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  191</span>    <span class="keyword">def </span>display_parameter(self, param_name, value, unit, icon=None):</div>
+<div class="line"><span class="lineno">  192</span>        <span class="stringliteral">&quot;&quot;&quot;Muestra parámetro con diseño mejorado&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  193</span>        self.clear()</div>
+<div class="line"><span class="lineno">  194</span>        </div>
+<div class="line"><span class="lineno">  195</span>        <span class="comment"># Título superior</span></div>
+<div class="line"><span class="lineno">  196</span>        self.text(<span class="stringliteral">&quot;Monitor Salud&quot;</span>, 35, 2)</div>
+<div class="line"><span class="lineno">  197</span>        </div>
+<div class="line"><span class="lineno">  198</span>        <span class="comment"># Línea divisoria</span></div>
+<div class="line"><span class="lineno">  199</span>        self.framebuf.hline(0, 12, self.width, 1)</div>
+<div class="line"><span class="lineno">  200</span>        </div>
+<div class="line"><span class="lineno">  201</span>        <span class="comment"># Icono compacto</span></div>
+<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">if</span> icon == <span class="stringliteral">&quot;heart&quot;</span>:</div>
+<div class="line"><span class="lineno">  203</span>            self.draw_heart(100, 2)</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keywordflow">elif</span> icon == <span class="stringliteral">&quot;temp&quot;</span>:</div>
+<div class="line"><span class="lineno">  205</span>            self.draw_thermometer(100, 2)</div>
+<div class="line"><span class="lineno">  206</span>        <span class="keywordflow">elif</span> icon == <span class="stringliteral">&quot;oxygen&quot;</span>:</div>
+<div class="line"><span class="lineno">  207</span>            self.draw_oxygen(100, 2)</div>
+<div class="line"><span class="lineno">  208</span>        </div>
+<div class="line"><span class="lineno">  209</span>        <span class="comment"># Nombre del parámetro</span></div>
+<div class="line"><span class="lineno">  210</span>        param_x = max(0, (self.width - len(param_name) * 8) // 2)</div>
+<div class="line"><span class="lineno">  211</span>        self.text(param_name, param_x, 16)</div>
+<div class="line"><span class="lineno">  212</span>        </div>
+<div class="line"><span class="lineno">  213</span>        <span class="comment"># Valor principal (doble tamaño)</span></div>
+<div class="line"><span class="lineno">  214</span>        value_str = <span class="stringliteral">&quot;{:.1f}&quot;</span>.format(value) <span class="keywordflow">if</span> isinstance(value, float) <span class="keywordflow">else</span> str(value)</div>
+<div class="line"><span class="lineno">  215</span>        value_x = max(0, (self.width - len(value_str) * 16) // 2)</div>
+<div class="line"><span class="lineno">  216</span>        self.text_scaled(value_str, value_x, 28, scale=2, color=1)</div>
+<div class="line"><span class="lineno">  217</span>        </div>
+<div class="line"><span class="lineno">  218</span>        <span class="comment"># Línea divisoria</span></div>
+<div class="line"><span class="lineno">  219</span>        self.framebuf.hline(0, 45, self.width, 1)</div>
+<div class="line"><span class="lineno">  220</span>        </div>
+<div class="line"><span class="lineno">  221</span>        <span class="comment"># Unidad</span></div>
+<div class="line"><span class="lineno">  222</span>        unit_x = max(0, (self.width - len(unit) * 8) // 2)</div>
+<div class="line"><span class="lineno">  223</span>        self.text(unit, unit_x, 50)</div>
+<div class="line"><span class="lineno">  224</span>        </div>
+<div class="line"><span class="lineno">  225</span>        self.show()</div>
+<div class="line"><span class="lineno">  226</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a54765628f82bec418830e49d1439bd4e" name="a54765628f82bec418830e49d1439bd4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54765628f82bec418830e49d1439bd4e">&#9670;&#160;</a></span>display_weak_signal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.display_weak_signal </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Mensaje de señal débil</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00251">251</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  251</span>    <span class="keyword">def </span>display_weak_signal(self):</div>
+<div class="line"><span class="lineno">  252</span>        <span class="stringliteral">&quot;&quot;&quot;Mensaje de señal débil&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  253</span>        self.clear()</div>
+<div class="line"><span class="lineno">  254</span>        self.text(<span class="stringliteral">&quot;Señal debil&quot;</span>, 25, 10)</div>
+<div class="line"><span class="lineno">  255</span>        self.text_scaled(<span class="stringliteral">&quot;AJUSTE&quot;</span>, 35, 20, scale=2)</div>
+<div class="line"><span class="lineno">  256</span>        self.text(<span class="stringliteral">&quot;la posicion&quot;</span>, 25, 45)</div>
+<div class="line"><span class="lineno">  257</span>        self.show()</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1426fed71b68a0c0863abebf610c2d48" name="a1426fed71b68a0c0863abebf610c2d48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1426fed71b68a0c0863abebf610c2d48">&#9670;&#160;</a></span>draw_heart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.draw_heart </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>y</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>size</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Corazón optimizado</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00175">175</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  175</span>    <span class="keyword">def </span>draw_heart(self, x, y, size=1, color=1):</div>
+<div class="line"><span class="lineno">  176</span>        <span class="stringliteral">&quot;&quot;&quot;Corazón optimizado&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  177</span>        heart = [</div>
+<div class="line"><span class="lineno">  178</span>            [0, 1, 1, 0, 1, 1, 0],</div>
+<div class="line"><span class="lineno">  179</span>            [1, 1, 1, 1, 1, 1, 1],</div>
+<div class="line"><span class="lineno">  180</span>            [1, 1, 1, 1, 1, 1, 1],</div>
+<div class="line"><span class="lineno">  181</span>            [1, 1, 1, 1, 1, 1, 1],</div>
+<div class="line"><span class="lineno">  182</span>            [0, 1, 1, 1, 1, 1, 0],</div>
+<div class="line"><span class="lineno">  183</span>            [0, 0, 1, 1, 1, 0, 0],</div>
+<div class="line"><span class="lineno">  184</span>        ]</div>
+<div class="line"><span class="lineno">  185</span>        </div>
+<div class="line"><span class="lineno">  186</span>        <span class="keywordflow">for</span> dy, row <span class="keywordflow">in</span> enumerate(heart):</div>
+<div class="line"><span class="lineno">  187</span>            <span class="keywordflow">for</span> dx, pixel <span class="keywordflow">in</span> enumerate(row):</div>
+<div class="line"><span class="lineno">  188</span>                <span class="keywordflow">if</span> pixel:</div>
+<div class="line"><span class="lineno">  189</span>                    self.framebuf.fill_rect(x + dx*size, y + dy*size, size, size, color)</div>
+<div class="line"><span class="lineno">  190</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa495cbc4a55d5d3ec54586df6b10a18e" name="aa495cbc4a55d5d3ec54586df6b10a18e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa495cbc4a55d5d3ec54586df6b10a18e">&#9670;&#160;</a></span>draw_oxygen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.draw_oxygen </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Icono de oxígeno optimizado</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00236">236</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  236</span>    <span class="keyword">def </span>draw_oxygen(self, x, y):</div>
+<div class="line"><span class="lineno">  237</span>        <span class="stringliteral">&quot;&quot;&quot;Icono de oxígeno optimizado&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  238</span>        <span class="comment"># Letra O</span></div>
+<div class="line"><span class="lineno">  239</span>        self.framebuf.ellipse(x+4, y+6, 3, 3, 1)</div>
+<div class="line"><span class="lineno">  240</span>        <span class="comment"># Número 2</span></div>
+<div class="line"><span class="lineno">  241</span>        self.framebuf.text(<span class="stringliteral">&quot;2&quot;</span>, x+8, y+2, 1)</div>
+<div class="line"><span class="lineno">  242</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ace60966c9eb262ecff26a24bc117c65d" name="ace60966c9eb262ecff26a24bc117c65d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace60966c9eb262ecff26a24bc117c65d">&#9670;&#160;</a></span>draw_thermometer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.draw_thermometer </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Termómetro optimizado</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00227">227</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  227</span>    <span class="keyword">def </span>draw_thermometer(self, x, y):</div>
+<div class="line"><span class="lineno">  228</span>        <span class="stringliteral">&quot;&quot;&quot;Termómetro optimizado&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  229</span>        <span class="comment"># Bulbo</span></div>
+<div class="line"><span class="lineno">  230</span>        self.framebuf.fill_rect(x+2, y+10, 3, 3, 1)</div>
+<div class="line"><span class="lineno">  231</span>        <span class="comment"># Vara</span></div>
+<div class="line"><span class="lineno">  232</span>        self.framebuf.vline(x+3, y+2, 8, 1)</div>
+<div class="line"><span class="lineno">  233</span>        <span class="comment"># Parte superior</span></div>
+<div class="line"><span class="lineno">  234</span>        self.framebuf.fill_rect(x+2, y, 3, 2, 1)</div>
+<div class="line"><span class="lineno">  235</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a24ca1072418a3a36d6d9238a71741bbf" name="a24ca1072418a3a36d6d9238a71741bbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24ca1072418a3a36d6d9238a71741bbf">&#9670;&#160;</a></span>is_connected()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.is_connected </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Devuelve True/False según la presencia del display.</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00085">85</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>    <span class="keyword">def </span>is_connected(self):</div>
+<div class="line"><span class="lineno">   86</span>        <span class="stringliteral">&quot;&quot;&quot;Devuelve True/False según la presencia del display.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   87</span>        <span class="keywordflow">return</span> self.connected</div>
+<div class="line"><span class="lineno">   88</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa55d058eb4974bd86ca53fdd02dea3c7" name="aa55d058eb4974bd86ca53fdd02dea3c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa55d058eb4974bd86ca53fdd02dea3c7">&#9670;&#160;</a></span>show()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.show </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00138">138</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  138</span>    <span class="keyword">def </span>show(self):</div>
+<div class="line"><span class="lineno">  139</span>        self.write_cmd(SSD1306_COLUMNADDR)</div>
+<div class="line"><span class="lineno">  140</span>        self.write_cmd(0)</div>
+<div class="line"><span class="lineno">  141</span>        self.write_cmd(self.width - 1)</div>
+<div class="line"><span class="lineno">  142</span>        self.write_cmd(SSD1306_PAGEADDR)</div>
+<div class="line"><span class="lineno">  143</span>        self.write_cmd(0)</div>
+<div class="line"><span class="lineno">  144</span>        self.write_cmd(self.pages - 1)</div>
+<div class="line"><span class="lineno">  145</span>        self.write_data(self.buffer)</div>
+<div class="line"><span class="lineno">  146</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5e3343c6e884619364b72d890bdc0388" name="a5e3343c6e884619364b72d890bdc0388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e3343c6e884619364b72d890bdc0388">&#9670;&#160;</a></span>text()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.text </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>string</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>y</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00147">147</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  147</span>    <span class="keyword">def </span>text(self, string, x, y, color=1):</div>
+<div class="line"><span class="lineno">  148</span>        self.framebuf.text(string, x, y, color)</div>
+<div class="line"><span class="lineno">  149</span> </div>
+<div class="line"><span class="lineno">  150</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4a0534f768fde4d5f32ec589b23cd275" name="a4a0534f768fde4d5f32ec589b23cd275"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a0534f768fde4d5f32ec589b23cd275">&#9670;&#160;</a></span>text_scaled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.text_scaled </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>string</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>y</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>scale</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval">1</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Renderiza texto escalado</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00151">151</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  151</span>    <span class="keyword">def </span>text_scaled(self, string, x, y, scale=1, color=1):</div>
+<div class="line"><span class="lineno">  152</span>        <span class="stringliteral">&quot;&quot;&quot;Renderiza texto escalado&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  153</span>        <span class="keywordflow">for</span> char <span class="keywordflow">in</span> string:</div>
+<div class="line"><span class="lineno">  154</span>            <span class="comment"># Buffer temporal para el caracter</span></div>
+<div class="line"><span class="lineno">  155</span>            char_width = 8</div>
+<div class="line"><span class="lineno">  156</span>            char_height = 8</div>
+<div class="line"><span class="lineno">  157</span>            buf_temp = bytearray(char_width * char_height // 8)</div>
+<div class="line"><span class="lineno">  158</span>            fb_temp = framebuf.FrameBuffer(buf_temp, char_width, char_height, framebuf.MONO_VLSB)</div>
+<div class="line"><span class="lineno">  159</span>            </div>
+<div class="line"><span class="lineno">  160</span>            <span class="comment"># Renderizar caracter</span></div>
+<div class="line"><span class="lineno">  161</span>            fb_temp.fill(0)</div>
+<div class="line"><span class="lineno">  162</span>            fb_temp.text(char, 0, 0, color)</div>
+<div class="line"><span class="lineno">  163</span>            </div>
+<div class="line"><span class="lineno">  164</span>            <span class="comment"># Transferir con escala</span></div>
+<div class="line"><span class="lineno">  165</span>            <span class="keywordflow">for</span> py <span class="keywordflow">in</span> range(char_height):</div>
+<div class="line"><span class="lineno">  166</span>                <span class="keywordflow">for</span> px <span class="keywordflow">in</span> range(char_width):</div>
+<div class="line"><span class="lineno">  167</span>                    <span class="keywordflow">if</span> fb_temp.pixel(px, py):</div>
+<div class="line"><span class="lineno">  168</span>                        self.framebuf.fill_rect(</div>
+<div class="line"><span class="lineno">  169</span>                            x + px * scale,</div>
+<div class="line"><span class="lineno">  170</span>                            y + py * scale,</div>
+<div class="line"><span class="lineno">  171</span>                            scale, scale, color)</div>
+<div class="line"><span class="lineno">  172</span>            </div>
+<div class="line"><span class="lineno">  173</span>            x += char_width * scale</div>
+<div class="line"><span class="lineno">  174</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abd6eb9c59d13c889bf4dcf5d0fc2911d" name="abd6eb9c59d13c889bf4dcf5d0fc2911d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd6eb9c59d13c889bf4dcf5d0fc2911d">&#9670;&#160;</a></span>write_cmd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.write_cmd </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>cmd</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00115">115</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  115</span>    <span class="keyword">def </span>write_cmd(self, cmd):</div>
+<div class="line"><span class="lineno">  116</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  117</span>            self.i2c.writeto(self.addr, bytes([0x80, cmd]))</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">except</span> OSError:</div>
+<div class="line"><span class="lineno">  119</span>            <span class="comment"># Cable suelto durante la marcha → Marcar como desconectado</span></div>
+<div class="line"><span class="lineno">  120</span>            self.connected = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  121</span>            self.write_cmd = self._noop</div>
+<div class="line"><span class="lineno">  122</span>            self.write_data = self._noop</div>
+<div class="line"><span class="lineno">  123</span>            self.show = self._noop</div>
+<div class="line"><span class="lineno">  124</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5f24a7dcd439e62569c471b03a791045" name="a5f24a7dcd439e62569c471b03a791045"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f24a7dcd439e62569c471b03a791045">&#9670;&#160;</a></span>write_data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.write_data </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>buf</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00125">125</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  125</span>    <span class="keyword">def </span>write_data(self, buf):</div>
+<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  127</span>            self.i2c.writeto(self.addr, b<span class="stringliteral">&#39;\x40&#39;</span> + buf)</div>
+<div class="line"><span class="lineno">  128</span>        <span class="keywordflow">except</span> OSError:</div>
+<div class="line"><span class="lineno">  129</span>            self.connected = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  130</span>            self.write_cmd = self._noop</div>
+<div class="line"><span class="lineno">  131</span>            self.write_data = self._noop</div>
+<div class="line"><span class="lineno">  132</span>            self.show = self._noop</div>
+<div class="line"><span class="lineno">  133</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Documentación de datos miembro</h2>
+<a id="ac6ecac79125aae723fc7e078b44f2b4f" name="ac6ecac79125aae723fc7e078b44f2b4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ecac79125aae723fc7e078b44f2b4f">&#9670;&#160;</a></span>addr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.addr = addr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00045">45</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="acd7cec69df8f76ce23f1a7a832df9a01" name="acd7cec69df8f76ce23f1a7a832df9a01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd7cec69df8f76ce23f1a7a832df9a01">&#9670;&#160;</a></span>buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.buffer = bytearray(self.pages * self.width)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00058">58</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="a91737d91ad4144ac89ae269612f27674" name="a91737d91ad4144ac89ae269612f27674"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91737d91ad4144ac89ae269612f27674">&#9670;&#160;</a></span>connected</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ssd1306.ssd1306.SSD1306.connected = self._detect_display()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00054">54</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="ab8e748901ad118a472d3568a1aca2971" name="ab8e748901ad118a472d3568a1aca2971"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8e748901ad118a472d3568a1aca2971">&#9670;&#160;</a></span>framebuf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.framebuf</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">=  framebuf.FrameBuffer(self.buffer, self.width,</div>
+<div class="line">                                             self.height, framebuf.MONO_VLSB)</div>
+</div><!-- fragment -->
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00059">59</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="a868fda033c723aa6dcffadc81f540a24" name="a868fda033c723aa6dcffadc81f540a24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a868fda033c723aa6dcffadc81f540a24">&#9670;&#160;</a></span>height</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.height = height</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00043">43</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="a6ebe192e21523c83455df8d8aa8ab46d" name="a6ebe192e21523c83455df8d8aa8ab46d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ebe192e21523c83455df8d8aa8ab46d">&#9670;&#160;</a></span>i2c</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400_000)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00049">49</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="a3935157f8b24425c54860958191b64a3" name="a3935157f8b24425c54860958191b64a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3935157f8b24425c54860958191b64a3">&#9670;&#160;</a></span>pages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ssd1306.ssd1306.SSD1306.pages = <a class="el" href="#a868fda033c723aa6dcffadc81f540a24">height</a> // 8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00044">44</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="a5cbd31e4a42f56879222037d39afaf4e" name="a5cbd31e4a42f56879222037d39afaf4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cbd31e4a42f56879222037d39afaf4e">&#9670;&#160;</a></span>show</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.show = self._noop</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00068">68</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="afd0f15768a60cdccba491a36a58ac87c" name="afd0f15768a60cdccba491a36a58ac87c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd0f15768a60cdccba491a36a58ac87c">&#9670;&#160;</a></span>width</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.width = width</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00042">42</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="af35cd3159a78bea48f5c90f041528024" name="af35cd3159a78bea48f5c90f041528024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af35cd3159a78bea48f5c90f041528024">&#9670;&#160;</a></span>write_cmd</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.write_cmd = self._noop</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00066">66</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<a id="a9069ff0c07183c6a2ed4c9f76a2b93e4" name="a9069ff0c07183c6a2ed4c9f76a2b93e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9069ff0c07183c6a2ed4c9f76a2b93e4">&#9670;&#160;</a></span>write_data</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssd1306.ssd1306.SSD1306.write_data = self._noop</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d8/d76/ssd1306_8py_source.html#l00067">67</a> del archivo <a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a>.</p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<li>lib/ssd1306/<a class="el" href="../../d8/d76/ssd1306_8py_source.html">ssd1306.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../d0/d73/namespacessd1306.html">ssd1306</a></li><li class="navelem"><a class="el" href="../../d7/d96/namespacessd1306_1_1ssd1306.html">ssd1306</a></li><li class="navelem"><a class="el" href="../../d3/df6/classssd1306_1_1ssd1306_1_1_s_s_d1306.html">SSD1306</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

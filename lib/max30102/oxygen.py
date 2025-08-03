@@ -10,7 +10,7 @@
 #  de la relación de amplitudes AC/DC de las señales RED e IR.
 #  
 #  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandez13Uclm
+#  @contact github.com/afernandezLuc
 #  @version 1.0.0
 #  @date 2025-08-02
 #  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez
@@ -59,7 +59,10 @@ class OxygenSaturation:
         3, 2, 1
     ]
 
-    def __init__(self):
+    def __init__(self, sample_rate_hz=400):
+        #self.FreqS = sample_rate_hz
+        #self.BUFFER_SIZE = self.FreqS * 4        # 4 s de señal
+        #self.MA4_SIZE = sample_rate_hz/10    # 100 ms de media móvil
         pass
 
     def _mean(self, arr):
@@ -113,7 +116,11 @@ class OxygenSaturation:
         n_th1 = max(30, min(n_th1, 60))
 
         # 4. Detección de valles (picos en señal invertida)
+        # mínimo 160 ms entre valles  ⇒ muestras = FreqS * 0.16
+        #min_gap = self.FreqS // 6          # ≈0.166 s
+        #an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)
         an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, 4, 15)
+
         n_npks = len(an_ir_valley_locs)
 
         # 5. Heart rate

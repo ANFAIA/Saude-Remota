@@ -1,0 +1,687 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Referencia de la clase max30102.oxygen.OxygenSaturation</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d7/d9e/classmax30102_1_1oxygen_1_1_oxygen_saturation.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Métodos públicos</a> &#124;
+<a href="#pub-static-attribs">Atributos públicos estáticos</a> &#124;
+<a href="#pro-methods">Métodos protegidos</a> &#124;
+<a href="../../db/d98/classmax30102_1_1oxygen_1_1_oxygen_saturation-members.html">Lista de todos los miembros</a>  </div>
+  <div class="headertitle"><div class="title">Referencia de la clase max30102.oxygen.OxygenSaturation</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Clase para calcular la saturación de oxygeno en sangre a partir de los datos del sensor <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>.  
+ <a href="#details">Más...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:af18bcb100d9eaf4ebe4e2daa2cffd569" id="r_af18bcb100d9eaf4ebe4e2daa2cffd569"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af18bcb100d9eaf4ebe4e2daa2cffd569">__init__</a> (self, sample_rate_hz=400)</td></tr>
+<tr class="separator:af18bcb100d9eaf4ebe4e2daa2cffd569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d961aee1e2399eafa79e9d92d88d50b" id="r_a7d961aee1e2399eafa79e9d92d88d50b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d961aee1e2399eafa79e9d92d88d50b">calculate_spo2_and_heart_rate</a> (self, ir_buffer, red_buffer)</td></tr>
+<tr class="memdesc:a7d961aee1e2399eafa79e9d92d88d50b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcula SpO2 (%) y ritmo cardiaco (bpm).  <br /></td></tr>
+<tr class="separator:a7d961aee1e2399eafa79e9d92d88d50b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Atributos públicos estáticos</h2></td></tr>
+<tr class="memitem:adc72c25ebbcef195da4193b0894d2ac4" id="r_adc72c25ebbcef195da4193b0894d2ac4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc72c25ebbcef195da4193b0894d2ac4">FreqS</a> = 25</td></tr>
+<tr class="separator:adc72c25ebbcef195da4193b0894d2ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70ba28187e2f167da4593eb50c331ba7" id="r_a70ba28187e2f167da4593eb50c331ba7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70ba28187e2f167da4593eb50c331ba7">BUFFER_SIZE</a> = <a class="el" href="#adc72c25ebbcef195da4193b0894d2ac4">FreqS</a> * 4</td></tr>
+<tr class="separator:a70ba28187e2f167da4593eb50c331ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7acf0b38387aabace6f11cb2a054806" id="r_ac7acf0b38387aabace6f11cb2a054806"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7acf0b38387aabace6f11cb2a054806">MA4_SIZE</a> = 4</td></tr>
+<tr class="separator:ac7acf0b38387aabace6f11cb2a054806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa66ffdaa6939ae9c7f1dd9f3b9e83d0" id="r_aaa66ffdaa6939ae9c7f1dd9f3b9e83d0"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa66ffdaa6939ae9c7f1dd9f3b9e83d0">SPO2_TABLE</a></td></tr>
+<tr class="separator:aaa66ffdaa6939ae9c7f1dd9f3b9e83d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Métodos protegidos</h2></td></tr>
+<tr class="memitem:af2d30aa19ddb4109b0800702e9dea59c" id="r_af2d30aa19ddb4109b0800702e9dea59c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2d30aa19ddb4109b0800702e9dea59c">_mean</a> (self, arr)</td></tr>
+<tr class="separator:af2d30aa19ddb4109b0800702e9dea59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca45141dbf5251e359a3b2fb33f4ebc8" id="r_aca45141dbf5251e359a3b2fb33f4ebc8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca45141dbf5251e359a3b2fb33f4ebc8">_max</a> (self, arr)</td></tr>
+<tr class="separator:aca45141dbf5251e359a3b2fb33f4ebc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a979f16a7abecf08acbaa28dabf88f32d" id="r_a979f16a7abecf08acbaa28dabf88f32d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a979f16a7abecf08acbaa28dabf88f32d">_find_peaks</a> (self, x, min_height, min_distance, max_num)</td></tr>
+<tr class="memdesc:a979f16a7abecf08acbaa28dabf88f32d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encuentra hasta <em>max_num</em> picos en <em>x</em> mayores que <em>min_height</em> y separados al menos <em>min_distance</em>.  <br /></td></tr>
+<tr class="separator:a979f16a7abecf08acbaa28dabf88f32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23ed06cfcd7825abfe53c55e85a92d04" id="r_a23ed06cfcd7825abfe53c55e85a92d04"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a23ed06cfcd7825abfe53c55e85a92d04">_remove_close_peaks</a> (self, x, peaks, min_distance)</td></tr>
+<tr class="memdesc:a23ed06cfcd7825abfe53c55e85a92d04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encuentra hasta <em>max_num</em> picos en <em>x</em> mayores que <em>min_height</em> y separados al menos <em>min_distance</em>.  <br /></td></tr>
+<tr class="separator:a23ed06cfcd7825abfe53c55e85a92d04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Clase para calcular la saturación de oxygeno en sangre a partir de los datos del sensor <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>. </p>
+<p>Obrece una api pública para calcular SpO2 y ritmo cardiaco (bpm) a partir de muestras de luz infrarroja (IR) y roja (RED). Utiliza un algoritmo basado en el AN-6595 de Maxim Integrated, adaptado para micro-controladores. Incluye detección de picos, filtrado y estimación de SpO2 mediante la relación de amplitudes AC/DC de las señales IR y RED. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00044">44</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+</div><h2 class="groupheader">Documentación de constructores y destructores</h2>
+<a id="af18bcb100d9eaf4ebe4e2daa2cffd569" name="af18bcb100d9eaf4ebe4e2daa2cffd569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af18bcb100d9eaf4ebe4e2daa2cffd569">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.oxygen.OxygenSaturation.__init__ </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sample_rate_hz</em></span><span class="paramdefsep"> = </span><span class="paramdefval">400</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00062">62</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   62</span>    <span class="keyword">def </span>__init__(self, sample_rate_hz=400):</div>
+<div class="line"><span class="lineno">   63</span>        <span class="comment">#self.FreqS = sample_rate_hz</span></div>
+<div class="line"><span class="lineno">   64</span>        <span class="comment">#self.BUFFER_SIZE = self.FreqS * 4        # 4 s de señal</span></div>
+<div class="line"><span class="lineno">   65</span>        <span class="comment">#self.MA4_SIZE = sample_rate_hz/10    # 100 ms de media móvil</span></div>
+<div class="line"><span class="lineno">   66</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">   67</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones miembro</h2>
+<a id="a979f16a7abecf08acbaa28dabf88f32d" name="a979f16a7abecf08acbaa28dabf88f32d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a979f16a7abecf08acbaa28dabf88f32d">&#9670;&#160;</a></span>_find_peaks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.oxygen.OxygenSaturation._find_peaks </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>min_height</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>min_distance</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>max_num</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Encuentra hasta <em>max_num</em> picos en <em>x</em> mayores que <em>min_height</em> y separados al menos <em>min_distance</em>. </p>
+<dl class="section return"><dt>Devuelve</dt><dd>Lista de índices de picos."""</dd></dl>
+<pre class="fragment">Encuentra hasta max_num picos en x mayores que min_height y separados al menos min_distance.
+Devuelve lista de índices.
+</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00215">215</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  215</span>    <span class="keyword">def </span>_find_peaks(self, x, min_height, min_distance, max_num):</div>
+<div class="line"><span class="lineno">  216</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  217</span><span class="stringliteral">        Encuentra hasta max_num picos en x mayores que min_height y separados al menos min_distance.</span></div>
+<div class="line"><span class="lineno">  218</span><span class="stringliteral">        Devuelve lista de índices.</span></div>
+<div class="line"><span class="lineno">  219</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  220</span>        peaks = []</div>
+<div class="line"><span class="lineno">  221</span>        i = 1</div>
+<div class="line"><span class="lineno">  222</span>        n_size = len(x)</div>
+<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">while</span> i &lt; n_size - 1:</div>
+<div class="line"><span class="lineno">  224</span>            <span class="keywordflow">if</span> x[i] &gt; min_height <span class="keywordflow">and</span> x[i] &gt; x[i-1]:</div>
+<div class="line"><span class="lineno">  225</span>                width = 1</div>
+<div class="line"><span class="lineno">  226</span>                <span class="comment"># Evitar desbordamiento en el bucle while</span></div>
+<div class="line"><span class="lineno">  227</span>                <span class="keywordflow">while</span> (i + width &lt; n_size) <span class="keywordflow">and</span> (x[i] == x[i+width]):</div>
+<div class="line"><span class="lineno">  228</span>                    width += 1</div>
+<div class="line"><span class="lineno">  229</span>                <span class="keywordflow">if</span> (i + width &lt; n_size) <span class="keywordflow">and</span> (x[i] &gt; x[i+width]):</div>
+<div class="line"><span class="lineno">  230</span>                    peaks.append(i)</div>
+<div class="line"><span class="lineno">  231</span>                    i += width + 1</div>
+<div class="line"><span class="lineno">  232</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  233</span>                    i += width</div>
+<div class="line"><span class="lineno">  234</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  235</span>                i += 1</div>
+<div class="line"><span class="lineno">  236</span>        <span class="comment"># Elimina picos demasiado cercanos</span></div>
+<div class="line"><span class="lineno">  237</span>        peaks = self._remove_close_peaks(x, peaks, min_distance)</div>
+<div class="line"><span class="lineno">  238</span>        <span class="comment"># Limita a max_num</span></div>
+<div class="line"><span class="lineno">  239</span>        peaks = peaks[:max_num]</div>
+<div class="line"><span class="lineno">  240</span>        <span class="keywordflow">return</span> peaks</div>
+<div class="line"><span class="lineno">  241</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aca45141dbf5251e359a3b2fb33f4ebc8" name="aca45141dbf5251e359a3b2fb33f4ebc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca45141dbf5251e359a3b2fb33f4ebc8">&#9670;&#160;</a></span>_max()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.oxygen.OxygenSaturation._max </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>arr</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00071">71</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   71</span>    <span class="keyword">def </span>_max(self, arr):</div>
+<div class="line"><span class="lineno">   72</span>        max_val = arr[0]</div>
+<div class="line"><span class="lineno">   73</span>        max_idx = 0</div>
+<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">for</span> i, v <span class="keywordflow">in</span> enumerate(arr):</div>
+<div class="line"><span class="lineno">   75</span>            <span class="keywordflow">if</span> v &gt; max_val:</div>
+<div class="line"><span class="lineno">   76</span>                max_val = v</div>
+<div class="line"><span class="lineno">   77</span>                max_idx = i</div>
+<div class="line"><span class="lineno">   78</span>        <span class="keywordflow">return</span> max_val, max_idx</div>
+<div class="line"><span class="lineno">   79</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af2d30aa19ddb4109b0800702e9dea59c" name="af2d30aa19ddb4109b0800702e9dea59c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2d30aa19ddb4109b0800702e9dea59c">&#9670;&#160;</a></span>_mean()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.oxygen.OxygenSaturation._mean </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>arr</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00068">68</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>    <span class="keyword">def </span>_mean(self, arr):</div>
+<div class="line"><span class="lineno">   69</span>        <span class="keywordflow">return</span> sum(arr) / len(arr) <span class="keywordflow">if</span> arr <span class="keywordflow">else</span> 0</div>
+<div class="line"><span class="lineno">   70</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a23ed06cfcd7825abfe53c55e85a92d04" name="a23ed06cfcd7825abfe53c55e85a92d04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23ed06cfcd7825abfe53c55e85a92d04">&#9670;&#160;</a></span>_remove_close_peaks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.oxygen.OxygenSaturation._remove_close_peaks </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>peaks</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>min_distance</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Encuentra hasta <em>max_num</em> picos en <em>x</em> mayores que <em>min_height</em> y separados al menos <em>min_distance</em>. </p>
+<dl class="section return"><dt>Devuelve</dt><dd>Lista de índices de picos."""</dd></dl>
+<pre class="fragment">Ordena los picos por altura descendente y elimina los que estén demasiado cerca.
+</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00247">247</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  247</span>    <span class="keyword">def </span>_remove_close_peaks(self, x, peaks, min_distance):</div>
+<div class="line"><span class="lineno">  248</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  249</span><span class="stringliteral">        Ordena los picos por altura descendente y elimina los que estén demasiado cerca.</span></div>
+<div class="line"><span class="lineno">  250</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  251</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> peaks:</div>
+<div class="line"><span class="lineno">  252</span>            <span class="keywordflow">return</span> []</div>
+<div class="line"><span class="lineno">  253</span>        <span class="comment"># Ordena por valor descendente</span></div>
+<div class="line"><span class="lineno">  254</span>        peaks_sorted = sorted(peaks, key=<span class="keyword">lambda</span> idx: x[idx], reverse=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  255</span>        filtered = []</div>
+<div class="line"><span class="lineno">  256</span>        <span class="keywordflow">for</span> idx <span class="keywordflow">in</span> peaks_sorted:</div>
+<div class="line"><span class="lineno">  257</span>            <span class="keywordflow">if</span> all(abs(idx - fidx) &gt; min_distance <span class="keywordflow">for</span> fidx <span class="keywordflow">in</span> filtered):</div>
+<div class="line"><span class="lineno">  258</span>                filtered.append(idx)</div>
+<div class="line"><span class="lineno">  259</span>        <span class="comment"># Devuelve ordenados por posición ascendente</span></div>
+<div class="line"><span class="lineno">  260</span>        <span class="keywordflow">return</span> sorted(filtered)</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7d961aee1e2399eafa79e9d92d88d50b" name="a7d961aee1e2399eafa79e9d92d88d50b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d961aee1e2399eafa79e9d92d88d50b">&#9670;&#160;</a></span>calculate_spo2_and_heart_rate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.oxygen.OxygenSaturation.calculate_spo2_and_heart_rate </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ir_buffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>red_buffer</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calcula SpO2 (%) y ritmo cardiaco (bpm). </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ir_buffer</td><td>Lista con muestras de infrarrojo (enteros sin signo). </td></tr>
+    <tr><td class="paramname">red_buffer</td><td>Lista con muestras de rojo. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>Tupla <code>(spo2, spo2_valid, heart_rate, hr_valid)</code> donde:<ul>
+<li><em>spo2</em> Saturación estimada 0‑100 %. <code>-999</code> si inválido.</li>
+<li><em>spo2_valid</em> <code>1</code> si la estimación es válida, <code>0</code> si no.</li>
+<li><em>heart_rate</em> Frecuencia cardiaca (bpm). <code>-999</code> si inválida.</li>
+<li><em>hr_valid</em> <code>1</code> si <em>heart_rate</em> es válida.</li>
+</ul>
+</dd></dl>
+<pre class="fragment">Algoritmo completo descrito en AN‑6595; vermente implementa:
+1. Eliminación de componente DC e inversión de señal IR.
+2. Suavizado con media móvil de 4 puntos.
+3. Cálculo de umbral dinámico y detección de valles.
+4. Estimación de bpm mediante intervalos entre valles.
+5. Estimación de SpO2 usando relación AC/DC y la tabla ``SPO2_TABLE``.
+Consulte el código para detalle de cálculos intermedios.</pre> 
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00092">92</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   92</span>    <span class="keyword">def </span>calculate_spo2_and_heart_rate(self, ir_buffer, red_buffer):</div>
+<div class="line"><span class="lineno">   93</span>        <span class="stringliteral">&quot;&quot;&quot;Algoritmo completo descrito en AN‑6595; vermente implementa:</span></div>
+<div class="line"><span class="lineno">   94</span><span class="stringliteral">        1. Eliminación de componente DC e inversión de señal IR.</span></div>
+<div class="line"><span class="lineno">   95</span><span class="stringliteral">        2. Suavizado con media móvil de 4 puntos.</span></div>
+<div class="line"><span class="lineno">   96</span><span class="stringliteral">        3. Cálculo de umbral dinámico y detección de valles.</span></div>
+<div class="line"><span class="lineno">   97</span><span class="stringliteral">        4. Estimación de bpm mediante intervalos entre valles.</span></div>
+<div class="line"><span class="lineno">   98</span><span class="stringliteral">        5. Estimación de SpO2 usando relación AC/DC y la tabla ``SPO2_TABLE``.</span></div>
+<div class="line"><span class="lineno">   99</span><span class="stringliteral">        Consulte el código para detalle de cálculos intermedios.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  100</span>        <span class="comment"># Verificar que los buffers tengan la misma longitud y sean válidos</span></div>
+<div class="line"><span class="lineno">  101</span>        <span class="keywordflow">if</span> len(ir_buffer) != len(red_buffer) <span class="keywordflow">or</span> len(ir_buffer) &lt; 4:</div>
+<div class="line"><span class="lineno">  102</span>            <span class="keywordflow">return</span> -999, 0, -999, 0</div>
+<div class="line"><span class="lineno">  103</span> </div>
+<div class="line"><span class="lineno">  104</span>        <span class="comment"># 1. Calcula la media DC y elimina DC de IR, invierte señal</span></div>
+<div class="line"><span class="lineno">  105</span>        un_ir_mean = self._mean(ir_buffer)</div>
+<div class="line"><span class="lineno">  106</span>        an_x = [-1 * (val - un_ir_mean) <span class="keywordflow">for</span> val <span class="keywordflow">in</span> ir_buffer]</div>
+<div class="line"><span class="lineno">  107</span> </div>
+<div class="line"><span class="lineno">  108</span>        <span class="comment"># 2. Media móvil de 4 puntos - CORRECCIÓN: usar longitud real del buffer</span></div>
+<div class="line"><span class="lineno">  109</span>        an_x_ma4 = an_x.copy()</div>
+<div class="line"><span class="lineno">  110</span>        buffer_length = len(an_x)</div>
+<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(buffer_length - self.MA4_SIZE):</div>
+<div class="line"><span class="lineno">  112</span>            an_x_ma4[k] = sum(an_x[k:k+self.MA4_SIZE]) // self.MA4_SIZE</div>
+<div class="line"><span class="lineno">  113</span> </div>
+<div class="line"><span class="lineno">  114</span>        <span class="comment"># 3. Calcula umbral</span></div>
+<div class="line"><span class="lineno">  115</span>        n_th1 = int(self._mean(an_x_ma4[:buffer_length - self.MA4_SIZE]))</div>
+<div class="line"><span class="lineno">  116</span>        n_th1 = max(30, min(n_th1, 60))</div>
+<div class="line"><span class="lineno">  117</span> </div>
+<div class="line"><span class="lineno">  118</span>        <span class="comment"># 4. Detección de valles (picos en señal invertida)</span></div>
+<div class="line"><span class="lineno">  119</span>        <span class="comment"># mínimo 160 ms entre valles  ⇒ muestras = FreqS * 0.16</span></div>
+<div class="line"><span class="lineno">  120</span>        <span class="comment">#min_gap = self.FreqS // 6          # ≈0.166 s</span></div>
+<div class="line"><span class="lineno">  121</span>        <span class="comment">#an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)</span></div>
+<div class="line"><span class="lineno">  122</span>        an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, 4, 15)</div>
+<div class="line"><span class="lineno">  123</span> </div>
+<div class="line"><span class="lineno">  124</span>        n_npks = len(an_ir_valley_locs)</div>
+<div class="line"><span class="lineno">  125</span> </div>
+<div class="line"><span class="lineno">  126</span>        <span class="comment"># 5. Heart rate</span></div>
+<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">if</span> n_npks &gt;= 2:</div>
+<div class="line"><span class="lineno">  128</span>            n_peak_interval_sum = 0</div>
+<div class="line"><span class="lineno">  129</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(1, n_npks):</div>
+<div class="line"><span class="lineno">  130</span>                <span class="comment"># Asegurar que los índices estén dentro del rango</span></div>
+<div class="line"><span class="lineno">  131</span>                <span class="keywordflow">if</span> (an_ir_valley_locs[k] &lt; buffer_length <span class="keywordflow">and</span> </div>
+<div class="line"><span class="lineno">  132</span>                    an_ir_valley_locs[k-1] &lt; buffer_length):</div>
+<div class="line"><span class="lineno">  133</span>                    n_peak_interval_sum += (an_ir_valley_locs[k] - an_ir_valley_locs[k-1])</div>
+<div class="line"><span class="lineno">  134</span>            <span class="keywordflow">if</span> n_peak_interval_sum &gt; 0:</div>
+<div class="line"><span class="lineno">  135</span>                n_peak_interval_sum //= (n_npks - 1)</div>
+<div class="line"><span class="lineno">  136</span>                heart_rate = int((self.FreqS * 60) / n_peak_interval_sum)</div>
+<div class="line"><span class="lineno">  137</span>                hr_valid = 1</div>
+<div class="line"><span class="lineno">  138</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  139</span>                heart_rate = -999</div>
+<div class="line"><span class="lineno">  140</span>                hr_valid = 0</div>
+<div class="line"><span class="lineno">  141</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  142</span>            heart_rate = -999</div>
+<div class="line"><span class="lineno">  143</span>            hr_valid = 0</div>
+<div class="line"><span class="lineno">  144</span> </div>
+<div class="line"><span class="lineno">  145</span>        <span class="comment"># 6. Carga valores originales para SpO2</span></div>
+<div class="line"><span class="lineno">  146</span>        an_x = list(ir_buffer)</div>
+<div class="line"><span class="lineno">  147</span>        an_y = list(red_buffer)</div>
+<div class="line"><span class="lineno">  148</span> </div>
+<div class="line"><span class="lineno">  149</span>        <span class="comment"># 7. Calcula SpO2 usando los valles detectados</span></div>
+<div class="line"><span class="lineno">  150</span>        n_exact_ir_valley_locs_count = n_npks</div>
+<div class="line"><span class="lineno">  151</span>        an_ratio = []</div>
+<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_exact_ir_valley_locs_count - 1):</div>
+<div class="line"><span class="lineno">  153</span>            loc_k = an_ir_valley_locs[k]</div>
+<div class="line"><span class="lineno">  154</span>            loc_k1 = an_ir_valley_locs[k+1]</div>
+<div class="line"><span class="lineno">  155</span>            </div>
+<div class="line"><span class="lineno">  156</span>            <span class="comment"># Verificar que los índices estén dentro del rango CORRECCIÓN PRINCIPAL</span></div>
+<div class="line"><span class="lineno">  157</span>            <span class="keywordflow">if</span> (loc_k &lt; buffer_length <span class="keywordflow">and</span> loc_k1 &lt; buffer_length <span class="keywordflow">and</span> </div>
+<div class="line"><span class="lineno">  158</span>                loc_k1 &gt; loc_k <span class="keywordflow">and</span> loc_k1 - loc_k &gt; 3):</div>
+<div class="line"><span class="lineno">  159</span>                </div>
+<div class="line"><span class="lineno">  160</span>                <span class="comment"># Busca máximos DC en el segmento</span></div>
+<div class="line"><span class="lineno">  161</span>                segment_end = min(loc_k1 + 1, buffer_length)</div>
+<div class="line"><span class="lineno">  162</span>                segment_x = an_x[loc_k:segment_end]</div>
+<div class="line"><span class="lineno">  163</span>                segment_y = an_y[loc_k:segment_end]</div>
+<div class="line"><span class="lineno">  164</span>                </div>
+<div class="line"><span class="lineno">  165</span>                <span class="keywordflow">if</span> segment_x <span class="keywordflow">and</span> segment_y:</div>
+<div class="line"><span class="lineno">  166</span>                    n_x_dc_max, n_x_dc_max_idx_rel = self._max(segment_x)</div>
+<div class="line"><span class="lineno">  167</span>                    n_x_dc_max_idx = loc_k + n_x_dc_max_idx_rel</div>
+<div class="line"><span class="lineno">  168</span>                    n_y_dc_max, n_y_dc_max_idx_rel = self._max(segment_y)</div>
+<div class="line"><span class="lineno">  169</span>                    n_y_dc_max_idx = loc_k + n_y_dc_max_idx_rel</div>
+<div class="line"><span class="lineno">  170</span> </div>
+<div class="line"><span class="lineno">  171</span>                    <span class="comment"># AC componente IR y RED</span></div>
+<div class="line"><span class="lineno">  172</span>                    <span class="comment"># Cálculo seguro con verificación de índices</span></div>
+<div class="line"><span class="lineno">  173</span>                    <span class="keywordflow">if</span> loc_k1 &lt; buffer_length:</div>
+<div class="line"><span class="lineno">  174</span>                        n_y_ac = (an_y[loc_k1] - an_y[loc_k]) * (n_y_dc_max_idx - loc_k)</div>
+<div class="line"><span class="lineno">  175</span>                        n_y_ac = an_y[loc_k] + n_y_ac // (loc_k1 - loc_k)</div>
+<div class="line"><span class="lineno">  176</span>                        n_y_ac = an_y[n_y_dc_max_idx] - n_y_ac</div>
+<div class="line"><span class="lineno">  177</span> </div>
+<div class="line"><span class="lineno">  178</span>                        n_x_ac = (an_x[loc_k1] - an_x[loc_k]) * (n_x_dc_max_idx - loc_k)</div>
+<div class="line"><span class="lineno">  179</span>                        n_x_ac = an_x[loc_k] + n_x_ac // (loc_k1 - loc_k)</div>
+<div class="line"><span class="lineno">  180</span>                        n_x_ac = an_x[n_x_dc_max_idx] - n_x_ac</div>
+<div class="line"><span class="lineno">  181</span> </div>
+<div class="line"><span class="lineno">  182</span>                        n_nume = (n_y_ac * n_x_dc_max) &gt;&gt; 7</div>
+<div class="line"><span class="lineno">  183</span>                        n_denom = (n_x_ac * n_y_dc_max) &gt;&gt; 7</div>
+<div class="line"><span class="lineno">  184</span>                        </div>
+<div class="line"><span class="lineno">  185</span>                        <span class="keywordflow">if</span> n_denom &gt; 0 <span class="keywordflow">and</span> n_nume != 0:</div>
+<div class="line"><span class="lineno">  186</span>                            ratio = (n_nume * 100) // n_denom</div>
+<div class="line"><span class="lineno">  187</span>                            an_ratio.append(ratio)</div>
+<div class="line"><span class="lineno">  188</span> </div>
+<div class="line"><span class="lineno">  189</span>        <span class="comment"># 8. Mediana de ratios</span></div>
+<div class="line"><span class="lineno">  190</span>        <span class="keywordflow">if</span> len(an_ratio) &gt; 0:</div>
+<div class="line"><span class="lineno">  191</span>            an_ratio.sort()</div>
+<div class="line"><span class="lineno">  192</span>            n_middle_idx = len(an_ratio) // 2</div>
+<div class="line"><span class="lineno">  193</span>            <span class="keywordflow">if</span> n_middle_idx &gt; 0:</div>
+<div class="line"><span class="lineno">  194</span>                n_ratio_average = (an_ratio[n_middle_idx-1] + an_ratio[n_middle_idx]) // 2</div>
+<div class="line"><span class="lineno">  195</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  196</span>                n_ratio_average = an_ratio[n_middle_idx]</div>
+<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  198</span>            n_ratio_average = -1</div>
+<div class="line"><span class="lineno">  199</span> </div>
+<div class="line"><span class="lineno">  200</span>        <span class="comment"># 9. Busca SpO2 en tabla</span></div>
+<div class="line"><span class="lineno">  201</span>        <span class="keywordflow">if</span> 2 &lt; n_ratio_average &lt; len(self.SPO2_TABLE):</div>
+<div class="line"><span class="lineno">  202</span>            spo2 = self.SPO2_TABLE[int(n_ratio_average)]</div>
+<div class="line"><span class="lineno">  203</span>            spo2_valid = 1</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  205</span>            spo2 = -999</div>
+<div class="line"><span class="lineno">  206</span>            spo2_valid = 0</div>
+<div class="line"><span class="lineno">  207</span> </div>
+<div class="line"><span class="lineno">  208</span>        <span class="keywordflow">return</span> spo2, spo2_valid, heart_rate, hr_valid</div>
+<div class="line"><span class="lineno">  209</span>    </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Documentación de datos miembro</h2>
+<a id="a70ba28187e2f167da4593eb50c331ba7" name="a70ba28187e2f167da4593eb50c331ba7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70ba28187e2f167da4593eb50c331ba7">&#9670;&#160;</a></span>BUFFER_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.oxygen.OxygenSaturation.BUFFER_SIZE = <a class="el" href="#adc72c25ebbcef195da4193b0894d2ac4">FreqS</a> * 4</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00046">46</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+
+</div>
+</div>
+<a id="adc72c25ebbcef195da4193b0894d2ac4" name="adc72c25ebbcef195da4193b0894d2ac4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc72c25ebbcef195da4193b0894d2ac4">&#9670;&#160;</a></span>FreqS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.oxygen.OxygenSaturation.FreqS = 25</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00045">45</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+
+</div>
+</div>
+<a id="ac7acf0b38387aabace6f11cb2a054806" name="ac7acf0b38387aabace6f11cb2a054806"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7acf0b38387aabace6f11cb2a054806">&#9670;&#160;</a></span>MA4_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.oxygen.OxygenSaturation.MA4_SIZE = 4</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00047">47</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+
+</div>
+</div>
+<a id="aaa66ffdaa6939ae9c7f1dd9f3b9e83d0" name="aaa66ffdaa6939ae9c7f1dd9f3b9e83d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa66ffdaa6939ae9c7f1dd9f3b9e83d0">&#9670;&#160;</a></span>SPO2_TABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.oxygen.OxygenSaturation.SPO2_TABLE</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">=  [</div>
+<div class="line">        95, 95, 95, 96, 96, 96, 97, 97, 97, 97, 97, 98, 98, 98, 98, 98, 99, 99, 99, 99,</div>
+<div class="line">        99, 99, 99, 99, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,</div>
+<div class="line">        100, 100, 100, 100, 99, 99, 99, 99, 99, 99, 99, 99, 98, 98, 98, 98, 98, 98, 97, 97,</div>
+<div class="line">        97, 97, 96, 96, 96, 96, 95, 95, 95, 94, 94, 94, 93, 93, 93, 92, 92, 92, 91, 91,</div>
+<div class="line">        90, 90, 89, 89, 89, 88, 88, 87, 87, 86, 86, 85, 85, 84, 84, 83, 82, 82, 81, 81,</div>
+<div class="line">        80, 80, 79, 78, 78, 77, 76, 76, 75, 74, 74, 73, 72, 72, 71, 70, 69, 69, 68, 67,</div>
+<div class="line">        66, 66, 65, 64, 63, 62, 62, 61, 60, 59, 58, 57, 56, 56, 55, 54, 53, 52, 51, 50,</div>
+<div class="line">        49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 31, 30, 29,</div>
+<div class="line">        28, 27, 26, 25, 23, 22, 21, 20, 19, 17, 16, 15, 14, 12, 11, 10, 9, 7, 6, 5,</div>
+<div class="line">        3, 2, 1</div>
+<div class="line">    ]</div>
+</div><!-- fragment -->
+<p class="definition">Definición en la línea <a class="el" href="../../d9/d3a/oxygen_8py_source.html#l00049">49</a> del archivo <a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a>.</p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<li>lib/max30102/<a class="el" href="../../d9/d3a/oxygen_8py_source.html">oxygen.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../d2/d5b/namespacemax30102.html">max30102</a></li><li class="navelem"><a class="el" href="../../d1/dd1/namespacemax30102_1_1oxygen.html">oxygen</a></li><li class="navelem"><a class="el" href="../../d7/d9e/classmax30102_1_1oxygen_1_1_oxygen_saturation.html">OxygenSaturation</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

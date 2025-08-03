@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Saúde Remota</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d3/dcc/md__r_e_a_d_m_e.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Saúde Remota</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md38"></a></p>
+<h1><a class="anchor" id="autotoc_md39"></a>
+🩺 Descripción general</h1>
+<p>Este proyecto implementa un sistema de <b>monitorización remota de salud</b> utilizando un microcontrolador <b>ESP32-WROOM-32</b> y un sensor óptico <b>Max30102</b>. Está desarrollado en <b>Python con MicroPython</b>, lo que permite una ejecución eficiente sobre el hardware embebido.</p>
+<p>El sistema permite leer datos de:</p><ul>
+<li>Frecuencia cardíaca (BPM)</li>
+<li>Saturación de oxígeno (SpO₂)</li>
+<li>Temperatura del sensor (opcional)</li>
+</ul>
+<p>Y los muestra a través de una pantalla OLED I2C (SSD1306), si está conectada.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md41"></a>
+📁 Estructura del proyecto</h1>
+<div class="fragment"><div class="line">.</div>
+<div class="line">├── lib/</div>
+<div class="line">│   ├── max30102/</div>
+<div class="line">│   │   ├── __init__.py             # Inicialización del paquete del sensor</div>
+<div class="line">│   │   ├── heartrate.py            # Cálculo de BPM a partir de las muestras del sensor</div>
+<div class="line">│   │   ├── max30102.py             # Controlador del sensor MAX30102</div>
+<div class="line">│   │   ├── oxygen.py               # Estimación de SpO₂ (saturación de oxígeno)</div>
+<div class="line">│   │   ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la libreria</div>
+<div class="line">│   │   └── LICENSE                 # Archivo de licencia de la libreria</div>
+<div class="line">│   │── ssd1306/</div>
+<div class="line">│   │   ├── __init__.py             # Inicialización del paquete OLED</div>
+<div class="line">│   │   │── ssd1306.py              # Controlador de la pantalla OLED (basado en MicroPython)</div>
+<div class="line">│   │   ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la libreria</div>
+<div class="line">│   │   └── LICENSE                 # Archivo de licencia de la libreria</div>
+<div class="line">│   └── firebase_data_send/</div>
+<div class="line">│       ├── __init__.py             # Inicialización del paquete de envio de datos a Firebase</div>
+<div class="line">│       └── FirebaseRawSender.py    # Clase con funciones para enviar los datos a Firebase</div>
+<div class="line">│       ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la libreria</div>
+<div class="line">│       └── LICENSE                 # Archivo de licencia de la libreria</div>
+<div class="line">├── main.py                         # Script principal de ejecución en el ESP32</div>
+<div class="line">├── upload.sh                       # Script Bash para subir automáticamente los archivos al ESP32</div>
+<div class="line">├── LICENSE                         # Archivo de licencia del proyecto</div>
+<div class="line">├── README.md                       # Este archivo</div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="autotoc_md43"></a>
+🧾 Requisitos</h1>
+<h2><a class="anchor" id="autotoc_md44"></a>
+Hardware</h2>
+<ul>
+<li>Microcontrolador <b>ESP32-WROOM-32</b></li>
+<li>Sensor <b>Max30102</b> (conexión I2C)</li>
+<li>Pantalla <b>OLED SSD1306</b> (opcional)</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md45"></a>
+Software en PC</h2>
+<ul>
+<li>Python ≥ 3.9</li>
+<li>Herramientas de comunicación:<ul>
+<li><a href="https://github.com/adafruit/ampy"><code>adafruit-ampy</code></a></li>
+</ul>
+</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md47"></a>
+⚙️ Preparación del entorno de desarrollo</h1>
+<ol type="1">
+<li>Crea un entorno virtual: <div class="fragment"><div class="line">python3.9 -m venv venv</div>
+<div class="line">source venv/bin/activate</div>
+</div><!-- fragment --></li>
+<li>Instala las dependencias: <div class="fragment"><div class="line">pip install adafruit-ampy</div>
+</div><!-- fragment --></li>
+</ol>
+<hr  />
+ <h1><a class="anchor" id="autotoc_md49"></a>
+🛜 Configuracion de tu red wifi</h1>
+<p>En el archivo <a class="el" href="../../dc/dba/main_8py.html" title="Programa principal para medir frecuencia cardíaca, SpO2 y temperatura con un MAX30102.">main.py</a> añade las credenciales de tu red para conectarte a la red wifi disponible</p>
+<h1><a class="anchor" id="autotoc_md50"></a>
+🚀 Instalación en el ESP32</h1>
+<ol type="1">
+<li>Asegúrate de tener MicroPython flasheado en el ESP32.</li>
+<li>Conecta el ESP32 por USB y localiza el puerto serial: <div class="fragment"><div class="line">ls /dev/tty.usb*</div>
+</div><!-- fragment --></li>
+<li>Ejecuta el script de carga: <div class="fragment"><div class="line">./upload.sh /dev/tty.usbserial-0001</div>
+</div><!-- fragment --></li>
+</ol>
+<p>Este script:</p><ul>
+<li>Verifica si <code>ampy</code> está instalado.</li>
+<li>Elimina los archivos del ESP32 (excepto <code>boot.py</code> si existe).</li>
+<li>Sube todos los ficheros <code>.py</code> y crea la estructura de carpetas.</li>
+<li>Lista el contenido final cargado.</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md52"></a>
+🔧 Conexion con el sensor</h1>
+<div class="fragment"><div class="line">ESP32                     MAX30102</div>
+<div class="line">┌───────────┐             ┌─────────┐</div>
+<div class="line">│ 3V3  ───────────────► VCC │</div>
+<div class="line">│ GND  ───────────────► GND │</div>
+<div class="line">│ GPIO21 (SDA) ───────► SDA │</div>
+<div class="line">│ GPIO22 (SCL) ───────► SCL │</div>
+<div class="line">└───────────┘             └─────────┘</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md53"></a>
+🩺 Uso</h1>
+<ol type="1">
+<li>Conecta el sensor Max30102 a los pines I2C del ESP32 (por defecto SDA: GPIO21, SCL: GPIO22).</li>
+<li>(Opcional) Conecta la pantalla OLED SSD1306 al mismo bus I2C.</li>
+<li>Abre un monitor serial: <div class="fragment"><div class="line">screen /dev/tty.usbserial-0001 115200</div>
+</div><!-- fragment --></li>
+<li>Ejecuta el programa principal: <div class="fragment"><div class="line">ampy --port /dev/tty.usbserial-0001 run main.py</div>
+</div><!-- fragment --></li>
+<li>Verás la lectura en tiempo real de: <div class="fragment"><div class="line">🌡️ Temperatura: 36.25 °C</div>
+<div class="line">❤️ BPM: 75</div>
+<div class="line">🩸 SpO₂: 98%</div>
+</div><!-- fragment --></li>
+</ol>
+<hr  />
+<h1><a class="anchor" id="autotoc_md55"></a>
+📌 Notas</h1>
+<ul>
+<li>Asegúrate de tener bien conectados los cables I2C y alimentación.</li>
+<li>El sensor puede tardar unos segundos en estabilizarse.</li>
+<li>Si no aparecen datos, revisa la orientación del dedo o el nivel de señal IR. </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

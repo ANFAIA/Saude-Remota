@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Archivo de código fuente lib/firebase_data_send/FirebaseRawSender.py</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d6/dbb/_firebase_raw_sender_8py_source.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">FirebaseRawSender.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d6/dbb/_firebase_raw_sender_8py.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="../../dd/d9e/namespacefirebase__data__send_1_1_firebase_raw_sender.html">    1</a></span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">import</span> ujson <span class="keyword">as</span> json</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">import</span> urequests <span class="keyword">as</span> requests</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">import</span> time</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">import</span> network</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="foldopen" id="foldopen00022" data-start="" data-end="">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html">   22</a></span><span class="keyword">class </span><a class="code hl_class" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html">FirebaseRawSender</a>:</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral">    @class FirebaseRawSender</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="stringliteral">    @brief Cliente para enviar datos a Firebase Realtime Database con soporte de conexión Wi-Fi.</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="foldopen" id="foldopen00028" data-start="" data-end="">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a1b56e9383da427231093a4bb51b07d7a">   28</a></span>    <span class="keyword">def </span><a class="code hl_function" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a1b56e9383da427231093a4bb51b07d7a">__init__</a>(self, email, password, api_key, database_url, wifi_config=None):</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="stringliteral">        @brief Constructor de la clase.</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="stringliteral">        @param email Correo electrónico del usuario Firebase.</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="stringliteral">        @param password Contraseña del usuario.</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="stringliteral">        @param api_key Clave de API del proyecto Firebase.</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="stringliteral">        @param database_url URL de la base de datos Realtime (sin `/` al final).</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="stringliteral">        @param wifi_config Diccionario opcional con {&#39;ssid&#39;: str, &#39;password&#39;: str}</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordflow">if</span> wifi_config:</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            self.<a class="code hl_function" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a660edf3768c8e936b4e11591f03a35e7">_connect_wifi</a>(wifi_config.get(<span class="stringliteral">&#39;ssid&#39;</span>), wifi_config.get(<span class="stringliteral">&#39;password&#39;</span>))</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a5485a8c2784a70e29d78a9f70779e3f9">   41</a></span>        self.<a class="code hl_variable" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a5485a8c2784a70e29d78a9f70779e3f9">email</a> = email</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a728f83e07a62244ed6062d59862c8cd2">   42</a></span>        self.<a class="code hl_variable" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a728f83e07a62244ed6062d59862c8cd2">password</a> = password</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a52d770cdd44dff14a68f400fa846921d">   43</a></span>        self.<a class="code hl_variable" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a52d770cdd44dff14a68f400fa846921d">api_key</a> = api_key</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a5cd0670909eb7ae34c9ca645f8e46d73">   44</a></span>        self.<a class="code hl_variable" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a5cd0670909eb7ae34c9ca645f8e46d73">database_url</a> = database_url.rstrip(<span class="stringliteral">&quot;/&quot;</span>)</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a53b72718b50e00febaa31995fbf5e748">   45</a></span>        self.<a class="code hl_variable" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a53b72718b50e00febaa31995fbf5e748">id_token</a> = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        self.<a class="code hl_function" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a556a190f424ed3e5b4ea71eecc4461e3">_authenticate</a>()</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+</div>
+<div class="foldopen" id="foldopen00048" data-start="" data-end="">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a660edf3768c8e936b4e11591f03a35e7">   48</a></span>    <span class="keyword">def </span><a class="code hl_function" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a660edf3768c8e936b4e11591f03a35e7">_connect_wifi</a>(self, ssid, password):</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="stringliteral">        @brief Conecta el ESP32 a la red Wi-Fi especificada.</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="stringliteral">        @param ssid Nombre de la red Wi-Fi.</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="stringliteral">        @param password Contraseña de la red Wi-Fi.</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        sta = network.WLAN(network.STA_IF)</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> sta.isconnected():</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            print(f<span class="stringliteral">&quot;Conectando a Wi-Fi &#39;{ssid}&#39;...&quot;</span>)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            sta.active(<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            sta.connect(ssid, password)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(10):  <span class="comment"># Esperar hasta 10 segundos</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                <span class="keywordflow">if</span> sta.isconnected():</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                    <span class="keywordflow">break</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                time.sleep(1)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">if</span> sta.isconnected():</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            print(<span class="stringliteral">&quot;✔ Wi-Fi conectado. IP:&quot;</span>, sta.ifconfig()[0])</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;No se pudo conectar al Wi-Fi.&quot;</span>)</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+</div>
+<div class="foldopen" id="foldopen00070" data-start="" data-end="">
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#af7004499a7283fd3eda48aba350cc80b">   70</a></span>    <span class="keyword">def </span><a class="code hl_function" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#af7004499a7283fd3eda48aba350cc80b">send_measurement</a>(self, temperature, bmp, spo2, modelPreccision=0.0, riskScore=0.0, timestamp_ms=None):</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="stringliteral">        @brief Envía una medición estándar a Firebase.</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="stringliteral">        @param temperature Temperatura corporal (°C).</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="stringliteral">        @param bmp Pulsaciones por minuto.</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="stringliteral">        @param spo2 Saturación de oxígeno (%).</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="stringliteral">        @param modelPreccision Precisión del modelo (0.0 a 1.0).</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="stringliteral">        @param riskScore Riesgo calculado por el modelo (0.0 a 1.0).</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="stringliteral">        @param timestamp_ms Marca temporal en milisegundos desde época Unix.</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        payload = {</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="stringliteral">&quot;temperature&quot;</span>: round(float(temperature), 2),</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="stringliteral">&quot;bmp&quot;</span>: round(float(bmp), 2),</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="stringliteral">&quot;spo2&quot;</span>: round(float(spo2), 2),</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <span class="stringliteral">&quot;modelPreccision&quot;</span>: round(float(modelPreccision), 2),</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <span class="stringliteral">&quot;riskScore&quot;</span>: round(float(riskScore), 2),</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        }</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        self.<a class="code hl_function" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a2cd4464be0046a59248a4592841e76d0">send_raw</a>(payload, timestamp_ms)</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+</div>
+<div class="foldopen" id="foldopen00090" data-start="" data-end="">
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a2cd4464be0046a59248a4592841e76d0">   90</a></span>    <span class="keyword">def </span><a class="code hl_function" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a2cd4464be0046a59248a4592841e76d0">send_raw</a>(self, data, timestamp_ms=None):</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="stringliteral">        @brief Envía un diccionario arbitrario a la base de datos Firebase.</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="stringliteral">        @param data Diccionario de datos a almacenar.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="stringliteral">        @param timestamp_ms Marca de tiempo personalizada en milisegundos.</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="stringliteral">                         Si no se proporciona, se usa el tiempo actual.</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">if</span> timestamp_ms <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            timestamp_ms = int(time.time() * 1000)</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.<a class="code hl_variable" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a53b72718b50e00febaa31995fbf5e748">id_token</a>:</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            self.<a class="code hl_function" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a556a190f424ed3e5b4ea71eecc4461e3">_authenticate</a>()</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        url = f<span class="stringliteral">&quot;{self.database_url}/raw/{timestamp_ms}.json?auth={self.id_token}&quot;</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            res = requests.put(url, data=json.dumps(data))</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            res.close()</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            print(<span class="stringliteral">&quot;Error al escribir en Firebase:&quot;</span>, e)</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+</div>
+<div class="foldopen" id="foldopen00112" data-start="" data-end="">
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a556a190f424ed3e5b4ea71eecc4461e3">  112</a></span>    <span class="keyword">def </span><a class="code hl_function" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a556a190f424ed3e5b4ea71eecc4461e3">_authenticate</a>(self):</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="stringliteral">        @brief Realiza la autenticación con Firebase Auth y obtiene el ID token.</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        url = f<span class="stringliteral">&quot;https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={self.api_key}&quot;</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        payload = {</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="stringliteral">&quot;email&quot;</span>: self.<a class="code hl_variable" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a5485a8c2784a70e29d78a9f70779e3f9">email</a>,</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <span class="stringliteral">&quot;password&quot;</span>: self.<a class="code hl_variable" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a728f83e07a62244ed6062d59862c8cd2">password</a>,</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            <span class="stringliteral">&quot;returnSecureToken&quot;</span>: <span class="keyword">True</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        }</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>            headers = {<span class="stringliteral">&#39;Content-Type&#39;</span>: <span class="stringliteral">&#39;application/json&#39;</span>}</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            res = requests.post(url, data=json.dumps(payload), headers=headers)</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            <span class="keywordflow">if</span> res.status_code == 200:</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                self.<a class="code hl_variable" href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a53b72718b50e00febaa31995fbf5e748">id_token</a> = res.json().get(<span class="stringliteral">&quot;idToken&quot;</span>)</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                print(<span class="stringliteral">&quot;✔ Autenticado con Firebase.&quot;</span>)</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                print(<span class="stringliteral">&quot;Error de autenticación:&quot;</span>, res.text)</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            res.close()</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            print(<span class="stringliteral">&quot;Excepción al autenticar:&quot;</span>, e)</div>
+</div>
+</div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html">firebase_data_send.FirebaseRawSender.FirebaseRawSender</a></div><div class="ttdef"><b>Definition</b> <a href="#l00022">FirebaseRawSender.py:22</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_a1b56e9383da427231093a4bb51b07d7a"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a1b56e9383da427231093a4bb51b07d7a">firebase_data_send.FirebaseRawSender.FirebaseRawSender.__init__</a></div><div class="ttdeci">__init__(self, email, password, api_key, database_url, wifi_config=None)</div><div class="ttdef"><b>Definition</b> <a href="#l00028">FirebaseRawSender.py:28</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_a2cd4464be0046a59248a4592841e76d0"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a2cd4464be0046a59248a4592841e76d0">firebase_data_send.FirebaseRawSender.FirebaseRawSender.send_raw</a></div><div class="ttdeci">send_raw(self, data, timestamp_ms=None)</div><div class="ttdef"><b>Definition</b> <a href="#l00090">FirebaseRawSender.py:90</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_a52d770cdd44dff14a68f400fa846921d"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a52d770cdd44dff14a68f400fa846921d">firebase_data_send.FirebaseRawSender.FirebaseRawSender.api_key</a></div><div class="ttdeci">api_key</div><div class="ttdef"><b>Definition</b> <a href="#l00043">FirebaseRawSender.py:43</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_a53b72718b50e00febaa31995fbf5e748"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a53b72718b50e00febaa31995fbf5e748">firebase_data_send.FirebaseRawSender.FirebaseRawSender.id_token</a></div><div class="ttdeci">id_token</div><div class="ttdef"><b>Definition</b> <a href="#l00045">FirebaseRawSender.py:45</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_a5485a8c2784a70e29d78a9f70779e3f9"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a5485a8c2784a70e29d78a9f70779e3f9">firebase_data_send.FirebaseRawSender.FirebaseRawSender.email</a></div><div class="ttdeci">email</div><div class="ttdef"><b>Definition</b> <a href="#l00041">FirebaseRawSender.py:41</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_a556a190f424ed3e5b4ea71eecc4461e3"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a556a190f424ed3e5b4ea71eecc4461e3">firebase_data_send.FirebaseRawSender.FirebaseRawSender._authenticate</a></div><div class="ttdeci">_authenticate(self)</div><div class="ttdef"><b>Definition</b> <a href="#l00112">FirebaseRawSender.py:112</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_a5cd0670909eb7ae34c9ca645f8e46d73"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a5cd0670909eb7ae34c9ca645f8e46d73">firebase_data_send.FirebaseRawSender.FirebaseRawSender.database_url</a></div><div class="ttdeci">database_url</div><div class="ttdef"><b>Definition</b> <a href="#l00044">FirebaseRawSender.py:44</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_a660edf3768c8e936b4e11591f03a35e7"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a660edf3768c8e936b4e11591f03a35e7">firebase_data_send.FirebaseRawSender.FirebaseRawSender._connect_wifi</a></div><div class="ttdeci">_connect_wifi(self, ssid, password)</div><div class="ttdef"><b>Definition</b> <a href="#l00048">FirebaseRawSender.py:48</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_a728f83e07a62244ed6062d59862c8cd2"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#a728f83e07a62244ed6062d59862c8cd2">firebase_data_send.FirebaseRawSender.FirebaseRawSender.password</a></div><div class="ttdeci">password</div><div class="ttdef"><b>Definition</b> <a href="#l00042">FirebaseRawSender.py:42</a></div></div>
+<div class="ttc" id="aclassfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender_html_af7004499a7283fd3eda48aba350cc80b"><div class="ttname"><a href="../../dd/df1/classfirebase__data__send_1_1_firebase_raw_sender_1_1_firebase_raw_sender.html#af7004499a7283fd3eda48aba350cc80b">firebase_data_send.FirebaseRawSender.FirebaseRawSender.send_measurement</a></div><div class="ttdeci">send_measurement(self, temperature, bmp, spo2, modelPreccision=0.0, riskScore=0.0, timestamp_ms=None)</div><div class="ttdef"><b>Definition</b> <a href="#l00070">FirebaseRawSender.py:70</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="../../dir_5fc98195108bfa9815cc81124deba809.html">firebase_data_send</a></li><li class="navelem"><a class="el" href="../../d6/dbb/_firebase_raw_sender_8py.html">FirebaseRawSender.py</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

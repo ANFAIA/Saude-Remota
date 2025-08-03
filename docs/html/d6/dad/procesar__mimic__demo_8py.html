@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Referencia del archivo lib/predictionModel/modeloIA/procesar_mimic_demo.py</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d6/dad/procesar__mimic__demo_8py.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#namespaces">Espacios de nombres</a> &#124;
+<a href="#func-members">Funciones</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo procesar_mimic_demo.py</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><a href="../../d6/dad/procesar__mimic__demo_8py_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espacios de nombres</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html">procesar_mimic_demo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:aa3a2dd0097d0b6edb7ba9f1a9140fa8d" id="r_aa3a2dd0097d0b6edb7ba9f1a9140fa8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#aa3a2dd0097d0b6edb7ba9f1a9140fa8d">procesar_mimic_demo.clasifica_riesgo</a> (row)</td></tr>
+<tr class="separator:aa3a2dd0097d0b6edb7ba9f1a9140fa8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3af9aabd4d65afd254cfee7155d76b3f" id="r_a3af9aabd4d65afd254cfee7155d76b3f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a3af9aabd4d65afd254cfee7155d76b3f">procesar_mimic_demo.items</a> = pd.read_csv(&quot;lib/predictionModel/dataset/mimic-iv-clinical-database-demo-2.2/icu/d_items.csv.gz&quot;, compression=&quot;gzip&quot;)</td></tr>
+<tr class="separator:a3af9aabd4d65afd254cfee7155d76b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad65502229e9d31ff55ed2f2fc86f54c" id="r_aad65502229e9d31ff55ed2f2fc86f54c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#aad65502229e9d31ff55ed2f2fc86f54c">procesar_mimic_demo.chartevents</a> = pd.read_csv(&quot;lib/predictionModel/dataset/mimic-iv-clinical-database-demo-2.2/icu/chartevents.csv.gz&quot;, compression=&quot;gzip&quot;)</td></tr>
+<tr class="separator:aad65502229e9d31ff55ed2f2fc86f54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a326496c7c9ae1cf0e5bc5b74692c8eca" id="r_a326496c7c9ae1cf0e5bc5b74692c8eca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a326496c7c9ae1cf0e5bc5b74692c8eca">procesar_mimic_demo.patients</a> = pd.read_csv(&quot;lib/predictionModel/dataset/mimic-iv-clinical-database-demo-2.2/hosp/patients.csv.gz&quot;, compression=&quot;gzip&quot;)</td></tr>
+<tr class="separator:a326496c7c9ae1cf0e5bc5b74692c8eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f1cc0ec0a74f4decfcec4eb959336b5" id="r_a0f1cc0ec0a74f4decfcec4eb959336b5"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a0f1cc0ec0a74f4decfcec4eb959336b5">procesar_mimic_demo.ITEMID_MAP</a></td></tr>
+<tr class="separator:a0f1cc0ec0a74f4decfcec4eb959336b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0df676033268260aa0527630eb8ced25" id="r_a0df676033268260aa0527630eb8ced25"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a0df676033268260aa0527630eb8ced25">procesar_mimic_demo.vitals</a> = <a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#aad65502229e9d31ff55ed2f2fc86f54c">chartevents</a>[<a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#aad65502229e9d31ff55ed2f2fc86f54c">chartevents</a>['itemid'].isin(ITEMID_MAP.keys())].copy()</td></tr>
+<tr class="separator:a0df676033268260aa0527630eb8ced25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a2055ac0586777d1876c916eb50da47" id="r_a2a2055ac0586777d1876c916eb50da47"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a2a2055ac0586777d1876c916eb50da47">procesar_mimic_demo.temp_idx</a> = (<a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a0df676033268260aa0527630eb8ced25">vitals</a>['itemid'] == 223761) &amp; (<a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a0df676033268260aa0527630eb8ced25">vitals</a>['valuenum'] &gt; 80)</td></tr>
+<tr class="separator:a2a2055ac0586777d1876c916eb50da47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f0e4bd7e54c11b09938e16c3dba8ef6" id="r_a9f0e4bd7e54c11b09938e16c3dba8ef6"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a9f0e4bd7e54c11b09938e16c3dba8ef6">procesar_mimic_demo.pivot</a></td></tr>
+<tr class="separator:a9f0e4bd7e54c11b09938e16c3dba8ef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5d6ad28d2214615d0af7001b41ff0ba" id="r_aa5d6ad28d2214615d0af7001b41ff0ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#aa5d6ad28d2214615d0af7001b41ff0ba">procesar_mimic_demo.clasifica_riesgo</a></td></tr>
+<tr class="separator:aa5d6ad28d2214615d0af7001b41ff0ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2b8f93149380730a6e64782e28a136e" id="r_af2b8f93149380730a6e64782e28a136e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d7b/namespaceprocesar__mimic__demo.html#af2b8f93149380730a6e64782e28a136e">procesar_mimic_demo.axis</a></td></tr>
+<tr class="separator:af2b8f93149380730a6e64782e28a136e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="../../dir_9976e9a11bba37f798035b1e1c066801.html">predictionModel</a></li><li class="navelem"><a class="el" href="../../dir_2208201784643e6242e7651e98a6ae3e.html">modeloIA</a></li><li class="navelem"><a class="el" href="../../d6/dad/procesar__mimic__demo_8py.html">procesar_mimic_demo.py</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+:root {
+    --background-light: #f8fdfe;
+    --background-medium-dark: #5a6c6d;
+    --background-medium-light: #c5e5e8;
+    --background-dark: #1b1b1c;
+    --main: #41999c;
+    --linear-gradient-main-1: #27847b;
+    --linear-gradient-main-2: #00afb5;
+    --linear-gradient-light-1: #bbddd6;
+    --linear-gradient-light-2: #d1ebf0;
+
+
+    --error: #9b0027;
+    --success: #009b62;
+    --warning: #dcac00;
+}

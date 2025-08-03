@@ -1,0 +1,2278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Referencia de la clase max30102.max30102.MAX30105</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Métodos públicos</a> &#124;
+<a href="#pub-attribs">Atributos públicos</a> &#124;
+<a href="../../dd/d62/classmax30102_1_1max30102_1_1_m_a_x30105-members.html">Lista de todos los miembros</a>  </div>
+  <div class="headertitle"><div class="title">Referencia de la clase max30102.max30102.MAX30105</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Clase que permite el manejo del sensor óptico <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>.  
+ <a href="#details">Más...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:a1e0e57dc4f2b58de3745ab51811e0fd0" id="r_a1e0e57dc4f2b58de3745ab51811e0fd0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e0e57dc4f2b58de3745ab51811e0fd0">__init__</a> (self, <a class="el" href="#aed1baf9cc7074a4e16038e041cd446dc">i2c</a>, <a class="el" href="#aa9fdbbba159c13bfd520a68323f848b3">addr</a>=<a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#ab5f560ea5f64e0cc69ce2d1747112fee">MAX30105_ADDRESS</a>)</td></tr>
+<tr class="memdesc:a1e0e57dc4f2b58de3745ab51811e0fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor de la clase <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>.  <br /></td></tr>
+<tr class="separator:a1e0e57dc4f2b58de3745ab51811e0fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3e903a5321d1618384571769afec4fc" id="r_ad3e903a5321d1618384571769afec4fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3e903a5321d1618384571769afec4fc">begin</a> (self)</td></tr>
+<tr class="memdesc:ad3e903a5321d1618384571769afec4fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa el sensor <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>.  <br /></td></tr>
+<tr class="separator:ad3e903a5321d1618384571769afec4fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b280585984dc94b0242795425cd2726" id="r_a4b280585984dc94b0242795425cd2726"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b280585984dc94b0242795425cd2726">readRegister</a> (self, reg)</td></tr>
+<tr class="memdesc:a4b280585984dc94b0242795425cd2726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lee un byte desde un registro del sensor.  <br /></td></tr>
+<tr class="separator:a4b280585984dc94b0242795425cd2726"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80dd30f1d57153bb50a98f2b6d26dcd6" id="r_a80dd30f1d57153bb50a98f2b6d26dcd6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a80dd30f1d57153bb50a98f2b6d26dcd6">writeRegister</a> (self, reg, val)</td></tr>
+<tr class="memdesc:a80dd30f1d57153bb50a98f2b6d26dcd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escribe un byte en un registro del sensor.  <br /></td></tr>
+<tr class="separator:a80dd30f1d57153bb50a98f2b6d26dcd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca42c0172fb46bafe1e4982e9ce6f1f5" id="r_aca42c0172fb46bafe1e4982e9ce6f1f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca42c0172fb46bafe1e4982e9ce6f1f5">bitMask</a> (self, reg, mask, thing)</td></tr>
+<tr class="memdesc:aca42c0172fb46bafe1e4982e9ce6f1f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifica determinados bits de un registro usando una máscara.  <br /></td></tr>
+<tr class="separator:aca42c0172fb46bafe1e4982e9ce6f1f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02cd709487e479d6318bc82c97bd85a8" id="r_a02cd709487e479d6318bc82c97bd85a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02cd709487e479d6318bc82c97bd85a8">getINT1</a> (self)</td></tr>
+<tr class="memdesc:a02cd709487e479d6318bc82c97bd85a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lee el valor actual del registro de estado de interrupciones INT1.  <br /></td></tr>
+<tr class="separator:a02cd709487e479d6318bc82c97bd85a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf9c9d7bc6f4341583a6295d6e755139" id="r_adf9c9d7bc6f4341583a6295d6e755139"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf9c9d7bc6f4341583a6295d6e755139">getINT2</a> (self)</td></tr>
+<tr class="memdesc:adf9c9d7bc6f4341583a6295d6e755139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lee el valor actual del registro de estado de interrupciones INT2.  <br /></td></tr>
+<tr class="separator:adf9c9d7bc6f4341583a6295d6e755139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac966ca726faf52d1acf61de8011eec12" id="r_ac966ca726faf52d1acf61de8011eec12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac966ca726faf52d1acf61de8011eec12">enableAFULL</a> (self)</td></tr>
+<tr class="memdesc:ac966ca726faf52d1acf61de8011eec12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita la interrupción cuando el FIFO está lleno (Almost Full).  <br /></td></tr>
+<tr class="separator:ac966ca726faf52d1acf61de8011eec12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a8ee67664442dd6b9609a7d91f404d4" id="r_a1a8ee67664442dd6b9609a7d91f404d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a8ee67664442dd6b9609a7d91f404d4">disableAFULL</a> (self)</td></tr>
+<tr class="memdesc:a1a8ee67664442dd6b9609a7d91f404d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deshabilita la interrupción por FIFO lleno.  <br /></td></tr>
+<tr class="separator:a1a8ee67664442dd6b9609a7d91f404d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf54fe6e3b3f0b61a100c67c3057e45f" id="r_abf54fe6e3b3f0b61a100c67c3057e45f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf54fe6e3b3f0b61a100c67c3057e45f">enableDATARDY</a> (self)</td></tr>
+<tr class="memdesc:abf54fe6e3b3f0b61a100c67c3057e45f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita la interrupción por disponibilidad de nuevos datos.  <br /></td></tr>
+<tr class="separator:abf54fe6e3b3f0b61a100c67c3057e45f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88819e6097f9848e85953f3c8f0b1091" id="r_a88819e6097f9848e85953f3c8f0b1091"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88819e6097f9848e85953f3c8f0b1091">disableDATARDY</a> (self)</td></tr>
+<tr class="memdesc:a88819e6097f9848e85953f3c8f0b1091"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deshabilita la interrupción por disponibilidad de nuevos datos.  <br /></td></tr>
+<tr class="separator:a88819e6097f9848e85953f3c8f0b1091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d34695f4634644150f5657de1c2da6f" id="r_a4d34695f4634644150f5657de1c2da6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d34695f4634644150f5657de1c2da6f">enableALCOVF</a> (self)</td></tr>
+<tr class="memdesc:a4d34695f4634644150f5657de1c2da6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita la interrupción por desbordamiento de ALC (auto range).  <br /></td></tr>
+<tr class="separator:a4d34695f4634644150f5657de1c2da6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2af92f61de9f81fedd865edac764e8f" id="r_ae2af92f61de9f81fedd865edac764e8f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2af92f61de9f81fedd865edac764e8f">disableALCOVF</a> (self)</td></tr>
+<tr class="memdesc:ae2af92f61de9f81fedd865edac764e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deshabilita la interrupción por desbordamiento de ALC.  <br /></td></tr>
+<tr class="separator:ae2af92f61de9f81fedd865edac764e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d9ad784eb7a85143d583d1efbd6ca46" id="r_a6d9ad784eb7a85143d583d1efbd6ca46"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d9ad784eb7a85143d583d1efbd6ca46">enablePROXINT</a> (self)</td></tr>
+<tr class="memdesc:a6d9ad784eb7a85143d583d1efbd6ca46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita la interrupción por proximidad.  <br /></td></tr>
+<tr class="separator:a6d9ad784eb7a85143d583d1efbd6ca46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f97680baba22ed034ef1c6e01278aeb" id="r_a3f97680baba22ed034ef1c6e01278aeb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f97680baba22ed034ef1c6e01278aeb">disablePROXINT</a> (self)</td></tr>
+<tr class="memdesc:a3f97680baba22ed034ef1c6e01278aeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deshabilita la interrupción por proximidad.  <br /></td></tr>
+<tr class="separator:a3f97680baba22ed034ef1c6e01278aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6924747b3ad49ebaf45615216d489aa" id="r_af6924747b3ad49ebaf45615216d489aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af6924747b3ad49ebaf45615216d489aa">enableDIETEMPRDY</a> (self)</td></tr>
+<tr class="memdesc:af6924747b3ad49ebaf45615216d489aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita la interrupción cuando la temperatura interna está lista.  <br /></td></tr>
+<tr class="separator:af6924747b3ad49ebaf45615216d489aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22c646540c2000c090fe2ca1707cb004" id="r_a22c646540c2000c090fe2ca1707cb004"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22c646540c2000c090fe2ca1707cb004">disableDIETEMPRDY</a> (self)</td></tr>
+<tr class="memdesc:a22c646540c2000c090fe2ca1707cb004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deshabilita la interrupción por temperatura interna lista.  <br /></td></tr>
+<tr class="separator:a22c646540c2000c090fe2ca1707cb004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8354e586ceb9fefeb546ace71253cf45" id="r_a8354e586ceb9fefeb546ace71253cf45"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8354e586ceb9fefeb546ace71253cf45">softReset</a> (self)</td></tr>
+<tr class="memdesc:a8354e586ceb9fefeb546ace71253cf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Realiza un reinicio por software (<em>soft‑reset</em>) del <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>.  <br /></td></tr>
+<tr class="separator:a8354e586ceb9fefeb546ace71253cf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6edc55e72ffe6e24978338328cba27a4" id="r_a6edc55e72ffe6e24978338328cba27a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6edc55e72ffe6e24978338328cba27a4">shutDown</a> (self)</td></tr>
+<tr class="memdesc:a6edc55e72ffe6e24978338328cba27a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Coloca al sensor en modo de <em>shutdown</em> de bajo consumo.  <br /></td></tr>
+<tr class="separator:a6edc55e72ffe6e24978338328cba27a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4450905b60fff5def1a6a00b4817cf4a" id="r_a4450905b60fff5def1a6a00b4817cf4a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4450905b60fff5def1a6a00b4817cf4a">wakeUp</a> (self)</td></tr>
+<tr class="memdesc:a4450905b60fff5def1a6a00b4817cf4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reactiva el sensor saliendo del modo <em>shutdown</em>.  <br /></td></tr>
+<tr class="separator:a4450905b60fff5def1a6a00b4817cf4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c667bc5eeb8fcb668671d6ae2552d57" id="r_a4c667bc5eeb8fcb668671d6ae2552d57"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c667bc5eeb8fcb668671d6ae2552d57">setLEDMode</a> (self, m)</td></tr>
+<tr class="memdesc:a4c667bc5eeb8fcb668671d6ae2552d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selecciona cuántos LEDs se activan por ciclo de conversión.  <br /></td></tr>
+<tr class="separator:a4c667bc5eeb8fcb668671d6ae2552d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9a6f335afa222d7c8e609d627e832f6" id="r_ac9a6f335afa222d7c8e609d627e832f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9a6f335afa222d7c8e609d627e832f6">setADCRange</a> (self, r)</td></tr>
+<tr class="memdesc:ac9a6f335afa222d7c8e609d627e832f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ajusta el rango de corriente del ADC interno.  <br /></td></tr>
+<tr class="separator:ac9a6f335afa222d7c8e609d627e832f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d2101d270fdcceede75972a74e93df0" id="r_a2d2101d270fdcceede75972a74e93df0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d2101d270fdcceede75972a74e93df0">setSampleRate</a> (self, s)</td></tr>
+<tr class="memdesc:a2d2101d270fdcceede75972a74e93df0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configura la frecuencia de muestreo (Hz).  <br /></td></tr>
+<tr class="separator:a2d2101d270fdcceede75972a74e93df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fca6e114dc71274fbd44f2628d6f03e" id="r_a4fca6e114dc71274fbd44f2628d6f03e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fca6e114dc71274fbd44f2628d6f03e">setPulseWidth</a> (self, pw)</td></tr>
+<tr class="memdesc:a4fca6e114dc71274fbd44f2628d6f03e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establece la duración del pulso (anchura) en µs.  <br /></td></tr>
+<tr class="separator:a4fca6e114dc71274fbd44f2628d6f03e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a891cc377f701a3c608ba9df4497a098d" id="r_a891cc377f701a3c608ba9df4497a098d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a891cc377f701a3c608ba9df4497a098d">setPulseAmplitudeRed</a> (self, v)</td></tr>
+<tr class="memdesc:a891cc377f701a3c608ba9df4497a098d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define la amplitud (corriente) del LED rojo.  <br /></td></tr>
+<tr class="separator:a891cc377f701a3c608ba9df4497a098d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fdf2fe79151839e1900f5c9ee409ff9" id="r_a7fdf2fe79151839e1900f5c9ee409ff9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fdf2fe79151839e1900f5c9ee409ff9">setPulseAmplitudeIR</a> (self, v)</td></tr>
+<tr class="memdesc:a7fdf2fe79151839e1900f5c9ee409ff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define la amplitud del LED infrarrojo.  <br /></td></tr>
+<tr class="separator:a7fdf2fe79151839e1900f5c9ee409ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab80843efb337b8d12f423dfd83059417" id="r_ab80843efb337b8d12f423dfd83059417"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab80843efb337b8d12f423dfd83059417">setPulseAmplitudeGreen</a> (self, v)</td></tr>
+<tr class="memdesc:ab80843efb337b8d12f423dfd83059417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define la amplitud del LED verde.  <br /></td></tr>
+<tr class="separator:ab80843efb337b8d12f423dfd83059417"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae31cbca9d43f0a70f818874177044f72" id="r_ae31cbca9d43f0a70f818874177044f72"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae31cbca9d43f0a70f818874177044f72">setPulseAmplitudeProximity</a> (self, v)</td></tr>
+<tr class="memdesc:ae31cbca9d43f0a70f818874177044f72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define la amplitud del LED dedicado a la función de proximidad.  <br /></td></tr>
+<tr class="separator:ae31cbca9d43f0a70f818874177044f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36cde58a66c80e77792764df845fa5ae" id="r_a36cde58a66c80e77792764df845fa5ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36cde58a66c80e77792764df845fa5ae">setProximityThreshold</a> (self, v)</td></tr>
+<tr class="memdesc:a36cde58a66c80e77792764df845fa5ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Establece el umbral que genera la interrupción de proximidad.  <br /></td></tr>
+<tr class="separator:a36cde58a66c80e77792764df845fa5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e0699289e71dbbfe1c9f8398c2fe4bd" id="r_a0e0699289e71dbbfe1c9f8398c2fe4bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e0699289e71dbbfe1c9f8398c2fe4bd">enableSlot</a> (self, num, device)</td></tr>
+<tr class="memdesc:a0e0699289e71dbbfe1c9f8398c2fe4bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asigna un dispositivo (LED) a uno de los cuatro <em>slots</em> de disparo.  <br /></td></tr>
+<tr class="separator:a0e0699289e71dbbfe1c9f8398c2fe4bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a60e63464e89992609ed96b8dac9ddf" id="r_a1a60e63464e89992609ed96b8dac9ddf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a60e63464e89992609ed96b8dac9ddf">disableSlots</a> (self)</td></tr>
+<tr class="memdesc:a1a60e63464e89992609ed96b8dac9ddf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desactiva todos los slots (ningún LED se dispara).  <br /></td></tr>
+<tr class="separator:a1a60e63464e89992609ed96b8dac9ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f644fc601a68048a4fb03b2496063f0" id="r_a9f644fc601a68048a4fb03b2496063f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f644fc601a68048a4fb03b2496063f0">setFIFOAverage</a> (self, n)</td></tr>
+<tr class="memdesc:a9f644fc601a68048a4fb03b2496063f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define cuántas muestras se promedian en el FIFO.  <br /></td></tr>
+<tr class="separator:a9f644fc601a68048a4fb03b2496063f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e0be9080599d92fdb668bd72ed99f1f" id="r_a5e0be9080599d92fdb668bd72ed99f1f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e0be9080599d92fdb668bd72ed99f1f">clearFIFO</a> (self)</td></tr>
+<tr class="memdesc:a5e0be9080599d92fdb668bd72ed99f1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinicia los punteros de lectura/escritura y el contador overflow.  <br /></td></tr>
+<tr class="separator:a5e0be9080599d92fdb668bd72ed99f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53bd0f6e8517abcc312b576c7e6bf55f" id="r_a53bd0f6e8517abcc312b576c7e6bf55f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53bd0f6e8517abcc312b576c7e6bf55f">enableFIFORollover</a> (self)</td></tr>
+<tr class="memdesc:a53bd0f6e8517abcc312b576c7e6bf55f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activa el <em>roll‑over</em>: el puntero de escritura vuelve a 0 al llenarse.  <br /></td></tr>
+<tr class="separator:a53bd0f6e8517abcc312b576c7e6bf55f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a112263115a7f0a31d0fedb47f2e43a93" id="r_a112263115a7f0a31d0fedb47f2e43a93"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a112263115a7f0a31d0fedb47f2e43a93">disableFIFORollover</a> (self)</td></tr>
+<tr class="memdesc:a112263115a7f0a31d0fedb47f2e43a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desactiva el roll‑over del FIFO.  <br /></td></tr>
+<tr class="separator:a112263115a7f0a31d0fedb47f2e43a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ea2aea6e32c0ba88391d46b21ca3cb1" id="r_a3ea2aea6e32c0ba88391d46b21ca3cb1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ea2aea6e32c0ba88391d46b21ca3cb1">setFIFOAlmostFull</a> (self, n)</td></tr>
+<tr class="memdesc:a3ea2aea6e32c0ba88391d46b21ca3cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Programa el nivel <em>casi‑lleno</em> que dispara la interrupción A_FULL.  <br /></td></tr>
+<tr class="separator:a3ea2aea6e32c0ba88391d46b21ca3cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a3b98e580c5fcf6cf1f06733ac76d96" id="r_a0a3b98e580c5fcf6cf1f06733ac76d96"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a3b98e580c5fcf6cf1f06733ac76d96">getWritePointer</a> (self)</td></tr>
+<tr class="memdesc:a0a3b98e580c5fcf6cf1f06733ac76d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve el puntero de escritura del FIFO.  <br /></td></tr>
+<tr class="separator:a0a3b98e580c5fcf6cf1f06733ac76d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a999383d7581626b6d9c5f2f334371fa6" id="r_a999383d7581626b6d9c5f2f334371fa6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a999383d7581626b6d9c5f2f334371fa6">getReadPointer</a> (self)</td></tr>
+<tr class="memdesc:a999383d7581626b6d9c5f2f334371fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve el puntero de lectura del FIFO.  <br /></td></tr>
+<tr class="separator:a999383d7581626b6d9c5f2f334371fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90f04527a90280484155e78917ee334f" id="r_a90f04527a90280484155e78917ee334f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90f04527a90280484155e78917ee334f">readTemperature</a> (self)</td></tr>
+<tr class="memdesc:a90f04527a90280484155e78917ee334f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lee la temperatura interna del chip (°C).  <br /></td></tr>
+<tr class="separator:a90f04527a90280484155e78917ee334f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad54f7161a4f5e6ca968a07a99623d3a3" id="r_ad54f7161a4f5e6ca968a07a99623d3a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad54f7161a4f5e6ca968a07a99623d3a3">readTemperatureF</a> (self)</td></tr>
+<tr class="memdesc:ad54f7161a4f5e6ca968a07a99623d3a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lee la temperatura interna en grados Fahrenheit.  <br /></td></tr>
+<tr class="separator:ad54f7161a4f5e6ca968a07a99623d3a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a598ecb920c071f3ec468be6dff545120" id="r_a598ecb920c071f3ec468be6dff545120"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a598ecb920c071f3ec468be6dff545120">readPartID</a> (self)</td></tr>
+<tr class="memdesc:a598ecb920c071f3ec468be6dff545120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve el identificador de parte (0x15 para <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>).  <br /></td></tr>
+<tr class="separator:a598ecb920c071f3ec468be6dff545120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc0b93c34fb2440b6cd9c893793c15d1" id="r_afc0b93c34fb2440b6cd9c893793c15d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc0b93c34fb2440b6cd9c893793c15d1">readRevisionID</a> (self)</td></tr>
+<tr class="memdesc:afc0b93c34fb2440b6cd9c893793c15d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Almacena en <code>self.revisionID</code> la revisión de silicio.  <br /></td></tr>
+<tr class="separator:afc0b93c34fb2440b6cd9c893793c15d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24558d23ea61d78b08f3f873dcb13cfe" id="r_a24558d23ea61d78b08f3f873dcb13cfe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24558d23ea61d78b08f3f873dcb13cfe">getRevisionID</a> (self)</td></tr>
+<tr class="memdesc:a24558d23ea61d78b08f3f873dcb13cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve la revisión de silicio previamente leída.  <br /></td></tr>
+<tr class="separator:a24558d23ea61d78b08f3f873dcb13cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2708c4f948aeedbdb55e1e4e378fea2" id="r_aa2708c4f948aeedbdb55e1e4e378fea2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2708c4f948aeedbdb55e1e4e378fea2">setup</a> (self, powerLevel, sampleAverage, ledMode, sampleRate, pulseWidth, adcRange)</td></tr>
+<tr class="memdesc:aa2708c4f948aeedbdb55e1e4e378fea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configura el sensor con un conjunto coherente de parámetros.  <br /></td></tr>
+<tr class="separator:aa2708c4f948aeedbdb55e1e4e378fea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb5d3b85ab61773d3d4a1c4642936fc7" id="r_abb5d3b85ab61773d3d4a1c4642936fc7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb5d3b85ab61773d3d4a1c4642936fc7">available</a> (self)</td></tr>
+<tr class="memdesc:abb5d3b85ab61773d3d4a1c4642936fc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica cuántas muestras sin leer hay en el buffer FIFO local.  <br /></td></tr>
+<tr class="separator:abb5d3b85ab61773d3d4a1c4642936fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaf05716be08d6c8ee612fae2b92b2ab" id="r_aaaf05716be08d6c8ee612fae2b92b2ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaaf05716be08d6c8ee612fae2b92b2ab">getRed</a> (self)</td></tr>
+<tr class="memdesc:aaaf05716be08d6c8ee612fae2b92b2ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene la última muestra del LED rojo.  <br /></td></tr>
+<tr class="separator:aaaf05716be08d6c8ee612fae2b92b2ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b6097ba5442556ed148dff73cec060d" id="r_a3b6097ba5442556ed148dff73cec060d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b6097ba5442556ed148dff73cec060d">getIR</a> (self)</td></tr>
+<tr class="memdesc:a3b6097ba5442556ed148dff73cec060d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene la última muestra del LED infrarrojo.  <br /></td></tr>
+<tr class="separator:a3b6097ba5442556ed148dff73cec060d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e6483ca303531abcd667f42acfe07ab" id="r_a2e6483ca303531abcd667f42acfe07ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e6483ca303531abcd667f42acfe07ab">getGreen</a> (self)</td></tr>
+<tr class="memdesc:a2e6483ca303531abcd667f42acfe07ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene la última muestra del LED verde.  <br /></td></tr>
+<tr class="separator:a2e6483ca303531abcd667f42acfe07ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2c5946441ed7d221f1c80c0381cf0ff" id="r_ad2c5946441ed7d221f1c80c0381cf0ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2c5946441ed7d221f1c80c0381cf0ff">getFIFORed</a> (self)</td></tr>
+<tr class="memdesc:ad2c5946441ed7d221f1c80c0381cf0ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve la muestra del LED rojo apuntada por <code>self.tail</code>.  <br /></td></tr>
+<tr class="separator:ad2c5946441ed7d221f1c80c0381cf0ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f1889bc08430e927fa24d27a0985f22" id="r_a7f1889bc08430e927fa24d27a0985f22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f1889bc08430e927fa24d27a0985f22">getFIFOIR</a> (self)</td></tr>
+<tr class="memdesc:a7f1889bc08430e927fa24d27a0985f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve la muestra IR en la posición <code>tail</code>.  <br /></td></tr>
+<tr class="separator:a7f1889bc08430e927fa24d27a0985f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e04178aca5dce772ff13c66b1e3a4df" id="r_a8e04178aca5dce772ff13c66b1e3a4df"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e04178aca5dce772ff13c66b1e3a4df">getFIFOGreen</a> (self)</td></tr>
+<tr class="memdesc:a8e04178aca5dce772ff13c66b1e3a4df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Devuelve la muestra verde en la posición <code>tail</code>.  <br /></td></tr>
+<tr class="separator:a8e04178aca5dce772ff13c66b1e3a4df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bd003fd3683d77a9f53a427743fc73d" id="r_a9bd003fd3683d77a9f53a427743fc73d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9bd003fd3683d77a9f53a427743fc73d">nextSample</a> (self)</td></tr>
+<tr class="memdesc:a9bd003fd3683d77a9f53a427743fc73d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Avanza el puntero de lectura para procesar la siguiente muestra.  <br /></td></tr>
+<tr class="separator:a9bd003fd3683d77a9f53a427743fc73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e80c4623b81b7f080b247fcbf0084a6" id="r_a0e80c4623b81b7f080b247fcbf0084a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e80c4623b81b7f080b247fcbf0084a6">check</a> (self)</td></tr>
+<tr class="memdesc:a0e80c4623b81b7f080b247fcbf0084a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vacía el FIFO del sensor y llena los buffers locales con los datos más recientes disponibles.  <br /></td></tr>
+<tr class="separator:a0e80c4623b81b7f080b247fcbf0084a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1b6c9caefaae3b046d1218d66895734" id="r_ad1b6c9caefaae3b046d1218d66895734"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1b6c9caefaae3b046d1218d66895734">safeCheck</a> (self, max_ms)</td></tr>
+<tr class="memdesc:ad1b6c9caefaae3b046d1218d66895734"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variante segura de :pyfunc:<code>check</code> con tiempo máximo de espera.  <br /></td></tr>
+<tr class="separator:ad1b6c9caefaae3b046d1218d66895734"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Atributos públicos</h2></td></tr>
+<tr class="memitem:aed1baf9cc7074a4e16038e041cd446dc" id="r_aed1baf9cc7074a4e16038e041cd446dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed1baf9cc7074a4e16038e041cd446dc">i2c</a> = i2c</td></tr>
+<tr class="separator:aed1baf9cc7074a4e16038e041cd446dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9fdbbba159c13bfd520a68323f848b3" id="r_aa9fdbbba159c13bfd520a68323f848b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9fdbbba159c13bfd520a68323f848b3">addr</a> = addr</td></tr>
+<tr class="separator:aa9fdbbba159c13bfd520a68323f848b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64db843dc3bf02c0891720a8943daa1d" id="r_a64db843dc3bf02c0891720a8943daa1d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64db843dc3bf02c0891720a8943daa1d">revisionID</a> = 0</td></tr>
+<tr class="separator:a64db843dc3bf02c0891720a8943daa1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cdcdde89f9a3120b80d0ee1ae265940" id="r_a1cdcdde89f9a3120b80d0ee1ae265940"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1cdcdde89f9a3120b80d0ee1ae265940">activeLEDs</a> = 0</td></tr>
+<tr class="separator:a1cdcdde89f9a3120b80d0ee1ae265940"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b2460b04b39a7427f8a51f6bb4daffe" id="r_a3b2460b04b39a7427f8a51f6bb4daffe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b2460b04b39a7427f8a51f6bb4daffe">head</a> = 0</td></tr>
+<tr class="separator:a3b2460b04b39a7427f8a51f6bb4daffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdf8d07b3892d87ce5a435a6a555fa73" id="r_afdf8d07b3892d87ce5a435a6a555fa73"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdf8d07b3892d87ce5a435a6a555fa73">tail</a> = 0</td></tr>
+<tr class="separator:afdf8d07b3892d87ce5a435a6a555fa73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad56cff0d327ebe4230a30e85eadc8c2d" id="r_ad56cff0d327ebe4230a30e85eadc8c2d"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad56cff0d327ebe4230a30e85eadc8c2d">red</a> = [0]*<a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#a283819a785c5952aec403ce889637258">STORAGE_SIZE</a></td></tr>
+<tr class="separator:ad56cff0d327ebe4230a30e85eadc8c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a69dd42570d41f02fa7d1218acebea9" id="r_a7a69dd42570d41f02fa7d1218acebea9"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a69dd42570d41f02fa7d1218acebea9">IR</a> = [0]*<a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#a283819a785c5952aec403ce889637258">STORAGE_SIZE</a></td></tr>
+<tr class="separator:a7a69dd42570d41f02fa7d1218acebea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa002463880425ad2887d5c3e513a3750" id="r_aa002463880425ad2887d5c3e513a3750"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa002463880425ad2887d5c3e513a3750">green</a> = [0]*<a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#a283819a785c5952aec403ce889637258">STORAGE_SIZE</a></td></tr>
+<tr class="separator:aa002463880425ad2887d5c3e513a3750"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57eed9dc5cf88b9f823b4e11b83e029d" id="r_a57eed9dc5cf88b9f823b4e11b83e029d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57eed9dc5cf88b9f823b4e11b83e029d">setPulseAmplitudeRed</a> = 411 else <a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#aeb569a5566ac1073e830133ba6ec7386">MAX30105_PULSEWIDTH_69</a>)</td></tr>
+<tr class="separator:a57eed9dc5cf88b9f823b4e11b83e029d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2da9c18281447e7e6d79e57899029550" id="r_a2da9c18281447e7e6d79e57899029550"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2da9c18281447e7e6d79e57899029550">setPulseAmplitudeIR</a></td></tr>
+<tr class="separator:a2da9c18281447e7e6d79e57899029550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade2b7ecf92a9fdf046e8d380d6484eb3" id="r_ade2b7ecf92a9fdf046e8d380d6484eb3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade2b7ecf92a9fdf046e8d380d6484eb3">setPulseAmplitudeGreen</a></td></tr>
+<tr class="separator:ade2b7ecf92a9fdf046e8d380d6484eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf18f42e7fc4fee595cfaf9c69b15899" id="r_aaf18f42e7fc4fee595cfaf9c69b15899"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf18f42e7fc4fee595cfaf9c69b15899">setPulseAmplitudeProximity</a></td></tr>
+<tr class="separator:aaf18f42e7fc4fee595cfaf9c69b15899"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Clase que permite el manejo del sensor óptico <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>. </p>
+<p>Ofrece funcionalidades para configuración, lectura y procesamiento de datos de los LEDs rojo, IR y verde, control de interrupciones, lectura de temperatura interna y control del FIFO. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00154">154</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+</div><h2 class="groupheader">Documentación de constructores y destructores</h2>
+<a id="a1e0e57dc4f2b58de3745ab51811e0fd0" name="a1e0e57dc4f2b58de3745ab51811e0fd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e0e57dc4f2b58de3745ab51811e0fd0">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.__init__ </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>i2c</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>addr</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#ab5f560ea5f64e0cc69ce2d1747112fee">MAX30105_ADDRESS</a></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor de la clase <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i2c</td><td>Objeto de interfaz I2C de la clase <code>machine.I2C</code>. </td></tr>
+    <tr><td class="paramname">addr</td><td>Dirección del dispositivo I2C (por defecto 0x57). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00158">158</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  158</span>    <span class="keyword">def </span>__init__(self, i2c, addr=MAX30105_ADDRESS):</div>
+<div class="line"><span class="lineno">  159</span>        self.i2c = i2c                      <span class="comment">#: Interfaz I2C utilizada para la comunicación.</span></div>
+<div class="line"><span class="lineno">  160</span>        self.addr = addr                    <span class="comment">#: Dirección I2C del sensor.</span></div>
+<div class="line"><span class="lineno">  161</span>        self.revisionID = 0                <span class="comment">#: ID de revisión del chip.</span></div>
+<div class="line"><span class="lineno">  162</span>        self.activeLEDs = 0                <span class="comment">#: Número de LEDs activos configurados.</span></div>
+<div class="line"><span class="lineno">  163</span> </div>
+<div class="line"><span class="lineno">  164</span>        <span class="comment"># Buffers circulares para los datos de los LEDs</span></div>
+<div class="line"><span class="lineno">  165</span>        self.head = 0                      <span class="comment">#: Índice de escritura del buffer circular.</span></div>
+<div class="line"><span class="lineno">  166</span>        self.tail = 0                      <span class="comment">#: Índice de lectura del buffer circular.</span></div>
+<div class="line"><span class="lineno">  167</span>        self.red   = [0]*STORAGE_SIZE              <span class="comment">#: Almacena las muestras del LED rojo.</span></div>
+<div class="line"><span class="lineno">  168</span>        self.IR    = [0]*STORAGE_SIZE              <span class="comment">#: Almacena las muestras del LED infrarrojo.</span></div>
+<div class="line"><span class="lineno">  169</span>        self.green = [0]*STORAGE_SIZE              <span class="comment">#: Almacena las muestras del LED verde.</span></div>
+<div class="line"><span class="lineno">  170</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones miembro</h2>
+<a id="abb5d3b85ab61773d3d4a1c4642936fc7" name="abb5d3b85ab61773d3d4a1c4642936fc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb5d3b85ab61773d3d4a1c4642936fc7">&#9670;&#160;</a></span>available()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.available </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica cuántas muestras sin leer hay en el buffer FIFO local. </p>
+<p>Calculado como la distancia circular entre <code>self.head</code> (última muestra escrita) y <code>self.tail</code> (siguiente muestra a leer). Si <code>head &lt; tail</code>, se ajusta sumando <code>STORAGE_SIZE</code>.</p>
+<dl class="section return"><dt>Devuelve</dt><dd>Número de muestras pendientes (0–31). </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00526">526</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  526</span>    <span class="keyword">def </span>available(self):</div>
+<div class="line"><span class="lineno">  527</span>        n = self.head - self.tail</div>
+<div class="line"><span class="lineno">  528</span>        <span class="keywordflow">return</span> n + STORAGE_SIZE <span class="keywordflow">if</span> n&lt;0 <span class="keywordflow">else</span> n</div>
+<div class="line"><span class="lineno">  529</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad3e903a5321d1618384571769afec4fc" name="ad3e903a5321d1618384571769afec4fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3e903a5321d1618384571769afec4fc">&#9670;&#160;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.begin </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inicializa el sensor <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>. </p>
+<p>Verifica que el sensor responda correctamente leyendo su ID de parte, realiza un soft reset y limpia los buffers FIFO. </p><dl class="retval"><dt>Valores devueltos</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">True</td><td>si la inicialización fue exitosa. </td></tr>
+    <tr><td class="paramname">False</td><td>si el sensor no responde o el ID es incorrecto. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00177">177</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  177</span>    <span class="keyword">def </span>begin(self):</div>
+<div class="line"><span class="lineno">  178</span>        <span class="keywordflow">if</span> self.readPartID() != MAX_30105_EXPECTEDPARTID:</div>
+<div class="line"><span class="lineno">  179</span>            print(<span class="stringliteral">&quot;MAX30105 no encontrado. Verifica conexión.&quot;</span>)</div>
+<div class="line"><span class="lineno">  180</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  181</span>        self.readRevisionID()</div>
+<div class="line"><span class="lineno">  182</span> </div>
+<div class="line"><span class="lineno">  183</span>        self.softReset()</div>
+<div class="line"><span class="lineno">  184</span>        time.sleep_ms(10)</div>
+<div class="line"><span class="lineno">  185</span>        self.clearFIFO()</div>
+<div class="line"><span class="lineno">  186</span> </div>
+<div class="line"><span class="lineno">  187</span>        <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  188</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aca42c0172fb46bafe1e4982e9ce6f1f5" name="aca42c0172fb46bafe1e4982e9ce6f1f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca42c0172fb46bafe1e4982e9ce6f1f5">&#9670;&#160;</a></span>bitMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.bitMask </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>reg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>mask</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>thing</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Modifica determinados bits de un registro usando una máscara. </p>
+<p>Realiza una operación de máscara AND y OR sobre un registro para modificar solo los bits deseados sin afectar el resto. </p><dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>Dirección del registro a modificar. </td></tr>
+    <tr><td class="paramname">mask</td><td>Máscara AND para limpiar los bits deseados. </td></tr>
+    <tr><td class="paramname">thing</td><td>Valor OR para establecer los bits deseados. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00217">217</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  217</span>    <span class="keyword">def </span>bitMask(self, reg, mask, thing):</div>
+<div class="line"><span class="lineno">  218</span>        orig = self.readRegister(reg)</div>
+<div class="line"><span class="lineno">  219</span>        orig &amp;= mask</div>
+<div class="line"><span class="lineno">  220</span>        self.writeRegister(reg, orig | thing)</div>
+<div class="line"><span class="lineno">  221</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0e80c4623b81b7f080b247fcbf0084a6" name="a0e80c4623b81b7f080b247fcbf0084a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e80c4623b81b7f080b247fcbf0084a6">&#9670;&#160;</a></span>check()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.check </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Vacía el FIFO del sensor y llena los buffers locales con los datos más recientes disponibles. </p>
+<p>Este método sincroniza los punteros de lectura y escritura del FIFO interno, realiza lecturas <em>burst</em> de hasta 32 bytes y decodifica cada muestra de 18 bits para los LEDs activos (rojo siempre, IR y verde según el modo). Las muestras se almacenan en los buffers circulares <code>red</code>, <code>IR</code> y <code>green</code> actualizando el índice <code>self.head</code>.</p>
+<dl class="section return"><dt>Devuelve</dt><dd>Número de grupos de datos (muestras) leídos del FIFO. </dd></dl>
+<dl class="retval"><dt>Valores devueltos</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>si no había datos nuevos o se produjo un error de I²C.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Nota</dt><dd>El método intenta leer en bloques de hasta 32 bytes y siempre alinea la longitud al múltiplo de *LEDs*×3 bytes necesario para formar muestras completas. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00582">582</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  582</span>    <span class="keyword">def </span>check(self):</div>
+<div class="line"><span class="lineno">  583</span>        readPtr  = self.getReadPointer()</div>
+<div class="line"><span class="lineno">  584</span>        writePtr = self.getWritePointer()</div>
+<div class="line"><span class="lineno">  585</span>        <span class="keywordflow">if</span> readPtr == writePtr:</div>
+<div class="line"><span class="lineno">  586</span>            <span class="keywordflow">return</span> 0</div>
+<div class="line"><span class="lineno">  587</span>        num = writePtr - readPtr</div>
+<div class="line"><span class="lineno">  588</span>        <span class="keywordflow">if</span> num &lt; 0: num += STORAGE_SIZE</div>
+<div class="line"><span class="lineno">  589</span>        to_read = num * self.activeLEDs * 3</div>
+<div class="line"><span class="lineno">  590</span> </div>
+<div class="line"><span class="lineno">  591</span>        <span class="comment"># burst read</span></div>
+<div class="line"><span class="lineno">  592</span>        <span class="keywordflow">while</span> to_read &gt; 0:</div>
+<div class="line"><span class="lineno">  593</span>            chunk = min(to_read, 32)</div>
+<div class="line"><span class="lineno">  594</span>            <span class="comment"># align chunk to multiple of leds*3</span></div>
+<div class="line"><span class="lineno">  595</span>            mod = chunk % (self.activeLEDs*3)</div>
+<div class="line"><span class="lineno">  596</span>            <span class="keywordflow">if</span> mod: </div>
+<div class="line"><span class="lineno">  597</span>                chunk -= mod</div>
+<div class="line"><span class="lineno">  598</span>                <span class="keywordflow">if</span> chunk == 0:  <span class="comment"># no hay suficientes datos para leer</span></div>
+<div class="line"><span class="lineno">  599</span>                    <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  600</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  601</span>                buf = self.i2c.readfrom_mem(self.addr, MAX30105_FIFODATA, chunk)</div>
+<div class="line"><span class="lineno">  602</span>            <span class="keywordflow">except</span> OSError:</div>
+<div class="line"><span class="lineno">  603</span>                <span class="keywordflow">return</span> 0  <span class="comment"># Error en I2C</span></div>
+<div class="line"><span class="lineno">  604</span> </div>
+<div class="line"><span class="lineno">  605</span>            i = 0</div>
+<div class="line"><span class="lineno">  606</span>            <span class="keywordflow">while</span> i &lt; len(buf):</div>
+<div class="line"><span class="lineno">  607</span>                <span class="comment"># Verificar que tenemos suficientes bytes para al menos una muestra</span></div>
+<div class="line"><span class="lineno">  608</span>                <span class="keywordflow">if</span> i + 3 &gt; len(buf):</div>
+<div class="line"><span class="lineno">  609</span>                    <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  610</span>                    </div>
+<div class="line"><span class="lineno">  611</span>                self.head = (self.head + 1) % STORAGE_SIZE</div>
+<div class="line"><span class="lineno">  612</span>                </div>
+<div class="line"><span class="lineno">  613</span>                <span class="comment"># Leer valor RED (siempre presente)</span></div>
+<div class="line"><span class="lineno">  614</span>                val = (buf[i] &lt;&lt; 16) | (buf[i+1] &lt;&lt; 8) | buf[i+2]</div>
+<div class="line"><span class="lineno">  615</span>                val &amp;= 0x3FFFF</div>
+<div class="line"><span class="lineno">  616</span>                self.red[self.head] = val</div>
+<div class="line"><span class="lineno">  617</span>                i += 3</div>
+<div class="line"><span class="lineno">  618</span>                </div>
+<div class="line"><span class="lineno">  619</span>                <span class="comment"># Leer valor IR (si hay más de 1 LED activo)</span></div>
+<div class="line"><span class="lineno">  620</span>                <span class="keywordflow">if</span> self.activeLEDs &gt; 1:</div>
+<div class="line"><span class="lineno">  621</span>                    <span class="keywordflow">if</span> i + 3 &gt; len(buf):</div>
+<div class="line"><span class="lineno">  622</span>                        <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  623</span>                    val = (buf[i] &lt;&lt; 16) | (buf[i+1] &lt;&lt; 8) | buf[i+2]</div>
+<div class="line"><span class="lineno">  624</span>                    val &amp;= 0x3FFFF</div>
+<div class="line"><span class="lineno">  625</span>                    self.IR[self.head] = val</div>
+<div class="line"><span class="lineno">  626</span>                    i += 3</div>
+<div class="line"><span class="lineno">  627</span>                </div>
+<div class="line"><span class="lineno">  628</span>                <span class="comment"># Leer valor GREEN (si hay más de 2 LEDs activos)</span></div>
+<div class="line"><span class="lineno">  629</span>                <span class="keywordflow">if</span> self.activeLEDs &gt; 2:</div>
+<div class="line"><span class="lineno">  630</span>                    <span class="keywordflow">if</span> i + 3 &gt; len(buf):</div>
+<div class="line"><span class="lineno">  631</span>                        <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  632</span>                    val = (buf[i] &lt;&lt; 16) | (buf[i+1] &lt;&lt; 8) | buf[i+2]</div>
+<div class="line"><span class="lineno">  633</span>                    val &amp;= 0x3FFFF</div>
+<div class="line"><span class="lineno">  634</span>                    self.green[self.head] = val</div>
+<div class="line"><span class="lineno">  635</span>                    i += 3</div>
+<div class="line"><span class="lineno">  636</span>            </div>
+<div class="line"><span class="lineno">  637</span>            to_read -= chunk</div>
+<div class="line"><span class="lineno">  638</span>        <span class="keywordflow">return</span> num</div>
+<div class="line"><span class="lineno">  639</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5e0be9080599d92fdb668bd72ed99f1f" name="a5e0be9080599d92fdb668bd72ed99f1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e0be9080599d92fdb668bd72ed99f1f">&#9670;&#160;</a></span>clearFIFO()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.clearFIFO </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reinicia los punteros de lectura/escritura y el contador overflow. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00381">381</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  381</span>    <span class="keyword">def </span>clearFIFO(self):</div>
+<div class="line"><span class="lineno">  382</span>        <span class="keywordflow">for</span> r <span class="keywordflow">in</span> (MAX30105_FIFOWRITEPTR, MAX30105_FIFOOVERFLOW, MAX30105_FIFOREADPTR):</div>
+<div class="line"><span class="lineno">  383</span>            self.writeRegister(r, 0)</div>
+<div class="line"><span class="lineno">  384</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1a8ee67664442dd6b9609a7d91f404d4" name="a1a8ee67664442dd6b9609a7d91f404d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a8ee67664442dd6b9609a7d91f404d4">&#9670;&#160;</a></span>disableAFULL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.disableAFULL </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deshabilita la interrupción por FIFO lleno. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00234">234</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  234</span>    <span class="keyword">def </span>disableAFULL(self):  self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_A_FULL_MASK,   0)</div>
+<div class="line"><span class="lineno">  235</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae2af92f61de9f81fedd865edac764e8f" name="ae2af92f61de9f81fedd865edac764e8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2af92f61de9f81fedd865edac764e8f">&#9670;&#160;</a></span>disableALCOVF()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.disableALCOVF </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deshabilita la interrupción por desbordamiento de ALC. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00246">246</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  246</span>    <span class="keyword">def </span>disableALCOVF(self): self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_ALC_OVF_MASK,  0)</div>
+<div class="line"><span class="lineno">  247</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a88819e6097f9848e85953f3c8f0b1091" name="a88819e6097f9848e85953f3c8f0b1091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88819e6097f9848e85953f3c8f0b1091">&#9670;&#160;</a></span>disableDATARDY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.disableDATARDY </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deshabilita la interrupción por disponibilidad de nuevos datos. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00240">240</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  240</span>    <span class="keyword">def </span>disableDATARDY(self):self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_DATA_RDY_MASK, 0)</div>
+<div class="line"><span class="lineno">  241</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a22c646540c2000c090fe2ca1707cb004" name="a22c646540c2000c090fe2ca1707cb004"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22c646540c2000c090fe2ca1707cb004">&#9670;&#160;</a></span>disableDIETEMPRDY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.disableDIETEMPRDY </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deshabilita la interrupción por temperatura interna lista. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00258">258</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  258</span>    <span class="keyword">def </span>disableDIETEMPRDY(self):self.bitMask(MAX30105_INTENABLE2, MAX30105_INT_DIE_TEMP_RDY_MASK, 0)</div>
+<div class="line"><span class="lineno">  259</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a112263115a7f0a31d0fedb47f2e43a93" name="a112263115a7f0a31d0fedb47f2e43a93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a112263115a7f0a31d0fedb47f2e43a93">&#9670;&#160;</a></span>disableFIFORollover()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.disableFIFORollover </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Desactiva el roll‑over del FIFO. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00389">389</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  389</span>    <span class="keyword">def </span>disableFIFORollover(self): self.bitMask(MAX30105_FIFOCONFIG, MAX30105_ROLLOVER_MASK, 0)</div>
+<div class="line"><span class="lineno">  390</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3f97680baba22ed034ef1c6e01278aeb" name="a3f97680baba22ed034ef1c6e01278aeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f97680baba22ed034ef1c6e01278aeb">&#9670;&#160;</a></span>disablePROXINT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.disablePROXINT </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deshabilita la interrupción por proximidad. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00252">252</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  252</span>    <span class="keyword">def </span>disablePROXINT(self):self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_PROX_INT_MASK, 0)</div>
+<div class="line"><span class="lineno">  253</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1a60e63464e89992609ed96b8dac9ddf" name="a1a60e63464e89992609ed96b8dac9ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a60e63464e89992609ed96b8dac9ddf">&#9670;&#160;</a></span>disableSlots()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.disableSlots </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Desactiva todos los slots (ningún LED se dispara). </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00371">371</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  371</span>    <span class="keyword">def </span>disableSlots(self):</div>
+<div class="line"><span class="lineno">  372</span>        self.writeRegister(MAX30105_MULTILEDCONFIG1, 0)</div>
+<div class="line"><span class="lineno">  373</span>        self.writeRegister(MAX30105_MULTILEDCONFIG2, 0)</div>
+<div class="line"><span class="lineno">  374</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac966ca726faf52d1acf61de8011eec12" name="ac966ca726faf52d1acf61de8011eec12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac966ca726faf52d1acf61de8011eec12">&#9670;&#160;</a></span>enableAFULL()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.enableAFULL </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita la interrupción cuando el FIFO está lleno (Almost Full). </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00231">231</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  231</span>    <span class="keyword">def </span>enableAFULL(self):   self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_A_FULL_MASK,   MAX30105_INT_A_FULL_ENABLE)</div>
+<div class="line"><span class="lineno">  232</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4d34695f4634644150f5657de1c2da6f" name="a4d34695f4634644150f5657de1c2da6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d34695f4634644150f5657de1c2da6f">&#9670;&#160;</a></span>enableALCOVF()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.enableALCOVF </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita la interrupción por desbordamiento de ALC (auto range). </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00243">243</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  243</span>    <span class="keyword">def </span>enableALCOVF(self):  self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_ALC_OVF_MASK,  MAX30105_INT_ALC_OVF_ENABLE)</div>
+<div class="line"><span class="lineno">  244</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abf54fe6e3b3f0b61a100c67c3057e45f" name="abf54fe6e3b3f0b61a100c67c3057e45f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf54fe6e3b3f0b61a100c67c3057e45f">&#9670;&#160;</a></span>enableDATARDY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.enableDATARDY </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita la interrupción por disponibilidad de nuevos datos. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00237">237</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  237</span>    <span class="keyword">def </span>enableDATARDY(self): self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_DATA_RDY_MASK, MAX30105_INT_DATA_RDY_ENABLE)</div>
+<div class="line"><span class="lineno">  238</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af6924747b3ad49ebaf45615216d489aa" name="af6924747b3ad49ebaf45615216d489aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6924747b3ad49ebaf45615216d489aa">&#9670;&#160;</a></span>enableDIETEMPRDY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.enableDIETEMPRDY </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita la interrupción cuando la temperatura interna está lista. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00255">255</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  255</span>    <span class="keyword">def </span>enableDIETEMPRDY(self): self.bitMask(MAX30105_INTENABLE2, MAX30105_INT_DIE_TEMP_RDY_MASK, MAX30105_INT_DIE_TEMP_RDY_ENABLE)</div>
+<div class="line"><span class="lineno">  256</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a53bd0f6e8517abcc312b576c7e6bf55f" name="a53bd0f6e8517abcc312b576c7e6bf55f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53bd0f6e8517abcc312b576c7e6bf55f">&#9670;&#160;</a></span>enableFIFORollover()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.enableFIFORollover </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Activa el <em>roll‑over</em>: el puntero de escritura vuelve a 0 al llenarse. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00386">386</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  386</span>    <span class="keyword">def </span>enableFIFORollover(self):  self.bitMask(MAX30105_FIFOCONFIG, MAX30105_ROLLOVER_MASK, MAX30105_ROLLOVER_ENABLE)</div>
+<div class="line"><span class="lineno">  387</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6d9ad784eb7a85143d583d1efbd6ca46" name="a6d9ad784eb7a85143d583d1efbd6ca46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d9ad784eb7a85143d583d1efbd6ca46">&#9670;&#160;</a></span>enablePROXINT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.enablePROXINT </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita la interrupción por proximidad. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00249">249</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  249</span>    <span class="keyword">def </span>enablePROXINT(self): self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_PROX_INT_MASK, MAX30105_INT_PROX_INT_ENABLE)</div>
+<div class="line"><span class="lineno">  250</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0e0699289e71dbbfe1c9f8398c2fe4bd" name="a0e0699289e71dbbfe1c9f8398c2fe4bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e0699289e71dbbfe1c9f8398c2fe4bd">&#9670;&#160;</a></span>enableSlot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.enableSlot </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>num</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>device</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Asigna un dispositivo (LED) a uno de los cuatro <em>slots</em> de disparo. </p>
+<p>Cada conversión del <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a> puede incluir hasta cuatro sub‑pulsos (slots 1‑4). En cada slot se selecciona el LED que se encenderá o si se utilizará un piloto/fotodiodo de compensación. <br  />
+ </p><dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">num</td><td>Slot a configurar (1–4). <br  />
+ </td></tr>
+    <tr><td class="paramname">device</td><td>Código <code>SLOT_*</code> que indica LED o piloto. <br  />
+<ul>
+<li><code>SLOT_RED_LED</code> / <code>SLOT_IR_LED</code> / <code>SLOT_GREEN_LED</code> <br  />
+</li>
+<li><code>SLOT_RED_PILOT</code> / <code>SLOT_NONE</code> … etc. <br  />
+ </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section post"><dt>Postcondición</dt><dd>Internamente se actualizan los registros <code>MAX30105_MULTILEDCONFIG1/2</code> aplicando las máscaras correctas. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00364">364</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  364</span>    <span class="keyword">def </span>enableSlot(self, num, device):</div>
+<div class="line"><span class="lineno">  365</span>        <span class="keywordflow">if</span> num==1: self.bitMask(MAX30105_MULTILEDCONFIG1, MAX30105_SLOT1_MASK, device)</div>
+<div class="line"><span class="lineno">  366</span>        <span class="keywordflow">elif</span> num==2: self.bitMask(MAX30105_MULTILEDCONFIG1, MAX30105_SLOT2_MASK, device&lt;&lt;4)</div>
+<div class="line"><span class="lineno">  367</span>        <span class="keywordflow">elif</span> num==3: self.bitMask(MAX30105_MULTILEDCONFIG2, MAX30105_SLOT3_MASK, device)</div>
+<div class="line"><span class="lineno">  368</span>        <span class="keywordflow">elif</span> num==4: self.bitMask(MAX30105_MULTILEDCONFIG2, MAX30105_SLOT4_MASK, device&lt;&lt;4)</div>
+<div class="line"><span class="lineno">  369</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8e04178aca5dce772ff13c66b1e3a4df" name="a8e04178aca5dce772ff13c66b1e3a4df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e04178aca5dce772ff13c66b1e3a4df">&#9670;&#160;</a></span>getFIFOGreen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getFIFOGreen </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Devuelve la muestra verde en la posición <code>tail</code>. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00556">556</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  556</span>    <span class="keyword">def </span>getFIFOGreen(self): <span class="keywordflow">return</span> self.green[self.tail]</div>
+<div class="line"><span class="lineno">  557</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7f1889bc08430e927fa24d27a0985f22" name="a7f1889bc08430e927fa24d27a0985f22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f1889bc08430e927fa24d27a0985f22">&#9670;&#160;</a></span>getFIFOIR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getFIFOIR </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Devuelve la muestra IR en la posición <code>tail</code>. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00553">553</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  553</span>    <span class="keyword">def </span>getFIFOIR(self):    <span class="keywordflow">return</span> self.IR[self.tail]</div>
+<div class="line"><span class="lineno">  554</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad2c5946441ed7d221f1c80c0381cf0ff" name="ad2c5946441ed7d221f1c80c0381cf0ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2c5946441ed7d221f1c80c0381cf0ff">&#9670;&#160;</a></span>getFIFORed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getFIFORed </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Devuelve la muestra del LED rojo apuntada por <code>self.tail</code>. </p>
+<dl class="section note"><dt>Nota</dt><dd>No realiza verificación de nuevos datos; se usa tras :pyfunc:<code>check</code>. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00550">550</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  550</span>    <span class="keyword">def </span>getFIFORed(self):   <span class="keywordflow">return</span> self.red[self.tail]</div>
+<div class="line"><span class="lineno">  551</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2e6483ca303531abcd667f42acfe07ab" name="a2e6483ca303531abcd667f42acfe07ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e6483ca303531abcd667f42acfe07ab">&#9670;&#160;</a></span>getGreen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getGreen </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Obtiene la última muestra del LED verde. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00545">545</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  545</span>    <span class="keyword">def </span>getGreen(self):</div>
+<div class="line"><span class="lineno">  546</span>        <span class="keywordflow">return</span> self.green[self.head] <span class="keywordflow">if</span> self.safeCheck(250) <span class="keywordflow">else</span> 0</div>
+<div class="line"><span class="lineno">  547</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a02cd709487e479d6318bc82c97bd85a8" name="a02cd709487e479d6318bc82c97bd85a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02cd709487e479d6318bc82c97bd85a8">&#9670;&#160;</a></span>getINT1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getINT1 </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lee el valor actual del registro de estado de interrupciones INT1. </p>
+<dl class="section return"><dt>Devuelve</dt><dd>Valor del registro MAX30105_INTSTAT1. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00224">224</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  224</span>    <span class="keyword">def </span>getINT1(self): <span class="keywordflow">return</span> self.readRegister(MAX30105_INTSTAT1)</div>
+<div class="line"><span class="lineno">  225</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="adf9c9d7bc6f4341583a6295d6e755139" name="adf9c9d7bc6f4341583a6295d6e755139"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf9c9d7bc6f4341583a6295d6e755139">&#9670;&#160;</a></span>getINT2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getINT2 </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lee el valor actual del registro de estado de interrupciones INT2. </p>
+<dl class="section return"><dt>Devuelve</dt><dd>Valor del registro MAX30105_INTSTAT2. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00228">228</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  228</span>    <span class="keyword">def </span>getINT2(self): <span class="keywordflow">return</span> self.readRegister(MAX30105_INTSTAT2)</div>
+<div class="line"><span class="lineno">  229</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3b6097ba5442556ed148dff73cec060d" name="a3b6097ba5442556ed148dff73cec060d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b6097ba5442556ed148dff73cec060d">&#9670;&#160;</a></span>getIR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getIR </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Obtiene la última muestra del LED infrarrojo. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00541">541</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  541</span>    <span class="keyword">def </span>getIR(self):</div>
+<div class="line"><span class="lineno">  542</span>        <span class="keywordflow">return</span> self.IR[self.head]  <span class="keywordflow">if</span> self.safeCheck(250) <span class="keywordflow">else</span> 0</div>
+<div class="line"><span class="lineno">  543</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a999383d7581626b6d9c5f2f334371fa6" name="a999383d7581626b6d9c5f2f334371fa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a999383d7581626b6d9c5f2f334371fa6">&#9670;&#160;</a></span>getReadPointer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getReadPointer </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Devuelve el puntero de lectura del FIFO. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00399">399</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  399</span>    <span class="keyword">def </span>getReadPointer(self):      <span class="keywordflow">return</span> self.readRegister(MAX30105_FIFOREADPTR)</div>
+<div class="line"><span class="lineno">  400</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aaaf05716be08d6c8ee612fae2b92b2ab" name="aaaf05716be08d6c8ee612fae2b92b2ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaf05716be08d6c8ee612fae2b92b2ab">&#9670;&#160;</a></span>getRed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getRed </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Obtiene la última muestra del LED rojo. </p>
+<p>Internamente llama a :pyfunc:<code>safeCheck</code> con un tiempo máximo de 250 ms para asegurarse de que el FIFO contenga datos frescos antes de acceder al índice <code>self.head</code>. <br  />
+ </p><dl class="retval"><dt>Valores devueltos</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">Valor</td><td>de 18 bits (0–262143). <br  />
+ </td></tr>
+    <tr><td class="paramname">0</td><td>si no hay datos disponibles antes de que expire el temporizador. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00537">537</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  537</span>    <span class="keyword">def </span>getRed(self):</div>
+<div class="line"><span class="lineno">  538</span>        <span class="keywordflow">return</span> self.red[self.head] <span class="keywordflow">if</span> self.safeCheck(250) <span class="keywordflow">else</span> 0</div>
+<div class="line"><span class="lineno">  539</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a24558d23ea61d78b08f3f873dcb13cfe" name="a24558d23ea61d78b08f3f873dcb13cfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24558d23ea61d78b08f3f873dcb13cfe">&#9670;&#160;</a></span>getRevisionID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getRevisionID </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Devuelve la revisión de silicio previamente leída. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00428">428</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  428</span>    <span class="keyword">def </span>getRevisionID(self): <span class="keywordflow">return</span> self.revisionID</div>
+<div class="line"><span class="lineno">  429</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0a3b98e580c5fcf6cf1f06733ac76d96" name="a0a3b98e580c5fcf6cf1f06733ac76d96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a3b98e580c5fcf6cf1f06733ac76d96">&#9670;&#160;</a></span>getWritePointer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.getWritePointer </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Devuelve el puntero de escritura del FIFO. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00396">396</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  396</span>    <span class="keyword">def </span>getWritePointer(self):     <span class="keywordflow">return</span> self.readRegister(MAX30105_FIFOWRITEPTR)</div>
+<div class="line"><span class="lineno">  397</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9bd003fd3683d77a9f53a427743fc73d" name="a9bd003fd3683d77a9f53a427743fc73d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bd003fd3683d77a9f53a427743fc73d">&#9670;&#160;</a></span>nextSample()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.nextSample </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Avanza el puntero de lectura para procesar la siguiente muestra. </p>
+<p>Debe invocarse después de leer los valores de <code>getFIFORed/IR/Green</code> para marcar la muestra como consumida. <br  />
+ Si no hay muestras disponibles, no modifica <code>self.tail</code>. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00563">563</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  563</span>    <span class="keyword">def </span>nextSample(self):</div>
+<div class="line"><span class="lineno">  564</span>        <span class="keywordflow">if</span> self.available():</div>
+<div class="line"><span class="lineno">  565</span>            self.tail = (self.tail + 1) % STORAGE_SIZE</div>
+<div class="line"><span class="lineno">  566</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a598ecb920c071f3ec468be6dff545120" name="a598ecb920c071f3ec468be6dff545120"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a598ecb920c071f3ec468be6dff545120">&#9670;&#160;</a></span>readPartID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.readPartID </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Devuelve el identificador de parte (0x15 para <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>). </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00422">422</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  422</span>    <span class="keyword">def </span>readPartID(self):   <span class="keywordflow">return</span> self.readRegister(MAX30105_PARTID)</div>
+<div class="line"><span class="lineno">  423</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4b280585984dc94b0242795425cd2726" name="a4b280585984dc94b0242795425cd2726"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b280585984dc94b0242795425cd2726">&#9670;&#160;</a></span>readRegister()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.readRegister </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>reg</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lee un byte desde un registro del sensor. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>Dirección del registro a leer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>Valor leído del registro (0-255). Si falla, devuelve 0. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00192">192</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  192</span>    <span class="keyword">def </span>readRegister(self, reg):</div>
+<div class="line"><span class="lineno">  193</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  194</span>            data = self.i2c.readfrom_mem(self.addr, reg, 1)</div>
+<div class="line"><span class="lineno">  195</span>            <span class="keywordflow">return</span> data[0]</div>
+<div class="line"><span class="lineno">  196</span>        <span class="keywordflow">except</span>:</div>
+<div class="line"><span class="lineno">  197</span>            <span class="keywordflow">return</span> 0</div>
+<div class="line"><span class="lineno">  198</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afc0b93c34fb2440b6cd9c893793c15d1" name="afc0b93c34fb2440b6cd9c893793c15d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc0b93c34fb2440b6cd9c893793c15d1">&#9670;&#160;</a></span>readRevisionID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.readRevisionID </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Almacena en <code>self.revisionID</code> la revisión de silicio. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00425">425</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  425</span>    <span class="keyword">def </span>readRevisionID(self): self.revisionID = self.readRegister(MAX30105_REVISIONID)</div>
+<div class="line"><span class="lineno">  426</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a90f04527a90280484155e78917ee334f" name="a90f04527a90280484155e78917ee334f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90f04527a90280484155e78917ee334f">&#9670;&#160;</a></span>readTemperature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.readTemperature </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lee la temperatura interna del chip (°C). </p>
+<dl class="section return"><dt>Devuelve</dt><dd>Temperatura en °C con resolución de 0.0625 °C. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00404">404</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  404</span>    <span class="keyword">def </span>readTemperature(self):</div>
+<div class="line"><span class="lineno">  405</span>        self.writeRegister(MAX30105_DIETEMPCONFIG, 0x01)</div>
+<div class="line"><span class="lineno">  406</span>        start = time.ticks_ms()</div>
+<div class="line"><span class="lineno">  407</span>        <span class="keywordflow">while</span> time.ticks_diff(time.ticks_ms(), start)&lt;100:</div>
+<div class="line"><span class="lineno">  408</span>            <span class="keywordflow">if</span> self.readRegister(MAX30105_INTSTAT2) &amp; MAX30105_INT_DIE_TEMP_RDY_ENABLE:</div>
+<div class="line"><span class="lineno">  409</span>                <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  410</span>            time.sleep_ms(1)</div>
+<div class="line"><span class="lineno">  411</span>        t_int  = self.readRegister(MAX30105_DIETEMPINT)</div>
+<div class="line"><span class="lineno">  412</span>        t_frac = self.readRegister(MAX30105_DIETEMPFRAC)</div>
+<div class="line"><span class="lineno">  413</span>        <span class="keywordflow">return</span> t_int + (t_frac * 0.0625)</div>
+<div class="line"><span class="lineno">  414</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad54f7161a4f5e6ca968a07a99623d3a3" name="ad54f7161a4f5e6ca968a07a99623d3a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad54f7161a4f5e6ca968a07a99623d3a3">&#9670;&#160;</a></span>readTemperatureF()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.readTemperatureF </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lee la temperatura interna en grados Fahrenheit. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00416">416</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  416</span>    <span class="keyword">def </span>readTemperatureF(self):</div>
+<div class="line"><span class="lineno">  417</span>        t = self.readTemperature()</div>
+<div class="line"><span class="lineno">  418</span>        <span class="keywordflow">return</span> t * 1.8 + 32 <span class="keywordflow">if</span> t!=-999.0 <span class="keywordflow">else</span> t</div>
+<div class="line"><span class="lineno">  419</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad1b6c9caefaae3b046d1218d66895734" name="ad1b6c9caefaae3b046d1218d66895734"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1b6c9caefaae3b046d1218d66895734">&#9670;&#160;</a></span>safeCheck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.safeCheck </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>max_ms</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variante segura de :pyfunc:<code>check</code> con tiempo máximo de espera. </p>
+<p>Llama repetidamente a :pyfunc:<code>check</code> hasta que se lean datos o expire <code>max_ms</code>. Esto permite al usuario bloquear la ejecución hasta que el sensor disponga de una nueva conversión completa.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">max_ms</td><td>Tiempo máximo de espera en milisegundos. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Valores devueltos</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">True</td><td>si se recibieron datos dentro del tiempo. </td></tr>
+    <tr><td class="paramname">False</td><td>si expiró <code>max_ms</code> sin novedades. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00649">649</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  649</span>    <span class="keyword">def </span>safeCheck(self, max_ms):</div>
+<div class="line"><span class="lineno">  650</span>        start = time.ticks_ms()</div>
+<div class="line"><span class="lineno">  651</span>        <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
+<div class="line"><span class="lineno">  652</span>            <span class="keywordflow">if</span> time.ticks_diff(time.ticks_ms(), start) &gt; max_ms:</div>
+<div class="line"><span class="lineno">  653</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  654</span>            <span class="keywordflow">if</span> self.check():</div>
+<div class="line"><span class="lineno">  655</span>                <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  656</span>            time.sleep_ms(1)</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac9a6f335afa222d7c8e609d627e832f6" name="ac9a6f335afa222d7c8e609d627e832f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9a6f335afa222d7c8e609d627e832f6">&#9670;&#160;</a></span>setADCRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setADCRange </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>r</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ajusta el rango de corriente del ADC interno. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Código <code>MAX30105_ADCRANGE_*</code> (2048, 4096, 8192, 16384 nA). Modifica los bits <b>ADCRANGE[6:5]</b> en <code>MAX30105_PARTICLECONFIG</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00312">312</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  312</span>    <span class="keyword">def </span>setADCRange(self, r):      self.bitMask(MAX30105_PARTICLECONFIG, MAX30105_ADCRANGE_MASK, r)</div>
+<div class="line"><span class="lineno">  313</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3ea2aea6e32c0ba88391d46b21ca3cb1" name="a3ea2aea6e32c0ba88391d46b21ca3cb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ea2aea6e32c0ba88391d46b21ca3cb1">&#9670;&#160;</a></span>setFIFOAlmostFull()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setFIFOAlmostFull </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>n</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Programa el nivel <em>casi‑lleno</em> que dispara la interrupción A_FULL. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Valor de 0–15 (profundidad restante). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00393">393</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  393</span>    <span class="keyword">def </span>setFIFOAlmostFull(self, n):self.bitMask(MAX30105_FIFOCONFIG, MAX30105_A_FULL_MASK, n)</div>
+<div class="line"><span class="lineno">  394</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9f644fc601a68048a4fb03b2496063f0" name="a9f644fc601a68048a4fb03b2496063f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f644fc601a68048a4fb03b2496063f0">&#9670;&#160;</a></span>setFIFOAverage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setFIFOAverage </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>n</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define cuántas muestras se promedian en el FIFO. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Código <code>MAX30105_SAMPLEAVG_*</code> (1,2,4,8,16,32). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00378">378</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  378</span>    <span class="keyword">def </span>setFIFOAverage(self, n):   self.bitMask(MAX30105_FIFOCONFIG, MAX30105_SAMPLEAVG_MASK, n)</div>
+<div class="line"><span class="lineno">  379</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4c667bc5eeb8fcb668671d6ae2552d57" name="a4c667bc5eeb8fcb668671d6ae2552d57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c667bc5eeb8fcb668671d6ae2552d57">&#9670;&#160;</a></span>setLEDMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setLEDMode </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>m</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Selecciona cuántos LEDs se activan por ciclo de conversión. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>Modo <code>MAX30105_MODE_*</code> (p.ej. <a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#abcabe3ab43d5ff4eb9f898c3d45ee230">MAX30105_MODE_MULTILED</a>).<ul>
+<li><code>MAX30105_MODE_REDONLY</code> → sólo LED rojo.</li>
+<li><code>MAX30105_MODE_REDIRONLY</code> → LED rojo + IR.</li>
+<li><code>MAX30105_MODE_MULTILED</code> → LED rojo + IR + verde.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Cambia el campo <b>MODE[2:0]</b> de <code>MAX30105_MODECONFIG</code>. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00307">307</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  307</span>    <span class="keyword">def </span>setLEDMode(self, m):       self.bitMask(MAX30105_MODECONFIG, MAX30105_MODE_MASK, m)</div>
+<div class="line"><span class="lineno">  308</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a36cde58a66c80e77792764df845fa5ae" name="a36cde58a66c80e77792764df845fa5ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36cde58a66c80e77792764df845fa5ae">&#9670;&#160;</a></span>setProximityThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setProximityThreshold </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Establece el umbral que genera la interrupción de proximidad. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Valor de 0–255 escrito en <code>MAX30105_PROXINTTHRESH</code> (LSB = ~7.8 µA). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00342">342</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  342</span>    <span class="keyword">def </span>setProximityThreshold(self, v):   self.writeRegister(MAX30105_PROXINTTHRESH, v)</div>
+<div class="line"><span class="lineno">  343</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab80843efb337b8d12f423dfd83059417" name="ab80843efb337b8d12f423dfd83059417"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab80843efb337b8d12f423dfd83059417">&#9670;&#160;</a></span>setPulseAmplitudeGreen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setPulseAmplitudeGreen </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define la amplitud del LED verde. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Valor de 0–255 escrito en <code>MAX30105_LED3_PULSEAMP</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00334">334</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  334</span>    <span class="keyword">def </span>setPulseAmplitudeGreen(self, v): self.writeRegister(MAX30105_LED3_PULSEAMP,  v)</div>
+<div class="line"><span class="lineno">  335</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7fdf2fe79151839e1900f5c9ee409ff9" name="a7fdf2fe79151839e1900f5c9ee409ff9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fdf2fe79151839e1900f5c9ee409ff9">&#9670;&#160;</a></span>setPulseAmplitudeIR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setPulseAmplitudeIR </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define la amplitud del LED infrarrojo. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Valor de 0–255 escrito en <code>MAX30105_LED2_PULSEAMP</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00330">330</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  330</span>    <span class="keyword">def </span>setPulseAmplitudeIR(self, v):    self.writeRegister(MAX30105_LED2_PULSEAMP,  v)</div>
+<div class="line"><span class="lineno">  331</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae31cbca9d43f0a70f818874177044f72" name="ae31cbca9d43f0a70f818874177044f72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae31cbca9d43f0a70f818874177044f72">&#9670;&#160;</a></span>setPulseAmplitudeProximity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setPulseAmplitudeProximity </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define la amplitud del LED dedicado a la función de proximidad. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Valor de 0–255 escrito en <code>MAX30105_LED_PROX_AMP</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00338">338</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  338</span>    <span class="keyword">def </span>setPulseAmplitudeProximity(self, v): self.writeRegister(MAX30105_LED_PROX_AMP, v)</div>
+<div class="line"><span class="lineno">  339</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a891cc377f701a3c608ba9df4497a098d" name="a891cc377f701a3c608ba9df4497a098d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a891cc377f701a3c608ba9df4497a098d">&#9670;&#160;</a></span>setPulseAmplitudeRed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setPulseAmplitudeRed </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define la amplitud (corriente) del LED rojo. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Valor de 0–255 (unidad ≈0.2 mA) escrito en <code>MAX30105_LED1_PULSEAMP</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00326">326</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  326</span>    <span class="keyword">def </span>setPulseAmplitudeRed(self, v):   self.writeRegister(MAX30105_LED1_PULSEAMP,  v)</div>
+<div class="line"><span class="lineno">  327</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4fca6e114dc71274fbd44f2628d6f03e" name="a4fca6e114dc71274fbd44f2628d6f03e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fca6e114dc71274fbd44f2628d6f03e">&#9670;&#160;</a></span>setPulseWidth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setPulseWidth </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pw</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Establece la duración del pulso (anchura) en µs. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pw</td><td>Código <code>MAX30105_PULSEWIDTH_*</code> (69, 118, 215 o 411 µs). Modifica los bits <b>PW[1:0]</b> de <code>MAX30105_PARTICLECONFIG</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00322">322</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  322</span>    <span class="keyword">def </span>setPulseWidth(self, pw):   self.bitMask(MAX30105_PARTICLECONFIG, MAX30105_PULSEWIDTH_MASK, pw)</div>
+<div class="line"><span class="lineno">  323</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2d2101d270fdcceede75972a74e93df0" name="a2d2101d270fdcceede75972a74e93df0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d2101d270fdcceede75972a74e93df0">&#9670;&#160;</a></span>setSampleRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setSampleRate </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configura la frecuencia de muestreo (Hz). </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Código <code>MAX30105_SAMPLERATE_*</code> (50 – 3200 Hz). Afecta a los bits <b>SR[4:2]</b> de <code>MAX30105_PARTICLECONFIG</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00317">317</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  317</span>    <span class="keyword">def </span>setSampleRate(self, s):    self.bitMask(MAX30105_PARTICLECONFIG, MAX30105_SAMPLERATE_MASK, s)</div>
+<div class="line"><span class="lineno">  318</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa2708c4f948aeedbdb55e1e4e378fea2" name="aa2708c4f948aeedbdb55e1e4e378fea2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2708c4f948aeedbdb55e1e4e378fea2">&#9670;&#160;</a></span>setup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setup </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>powerLevel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sampleAverage</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ledMode</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>sampleRate</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pulseWidth</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>adcRange</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configura el sensor con un conjunto coherente de parámetros. </p>
+<p>Esta función realiza todas las llamadas necesarias para dejar el <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a> listo para comenzar la adquisición de datos con un único paso. Internamente ejecuta las siguientes operaciones:</p><ul>
+<li><em>Soft-reset</em> del dispositivo.</li>
+<li>Ajuste del número de muestras a promediar en FIFO y habilita roll-over.</li>
+<li>Selección del modo de LED (1, 2 o 3 LEDs activos) y almacenamiento en <code>self.activeLEDs</code>.</li>
+<li>Selección del rango del ADC según la corriente pico deseada.</li>
+<li>Selección de la frecuencia de muestreo más cercana por defecto.</li>
+<li>Selección de la anchura de pulso más cercana por defecto.</li>
+<li>Programación de la misma corriente (<code>powerLevel</code>) para todos los LEDs y para la LED de proximidad.</li>
+<li>Asignación de los slots 1-3 a LED rojo, IR y verde respectivamente.</li>
+<li>Limpieza final del FIFO para empezar con buffer vacío.</li>
+</ul>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">powerLevel</td><td>Intensidad (0–255) aplicada a todos los LEDs. </td></tr>
+    <tr><td class="paramname">sampleAverage</td><td>Nº de muestras a promediar (1,2,4,8,16,32). </td></tr>
+    <tr><td class="paramname">ledMode</td><td>Nº de LEDs activos (1=rojo, 2=rojo+IR, 3=rojo+IR+verde). </td></tr>
+    <tr><td class="paramname">sampleRate</td><td>Frecuencia de muestreo en Hz (50–3200). </td></tr>
+    <tr><td class="paramname">pulseWidth</td><td>Anchura del pulso en µs (69,118,215,411). </td></tr>
+    <tr><td class="paramname">adcRange</td><td>Rango de corriente ADC en nA (≤16384).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Nota</dt><dd>Si se proporciona un valor fuera de rango, se selecciona el código más cercano soportado por el hardware. </dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>El FIFO queda vacío y el dispositivo listo para llamar a :pyfunc:<code>check</code> o :pyfunc:<code>available</code>. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00462">462</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  462</span>    <span class="keyword">def </span>setup(self, powerLevel, sampleAverage, ledMode, sampleRate, pulseWidth, adcRange):</div>
+<div class="line"><span class="lineno">  463</span>        self.softReset()</div>
+<div class="line"><span class="lineno">  464</span>        <span class="comment"># FIFO Avg</span></div>
+<div class="line"><span class="lineno">  465</span>        samp_map = {1:MAX30105_SAMPLEAVG_1,2:MAX30105_SAMPLEAVG_2,4:MAX30105_SAMPLEAVG_4,</div>
+<div class="line"><span class="lineno">  466</span>                    8:MAX30105_SAMPLEAVG_8,16:MAX30105_SAMPLEAVG_16,32:MAX30105_SAMPLEAVG_32}</div>
+<div class="line"><span class="lineno">  467</span>        self.setFIFOAverage(samp_map.get(sampleAverage, MAX30105_SAMPLEAVG_4))</div>
+<div class="line"><span class="lineno">  468</span>        self.enableFIFORollover()</div>
+<div class="line"><span class="lineno">  469</span>        <span class="comment"># Mode</span></div>
+<div class="line"><span class="lineno">  470</span>        modes = {1:MAX30105_MODE_REDONLY,2:MAX30105_MODE_REDIRONLY,3:MAX30105_MODE_MULTILED}</div>
+<div class="line"><span class="lineno">  471</span>        self.setLEDMode(modes.get(ledMode, MAX30105_MODE_REDONLY))</div>
+<div class="line"><span class="lineno">  472</span>        self.activeLEDs = ledMode</div>
+<div class="line"><span class="lineno">  473</span>        <span class="comment"># ADC range</span></div>
+<div class="line"><span class="lineno">  474</span>        <span class="keywordflow">if</span>   adcRange&lt;4096:   self.setADCRange(MAX30105_ADCRANGE_2048)</div>
+<div class="line"><span class="lineno">  475</span>        <span class="keywordflow">elif</span> adcRange&lt;8192:   self.setADCRange(MAX30105_ADCRANGE_4096)</div>
+<div class="line"><span class="lineno">  476</span>        <span class="keywordflow">elif</span> adcRange&lt;16384:  self.setADCRange(MAX30105_ADCRANGE_8192)</div>
+<div class="line"><span class="lineno">  477</span>        <span class="keywordflow">elif</span> adcRange==16384: self.setADCRange(MAX30105_ADCRANGE_16384)</div>
+<div class="line"><span class="lineno">  478</span>        <span class="keywordflow">else</span>:                 self.setADCRange(MAX30105_ADCRANGE_2048)</div>
+<div class="line"><span class="lineno">  479</span>        <span class="comment"># Sample rate</span></div>
+<div class="line"><span class="lineno">  480</span>        rate_map = [(100,MAX30105_SAMPLERATE_50),</div>
+<div class="line"><span class="lineno">  481</span>                    (200,MAX30105_SAMPLERATE_100),</div>
+<div class="line"><span class="lineno">  482</span>                    (400,MAX30105_SAMPLERATE_200),</div>
+<div class="line"><span class="lineno">  483</span>                    (800,MAX30105_SAMPLERATE_400),</div>
+<div class="line"><span class="lineno">  484</span>                    (1000,MAX30105_SAMPLERATE_800),</div>
+<div class="line"><span class="lineno">  485</span>                    (1600,MAX30105_SAMPLERATE_1000),</div>
+<div class="line"><span class="lineno">  486</span>                    (3200,MAX30105_SAMPLERATE_1600)]</div>
+<div class="line"><span class="lineno">  487</span>        <span class="keywordflow">for</span> thresh,code <span class="keywordflow">in</span> rate_map:</div>
+<div class="line"><span class="lineno">  488</span>            <span class="keywordflow">if</span> sampleRate &lt; thresh:</div>
+<div class="line"><span class="lineno">  489</span>                self.setSampleRate(code)</div>
+<div class="line"><span class="lineno">  490</span>                <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  491</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  492</span>            self.setSampleRate(MAX30105_SAMPLERATE_3200 <span class="keywordflow">if</span> sampleRate==3200 <span class="keywordflow">else</span> MAX30105_SAMPLERATE_50)</div>
+<div class="line"><span class="lineno">  493</span>        <span class="comment"># Pulse width</span></div>
+<div class="line"><span class="lineno">  494</span>        pw_map = [(118,MAX30105_PULSEWIDTH_69),</div>
+<div class="line"><span class="lineno">  495</span>                  (215,MAX30105_PULSEWIDTH_118),</div>
+<div class="line"><span class="lineno">  496</span>                  (411,MAX30105_PULSEWIDTH_215)]</div>
+<div class="line"><span class="lineno">  497</span>        <span class="keywordflow">for</span> thresh,code <span class="keywordflow">in</span> pw_map:</div>
+<div class="line"><span class="lineno">  498</span>            <span class="keywordflow">if</span> pulseWidth &lt; thresh:</div>
+<div class="line"><span class="lineno">  499</span>                self.setPulseWidth(code)</div>
+<div class="line"><span class="lineno">  500</span>                <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  501</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  502</span>            self.setPulseWidth(MAX30105_PULSEWIDTH_411 <span class="keywordflow">if</span> pulseWidth==411 <span class="keywordflow">else</span> MAX30105_PULSEWIDTH_69)</div>
+<div class="line"><span class="lineno">  503</span>        <span class="comment"># LED amplitudes</span></div>
+<div class="line"><span class="lineno">  504</span>        <span class="keywordflow">for</span> fn <span class="keywordflow">in</span> (self.setPulseAmplitudeRed,</div>
+<div class="line"><span class="lineno">  505</span>                   self.setPulseAmplitudeIR,</div>
+<div class="line"><span class="lineno">  506</span>                   self.setPulseAmplitudeGreen,</div>
+<div class="line"><span class="lineno">  507</span>                   self.setPulseAmplitudeProximity):</div>
+<div class="line"><span class="lineno">  508</span>            fn(powerLevel)</div>
+<div class="line"><span class="lineno">  509</span>        <span class="comment"># Multi-LED slots</span></div>
+<div class="line"><span class="lineno">  510</span>        self.enableSlot(1, SLOT_RED_LED)</div>
+<div class="line"><span class="lineno">  511</span>        <span class="keywordflow">if</span> ledMode&gt;1: self.enableSlot(2, SLOT_IR_LED)</div>
+<div class="line"><span class="lineno">  512</span>        <span class="keywordflow">if</span> ledMode&gt;2: self.enableSlot(3, SLOT_GREEN_LED)</div>
+<div class="line"><span class="lineno">  513</span>        self.clearFIFO()</div>
+<div class="line"><span class="lineno">  514</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6edc55e72ffe6e24978338328cba27a4" name="a6edc55e72ffe6e24978338328cba27a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6edc55e72ffe6e24978338328cba27a4">&#9670;&#160;</a></span>shutDown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.shutDown </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Coloca al sensor en modo de <em>shutdown</em> de bajo consumo. </p>
+<p>Activa el bit <b>SHDN</b> en <code>MAX30105_MODECONFIG</code>, reduciendo el consumo a ~0.7 µA. El contenido del FIFO y la configuración permanecen intactos. </p><dl class="section see"><dt>Ver también</dt><dd><a class="el" href="#a4450905b60fff5def1a6a00b4817cf4a" title="Reactiva el sensor saliendo del modo shutdown.">wakeUp()</a> </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00287">287</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  287</span>    <span class="keyword">def </span>shutDown(self): self.bitMask(MAX30105_MODECONFIG, MAX30105_SHUTDOWN_MASK, MAX30105_SHUTDOWN)</div>
+<div class="line"><span class="lineno">  288</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8354e586ceb9fefeb546ace71253cf45" name="a8354e586ceb9fefeb546ace71253cf45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8354e586ceb9fefeb546ace71253cf45">&#9670;&#160;</a></span>softReset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.softReset </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Realiza un reinicio por software (<em>soft‑reset</em>) del <a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html" title="Clase que permite el manejo del sensor óptico MAX30105.">MAX30105</a>. </p>
+<p>Establece el bit <b>RESET</b> en <code>MAX30105_MODECONFIG</code>; el dispositivo lo borra automáticamente una vez completada la secuencia interna (~50 ms). Este método sondea el registro durante un máximo de 100 ms hasta que el bit se libere.</p>
+<dl class="section post"><dt>Postcondición</dt><dd>Tras el reinicio se pierde la configuración volátil; se recomienda volver a llamar a :pymeth:<code>setup</code> o reconfigurar los registros. </dd></dl>
+<dl class="section note"><dt>Nota</dt><dd>Se introduce un retardo de 1 ms entre sondeos para reducir el bus I²C. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00274">274</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  274</span>    <span class="keyword">def </span>softReset(self):</div>
+<div class="line"><span class="lineno">  275</span>        self.bitMask(MAX30105_MODECONFIG, MAX30105_RESET_MASK, MAX30105_RESET)</div>
+<div class="line"><span class="lineno">  276</span>        start = time.ticks_ms()</div>
+<div class="line"><span class="lineno">  277</span>        <span class="keywordflow">while</span> time.ticks_diff(time.ticks_ms(), start) &lt; 100:</div>
+<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">if</span> (self.readRegister(MAX30105_MODECONFIG) &amp; MAX30105_RESET)==0:</div>
+<div class="line"><span class="lineno">  279</span>                <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  280</span>            time.sleep_ms(1)</div>
+<div class="line"><span class="lineno">  281</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4450905b60fff5def1a6a00b4817cf4a" name="a4450905b60fff5def1a6a00b4817cf4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4450905b60fff5def1a6a00b4817cf4a">&#9670;&#160;</a></span>wakeUp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.wakeUp </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reactiva el sensor saliendo del modo <em>shutdown</em>. </p>
+<p>Borra el bit <b>SHDN</b> en <code>MAX30105_MODECONFIG</code> y restaura el funcionamiento normal. Se recomienda un retardo de ≈1 ms antes de acceder a nuevos datos. </p><dl class="section see"><dt>Ver también</dt><dd><a class="el" href="#a6edc55e72ffe6e24978338328cba27a4" title="Coloca al sensor en modo de shutdown de bajo consumo.">shutDown()</a> </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00294">294</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  294</span>    <span class="keyword">def </span>wakeUp(self):   self.bitMask(MAX30105_MODECONFIG, MAX30105_SHUTDOWN_MASK, MAX30105_WAKEUP)</div>
+<div class="line"><span class="lineno">  295</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a80dd30f1d57153bb50a98f2b6d26dcd6" name="a80dd30f1d57153bb50a98f2b6d26dcd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80dd30f1d57153bb50a98f2b6d26dcd6">&#9670;&#160;</a></span>writeRegister()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.writeRegister </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>reg</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>val</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Escribe un byte en un registro del sensor. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reg</td><td>Dirección del registro a escribir. </td></tr>
+    <tr><td class="paramname">val</td><td>Valor de 8 bits que se desea escribir. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>True si la escritura fue exitosa; False si falló. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00203">203</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  203</span>    <span class="keyword">def </span>writeRegister(self, reg, val):</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  205</span>            self.i2c.writeto_mem(self.addr, reg, bytes([val]))</div>
+<div class="line"><span class="lineno">  206</span>            <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  207</span>        <span class="keywordflow">except</span>:</div>
+<div class="line"><span class="lineno">  208</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  209</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Documentación de datos miembro</h2>
+<a id="a1cdcdde89f9a3120b80d0ee1ae265940" name="a1cdcdde89f9a3120b80d0ee1ae265940"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cdcdde89f9a3120b80d0ee1ae265940">&#9670;&#160;</a></span>activeLEDs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.max30102.MAX30105.activeLEDs = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00162">162</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="aa9fdbbba159c13bfd520a68323f848b3" name="aa9fdbbba159c13bfd520a68323f848b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9fdbbba159c13bfd520a68323f848b3">&#9670;&#160;</a></span>addr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.addr = addr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00160">160</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="aa002463880425ad2887d5c3e513a3750" name="aa002463880425ad2887d5c3e513a3750"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa002463880425ad2887d5c3e513a3750">&#9670;&#160;</a></span>green</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">list max30102.max30102.MAX30105.green = [0]*<a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#a283819a785c5952aec403ce889637258">STORAGE_SIZE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00169">169</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="a3b2460b04b39a7427f8a51f6bb4daffe" name="a3b2460b04b39a7427f8a51f6bb4daffe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b2460b04b39a7427f8a51f6bb4daffe">&#9670;&#160;</a></span>head</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.max30102.MAX30105.head = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00165">165</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="aed1baf9cc7074a4e16038e041cd446dc" name="aed1baf9cc7074a4e16038e041cd446dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed1baf9cc7074a4e16038e041cd446dc">&#9670;&#160;</a></span>i2c</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.i2c = i2c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00159">159</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="a7a69dd42570d41f02fa7d1218acebea9" name="a7a69dd42570d41f02fa7d1218acebea9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a69dd42570d41f02fa7d1218acebea9">&#9670;&#160;</a></span>IR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">list max30102.max30102.MAX30105.IR = [0]*<a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#a283819a785c5952aec403ce889637258">STORAGE_SIZE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00168">168</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="ad56cff0d327ebe4230a30e85eadc8c2d" name="ad56cff0d327ebe4230a30e85eadc8c2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad56cff0d327ebe4230a30e85eadc8c2d">&#9670;&#160;</a></span>red</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">list max30102.max30102.MAX30105.red = [0]*<a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#a283819a785c5952aec403ce889637258">STORAGE_SIZE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00167">167</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="a64db843dc3bf02c0891720a8943daa1d" name="a64db843dc3bf02c0891720a8943daa1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64db843dc3bf02c0891720a8943daa1d">&#9670;&#160;</a></span>revisionID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.max30102.MAX30105.revisionID = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00161">161</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="ade2b7ecf92a9fdf046e8d380d6484eb3" name="ade2b7ecf92a9fdf046e8d380d6484eb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade2b7ecf92a9fdf046e8d380d6484eb3">&#9670;&#160;</a></span>setPulseAmplitudeGreen</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setPulseAmplitudeGreen</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00506">506</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="a2da9c18281447e7e6d79e57899029550" name="a2da9c18281447e7e6d79e57899029550"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2da9c18281447e7e6d79e57899029550">&#9670;&#160;</a></span>setPulseAmplitudeIR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setPulseAmplitudeIR</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00505">505</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="aaf18f42e7fc4fee595cfaf9c69b15899" name="aaf18f42e7fc4fee595cfaf9c69b15899"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf18f42e7fc4fee595cfaf9c69b15899">&#9670;&#160;</a></span>setPulseAmplitudeProximity</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setPulseAmplitudeProximity</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00507">507</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="a57eed9dc5cf88b9f823b4e11b83e029d" name="a57eed9dc5cf88b9f823b4e11b83e029d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57eed9dc5cf88b9f823b4e11b83e029d">&#9670;&#160;</a></span>setPulseAmplitudeRed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max30102.max30102.MAX30105.setPulseAmplitudeRed = 411 else <a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html#aeb569a5566ac1073e830133ba6ec7386">MAX30105_PULSEWIDTH_69</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00504">504</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<a id="afdf8d07b3892d87ce5a435a6a555fa73" name="afdf8d07b3892d87ce5a435a6a555fa73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdf8d07b3892d87ce5a435a6a555fa73">&#9670;&#160;</a></span>tail</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int max30102.max30102.MAX30105.tail = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="../../dc/d63/max30102_8py_source.html#l00166">166</a> del archivo <a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a>.</p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<li>lib/max30102/<a class="el" href="../../dc/d63/max30102_8py_source.html">max30102.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../d2/d5b/namespacemax30102.html">max30102</a></li><li class="navelem"><a class="el" href="../../d8/d17/namespacemax30102_1_1max30102.html">max30102</a></li><li class="navelem"><a class="el" href="../../dd/d88/classmax30102_1_1max30102_1_1_m_a_x30105.html">MAX30105</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

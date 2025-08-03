@@ -19,16 +19,26 @@ Y los muestra a través de una pantalla OLED I2C (SSD1306), si está conectada.
 .
 ├── lib/
 │   ├── max30102/
-│   │   ├── __init__.py         # Inicialización del paquete del sensor
-│   │   ├── heartrate.py        # Cálculo de BPM a partir de las muestras del sensor
-│   │   ├── max30102.py         # Controlador del sensor MAX30102
-│   │   └── oxygen.py           # Estimación de SpO₂ (saturación de oxígeno)
-│   └── ssd1306/
-│       ├── __init__.py         # Inicialización del paquete OLED
-│       └── ssd1306.py          # Controlador de la pantalla OLED (basado en MicroPython)
-├── main.py                     # Script principal de ejecución en el ESP32
-├── upload.sh                   # Script Bash para subir automáticamente los archivos al ESP32
-├── README.md                   # Este archivo
+│   │   ├── __init__.py             # Inicialización del paquete del sensor
+│   │   ├── heartrate.py            # Cálculo de BPM a partir de las muestras del sensor
+│   │   ├── max30102.py             # Controlador del sensor MAX30102
+│   │   ├── oxygen.py               # Estimación de SpO₂ (saturación de oxígeno)
+│   │   ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la libreria
+│   │   └── LICENSE                 # Archivo de licencia de la libreria
+│   │── ssd1306/
+│   │   ├── __init__.py             # Inicialización del paquete OLED
+│   │   │── ssd1306.py              # Controlador de la pantalla OLED (basado en MicroPython)
+│   │   ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la libreria
+│   │   └── LICENSE                 # Archivo de licencia de la libreria
+│   └── firebase_data_send/
+│       ├── __init__.py             # Inicialización del paquete de envio de datos a Firebase
+│       └── FirebaseRawSender.py    # Clase con funciones para enviar los datos a Firebase
+│       ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la libreria
+│       └── LICENSE                 # Archivo de licencia de la libreria
+├── main.py                         # Script principal de ejecución en el ESP32
+├── upload.sh                       # Script Bash para subir automáticamente los archivos al ESP32
+├── LICENSE                         # Archivo de licencia del proyecto
+├── README.md                       # Este archivo
 ```
 
 ---
@@ -61,6 +71,8 @@ Y los muestra a través de una pantalla OLED I2C (SSD1306), si está conectada.
    ```
 
 ---
+## 🛜 Configuracion de tu red wifi
+En el archivo main.py añade las credenciales de tu red para conectarte a la red wifi disponible
 
 ## 🚀 Instalación en el ESP32
 
@@ -84,10 +96,23 @@ Este script:
 
 ---
 
+## 🔧 Conexion con el sensor
+
+```
+ESP32                     MAX30102
+┌───────────┐             ┌─────────┐
+│ 3V3  ───────────────► VCC │
+│ GND  ───────────────► GND │
+│ GPIO21 (SDA) ───────► SDA │
+│ GPIO22 (SCL) ───────► SCL │
+└───────────┘             └─────────┘
+
+```
+
 ## 🩺 Uso
 
 1. Conecta el sensor Max30102 a los pines I2C del ESP32 (por defecto SDA: GPIO21, SCL: GPIO22).
-2. (Opcional) Conecta la pantalla OLED SSD1306 por I2C.
+2. (Opcional) Conecta la pantalla OLED SSD1306 al mismo bus I2C.
 3. Abre un monitor serial:
    ```bash
    screen /dev/tty.usbserial-0001 115200

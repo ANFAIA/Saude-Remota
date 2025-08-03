@@ -6,7 +6,7 @@
 #  internas y obtener la temperatura del chip.
 #
 #  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandez13Uclm
+#  @contact github.com/afernandezLuc
 #  @version 1.0.0
 #  @date 2025-08-02
 #  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez

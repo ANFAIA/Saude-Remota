@@ -2,3 +2,4 @@ tensorflow
 scikit-learn
 pandas
 numpy
+ampy

@@ -21,7 +21,7 @@
 #
 #  @dependencies adafruit‑ampy ≥ 1.1.0 (pip install adafruit‑ampy)
 #  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandez13Uclm
+#  @contact github.com/afernandezLuc
 #  @version 1.0.0
 #  @date 2025‑08‑02
 #  @license MIT

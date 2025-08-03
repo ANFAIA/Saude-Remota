@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Saude Remota: Archivo de código fuente lib/predictionModel/modeloIA/procesar_mimic_demo.py</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Saude Remota<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Sistema de monitorización remota de salud basado en el sensor MAX30102. Permite medir ritmo cardíaco en tiempo real y emplea IA para detectar anomalías y generar alertas automáticas. Ideal para aplicaciones de telemedicina en dispositivos embebidos como el ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('d6/dad/procesar__mimic__demo_8py_source.html','../../'); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">procesar_mimic_demo.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d6/dad/procesar__mimic__demo_8py.html">Ir a la documentación de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html">    1</a></span><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">#Importa la librería pandas, que sirve para manipular datos tabulares (como los csv)</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a3af9aabd4d65afd254cfee7155d76b3f">    3</a></span>items = pd.read_csv(<span class="stringliteral">&quot;lib/predictionModel/dataset/mimic-iv-clinical-database-demo-2.2/icu/d_items.csv.gz&quot;</span>, compression=<span class="stringliteral">&quot;gzip&quot;</span>)</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html#aad65502229e9d31ff55ed2f2fc86f54c">    4</a></span>chartevents = pd.read_csv(<span class="stringliteral">&quot;lib/predictionModel/dataset/mimic-iv-clinical-database-demo-2.2/icu/chartevents.csv.gz&quot;</span>, compression=<span class="stringliteral">&quot;gzip&quot;</span>)</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a326496c7c9ae1cf0e5bc5b74692c8eca">    5</a></span>patients = pd.read_csv(<span class="stringliteral">&quot;lib/predictionModel/dataset/mimic-iv-clinical-database-demo-2.2/hosp/patients.csv.gz&quot;</span>, compression=<span class="stringliteral">&quot;gzip&quot;</span>)</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">#Carga tres archivos del dataset MIMIC-IV demo: chartevents.csv (contiene miles de registros de signos vitales por paciente), d_items.csv y patients.csv (tiene datos básicos por paciente)</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a0f1cc0ec0a74f4decfcec4eb959336b5">    7</a></span>ITEMID_MAP = {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    220045: <span class="stringliteral">&#39;heart_rate&#39;</span>,      </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    220277: <span class="stringliteral">&#39;spo2&#39;</span>,            </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    223761: <span class="stringliteral">&#39;temperature&#39;</span>      </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>}</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">#Define qué itemid corresponde a qué variable, esto se extrae del diccionario d_items.csv</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a0df676033268260aa0527630eb8ced25">   13</a></span>vitals = chartevents[chartevents[<span class="stringliteral">&#39;itemid&#39;</span>].isin(ITEMID_MAP.keys())].copy()</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">#vitals selecciona sOlo las filas que contienen los itemid de las variables que interesan</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>vitals[<span class="stringliteral">&#39;label&#39;</span>] = vitals[<span class="stringliteral">&#39;itemid&#39;</span>].map(ITEMID_MAP)</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">#vitals[&#39;label&#39;] crea una nueva columna llamada label con el nombre legible de la variable </span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a2a2055ac0586777d1876c916eb50da47">   17</a></span>temp_idx = (vitals[<span class="stringliteral">&#39;itemid&#39;</span>] == 223761) &amp; (vitals[<span class="stringliteral">&#39;valuenum&#39;</span>] &gt; 80)</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>vitals.loc[temp_idx, <span class="stringliteral">&#39;valuenum&#39;</span>] = (vitals.loc[temp_idx, <span class="stringliteral">&#39;valuenum&#39;</span>] - 32) * (5/9)</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">#Convertir temperaturas sospechosamente altas (&gt;80) de Fahrenheit a Celsius</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html#a9f0e4bd7e54c11b09938e16c3dba8ef6">   20</a></span>pivot = (vitals</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>         .groupby([<span class="stringliteral">&#39;subject_id&#39;</span>, <span class="stringliteral">&#39;label&#39;</span>])[<span class="stringliteral">&#39;valuenum&#39;</span>]</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>         .mean()</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>         .unstack())</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">#Agrupa por subject_id (paciente) y label (variable), y calcula el promedio de los valores (valuenum), como resultado se obtiene una tabla con una fila por paciente y una columna por variable</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>pivot = pivot.dropna(thresh=2)</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">#Elimina a los pacientes que tengan menos de 2 de las 3 variables disponibles (para no trabajar con datos demasiado incompletos)</span></div>
+<div class="foldopen" id="foldopen00027" data-start="" data-end="">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html#aa3a2dd0097d0b6edb7ba9f1a9140fa8d">   27</a></span><span class="keyword">def </span><a class="code hl_variable" href="../../da/d7b/namespaceprocesar__mimic__demo.html#aa5d6ad28d2214615d0af7001b41ff0ba">clasifica_riesgo</a>(row):</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> int(</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        (row.get(<span class="stringliteral">&#39;heart_rate&#39;</span>, 0) &gt; 100) <span class="keywordflow">or</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        (row.get(<span class="stringliteral">&#39;heart_rate&#39;</span>, 0) &lt; 60) <span class="keywordflow">or</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        (row.get(<span class="stringliteral">&#39;spo2&#39;</span>, 100) &lt; 95) <span class="keywordflow">or</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        (row.get(<span class="stringliteral">&#39;temperature&#39;</span>, 0) &gt; 37.5) <span class="keywordflow">or</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        (row.get(<span class="stringliteral">&#39;temperature&#39;</span>, 0) &lt; 36)</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    )</div>
+</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="../../da/d7b/namespaceprocesar__mimic__demo.html#af2b8f93149380730a6e64782e28a136e">   35</a></span>pivot[<span class="stringliteral">&#39;riesgo&#39;</span>] = pivot.apply(clasifica_riesgo, axis=1)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">#Define una función que analiza cada fila y devuelve: 1 (riesgo) si frecuencia cardíaca &gt; 100 o SpO₂ &lt; 95 o temperatura &gt; 37.5 °C, y 0 si todo está dentro del rango normal, aplica la función a cada fila del DataFrame (axis=1) y guarda el resultado en la nueva columna riesgo</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>pivot.to_csv(<span class="stringliteral">&quot;mimic_demo_riesgo.csv&quot;</span>)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>print(<span class="stringliteral">&quot;Archivo mimic_demo_riesgo.csv creado con éxito.&quot;</span>)</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">#Guarda el DataFrame procesado en un nuevo archivo mimic_demo_riesgo.csv y muestra un mensaje en consola para confirmar que todo fue bien</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="ttc" id="anamespaceprocesar__mimic__demo_html_aa5d6ad28d2214615d0af7001b41ff0ba"><div class="ttname"><a href="../../da/d7b/namespaceprocesar__mimic__demo.html#aa5d6ad28d2214615d0af7001b41ff0ba">procesar_mimic_demo.clasifica_riesgo</a></div><div class="ttdeci">clasifica_riesgo</div><div class="ttdef"><b>Definition</b> <a href="#l00035">procesar_mimic_demo.py:35</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="../../dir_9976e9a11bba37f798035b1e1c066801.html">predictionModel</a></li><li class="navelem"><a class="el" href="../../dir_2208201784643e6242e7651e98a6ae3e.html">modeloIA</a></li><li class="navelem"><a class="el" href="../../d6/dad/procesar__mimic__demo_8py.html">procesar_mimic_demo.py</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -12,7 +12,7 @@ import tensorflow as tf                               # Para guardar el modelo e
 # 2. Cargar y preparar los datos
 # ============================
 # Carga los datos preprocesados desde un archivo csv 
-df = pd.read_csv("dataset_final_entrenamiento.csv")  
+df = pd.read_csv("lib/predictionModel/dataset/dataset_final_entrenamiento.csv")  
 
 # Separa las columnas de entrada (X) y la etiqueta objetivo (y)
 X = df[["spo2", "heart_rate", "temperature"]].values   # Variables de entrada
@@ -64,14 +64,10 @@ y_pred_classes = (y_pred > 0.5).astype(int)
 print(classification_report(y_test, y_pred_classes))
 
 # ============================
-# 5. Guardar el modelo como .tflite
+# 5. Guardar el modelo
 # ============================
-# Convierte el modelo entrenado al formato TensorFlow Lite
-converter = tf.lite.TFLiteConverter.from_keras_model(model)
-tflite_model = converter.convert()
 
-# Guarda el modelo TFLite en un archivo
-with open("modelo_ia_riesgo.tflite", "wb") as f:
-    f.write(tflite_model)
+weights = model.get_weights()
+np.save("lib/predictionModel/modeloIA/pesos.npy", np.array(weights, dtype=object), allow_pickle=True)
 
-print("Modelo guardado como modelo_ia_riesgo.tflite")
+np.savez("lib/predictionModel/modeloIA/escala.npz", mean=scaler.mean_, scale=scaler.scale_)

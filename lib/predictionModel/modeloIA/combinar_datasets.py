@@ -26,5 +26,5 @@ df_total = pd.concat([demo, riesgo_1], ignore_index=True)
 df_total = shuffle(df_total, random_state=42)
 
 #Guardar el archivo combinado
-df_total.to_csv("dataset_final_entrenamiento.csv", index=False)
+df_total.to_csv("lib/predictionModel/dataset/dataset_final_entrenamiento.csv", index=False)
 print("Dataset combinado guardado como 'dataset_final_entrenamiento.csv'")

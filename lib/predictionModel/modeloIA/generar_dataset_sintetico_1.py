@@ -32,6 +32,6 @@ df_riesgo_1 = pd.DataFrame({
 })
 
 #Guardar a CSV
-df_riesgo_1.to_csv("datos_sinteticos_riesgo_1.csv", index=False)
+df_riesgo_1.to_csv("lib/predictionModel/dataset/datos_sinteticos_riesgo_1.csv", index=False)
 
 print("Datos sintéticos con riesgo 1 generados y guardados")

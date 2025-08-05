@@ -34,7 +34,7 @@ def clasifica_riesgo(row):
     )
 pivot['riesgo'] = pivot.apply(clasifica_riesgo, axis=1)
 #Define una función que analiza cada fila y devuelve: 1 (riesgo) si frecuencia cardíaca > 100 o SpO₂ < 95 o temperatura > 37.5 °C, y 0 si todo está dentro del rango normal, aplica la función a cada fila del DataFrame (axis=1) y guarda el resultado en la nueva columna riesgo
-pivot.to_csv("mimic_demo_riesgo.csv")
+pivot.to_csv("lib/predictionModel/dataset/mimic_demo_riesgo.csv")
 print("Archivo mimic_demo_riesgo.csv creado con éxito.")
 #Guarda el DataFrame procesado en un nuevo archivo mimic_demo_riesgo.csv y muestra un mensaje en consola para confirmar que todo fue bien
 

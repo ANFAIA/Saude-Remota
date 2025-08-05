@@ -30,6 +30,7 @@ from lib.max30102.heartrate import HeartRate
 from lib.max30102.oxygen import OxygenSaturation
 from lib.ssd1306.ssd1306 import SSD1306
 from lib.firebase_data_send.FirebaseRawSender import FirebaseRawSender
+from lib.predictionModel.modeloIA.pesos_modelo import predict
 
 # -----------------------------------------------------------------------------
 # --------------------------------- MAIN DATA ---------------------------------
@@ -266,8 +267,22 @@ try:
                     print(f"Temperatura: {temperature:.2f}°C")
                     if spo2_valid:
                         print(f"SpO2: {spo2}%")
-                if bpm_valid and spo2_valid: # aqui seria conveniente crear una variable que diga cuando la salida del modelo esta lista<------------------- IRENE GALLARDO
-                    #TODO: enviar a Firebase AQUI LA SALIDA DE PREDICCIÓN DEL MODELO!!!!!!!!!!!!!!!!!!!!!!!!! <------------------- IRENE GALLARDO
+                if bpm_valid and spo2_valid: 
+                    temperature = sensor.readTemperature()
+                    entrada_modelo = [spo2, bpm, temperature]
+                    label, prob = predict(entrada_modelo)
+
+                    if printSerial:
+                        print(f"Probabilidad de riesgo: {prob:.4f}")
+                        print("Clasificación:", "Riesgo" if label == 1 else "No riesgo")
+
+                    sender.send_measurement(
+                        temperature=temperature,
+                        bmp=bpm,
+                        spo2=spo2,
+                        modelPrecision=round(prob, 4),
+                        riskScore=label
+                )
                     if printSerial:
                         print("Enviando datos a Firebase...")
                     sender.send_measurement(temperature=temperature, bmp=bpm, spo2=spo2, modelPrecision = 0, riskScore = 0)

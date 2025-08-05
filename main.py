@@ -31,6 +31,7 @@ from lib.max30102.oxygen import OxygenSaturation
 from lib.ssd1306.ssd1306 import SSD1306
 from lib.firebase_data_send.FirebaseRawSender import FirebaseRawSender
 from lib.predictionModel.modeloIA.pesos_modelo import predict
+from configuracion import WIFI_CONFIG, FIREBASE_CONFIG
 
 # -----------------------------------------------------------------------------
 # --------------------------------- MAIN DATA ---------------------------------
@@ -65,19 +66,12 @@ hr = HeartRate()
 ox = OxygenSaturation(sample_rate_hz=SAMPLE_RATE)
 
 # Inicializa el sender de Firebase
-# ----------------------- AÑADE AQUÍ TUS CREDENCIALES WIFI-----------------------   
-config = {
-    "ssid": "YOUR_WIFI_SSID",
-    "password": "YOUR_WIFI_PASSWORD"
-}
-
-# ----------------------- AÑADE AQUÍ TUS CREDENCIALES DE FIREBASE-----------------------   
 sender = FirebaseRawSender(
-    email="rawdata@sauderemota.com",
-    password="rawdata2025",
-    api_key="AIzaSyCZPe0DeM15cQiU7tzpQ5qsI6XtUqXvJ7E",
-    database_url="https://saude-remota-default-rtdb.europe-west1.firebasedatabase.app",
-    wifi_config=config
+    email=FIREBASE_CONFIG["email"],
+    password=FIREBASE_CONFIG["password"],
+    api_key=FIREBASE_CONFIG["api_key"],
+    database_url=FIREBASE_CONFIG["database_url"],
+    wifi_config=WIFI_CONFIG
 )
 
 # Variables de estado

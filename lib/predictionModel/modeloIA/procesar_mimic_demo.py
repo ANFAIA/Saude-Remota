@@ -26,7 +26,7 @@ pivot = pivot.dropna(thresh=2)
 #Elimina a los pacientes que tengan menos de 2 de las 3 variables disponibles (para no trabajar con datos demasiado incompletos)
 def clasifica_riesgo(row):
     return int(
-        (row.get('heart_rate', 0) > 100) or
+        (row.get('heart_rate', 0) > 90) or
         (row.get('heart_rate', 0) < 60) or
         (row.get('spo2', 100) < 95) or
         (row.get('temperature', 0) > 37.5) or

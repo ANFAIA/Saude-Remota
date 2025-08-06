@@ -3,7 +3,7 @@ from sklearn.utils import shuffle
 
 #Cargar los dos archivos
 demo = pd.read_csv("lib/predictionModel/dataset/mimic_demo_riesgo.csv")
-riesgo_1 = pd.read_csv("lib/predictionModel/dataset/datos_sinteticos_riesgo_1.csv")
+human = pd.read_csv("lib/predictionModel/dataset/human_dataset_label.csv")
 
 #Renombrar columnas si hace falta
 demo = demo.rename(columns={
@@ -12,15 +12,15 @@ demo = demo.rename(columns={
     "spo2": "spo2",
     "riesgo": "label"
 })
-riesgo_1 = riesgo_1.rename(columns={"riesgo": "label"})
+human = human.rename(columns={"riesgo": "label"})
 
 #Seleccionar columnas en común
 cols = ["spo2", "heart_rate", "temperature", "label"]
 demo = demo[cols]
-riesgo_1 = riesgo_1[cols]
+human = human[cols]
 
 #Combinar los dos datasets
-df_total = pd.concat([demo, riesgo_1], ignore_index=True)
+df_total = pd.concat([demo, human], ignore_index=True)
 
 #Mezclar las filas para que no estén ordenadas por tipo
 df_total = shuffle(df_total, random_state=42)

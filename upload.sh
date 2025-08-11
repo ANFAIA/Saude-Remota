@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# ===============================
-#  upload.sh para ESP32 (ampy)
-# ===============================
-# Uso:
-#   ./upload.sh /dev/ttyUSB0
-# ===============================
-
 if ! command -v ampy &> /dev/null; then
   echo "El comando 'ampy' no está instalado."
   echo "Instálalo con:"
@@ -40,10 +33,10 @@ function borrar_remoto_recursivo() {
       continue
     fi
     if [[ "$archivo" == *.* ]]; then
-      ampy --port "$PORT" rm "$full_path" || true
+      ampy --port "$PORT" rm "$full_path" 2>/dev/null || true
     else
       borrar_remoto_recursivo "$full_path"
-      ampy --port "$PORT" rmdir "$full_path" || true
+      ampy --port "$PORT" rmdir "$full_path" 2>/dev/null || true
     fi
   done <<< "$archivos"
 }

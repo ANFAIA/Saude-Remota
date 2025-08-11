@@ -1,8 +1,7 @@
 import math
 import ujson  # MicroPython usa ujson en vez de json
 
-# ==== 1. Cargar pesos y biases desde archivos JSON ====
-# Rutas absolutas en el sistema de archivos del ESP32
+# ==== 1. Cargar pesos y biases desde archivo JSON ====
 PESOS_PATH = "/lib/predictionModel/modeloIA/pesos.json"
 ESCALA_PATH = "/lib/predictionModel/modeloIA/escala.json"
 
@@ -10,16 +9,16 @@ def _load_json(path):
     with open(path) as f:
         return ujson.load(f)
 
-# Cargar pesos
+# Cargar pesos (lista)
 pesos = _load_json(PESOS_PATH)
-W1 = pesos["W1"]
-b1 = pesos["b1"]
-W2 = pesos["W2"]
-b2 = pesos["b2"]
-W3 = pesos["W3"]
-b3 = pesos["b3"]
+W1 = pesos[0]
+b1 = pesos[1]
+W2 = pesos[2]
+b2 = pesos[3]
+W3 = pesos[4]
+b3 = pesos[5]
 
-# Cargar escalas
+# Cargar escalas (diccionario)
 escala = _load_json(ESCALA_PATH)
 mean = escala["mean"]
 scale = escala["scale"]

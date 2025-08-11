@@ -1,106 +1,87 @@
 #!/bin/bash
-set -euo pipefail
 
-# ================================
-#  Subida fiable de .py al ESP32
-# ================================
+# ===============================
+#  upload.sh para ESP32 (ampy)
+# ===============================
+# Uso:
+#   ./upload.sh /dev/ttyUSB0
+# ===============================
 
-# --- Config ---
-DELAY="${AMPY_DELAY:-1}"      # segundos de delay para ampy (subidas más estables)
-PAUSA="0.4"                   # pausa entre subidas
-PORT_ARG="${1:-}"             # puerto opcional por argumento
-
-# --- Dependencias ---
-if ! command -v ampy >/dev/null 2>&1; then
-  echo "❌ 'ampy' no está instalado. Instálalo con:  pipx install adafruit-ampy"
+if ! command -v ampy &> /dev/null; then
+  echo "El comando 'ampy' no está instalado."
+  echo "Instálalo con:"
+  echo "pip install adafruit-ampy"
   exit 1
 fi
 
-# --- Detectar puerto si no se proporciona ---
-detectar_puerto() {
-  # Intentar USB primero, luego ACM
-  for p in /dev/ttyUSB* /dev/ttyACM*; do
-    [ -e "$p" ] && echo "$p" && return 0
-  done
-  return 1
-}
-
-if [ -n "$PORT_ARG" ]; then
-  PORT="$PORT_ARG"
-else
-  PORT="$(detectar_puerto || true)"
-  if [ -z "${PORT:-}" ]; then
-    echo "❌ No se encontró puerto serie. Conecta el ESP32 y prueba: ls /dev/ttyUSB* /dev/ttyACM*"
-    echo "   También puedes ejecutar: $0 /dev/ttyUSB0"
-    exit 1
-  fi
-fi
-
-echo "🔌 Usando puerto: $PORT  (delay=${DELAY}s)"
-
-# --- Comprobar que nadie esté usando el puerto (p.ej. Thonny) ---
-if lsof "$PORT" >/dev/null 2>&1; then
-  echo "❌ El puerto $PORT está en uso por otro proceso. Cierra Thonny/Arduino/REPL y vuelve a intentar."
-  lsof "$PORT" || true
+if [ -z "$1" ]; then
+  echo "Uso: $0 <PUERTO_SERIAL>"
+  echo "Ejemplo: $0 /dev/ttyUSB0"
   exit 1
 fi
 
-# --- Función para crear directorio remoto (anidado) ---
-mkpath_remote() {
-  local dir="$1"
-  [ -z "$dir" ] && return 0
-  IFS='/' read -r -a parts <<< "$dir"
-  local path=""
-  for part in "${parts[@]}"; do
-    [ -z "$part" ] && continue
-    path="$path/$part"
-    # ignorar error si ya existe
-    ampy --delay "$DELAY" --port "$PORT" mkdir "$path" >/dev/null 2>&1 || true
-    sleep "$PAUSA"
-  done
-}
+PORT="$1"
 
-# --- Subir un archivo asegurando su directorio ---
-put_file() {
-  local src="$1"
-  local dst="${src#./}"           # quitar ./ inicial
-  local dir
-  dir="$(dirname "$dst")"
-  [ "$dir" = "." ] && dir=""      # raíz
-  if [ -n "$dir" ]; then
-    mkpath_remote "$dir"
+# ====== Función para borrar recursivamente (excepto boot.py) ======
+function borrar_remoto_recursivo() {
+  local path="$1"
+  local archivos
+  archivos=$(ampy --port "$PORT" ls "$path" 2>/dev/null)
+
+  if [ -z "$archivos" ]; then
+    return
   fi
-  echo "➡  $dst"
-  ampy --delay "$DELAY" --port "$PORT" put "$src" "$dst"
-  sleep "$PAUSA"
+
+  while read -r archivo; do
+    archivo=${archivo//$'\r'/}
+    [ -z "$archivo" ] && continue
+    full_path="$path/$archivo"
+    if [[ "$archivo" == "boot.py" ]]; then
+      continue
+    fi
+    if [[ "$archivo" == *.* ]]; then
+      ampy --port "$PORT" rm "$full_path" || true
+    else
+      borrar_remoto_recursivo "$full_path"
+      ampy --port "$PORT" rmdir "$full_path" || true
+    fi
+  done <<< "$archivos"
 }
 
-# --- Lista de archivos a subir (orden sugerido) ---
-# 1) configuracion.py si existe (con tus claves)
-ARCHIVOS=()
-[ -f "./configuracion.py" ] && ARCHIVOS+=("./configuracion.py")
+echo "[1/4] Borrando archivos del ESP32 (excepto boot.py)..."
+borrar_remoto_recursivo ""
 
-# 2) librerías primero (para que main.py encuentre imports)
-while IFS= read -r f; do ARCHIVOS+=("$f"); done < <(find ./lib -type f -name "*.py" 2>/dev/null | sort)
+# ====== Función para subir un archivo y crear carpeta si no existe ======
+function subir_archivo() {
+  local archivo="$1"
+  local destino="$2"
+  local carpeta
+  carpeta=$(dirname "$destino")
 
-# 3) el resto de .py excepto main.py y configuracion.py
-while IFS= read -r f; do
-  [[ "$f" == "./main.py" ]] && continue
-  [[ "$f" == "./configuracion.py" ]] && continue
-  ARCHIVOS+=("$f")
-done < <(find . -maxdepth 1 -type f -name "*.py" | sort)
+  if [ "$carpeta" != "." ]; then
+    ampy --port "$PORT" mkdir "$carpeta" 2>/dev/null || true
+  fi
 
-# 4) main.py al final
-[ -f "./main.py" ] && ARCHIVOS+=("./main.py")
+  ampy --port "$PORT" put "$archivo" "$destino"
+}
 
-# --- Resumen ---
-echo "📤 Subiendo archivos al ESP32..."
-for f in "${ARCHIVOS[@]}"; do
-  put_file "$f"
+echo "[2/4] Subiendo archivos .py..."
+while IFS= read -r -d '' archivo; do
+  destino="${archivo#./}"
+  subir_archivo "$archivo" "$destino"
+done < <(find . -type f -name "*.py" -print0)
+
+echo "[3/4] Subiendo archivos del modelo..."
+for modelo_file in "./lib/predictionModel/modeloIA/pesos.json" "./lib/predictionModel/modeloIA/escala.json"; do
+  if [ -f "$modelo_file" ]; then
+    destino="${modelo_file#./}"
+    subir_archivo "$modelo_file" "$destino"
+  else
+    echo "⚠️  Aviso: No se encontró $modelo_file"
+  fi
 done
 
-echo "🔁 Reset suave del micro (opcional)…"
-ampy --delay "$DELAY" --port "$PORT" reset || true
+echo "[4/4] Mostrando estructura de archivos en el ESP32:"
+ampy --port "$PORT" ls -r
 
-echo "✅ Hecho. Estructura en el dispositivo:"
-ampy --delay "$DELAY" --port "$PORT" ls || true
+echo "✅ Subida completa."

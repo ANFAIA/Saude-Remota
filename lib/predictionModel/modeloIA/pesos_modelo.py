@@ -1,72 +1,94 @@
+# pesos_modelo.py — versión MicroPython (sin numpy)
 import math
-import numpy as np
 import os
 
-# ==== 1. Cargar pesos y biases dinámicamente ====
-# Obtener la ruta del directorio actual del script
-current_dir = os.path.dirname(os.path.abspath(__file__))
+try:
+    import ujson as json  # MicroPython
+except ImportError:
+    import json           # por si se ejecuta en CPython
 
-# Cargar pesos del modelo desde archivo .npy
-pesos_path = os.path.join(current_dir, "pesos.npy")
-pesos = np.load(pesos_path, allow_pickle=True)
+# --- util path: carpeta donde está este archivo ---
+def _this_dir():
+    try:
+        # MicroPython suele exponer __file__
+        d = __file__
+    except NameError:
+        # fallback si no existe (poco probable en MP)
+        d = ""
+    if not d:
+        return "."
+    parts = d.split("/")
+    return "/".join(parts[:-1]) or "."
 
-# Extraer pesos y biases de cada capa
-W1 = pesos[0].tolist()  # Primera capa - pesos
-b1 = pesos[1].tolist()  # Primera capa - bias
+_CUR = _this_dir()
 
-W2 = pesos[2].tolist()  # Segunda capa - pesos
-b2 = pesos[3].tolist()  # Segunda capa - bias
+def _load_json(name):
+    with open("{}/{}".format(_CUR, name), "r") as f:
+        return json.load(f)
 
-W3 = pesos[4].tolist()  # Tercera capa - pesos
-b3 = pesos[5].tolist()  # Tercera capa - bias
+# ==== 1. Cargar pesos y escalas desde JSON ====
+# pesos.json: [W1, b1, W2, b2, W3, b3]
+# escala.json: {"mean": [...], "scale": [...]}
+_pesos = _load_json("lib/predictionModel/modeloIA/pesos.json")
+W1, b1, W2, b2, W3, b3 = _pesos
 
-# Cargar escalas del StandardScaler desde archivo .npz
-escala_path = os.path.join(current_dir, "escala.npz")
-escala = np.load(escala_path)
-
-mean = escala["mean"].tolist()   # Media del StandardScaler
-scale = escala["scale"].tolist() # Desviación típica del StandardScaler
+_esc = _load_json("lib/predictionModel/modeloIA/escala.json")
+mean = _esc["mean"]
+scale = _esc["scale"]
 
 # ==== 2. Funciones auxiliares ====
 def standardize(x):
+    # (x - mean) / scale
     return [(x[i] - mean[i]) / scale[i] for i in range(len(x))]
 
-def relu(x):
-    return [max(0, i) for i in x]
+def relu(vec):
+    return [v if v > 0 else 0 for v in vec]
 
-def sigmoid(x):
-    return 1 / (1 + math.exp(-x))
+def sigmoid(z):
+    # cuidado con overflow en exp() si z es muy grande/pequeño
+    if z >= 0:
+        ez = math.exp(-z)
+        return 1.0 / (1.0 + ez)
+    else:
+        ez = math.exp(z)
+        return ez / (1.0 + ez)
 
 def dot(W, x, b):
-    """Multiplicación de matriz W (n_neuronas x n_entradas) * x + bias"""
-    result = []
-    for i in range(len(W[0])):  # para cada neurona
-        s = 0
-        for j in range(len(x)):
+    """
+    Multiplica W^T * x + b asumiendo que W está con forma (n_inputs x n_neuronas),
+    es decir W[j][i] = peso desde entrada j a neurona i.
+    """
+    n_inputs = len(W)
+    n_neuronas = len(W[0]) if n_inputs > 0 else 0
+    out = []
+    for i in range(n_neuronas):
+        s = 0.0
+        for j in range(n_inputs):
             s += x[j] * W[j][i]
         s += b[i]
-        result.append(s)
-    return result
+        out.append(s)
+    return out
 
-# ==== 3. Función de inferencia ====
+# ==== 3. Inferencia ====
 def predict(features):
-    # Estandarizar entrada
+    """
+    features: lista [spo2, heart_rate, temperature]
+    Devuelve: (clase, prob_riesgo)
+    """
+    # 1) estandarización
     x = standardize(features)
 
-    # Capa 1
-    z1 = dot(W1, x, b1)
-    a1 = relu(z1)
+    # 2) capa 1
+    a1 = relu(dot(W1, x, b1))
 
-    # Capa 2
-    z2 = dot(W2, a1, b2)
-    a2 = relu(z2)
+    # 3) capa 2
+    a2 = relu(dot(W2, a1, b2))
 
-    # Capa 3 (salida)
-    z3 = 0
+    # 4) salida (neurona única)
+    z3 = 0.0
     for i in range(len(a2)):
         z3 += a2[i] * W3[i][0]
     z3 += b3[0]
-    y = sigmoid(z3)
+    p = sigmoid(z3)
 
-    # Umbral de clasificación
-    return 1 if y > 0.5 else 0, y
+    return (1 if p > 0.5 else 0, p)

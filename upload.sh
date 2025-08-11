@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# =========================
+#  upload.sh — versión segura
+# =========================
+
 if ! command -v ampy &> /dev/null; then
-  echo "El comando 'ampy' no está instalado."
-  echo "Instálalo con:"
-  echo "pip install adafruit-ampy"
+  echo "❌ Error: 'ampy' no está instalado."
+  echo "Instálalo con: pip install adafruit-ampy"
   exit 1
 fi
 
@@ -14,67 +17,40 @@ if [ -z "$1" ]; then
 fi
 
 PORT="$1"
+BAUD=115200
+DELAY=2
 
-# ====== Función para borrar recursivamente (excepto boot.py) ======
-function borrar_remoto_recursivo() {
-  local path="$1"
-  local archivos
-  archivos=$(ampy --port "$PORT" ls "$path" 2>/dev/null)
+# ==== 1. Probar conexión ====
+echo "🔍 Probando conexión con el ESP32..."
+if ! ampy --port "$PORT" --baud $BAUD --delay $DELAY ls &> /dev/null; then
+  echo "❌ No se pudo conectar al ESP32 en $PORT"
+  echo "Verifica que no esté abierto en otro programa (Thonny, screen, etc.)"
+  exit 1
+fi
+echo "✅ Conexión correcta."
 
-  if [ -z "$archivos" ]; then
-    return
-  fi
-
-  while read -r archivo; do
-    archivo=${archivo//$'\r'/}
-    [ -z "$archivo" ] && continue
-    full_path="$path/$archivo"
-    if [[ "$archivo" == "boot.py" ]]; then
-      continue
-    fi
-    if [[ "$archivo" == *.* ]]; then
-      ampy --port "$PORT" rm "$full_path" 2>/dev/null || true
-    else
-      borrar_remoto_recursivo "$full_path"
-      ampy --port "$PORT" rmdir "$full_path" 2>/dev/null || true
-    fi
-  done <<< "$archivos"
-}
-
-echo "[1/4] Borrando archivos del ESP32 (excepto boot.py)..."
-borrar_remoto_recursivo ""
-
-# ====== Función para subir un archivo y crear carpeta si no existe ======
-function subir_archivo() {
-  local archivo="$1"
-  local destino="$2"
-  local carpeta
-  carpeta=$(dirname "$destino")
-
-  if [ "$carpeta" != "." ]; then
-    ampy --port "$PORT" mkdir "$carpeta" 2>/dev/null || true
-  fi
-
-  ampy --port "$PORT" put "$archivo" "$destino"
-}
-
-echo "[2/4] Subiendo archivos .py..."
-while IFS= read -r -d '' archivo; do
-  destino="${archivo#./}"
-  subir_archivo "$archivo" "$destino"
-done < <(find . -type f -name "*.py" -print0)
-
-echo "[3/4] Subiendo archivos del modelo..."
-for modelo_file in "./lib/predictionModel/modeloIA/pesos.json" "./lib/predictionModel/modeloIA/escala.json"; do
-  if [ -f "$modelo_file" ]; then
-    destino="${modelo_file#./}"
-    subir_archivo "$modelo_file" "$destino"
-  else
-    echo "⚠️  Aviso: No se encontró $modelo_file"
+# ==== 2. Borrar archivos (excepto boot.py) ====
+echo "[1/4] Borrando archivos del ESP32..."
+for file in $(ampy --port "$PORT" --baud $BAUD --delay $DELAY ls); do
+  if [[ "$file" != "boot.py" ]]; then
+    echo "   🗑  Eliminando $file"
+    ampy --port "$PORT" --baud $BAUD --delay $DELAY rmdir "$file" 2>/dev/null || \
+    ampy --port "$PORT" --baud $BAUD --delay $DELAY rm "$file" 2>/dev/null
   fi
 done
+echo "✅ Archivos borrados."
 
-echo "[4/4] Mostrando estructura de archivos en el ESP32:"
-ampy --port "$PORT" ls -r
+# ==== 3. Subir todos los .py ====
+echo "[2/4] Subiendo archivos .py..."
+find . -type f -name "*.py" | while read file; do
+  remote_path="${file#./}"
+  echo "   ⬆️  $remote_path"
+  ampy --port "$PORT" --baud $BAUD --delay $DELAY put "$file" "$remote_path"
+done
+echo "✅ Archivos subidos."
 
-echo "✅ Subida completa."
+# ==== 4. Mostrar contenido final ====
+echo "[3/4] Archivos en el ESP32:"
+ampy --port "$PORT" --baud $BAUD --delay $DELAY ls
+
+echo "🎯 Proceso completado."

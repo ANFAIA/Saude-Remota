@@ -1,27 +1,9 @@
 ## @file main.py
 #  @brief Programa principal para medir frecuencia cardíaca, SpO2 y temperatura con un MAX30102.
 #
-#  Librería para medir la frecuencia cardíaca, saturación de oxígeno y temperatura, enviarlos a Firebase, 
-#  mostrar en una pantalla OLED y permitir parada limpia del programa.
-#  Se utiliza un modelo de IA para calcular la precisión de los resultados y un nivel de riesgo.
-#
-#  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandezLuc
-#  @version 1.1.0   # + BLE (Web Bluetooth)
-#  @date 2025-08-12
-#  @license MIT
-#
+#  Envía a OLED/Firebase y EXPONE BLE (UART‑like) para lectura desde Chrome (Web Bluetooth).
+#  @version 1.1.1  (fix BLE advertise interval + advertise service UUID)
 #  ---------------------------------------------------------------------------
-
-"""
-Lectura de frecuencia cardiaca, SpO2 y temperatura usando un MAX30102
-con salida en una pantalla OLED. Añadido un "kill‑switch" dual:
-  1) Ctrl‑C desde el REPL (KeyboardInterrupt)
-  2) Botón físico en el pin IO0 (o el que definas en BUTTON_PIN)
-
-Además, expone los datos por Bluetooth Low Energy (BLE) usando un
-servicio tipo UART para recibirlos desde Google Chrome (Web Bluetooth).
-"""
 
 import time
 import sys
@@ -34,9 +16,7 @@ from lib.firebase_data_send.FirebaseRawSender import FirebaseRawSender
 from lib.predictionModel.modeloIA.pesos_modelo import predict
 from configuracion import WIFI_CONFIG, FIREBASE_CONFIG
 
-# ============================================================================
-#                                BLE (NUS-like)
-# ============================================================================
+# =============================== BLE (NUS-like) ==============================
 import ubluetooth as bt
 
 UART_SERVICE_UUID = bt.UUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
@@ -49,21 +29,39 @@ class BLEPeripheral:
         self.ble = bt.BLE()
         self.ble.active(True)
         self.ble.irq(self._irq)
+
         self.tx_char = (UART_TX_UUID, bt.FLAG_NOTIFY)
         self.rx_char = (UART_RX_UUID, bt.FLAG_WRITE)
-        ((self.tx_handle, self.rx_handle),) = self.ble.gatts_register_services(((UART_SERVICE_UUID,(self.tx_char,self.rx_char)),))
+        ((self.tx_handle, self.rx_handle),) = self.ble.gatts_register_services(
+            ((UART_SERVICE_UUID, (self.tx_char, self.rx_char)),)
+        )
         self.conn_handle = None
         self._advertise()
         print("BLE listo. Anunciando como:", self.name)
 
-    def _payload(self, name):
-        b = bytes(name, "utf-8")
-        # AD type 0x09 = Complete Local Name
-        return bytearray([len(b)+1, 0x09]) + b
+    def _payload(self, name, services=None):
+        """ADV payload: nombre completo + lista de UUIDs 128‑bit (completa)."""
+        p = bytearray()
+        nb = name.encode()
+        # 0x09 = Complete Local Name
+        p += bytes([len(nb) + 1, 0x09]) + nb
+        # 0x07 = Complete List of 128-bit Service Class UUIDs
+        if services:
+            for u in services:
+                try:
+                    ub = bytes(u)  # 16 bytes
+                    p += bytes([len(ub) + 1, 0x07]) + ub
+                except Exception:
+                    # Si el puerto no soporta bytes(UUID), omite la lista (no crítico)
+                    pass
+        return p
 
     def _advertise(self):
-        # Intervalo ~100 ms
-        self.ble.gap_advertise(100, adv_data=self._payload(self.name))
+        # IMPORTANTE: intervalo en MICROsegundos (200‑1000 ms recomendado)
+        self.ble.gap_advertise(
+            250_000,  # 250 ms
+            adv_data=self._payload(self.name, services=[UART_SERVICE_UUID])
+        )
 
     def _irq(self, event, data):
         if event == bt.IRQ_CENTRAL_CONNECT:
@@ -76,7 +74,7 @@ class BLEPeripheral:
                 self.conn_handle = None
             self._advertise()  # reanunciar
         elif event == bt.IRQ_GATTS_WRITE:
-            # Si más adelante quieres comandos desde Chrome, léelos aquí:
+            # Aquí puedes leer comandos desde Chrome si quieres
             pass
 
     def notify_str(self, s: str):
@@ -84,40 +82,27 @@ class BLEPeripheral:
             try:
                 self.ble.gatts_notify(self.conn_handle, self.tx_handle, s.encode("utf-8"))
             except Exception as e:
-                # Evita romper el bucle si hay un fallo puntual de notificación
                 print("BLE notify error:", e)
 
-# -----------------------------------------------------------------------------
-# --------------------------------- MAIN DATA ---------------------------------
-# -----------------------------------------------------------------------------
+# ------------------------------- MAIN DATA -----------------------------------
+printSerial = True
 
-# Exponer datos por puerto serie
-printSerial = True  # Cambia a False si no quieres salida por puerto serie
+BUTTON_PIN  = 0
+LED_POWER   = 0x7F
+LED_OFF     = 0x00
+PROX_LED    = 0x10
+PROX_THRESH = 0x20
+stop_flag   = False
 
-# Configuración del "key interrupt" físico
-BUTTON_PIN = 0            # IO0 (BOOT).
-LED_POWER   = 0x7F        # Corriente normal de los LED de medición
-LED_OFF     = 0x00        # LEDs apagados
-PROX_LED    = 0x10        # Corriente del LED de proximidad (~0,8 mA)
-PROX_THRESH = 0x20        # Umbral de proximidad (≈25 µA)
-stop_flag = False         # Se pondrá a True cuando se pulse el botón
+SAMPLE_RATE = 400
 
-SAMPLE_RATE = 400   # Tasa de muestreo del sensor (400 Hz)
-
-# Inicializa I2C
 i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400000)
-
-# Sensor MAX30102/5
 sensor = MAX30105(i2c)
-
-# Inicializa la pantalla OLED
 display = SSD1306(i2c=i2c)
 
-# Inicializa algoritmos de ritmo cardiaco y saturación O2
 hr = HeartRate()
 ox = OxygenSaturation(sample_rate_hz=SAMPLE_RATE)
 
-# Inicializa el sender de Firebase
 sender = FirebaseRawSender(
     email=FIREBASE_CONFIG["email"],
     password=FIREBASE_CONFIG["password"],
@@ -126,7 +111,7 @@ sender = FirebaseRawSender(
     wifi_config=WIFI_CONFIG
 )
 
-# Variables de estado
+# Estado
 beat_times = []
 last_beat_time = 0
 bpm = 0
@@ -136,74 +121,29 @@ stable_count = 0
 finger_present = False
 min_ir = 100000
 last_update_time = 0
-reset_threshold = 50000  # Umbral para detectar dedo
+reset_threshold = 50000
 spo2_valid = False
-bpm_valid = False
+bpm_valid  = False
 
-# Buffer para SpO2
 spo2_ir_buf = []
 spo2_red_buf = []
-SPO2_BUF_SIZE = ox.BUFFER_SIZE  # ventana de SpO2
+SPO2_BUF_SIZE = ox.BUFFER_SIZE
 
-# -----------------------------------------------------------------------------
-# ------------------------------ AUX FUNCTIONS --------------------------------
-# -----------------------------------------------------------------------------
-
+# ----------------------------- AUX FUNCTIONS ---------------------------------
 def _button_handler(pin):
-    """Interrupción del botón: marca la bandera y vuelve rápidamente."""
     global stop_flag
     stop_flag = True
 
 def leds_on():
-    """Activa los LED de medición con la potencia definida en LED_POWER."""
     sensor.setPulseAmplitudeIR(LED_POWER)
-    sensor.setPulseAmplitudeRed(LED_POWER)  # ledMode = 2 → IR + Rojo
+    sensor.setPulseAmplitudeRed(LED_POWER)
 
 def leds_off():
-    """Apaga los LED de medición (corriente = 0)."""
     sensor.setPulseAmplitudeIR(LED_OFF)
     sensor.setPulseAmplitudeRed(LED_OFF)
 
-def enable_proximity():
-    """Habilita el detector de proximidad con LED Prox de baja corriente."""
-    sensor.setPulseAmplitudeProximity(PROX_LED)
-    sensor.setProximityThreshold(PROX_THRESH)
-    sensor.enablePROXINT()
-
-def disable_proximity():
-    """Deshabilita el modo de proximidad para evitar falsas interrupciones."""
-    sensor.disablePROXINT()
-    sensor.setPulseAmplitudeProximity(0)
-
-# --- (Opcional futuro) cálculo de BPM optimizado usando heartrate.py ---
-def optimized_bpm_calculation():
-    if hr.check_for_beat(ir):
-        now = time.ticks_ms()
-        if last_beat_time > 0 and (now - last_beat_time) < 300:
-            return
-        last_beat_time = now
-        beat_times.append(now)
-        if len(beat_times) > 5:
-            beat_times.pop(0)
-        if len(beat_times) >= 2:
-            elapsed = time.ticks_diff(beat_times[-1], beat_times[-2])
-            new_bpm = 60000 / elapsed
-            if 40 <= new_bpm <= 200:
-                bpm_valid = True
-                if stable_count == 0:
-                    bpm = new_bpm
-                else:
-                    bpm = (bpm * 0.7) + (new_bpm * 0.3)
-                stable_count += 1
-
-# -----------------------------------------------------------------------------
-#  NUEVO: función que devuelve tus medidas actuales para el envío por BLE
-# -----------------------------------------------------------------------------
+# BLE helper para enviar lo que ya calculas
 def read_vitals():
-    """
-    Devuelve (spo2:int, bpm:int, temp:float) desde las variables calculadas
-    en tu bucle principal. Si no son válidas aún, devuelve ceros.
-    """
     global spo2, bpm, temperature, spo2_valid, bpm_valid
     if spo2_valid and bpm_valid:
         try:
@@ -214,15 +154,10 @@ def read_vitals():
             return int(spo2), int(bpm), t
     return 0, 0, 0.0
 
-# -----------------------------------------------------------------------------
-# ---------------------------------- MAIN  ------------------------------------
-# -----------------------------------------------------------------------------
-
-# Pin en modo entrada con pull‑up interno y disparo por flanco de bajada
+# ---------------------------------- MAIN -------------------------------------
 button = Pin(BUTTON_PIN, Pin.IN, Pin.PULL_UP)
 button.irq(trigger=Pin.IRQ_FALLING, handler=_button_handler)
 
-# Inicializa el sensor MAX30102/5
 if not sensor.begin():
     if printSerial:
         print("ERROR: MAX30105 no detectado.")
@@ -233,33 +168,29 @@ if not sensor.begin():
             sys.exit()
         time.sleep(1)
 
-# Configuración optimizada para mayor velocidad y precisión
 sensor.setup(
-    powerLevel    = LED_POWER,   # Potencia media (balance entre consumo y señal)
-    sampleAverage = 1,           # Sin promedios (mejor para latencia)
-    ledMode       = 2,           # IR + Rojo
-    sampleRate    = SAMPLE_RATE, # Tasa de muestreo
-    pulseWidth    = 411,         # Mayor ancho de pulso para más luz
+    powerLevel    = LED_POWER,
+    sampleAverage = 1,
+    ledMode       = 2,        # IR + Rojo
+    sampleRate    = SAMPLE_RATE,
+    pulseWidth    = 411,
     adcRange      = 16384
 )
 
-# Mostrar mensaje inicial
 if display.is_connected():
     display.display_finger_message()
 if printSerial:
     print("Sensor inicializado. Coloque su dedo en el sensor…")
 
-# ---- NUEVO: Inicializa periférico BLE (para Web Bluetooth en Chrome) ----
+# === Inicia BLE ===
 blep = BLEPeripheral("ESP32-SENSOR")
 
-# Bucle principal con salida limpia por Ctrl‑C o botón
 try:
     while True:
         current_time = time.ticks_ms()
         ir = sensor.getIR()
         red = sensor.getRed()
 
-        # ------------------------ Detección dedo ------------------------------
         if ir > reset_threshold:
             if not finger_present:
                 if printSerial:
@@ -268,43 +199,35 @@ try:
                     display.clear()
                 finger_present = True
                 min_ir = 100000
-                hr = HeartRate()  # Reiniciar detector
+                hr = HeartRate()
                 beat_times = []
                 last_beat_time = 0
                 stable_count = 0
 
-            # Calibración dinámica del mínimo IR
             if ir < min_ir:
                 min_ir = ir
 
-            # Procesar solo si la señal es suficientemente buena
             signal_strength = ir - min_ir
-            if signal_strength > 15000:  # Umbral de amplitud
-                # Acumula muestras para SpO2
+            if signal_strength > 15000:
                 spo2_ir_buf.append(ir)
                 spo2_red_buf.append(red)
                 if len(spo2_ir_buf) > SPO2_BUF_SIZE:
-                    spo2_ir_buf.pop(0)
-                    spo2_red_buf.pop(0)
-                # Calcular SpO2 y bpm si hay suficientes muestras
+                    spo2_ir_buf.pop(0); spo2_red_buf.pop(0)
                 if len(spo2_ir_buf) == SPO2_BUF_SIZE:
                     spo2, spo2_valid, bpm, bpm_valid = ox.calculate_spo2_and_heart_rate(
                         spo2_ir_buf, spo2_red_buf
                     )
 
-            # Actualizar pantalla cada 500 ms
             if time.ticks_diff(current_time, last_update_time) > 500:
                 last_update_time = current_time
                 temperature = sensor.readTemperature()
 
-                # Mostrar datos en pantalla        
                 if display.is_connected():
                     if spo2_valid:
                         display.display_parameter("Oxigeno", spo2, "%", icon="oxygen")
                     else:
                         display.display_parameter("Ritmo Cardiaco", bpm, "bpm", icon="heart")
 
-                # Mostrar en consola
                 if printSerial and (bpm_valid or spo2_valid):
                     if bpm_valid:
                         print(f"LPM: {bpm:.1f}  Señal: {signal_strength}")
@@ -312,8 +235,7 @@ try:
                     if spo2_valid:
                         print(f"SpO2: {spo2}%")
 
-                # Cuando ambas medidas son válidas, ejecuta IA, envía a Firebase y BLE
-                if bpm_valid and spo2_valid: 
+                if bpm_valid and spo2_valid:
                     temperature = sensor.readTemperature()
                     entrada_modelo = [spo2, bpm, temperature]
                     label, prob = predict(entrada_modelo)
@@ -324,21 +246,21 @@ try:
 
                     sender.send_measurement(
                         temperature=temperature,
-                        bmp=bpm,           # (mantengo tu parámetro tal cual)
+                        bmp=bpm,
                         spo2=spo2,
                         modelPrecision=round(prob, 4),
                         riskScore=label
                     )
                     if printSerial:
                         print("Enviando datos a Firebase...")
-                    # (En tu código original repetías el envío; lo conservo)
-                    sender.send_measurement(temperature=temperature, bmp=bpm, spo2=spo2, modelPrecision=0, riskScore=0)
+                    sender.send_measurement(
+                        temperature=temperature, bmp=bpm, spo2=spo2, modelPrecision=0, riskScore=0
+                    )
 
-                    # -------- NUEVO: Envío por BLE a Chrome (CSV) --------
+                    # ---------- Envío BLE a Chrome ----------
                     s_spo2, s_bpm, s_temp = read_vitals()
                     blep.notify_str(f"{s_spo2},{s_bpm},{s_temp:.2f}")
 
-        # ---------------------- Dedo retirado -------------------------------
         else:
             if finger_present:
                 if printSerial:
@@ -349,10 +271,8 @@ try:
                 bpm_valid = False
                 spo2_valid = False
                 stable_count = 0
-
             time.sleep_ms(100)
-            
-        # Señal débil
+
         if finger_present and (ir - min_ir) < 10000 and stable_count > 0:
             stable_count = max(0, stable_count - 1)
             if stable_count == 0:
@@ -361,7 +281,6 @@ try:
                 if display.is_connected():
                     display.display_weak_signal()
 
-        # ------------------- Comprobación de parada -------------------------
         if stop_flag:
             if printSerial:
                 print("\nParada solicitada por botón.")
@@ -370,17 +289,15 @@ try:
         time.sleep_ms(5)
 
 except KeyboardInterrupt:
-    # Captura Ctrl‑C enviado desde el REPL
     if printSerial:
         print("\nParada solicitada por Ctrl‑C.")
 
 finally:
-    # Limpieza de recursos y salida limpia al prompt >>>
     if display.is_connected():
         display.clear()
     try:
         if display.is_connected():
             display.display_text("Programa detenido")
     except AttributeError:
-        pass  # Si la función no existe en tu SSD1306
+        pass
     sys.exit()

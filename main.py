@@ -1,6 +1,7 @@
 ## @file main.py
 #  @brief MAX3010x + OLED + Firebase + IA + BLE (UART + Servicio Datos)
-#  @version 1.2.0
+#         con envío continuo (keep-alive) cada 1 s a Web Bluetooth.
+#  @version 1.3.0
 #  ---------------------------------------------------------------------------
 
 import time, sys
@@ -23,7 +24,7 @@ UART_RX_UUID      = bt.UUID("6E400002-B5A3-F393-E0A9-E50E24DCCA9E")  # write
 
 # --- Servicio propio de datos (solo-notify, pensado para Web Bluetooth) ---
 DATA_SERVICE_UUID = bt.UUID("12345678-1234-5678-1234-56789ABCDEF0")
-DATA_TX_UUID      = bt.UUID("12345678-1234-5678-1234-56789ABCDEF1")  # notify (+read opcional)
+DATA_TX_UUID      = bt.UUID("12345678-1234-5678-1234-56789ABCDEF1")  # notify + read
 
 class BLEPeripheral:
     def __init__(self, name="ESP32-SENSOR"):
@@ -32,7 +33,6 @@ class BLEPeripheral:
         self.ble.active(True)
         self.ble.irq(self._irq)
 
-        # Definición de characteristics/servicios
         tx_char = (UART_TX_UUID, bt.FLAG_NOTIFY)
         rx_char = (UART_RX_UUID, bt.FLAG_WRITE)
         data_tx = (DATA_TX_UUID, bt.FLAG_NOTIFY | bt.FLAG_READ)
@@ -41,30 +41,28 @@ class BLEPeripheral:
             (UART_SERVICE_UUID, (tx_char, rx_char)),
             (DATA_SERVICE_UUID, (data_tx,)),
         )
-
         ((self.tx_uart, self.rx_uart), (self.tx_data,)) = self.ble.gatts_register_services(services)
 
         self.conn_handle = None
         self._advertise()
         print("BLE listo. Anunciando como:", self.name)
 
-    # --- ADV: flags+nombre (<=31 B) ---
+    # ADV: flags + nombre (≤31 B)
     def _adv_payload(self) -> bytes:
         flags = b"\x02\x01\x06"  # LE General Discoverable + BR/EDR not supported
         nb = self.name.encode()
         name = bytes([len(nb) + 1, 0x09]) + nb  # 0x09 = Complete Local Name
         return flags + name
 
-    # --- Scan Response: UUID 128-bit de NUS (uno solo para no pasar de 31 B) ---
+    # Scan Response: UUID 128-bit (NUS) para no superar 31 B
     def _scanresp_payload(self) -> bytes:
-        u = bytes(UART_SERVICE_UUID)  # 16 bytes
+        u = bytes(UART_SERVICE_UUID)  # 16 B
         return bytes([len(u) + 1, 0x07]) + u  # 0x07 = Complete List of 128-bit UUIDs
 
     def _advertise(self):
         adv  = self._adv_payload()
         resp = self._scanresp_payload()
-        # Intervalo en MICROsegundos (p.ej. 300 ms)
-        self.ble.gap_advertise(300_000, adv_data=adv, resp_data=resp)
+        self.ble.gap_advertise(300_000, adv_data=adv, resp_data=resp)  # intervalo en µs (300 ms)
 
     def _irq(self, event, data):
         if event == bt.IRQ_CENTRAL_CONNECT:
@@ -75,28 +73,30 @@ class BLEPeripheral:
             if self.conn_handle == ch:
                 print("BLE desconectado:", self.conn_handle)
                 self.conn_handle = None
-            self._advertise()  # re-anunciar
+            self._advertise()
         elif event == bt.IRQ_GATTS_WRITE:
-            # Si algún día quieres comandos por RX (desde Chrome), se leen aquí:
-            # buf = self.ble.gatts_read(self.rx_uart)
-            # print("RX:", buf)
-            pass
+            pass  # Aquí podrías leer comandos desde RX si algún día los usas
 
-    # Envío por el TX de NUS (texto)
     def notify_uart(self, s: str):
         if self.conn_handle is not None:
-            try:
-                self.ble.gatts_notify(self.conn_handle, self.tx_uart, s.encode("utf-8"))
-            except Exception as e:
-                print("BLE notify UART error:", e)
+            self.ble.gatts_notify(self.conn_handle, self.tx_uart, s.encode("utf-8"))
 
-    # Envío por el TX del servicio de datos (también texto CSV)
     def notify_data(self, s: str):
         if self.conn_handle is not None:
-            try:
-                self.ble.gatts_notify(self.conn_handle, self.tx_data, s.encode("utf-8"))
-            except Exception as e:
-                print("BLE notify DATA error:", e)
+            self.ble.gatts_notify(self.conn_handle, self.tx_data, s.encode("utf-8"))
+
+# --- Envío BLE con trazas (ambos servicios) ----------------------------------
+def send_ble_values(blep: BLEPeripheral, spo2, bpm, temp):
+    try:
+        msg = f"{int(spo2)},{int(bpm)},{float(temp):.2f}"
+    except Exception:
+        msg = "0,0,0.00"
+    try:
+        blep.notify_data(msg)
+        blep.notify_uart(msg)
+        print("[BLE] TX ->", msg)
+    except Exception as e:
+        print("[BLE] ERROR al notificar:", e)
 
 # ============================== APP PRINCIPAL ================================
 printSerial = True
@@ -148,7 +148,7 @@ def _button_handler(pin):
     stop_flag = True
 
 def read_vitals():
-    """Devuelve (spo2:int, bpm:int, temp:float) ya validados o ceros."""
+    """Devuelve (spo2:int, bpm:int, temp:float) validados o ceros."""
     global spo2, bpm, temperature, spo2_valid, bpm_valid
     if spo2_valid and bpm_valid:
         try:
@@ -186,8 +186,9 @@ if display.is_connected():
 if printSerial:
     print("Sensor inicializado. Coloque su dedo en el sensor…")
 
-# === Inicia BLE con 2 servicios (UART + DATOS) ===
+# === Inicia BLE (UART + DATOS) y latido de 1 s ===
 blep = BLEPeripheral("ESP32-SENSOR")
+last_ble_ping = time.ticks_ms()
 
 try:
     while True:
@@ -258,11 +259,9 @@ try:
                         temperature=temperature, bmp=bpm, spo2=spo2, modelPrecision=0, riskScore=0
                     )
 
-                    # ---------- Envío BLE (ambos servicios) ----------
+                    # ---------- Envío BLE cuando hay válidos ----------
                     s_spo2, s_bpm, s_temp = read_vitals()
-                    csv = f"{s_spo2},{s_bpm},{s_temp:.2f}"
-                    blep.notify_uart(csv)   # NUS TX (para apps que esperan UART)
-                    blep.notify_data(csv)   # Servicio Datos (para Web Bluetooth directo)
+                    send_ble_values(blep, s_spo2, s_bpm, s_temp)
 
         else:
             if finger_present:
@@ -274,12 +273,18 @@ try:
                 stable_count = 0
             time.sleep_ms(100)
 
-        # Ajuste de señal débil
+        # Señal débil
         if finger_present and (ir - min_ir) < 10000 and stable_count > 0:
             stable_count = max(0, stable_count - 1)
             if stable_count == 0:
                 if printSerial: print("Señal débil. Ajuste el dedo")
                 if display.is_connected(): display.display_weak_signal()
+
+        # ---------- Keep-alive BLE cada 1 s (aunque no haya válidos) ----------
+        if time.ticks_diff(current_time, last_ble_ping) > 1000:
+            s_spo2, s_bpm, s_temp = read_vitals()  # 0,0,0 si aún no válidos
+            send_ble_values(blep, s_spo2, s_bpm, s_temp)
+            last_ble_ping = current_time
 
         # Parada limpia
         if stop_flag:

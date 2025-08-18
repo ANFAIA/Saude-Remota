@@ -1,8 +1,7 @@
 ## @file main.py
-#  @brief Programa principal para medir frecuencia cardíaca, SpO2 y temperatura con un MAX30102.
-#
-#  Envía a OLED/Firebase y EXPONE BLE (UART‑like) para lectura desde Chrome (Web Bluetooth).
-#  @version 1.1.1  (fix BLE advertise interval + advertise service UUID)
+#  @brief Medición de FC, SpO2 y temperatura (MAX3010x) con OLED/Firebase
+#         y envío por BLE (UART-like) para Web Bluetooth en Chrome.
+#  @version 1.1.3  (BLE: ADV flags+name, UUID en scan resp, intervalo en µs)
 #  ---------------------------------------------------------------------------
 
 import time
@@ -39,29 +38,26 @@ class BLEPeripheral:
         self._advertise()
         print("BLE listo. Anunciando como:", self.name)
 
-    def _payload(self, name, services=None):
-        """ADV payload: nombre completo + lista de UUIDs 128‑bit (completa)."""
-        p = bytearray()
-        nb = name.encode()
+    # --- ADV payload seguro: FLAGS + NOMBRE (<=31 B) ---
+    def _adv_payload(self) -> bytes:
+        # 0x01 = Flags → 0x06 (LE General Discoverable + BR/EDR not supported)
+        flags = b"\x02\x01\x06"
         # 0x09 = Complete Local Name
-        p += bytes([len(nb) + 1, 0x09]) + nb
+        nb = self.name.encode()
+        name = bytes([len(nb) + 1, 0x09]) + nb
+        return flags + name
+
+    # --- Scan Response con UUID 128-bit del servicio (<=31 B) ---
+    def _scanresp_payload(self) -> bytes:
         # 0x07 = Complete List of 128-bit Service Class UUIDs
-        if services:
-            for u in services:
-                try:
-                    ub = bytes(u)  # 16 bytes
-                    p += bytes([len(ub) + 1, 0x07]) + ub
-                except Exception:
-                    # Si el puerto no soporta bytes(UUID), omite la lista (no crítico)
-                    pass
-        return p
+        u = bytes(UART_SERVICE_UUID)  # 16 bytes
+        return bytes([len(u) + 1, 0x07]) + u
 
     def _advertise(self):
-        # IMPORTANTE: intervalo en MICROsegundos (200‑1000 ms recomendado)
-        self.ble.gap_advertise(
-            250_000,  # 250 ms
-            adv_data=self._payload(self.name, services=[UART_SERVICE_UUID])
-        )
+        adv  = self._adv_payload()
+        resp = self._scanresp_payload()
+        # Intervalo en MICROsegundos (p. ej. 300 ms)
+        self.ble.gap_advertise(300_000, adv_data=adv, resp_data=resp)
 
     def _irq(self, event, data):
         if event == bt.IRQ_CENTRAL_CONNECT:
@@ -74,7 +70,7 @@ class BLEPeripheral:
                 self.conn_handle = None
             self._advertise()  # reanunciar
         elif event == bt.IRQ_GATTS_WRITE:
-            # Aquí puedes leer comandos desde Chrome si quieres
+            # Aquí podrías leer comandos desde Chrome (RX)
             pass
 
     def notify_str(self, s: str):
@@ -142,8 +138,8 @@ def leds_off():
     sensor.setPulseAmplitudeIR(LED_OFF)
     sensor.setPulseAmplitudeRed(LED_OFF)
 
-# BLE helper para enviar lo que ya calculas
 def read_vitals():
+    """Devuelve (spo2:int, bpm:int, temp:float) ya validados o ceros."""
     global spo2, bpm, temperature, spo2_valid, bpm_valid
     if spo2_valid and bpm_valid:
         try:
@@ -163,8 +159,7 @@ if not sensor.begin():
         print("ERROR: MAX30105 no detectado.")
     while True:
         if stop_flag:
-            if printSerial:
-                print("Parada solicitada por botón.")
+            if printSerial: print("Parada solicitada por botón.")
             sys.exit()
         time.sleep(1)
 
@@ -193,10 +188,8 @@ try:
 
         if ir > reset_threshold:
             if not finger_present:
-                if printSerial:
-                    print("\nDedo detectado. Midiendo…")
-                if display.is_connected():
-                    display.clear()
+                if printSerial: print("\nDedo detectado. Midiendo…")
+                if display.is_connected(): display.clear()
                 finger_present = True
                 min_ir = 100000
                 hr = HeartRate()
@@ -209,8 +202,7 @@ try:
 
             signal_strength = ir - min_ir
             if signal_strength > 15000:
-                spo2_ir_buf.append(ir)
-                spo2_red_buf.append(red)
+                spo2_ir_buf.append(ir); spo2_red_buf.append(red)
                 if len(spo2_ir_buf) > SPO2_BUF_SIZE:
                     spo2_ir_buf.pop(0); spo2_red_buf.pop(0)
                 if len(spo2_ir_buf) == SPO2_BUF_SIZE:
@@ -229,11 +221,9 @@ try:
                         display.display_parameter("Ritmo Cardiaco", bpm, "bpm", icon="heart")
 
                 if printSerial and (bpm_valid or spo2_valid):
-                    if bpm_valid:
-                        print(f"LPM: {bpm:.1f}  Señal: {signal_strength}")
+                    if bpm_valid: print(f"LPM: {bpm:.1f}  Señal: {signal_strength}")
                     print(f"Temperatura: {temperature:.2f}°C")
-                    if spo2_valid:
-                        print(f"SpO2: {spo2}%")
+                    if spo2_valid: print(f"SpO2: {spo2}%")
 
                 if bpm_valid and spo2_valid:
                     temperature = sensor.readTemperature()
@@ -251,8 +241,7 @@ try:
                         modelPrecision=round(prob, 4),
                         riskScore=label
                     )
-                    if printSerial:
-                        print("Enviando datos a Firebase...")
+                    if printSerial: print("Enviando datos a Firebase...")
                     sender.send_measurement(
                         temperature=temperature, bmp=bpm, spo2=spo2, modelPrecision=0, riskScore=0
                     )
@@ -263,10 +252,8 @@ try:
 
         else:
             if finger_present:
-                if printSerial:
-                    print("\nDedo retirado. Coloque su dedo en el sensor…")
-                if display.is_connected():
-                    display.display_finger_message()
+                if printSerial: print("\nDedo retirado. Coloque su dedo en el sensor…")
+                if display.is_connected(): display.display_finger_message()
                 finger_present = False
                 bpm_valid = False
                 spo2_valid = False
@@ -276,28 +263,23 @@ try:
         if finger_present and (ir - min_ir) < 10000 and stable_count > 0:
             stable_count = max(0, stable_count - 1)
             if stable_count == 0:
-                if printSerial:
-                    print("Señal débil. Ajuste el dedo")
-                if display.is_connected():
-                    display.display_weak_signal()
+                if printSerial: print("Señal débil. Ajuste el dedo")
+                if display.is_connected(): display.display_weak_signal()
 
         if stop_flag:
-            if printSerial:
-                print("\nParada solicitada por botón.")
+            if printSerial: print("\nParada solicitada por botón.")
             break
 
         time.sleep_ms(5)
 
 except KeyboardInterrupt:
-    if printSerial:
-        print("\nParada solicitada por Ctrl‑C.")
+    if printSerial: print("\nParada solicitada por Ctrl-C.")
 
 finally:
     if display.is_connected():
         display.clear()
     try:
-        if display.is_connected():
-            display.display_text("Programa detenido")
+        if display.is_connected(): display.display_text("Programa detenido")
     except AttributeError:
         pass
     sys.exit()

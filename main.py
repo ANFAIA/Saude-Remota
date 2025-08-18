@@ -1,7 +1,7 @@
 ## @file main.py
 #  MAX3010x + OLED + Firebase + IA + BLE (SOLO NUS TX notify)
 #  Envío continuo (keep-alive 1 Hz) y cuando hay medidas válidas.
-#  Incluye compatibilidad para MicroPython con _IRQ_*.
+#  Compatible con builds de MicroPython que usan _IRQ_*.
 #  ----------------------------------------------------------------
 
 import time, sys
@@ -17,15 +17,16 @@ from configuracion import WIFI_CONFIG, FIREBASE_CONFIG
 # =============================== BLE (NUS) ================================
 import ubluetooth as bt
 
-# --- Compatibilidad de nombres de eventos (según versión de MicroPython) ---
-IRQ_CENTRAL_CONNECT    = getattr(bt, 'IRQ_CENTRAL_CONNECT',    getattr(bt, '_IRQ_CENTRAL_CONNECT'))
-IRQ_CENTRAL_DISCONNECT = getattr(bt, 'IRQ_CENTRAL_DISCONNECT', getattr(bt, '_IRQ_CENTRAL_DISCONNECT'))
-# Algunas builds exponen 'IRQ_GATTS_WRITE', otras '_IRQ_GATTS_WRITE' y otras 'GATTS_WRITE'
-IRQ_GATTS_WRITE        = (
-    getattr(bt, 'IRQ_GATTS_WRITE',  None) or
-    getattr(bt, '_IRQ_GATTS_WRITE', None) or
-    getattr(bt, 'GATTS_WRITE',      None)
-)
+# -------- Compatibilidad de versiones (elige el primer nombre que exista) --
+def _pick(*names):
+    for n in names:
+        if hasattr(bt, n):
+            return getattr(bt, n)
+    return None
+
+IRQ_CENTRAL_CONNECT    = _pick('IRQ_CENTRAL_CONNECT',    '_IRQ_CENTRAL_CONNECT')
+IRQ_CENTRAL_DISCONNECT = _pick('IRQ_CENTRAL_DISCONNECT', '_IRQ_CENTRAL_DISCONNECT')
+IRQ_GATTS_WRITE        = _pick('IRQ_GATTS_WRITE', '_IRQ_GATTS_WRITE', 'GATTS_WRITE')
 
 NUS_SERVICE_UUID = bt.UUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
 NUS_TX_UUID      = bt.UUID("6E400003-B5A3-F393-E0A9-E50E24DCCA9E")  # notify
@@ -62,30 +63,31 @@ class BLEPeripheral:
 
     def _advertise(self):
         self.ble.gap_advertise(
-            300_000,  # 300 ms en µs
+            300_000,  # 300 ms (µs)
             adv_data=self._adv_payload(),
             resp_data=self._scanresp_payload()
         )
 
     def _irq(self, event, data):
-        if event == IRQ_CENTRAL_CONNECT:
+        if IRQ_CENTRAL_CONNECT is not None and event == IRQ_CENTRAL_CONNECT:
             self.conn_handle, _, _ = data
             print("BLE conectado:", self.conn_handle)
-        elif event == IRQ_CENTRAL_DISCONNECT:
+
+        elif IRQ_CENTRAL_DISCONNECT is not None and event == IRQ_CENTRAL_DISCONNECT:
             ch, _, _ = data
             if self.conn_handle == ch:
                 print("BLE desconectado:", self.conn_handle)
                 self.conn_handle = None
             self._advertise()
+
         elif IRQ_GATTS_WRITE is not None and event == IRQ_GATTS_WRITE:
-            # Aquí podrías leer comandos por RX si lo necesitas
+            # Aquí podrías leer comandos por RX si algún día lo usas
             pass
 
     def notify_uart(self, s: str):
         if self.conn_handle is not None:
             self.ble.gatts_notify(self.conn_handle, self.tx_handle, s.encode("utf-8"))
         else:
-            # útil para depuración si la web no está realmente conectada
             print("[BLE] OMITIDO (sin conexión):", s)
 
 # --- Helper de envío con trazas

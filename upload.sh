@@ -1,113 +1,121 @@
 #!/bin/bash
-set -euo pipefail
 
-# =========================
-# upload.sh — seguro y auto-instalador de ampy
-# =========================
+# -----------------------------------------------------------------------------
+#  @file upload.sh
+#  @brief Script Bash para cargar automáticamente archivos .py a un dispositivo
+#         MicroPython/ESP32 mediante **adafruit‑ampy**.
+#
+#  El script realiza estas tareas:
+#    1. Verifica que `ampy` esté instalado en el sistema.
+#    2. Comprueba que se haya proporcionado el puerto serie.
+#    3. Elimina recursivamente todo el contenido existente en el sistema de
+#       archivos del dispositivo (excepto *boot.py*).
+#    4. Sube todos los archivos *.py* presentes en el directorio actual y sus
+#       sub‑carpetas, creando la jerarquía remota necesaria.
+#    5. Muestra al final un árbol de archivos resultante.
+#
+#  @usage
+#    ./upload.sh <PUERTO_SERIAL>
+#  @example
+#    ./upload.sh /dev/ttyUSB0
+#
+#  @dependencies adafruit‑ampy ≥ 1.1.0 (pip install adafruit‑ampy)
+#  @author Alejandro Fernández Rodríguez
+#  @contact github.com/afernandezLuc
+#  @version 1.0.0
+#  @date 2025‑08‑02
+#  @license MIT
+# -----------------------------------------------------------------------------
 
-BAUD=115200
-DELAY=${AMPY_DELAY:-2}
-PORT_ARG="${1:-}"
-
-# Función para ejecutar ampy con Python3 directamente
-AMPY() { python3 -m ampy.cli --baud "$BAUD" --delay "$DELAY" --port "$PORT" "$@"; }
-
-# ==== 0. Comprobar que ampy esté instalado ====
-if ! python3 -c "import ampy" >/dev/null 2>&1; then
-    echo "📦 Instalando adafruit-ampy..."
-    python3 -m pip install --user adafruit-ampy
-    echo "✅ ampy instalado."
+if ! command -v ampy &> /dev/null; then
+  echo "El comando 'ampy' no está instalado."
+  echo "Puedes instalarlo con pip ejecutando:"
+  echo "pip install adafruit-ampy"
+  exit 1
 fi
 
-# ==== 1. Detectar puerto ====
-detectar_puerto() {
-    for p in /dev/ttyUSB* /dev/ttyACM*; do
-        [ -e "$p" ] && echo "$p" && return 0
-    done
-    return 1
-}
-
-if [ -n "$PORT_ARG" ]; then
-    PORT="$PORT_ARG"
-else
-    PORT="$(detectar_puerto || true)"
-    [ -z "${PORT:-}" ] && { echo "❌ No se encontró puerto. Conecta el ESP32 o pasa /dev/ttyUSB0"; exit 1; }
+if [ -z "$1" ]; then
+  echo "Uso: $0 <PUERTO_SERIAL>"
+  echo "Ejemplo: $0 /dev/tty.usbserial-0001"
+  exit 1
 fi
 
-# ==== 2. Comprobar que el puerto no esté ocupado ====
-if lsof "$PORT" >/dev/null 2>&1; then
-    echo "❌ El puerto $PORT está en uso. Cierra Thonny/screen/etc."
-    lsof "$PORT" || true
-    exit 1
-fi
+PORT="$1"
 
-echo "🔌 Puerto: $PORT  | baud=$BAUD  | delay=${DELAY}s"
+function borrar_remoto_recursivo() {
+  local path="$1"
+  local archivos
+  archivos=$(ampy --port "$PORT" ls "$path" 2>/dev/null)
 
-# ==== 3. Probar conexión ====
-if ! AMPY ls >/dev/null 2>&1; then
-    echo "❌ No puedo hablar con el ESP32 en $PORT. Pulsa RST y reintenta."
-    exit 1
-fi
-echo "✅ Conexión OK"
+  if [ -z "$archivos" ]; then
+    return
+  fi
 
-# ==== 4. Borrar archivos excepto boot.py ====
-echo "[1/4] Borrando archivos del ESP32..."
-borrar_rec() {
-    local path="$1"
-    local entries
-    entries="$(AMPY ls "$path" 2>/dev/null || true)"
-    [ -z "$entries" ] && return 0
-    while read -r e; do
-        [ -z "$e" ] && continue
-        e="${e//$'\r'/}"
-        local full="${path:+$path/}$e"
-        if [[ "$e" == "boot.py" ]]; then continue; fi
-        AMPY rmdir "$full" >/dev/null 2>&1 || AMPY rm "$full" >/dev/null 2>&1 || {
-            borrar_rec "$full"
-            AMPY rmdir "$full" >/dev/null 2>&1 || true
-        }
-    done <<<"$entries"
-}
-borrar_rec ""
-
-# ==== 5. Crear carpetas remotas si no existen ====
-mkpath_remote() {
-    local dir="$1"
-    IFS='/' read -r -a parts <<<"$dir"
-    local acc=""
-    for part in "${parts[@]}"; do
-        [ -z "$part" ] && continue
-        acc="$acc/$part"
-        AMPY mkdir "$acc" >/dev/null 2>&1 || true
-    done
+  while read -r archivo; do
+    archivo=${archivo//$'\r'/}
+    [ -z "$archivo" ] && continue
+    full_path="$path/$archivo"
+    # No borrar boot.py
+    if [[ "$full_path" == "/boot.py" ]]; then
+      continue
+    fi
+    if ampy --port "$PORT" ls "$full_path" &>/dev/null; then
+      borrar_remoto_recursivo "$full_path"
+      ampy --port "$PORT" rmdir "$full_path" 2>/dev/null
+    else
+      ampy --port "$PORT" rm "$full_path" 2>/dev/null
+    fi
+  done <<< "$archivos"
 }
 
-# ==== 6. Subir un archivo ====
-put_file() {
-    local src="$1"
-    local dst="${src#./}"
-    local dir="$(dirname "$dst")"
-    [ "$dir" != "." ] && mkpath_remote "/$dir"
-    echo "⬆️  $dst"
-    AMPY put "$src" "/$dst"
-    sleep 0.3
+function listar_remoto_recursivo() {
+  local path="$1"
+  local prefix="$2"
+  local archivos
+  archivos=$(ampy --port "$PORT" ls "$path" 2>/dev/null)
+
+  if [ -z "$archivos" ]; then
+    return
+  fi
+
+  while read -r item; do
+    item=$(echo "$item" | tr -d '\r')
+    [ -z "$item" ] && continue
+    full_path="${path}/${item}"
+    if ampy --port "$PORT" ls "$full_path" &>/dev/null; then
+      echo "${prefix}${item}/"
+      listar_remoto_recursivo "$full_path" "  $prefix"
+    else
+      echo "${prefix}${item}"
+    fi
+  done <<< "$archivos"
 }
 
-# ==== 7. Subir .py ====
-echo "[2/4] Subiendo .py..."
-while IFS= read -r -d '' f; do put_file "$f"; done < <(find . -type f -name "*.py" -print0)
+echo "Borrando archivos remotos existentes..."
+borrar_remoto_recursivo "/"
 
-# ==== 8. Subir JSON del modelo ====
-echo "[3/4] Subiendo modelo (.json)..."
-for f in ./lib/predictionModel/modeloIA/pesos.json ./lib/predictionModel/modeloIA/escala.json; do
-    if [ -f "$f" ]; then put_file "$f"; else echo "⚠️  Falta $f"; fi
+echo "Iniciando carga a $PORT"
+echo "============================"
+find . -type f -name "*.py" | while read -r LOCAL_FILE; do
+  REMOTE_PATH="/$LOCAL_FILE"
+  REMOTE_DIR=$(dirname "$REMOTE_PATH")
+
+  echo "Verificando carpeta remota: $REMOTE_DIR"
+  IFS='/' read -ra PARTS <<< "$REMOTE_DIR"
+  CURRENT=""
+  for part in "${PARTS[@]}"; do
+    [ -z "$part" ] && continue
+    CURRENT="$CURRENT/$part"
+    ampy --port "$PORT" mkdir "$CURRENT" 2>/dev/null
+  done
+
+  echo -n "Subiendo $LOCAL_FILE ... "
+  ampy --port "$PORT" put "$LOCAL_FILE" "$REMOTE_PATH" && echo "Ok" || echo "Error"
 done
 
-# ==== 9. Listar archivos en el ESP32 ====
-echo "[4/4] Archivos en el ESP32:"
-AMPY ls -r || true
+echo -e "\nListando archivos en el ESP32:"
+echo "============================"
+listar_remoto_recursivo "" ""
+echo "============================"
 
-# ==== 10. Reset suave ====
-echo "🔁 Reset suave..."
-AMPY reset || true
-echo "✅ Subida completa."
+echo -e "\nCarga finalizada. Puedes ejecutar el programa con:\nampy --port $PORT run main.py"

@@ -148,9 +148,12 @@ class _BLEUART:
         self._adv_interval_us = adv_interval_ms * 1000
 
         # Prepara ADV + SCAN_RSP
-        self._adv = bytes(_adv_payload(flags=True, services=[_UART_SERVICE_UUID]))
+        try:
+            self._adv = bytes(_adv_payload(flags=True, services=[_UART_SERVICE_UUID]))
+        except Exception:
+            # Firmware antiguo: sin servicios en ADV
+             self._adv = bytes(_adv_payload(flags=True, services=None))
         self._scan = bytes(_scan_resp_payload(self._name))
-
         self._safe_stop_advertising()
         self._start_advertising()
 

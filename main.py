@@ -1,6 +1,5 @@
-# main.py — MAX3010x + Temperatura + IA + BLE (NUS) + Firebase (sin cambios)
-# Envía por BLE: spo2, bpm, temp, modelPreccision (0..1), riskScore (0/1)
-# Mantiene envío a Firebase como ya lo tenías.
+# main.py — MAX3010x + OLED (opcional) + IA + Firebase + BLE (NUS)
+# Envío BLE continuo (keep‑alive 1 Hz) y, cuando hay medidas válidas, BLE + Firebase + IA.
 
 import sys
 import utime as time
@@ -10,34 +9,36 @@ from machine import I2C, Pin
 from lib.max30102 import MAX30105
 from lib.max30102.heartrate import HeartRate
 from lib.max30102.oxygen import OxygenSaturation
-from lib.ssd1306.ssd1306 import SSD1306   # opcional
+# (opcional) comenta si no tienes pantalla:
+from lib.ssd1306.ssd1306 import SSD1306
 
 # --- BLE (NUS) ---
-from BLERawSender import BLERawSender
+from BLERawSender import BLERawSender  # ponlo en /lib/BLERawSender.py
 
-# --- Firebase + IA (SIN CAMBIOS) ---
+# --- Firebase + IA ---
 from lib.firebase_data_send.FirebaseRawSender import FirebaseRawSender
 from lib.predictionModel.modeloIA.pesos_modelo import predict
 from configuracion import WIFI_CONFIG, FIREBASE_CONFIG
 
-# =========================== CONFIG ===========================
-DEVICE_NAME       = "ESP32-SaudeRemota"
-I2C_SCL_PIN       = 22
-I2C_SDA_PIN       = 21
-BUTTON_PIN        = 0
+# =========================== CONFIGURACIÓN ===========================
+DEVICE_NAME    = "ESP32-SaudeRemota"  # nombre BLE (corto = más visible)
+I2C_SCL_PIN    = 22
+I2C_SDA_PIN    = 21
+BUTTON_PIN     = 0          # IO0 (BOOT) para parada limpia
 
-SAMPLE_RATE       = 400
-LED_POWER         = 0x7F
-RESET_THRESH      = 50000
-AMP_MIN           = 15000
-UI_REFRESH_MS     = 500
-BLE_KEEPALIVE_MS  = 1000
-FIREBASE_MIN_PERIOD_MS = 2000  # (igual que antes)
+SAMPLE_RATE    = 400        # Hz
+LED_POWER      = 0x7F
+RESET_THRESH   = 50000      # umbral IR para “hay dedo”
+AMP_MIN        = 15000      # amplitud mínima (ir - min_ir)
+UI_REFRESH_MS  = 500
+BLE_KEEPALIVE_MS = 1000     # envío 0,0,0 cuando no hay válidos
+FIREBASE_MIN_PERIOD_MS = 2000  # no mandar a Firebase más a menudo que esto
 
-PRINT_SERIAL      = True
+PRINT_SERIAL   = True
 
-# =========================== ESTADO ===========================
+# =========================== ESTADO GLOBAL ===========================
 stop_flag = False
+
 spo2_ir_buf = []
 spo2_red_buf = []
 finger_present = False
@@ -53,16 +54,18 @@ last_ui_ms = time.ticks_ms()
 last_ble_keepalive_ms = time.ticks_ms()
 last_fb_send_ms = 0
 
-# =========================== UTILS ===========================
+# =========================== UTILIDADES ==============================
 def clamp(v, lo, hi):
-    return max(lo, min(hi, v))
+    if v < lo: return lo
+    if v > hi: return hi
+    return v
 
 def log(*a):
     if PRINT_SERIAL:
         try: print(*a)
         except: pass
 
-# ======================== INICIALIZACIÓN ======================
+# =========================== INICIALIZACIÓN ==========================
 # Botón parada
 def _button_handler(pin):
     global stop_flag
@@ -70,7 +73,7 @@ def _button_handler(pin):
 button = Pin(BUTTON_PIN, Pin.IN, Pin.PULL_UP)
 button.irq(trigger=Pin.IRQ_FALLING, handler=_button_handler)
 
-# I2C, sensor, OLED
+# I2C, sensor y pantalla
 i2c = I2C(0, scl=Pin(I2C_SCL_PIN), sda=Pin(I2C_SDA_PIN), freq=400000)
 sensor = MAX30105(i2c)
 
@@ -81,12 +84,13 @@ if not sensor.begin():
 sensor.setup(
     powerLevel    = LED_POWER,
     sampleAverage = 1,
-    ledMode       = 2,        # IR + Rojo (SpO2)
+    ledMode       = 2,          # IR + Rojo (necesario para SpO2)
     sampleRate    = SAMPLE_RATE,
     pulseWidth    = 411,
     adcRange      = 16384
 )
 
+# (opcional) Pantalla
 try:
     display = SSD1306(i2c=i2c)
 except Exception:
@@ -103,7 +107,7 @@ SPO2_BUF_SIZE = ox.BUFFER_SIZE
 ble = BLERawSender(device_name=DEVICE_NAME, auto_wait_ms=0)
 log("BLE anunciando como", DEVICE_NAME)
 
-# Firebase (SIN CAMBIOS)
+# Firebase
 sender = FirebaseRawSender(
     email=FIREBASE_CONFIG["email"],
     password=FIREBASE_CONFIG["password"],
@@ -114,9 +118,10 @@ sender = FirebaseRawSender(
 
 log("Sensor inicializado. Coloque su dedo en el sensor…")
 
-# ======================= LECTURA / CÁLCULO ====================
+# =========================== LECTURA / CÁLCULO =======================
 def read_and_update():
-    global finger_present, min_ir, spo2, bpm, spo2_valid, bpm_valid
+    """Lee una muestra IR/Red, actualiza buffers y calcula spo2/bpm si hay ventana completa."""
+    global finger_present, min_ir, spo2, bpm, temp, spo2_valid, bpm_valid
 
     ir  = sensor.getIR()
     red = sensor.getRed()
@@ -164,35 +169,26 @@ def refresh_temperature():
     except Exception:
         temp = 0.0
 
-# ===== BLE: enviar también riesgo (0/1) y precisión (0..1) =====
-def send_ble(spo2_i, bpm_i, temp_f, risk_score, model_precision):
-    """Envía por BLE: spo2,bpm,temp + modelPreccision (0..1) + riskScore (0/1)."""
-    try: r = int(risk_score)
-    except: r = 0
-    try: p = float(model_precision)
-    except: p = 0.0
-
+def send_ble(spo2_i, bpm_i, temp_f):
+    """Envío por BLE con protección."""
     if ble.is_connected():
         try:
-            # ¡OJO! BLERawSender espera 'modelPreccision' (doble 'c') para la web.
+            # BLERawSender espera 'modelPreccision' (con doble c) por compatibilidad
             ble.send_measurement(
-                temperature=float(temp_f),
-                bmp=float(bpm_i),
-                spo2=float(spo2_i),
-                modelPreccision=round(p, 4),
-                riskScore=int(r)
+                temperature=temp_f,
+                bmp=bpm_i,
+                spo2=spo2_i,
+                modelPreccision=1.0,
+                riskScore=1.0
             )
-            log("[BLE] TX ->",
-                f"SPO2={spo2_i}, BPM={bpm_i}, T={float(temp_f):.2f}, Risk={int(r)}, Prec={p:.4f}")
+            log("[BLE] TX ->", f"{spo2_i},{bpm_i},{temp_f:.2f}")
         except Exception as e:
             log("[BLE] ERROR notify:", e)
     else:
-        log("[BLE] sin conexión; omitido:",
-            f"SPO2={spo2_i}, BPM={bpm_i}, T={float(temp_f):.2f}, Risk={int(r)}, Prec={p:.4f}")
+        log("[BLE] sin conexión; omitido:", f"{spo2_i},{bpm_i},{temp_f:.2f}")
 
-# ===== Firebase: lo dejamos como ya estaba =====
-def send_firebase_unchanged(spo2_i, bpm_i, temp_f, label, prob):
-    """Mantiene tu envío original a Firebase (sin tocar nombres/campos)."""
+def send_firebase(spo2_i, bpm_i, temp_f, label, prob):
+    """Envío a Firebase con control de frecuencia."""
     global last_fb_send_ms
     now = time.ticks_ms()
     if time.ticks_diff(now, last_fb_send_ms) < FIREBASE_MIN_PERIOD_MS:
@@ -200,18 +196,17 @@ def send_firebase_unchanged(spo2_i, bpm_i, temp_f, label, prob):
     last_fb_send_ms = now
     try:
         sender.send_measurement(
-            temperature=float(temp_f),
-            bmp=int(bpm_i),
-            spo2=int(spo2_i),
-            modelPrecision=round(float(prob), 4),  # tu backend ya lo usaba así
+            temperature=temp_f,
+            bmp=bpm_i,
+            spo2=spo2_i,
+            modelPrecision=round(float(prob), 4),  # Firebase usa 'modelPrecision' (una c)
             riskScore=int(label)
         )
-        log("[FB] Enviado:", spo2_i, bpm_i, temp_f,
-            " risk=", int(label), " prec=", round(float(prob), 4))
+        log("[FB] Enviado: spo2=", spo2_i, " bpm=", bpm_i, " temp=", temp_f, " prob=", round(float(prob),4), " label=", label)
     except Exception as e:
         log("[FB] ERROR:", e)
 
-# ======================== BUCLE PRINCIPAL =====================
+# =========================== BUCLE PRINCIPAL =========================
 try:
     while True:
         sv, bv = read_and_update()
@@ -221,10 +216,13 @@ try:
             last_ui_ms = now
             refresh_temperature()
 
+            # UI por serie
             if sv or bv:
                 log("SpO2:", (int(spo2) if sv else "-"),
                     " BPM:", (("%.1f" % bpm) if bv else "-"),
                     " Temp:", ("%.2f°C" % temp))
+
+            # UI en pantalla
             if display and display.is_connected():
                 try:
                     if sv:
@@ -234,34 +232,34 @@ try:
                 except Exception:
                     pass
 
+        # Envíos
         if sv and bv:
             s_spo2 = int(clamp(spo2, 0, 100))
             s_bpm  = int(clamp(bpm, 30, 220))
-            s_temp = float(temp)
+            s_temp = float(clamp(temp, 25.0, 45.0))
 
-            # === IA: riesgo (0/1) + precisión (0..1) ===
+            # IA
             try:
                 label, prob = predict([s_spo2, s_bpm, s_temp])
-                label = 1 if int(label) == 1 else 0
-                prob  = float(prob)
-                log(f"IA: prob={prob:.4f} →", ("Riesgo" if label==1 else "No riesgo"))
+                log(f"IA: prob={float(prob):.4f} →", ("Riesgo" if int(label)==1 else "No riesgo"))
             except Exception as e:
                 label, prob = 0, 0.0
                 log("IA ERROR:", e)
 
-            # BLE (con riesgo y precisión para la web)
-            send_ble(s_spo2, s_bpm, s_temp, label, prob)
+            # BLE (en cada lectura válida)
+            send_ble(s_spo2, s_bpm, s_temp)
 
-            # Firebase (SIN CAMBIOS)
-            send_firebase_unchanged(s_spo2, s_bpm, s_temp, label, prob)
+            # Firebase (rate‑limited)
+            send_firebase(s_spo2, s_bpm, s_temp, label, prob)
 
-            last_ble_keepalive_ms = now
+            last_ble_keepalive_ms = now  # resetea el temporizador
         else:
+            # keep‑alive BLE 0,0,0 cada 1 s
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS:
                 last_ble_keepalive_ms = now
-                # keep-alive para que la web “latido”:
-                send_ble(0, 0, 0.0, 0, 0.0)
+                send_ble(0, 0, 0.0)
 
+        # Parada por botón
         if stop_flag:
             log("Parada solicitada por botón.")
             break
@@ -269,7 +267,7 @@ try:
         time.sleep_ms(5)
 
 except KeyboardInterrupt:
-    log("Parada solicitada por Ctrl-C.")
+    log("Parada solicitada por Ctrl‑C.")
 
 finally:
     try:

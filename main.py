@@ -49,8 +49,6 @@ bpm  = 0
 temp = 0.0
 spo2_valid = False
 bpm_valid  = False
-label = 0    # resultado IA (0=sin riesgo, 1=riesgo)
-prob  = 0.0  # probabilidad IA (0.0 a 1.0)
 
 last_ui_ms = time.ticks_ms()
 last_ble_keepalive_ms = time.ticks_ms()
@@ -187,7 +185,7 @@ def send_ble(spo2_i, bpm_i, temp_f):
     else:
         log("[BLE] sin conexión; omitido:", f"{spo2_i},{bpm_i},{temp_f:.2f}")
 
-#def send_firebase(spo2_i, bpm_i, temp_f, label, prob):
+#def send_firebase(spo2_i, bpm_i, temp_f):
     #"""Envío a Firebase con control de frecuencia."""
     #global last_fb_send_ms
     #now = time.ticks_ms()
@@ -202,7 +200,7 @@ def send_ble(spo2_i, bpm_i, temp_f):
             #modelPrecision=round(float(prob), 4),  # Firebase usa 'modelPrecision' (una c)
             #riskScore=int(label)
         #)
-        #log("[FB] Enviado: spo2=", spo2_i, " bpm=", bpm_i, " temp=", temp_f, " prob=", round(float(prob),4), " label=", label)
+        #log("[FB] Enviado: spo2=", spo2_i, " bpm=", bpm_i, " temp=", temp_f)
     #except Exception as e:
         #log("[FB] ERROR:", e)
 
@@ -237,14 +235,12 @@ try:
             s_spo2 = int(clamp(spo2, 0, 100))
             s_bpm  = int(clamp(bpm, 30, 220))
             s_temp = float(clamp(temp, 25.0, 45.0))
-
-            IA
-            try:
-                label, prob = predict([s_spo2, s_bpm, s_temp])
-                log(f"IA: prob={float(prob):.4f} →", ("Riesgo" if int(label)==1 else "No riesgo"))
-            except Exception as e:
-                label, prob = 0, 0.0
-                log("IA ERROR:", e)
+            # IA
+            #try:
+                #label, prob = predict(s_spo2, s_bpm, s_temp)
+            #except Exception as e:
+                #log("ERROR en IA:", e)
+                #label, prob = "N/A", 0.0
 
             #BLE (en cada lectura válida)
             send_ble(s_spo2, s_bpm, s_temp)

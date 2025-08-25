@@ -1,4 +1,4 @@
-# main.py — MAX3010x + OLED (opcional) + Firebase + BLE (NUS)
+# main.py — MAX3010x + OLED (opcional) + IA + BLE (NUS)
 # Envío BLE continuo (keep‑alive 1 Hz) y, cuando hay medidas válidas, BLE + Firebase + IA.
 
 import sys
@@ -15,9 +15,8 @@ from lib.ssd1306.ssd1306 import SSD1306
 # --- BLE (NUS) ---
 from BLERawSender import BLERawSender  # ponlo en /lib/BLERawSender.py
 
-# --- Firebase ---
-from lib.firebase_data_send.FirebaseRawSender import FirebaseRawSender
-from configuracion import WIFI_CONFIG, FIREBASE_CONFIG
+# --- Modelo IA ---
+from lib.predictionModel.modeloIA.pesos_modelo import predict  
 
 # =========================== CONFIGURACIÓN ===========================
 DEVICE_NAME    = "ESP32-SaudeRemota"  # nombre BLE (corto = más visible)
@@ -48,6 +47,7 @@ bpm  = 0
 temp = 0.0
 spo2_valid = False
 bpm_valid  = False
+label, y = predict([spo2, bpm, temp])
 
 last_ui_ms = time.ticks_ms()
 last_ble_keepalive_ms = time.ticks_ms()
@@ -106,15 +106,6 @@ SPO2_BUF_SIZE = ox.BUFFER_SIZE
 ble = BLERawSender(device_name=DEVICE_NAME, auto_wait_ms=0)
 log("BLE anunciando como", DEVICE_NAME)
 
-# Firebase
-sender = FirebaseRawSender(
-    email=FIREBASE_CONFIG["email"],
-    password=FIREBASE_CONFIG["password"],
-    api_key=FIREBASE_CONFIG["api_key"],
-    database_url=FIREBASE_CONFIG["database_url"],
-    wifi_config=WIFI_CONFIG
-)
-
 log("Sensor inicializado. Coloque su dedo en el sensor…")
 
 # =========================== LECTURA / CÁLCULO =======================
@@ -168,37 +159,24 @@ def refresh_temperature():
     except Exception:
         temp = 0.0
 
-def send_ble(spo2_i, bpm_i, temp_f):
+def send_ble(spo2_i, bpm_i, temp_f,label,y):
     """Envío por BLE con protección."""
     if ble.is_connected():
         try:
             ble.send_measurement(
                 temperature=temp_f,
                 bmp=bpm_i,
-                spo2=spo2_i,
+                spo2=spo2_i,     
+                riskScore=label,  
+                modelPreccision=y           
             )
+            print(f"[BLE] TX -> spo2={spo2} bpm={bpm} temp={tC:.2f} "
+                  f"label={'Riesgo' if int(label)==1 else 'No riesgo'} prob={y:.3f}")
             log("[BLE] TX ->", f"{spo2_i},{bpm_i},{temp_f:.2f}")
         except Exception as e:
             log("[BLE] ERROR notify:", e)
     else:
         log("[BLE] sin conexión; omitido:", f"{spo2_i},{bpm_i},{temp_f:.2f}")
-
-def send_firebase(spo2_i, bpm_i, temp_f):
-    #"""Envío a Firebase con control de frecuencia."""
-    global last_fb_send_ms
-    now = time.ticks_ms()
-    if time.ticks_diff(now, last_fb_send_ms) < FIREBASE_MIN_PERIOD_MS:
-        return
-    last_fb_send_ms = now
-    try:
-        sender.send_measurement(
-            temperature=temp_f,
-            bmp=bpm_i,
-            spo2=spo2_i,
-        )
-        log("[FB] Enviado: spo2=", spo2_i, " bpm=", bpm_i, " temp=", temp_f)
-    except Exception as e:
-        log("[FB] ERROR:", e)
 
 # =========================== BUCLE PRINCIPAL =========================
 try:
@@ -233,10 +211,8 @@ try:
             s_temp = float(clamp(temp, 25.0, 45.0))
 
             #BLE (en cada lectura válida)
-            send_ble(s_spo2, s_bpm, s_temp)
-
-            # Firebase (rate‑limited)
-            send_firebase(s_spo2, s_bpm, s_temp)
+            send_ble(s_spo2, s_bpm, s_temp, label, y)
+            
             last_ble_keepalive_ms = now  # resetea el temporizador
         else:
             #keep‑alive BLE 0,0,0 cada 1 s

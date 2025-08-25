@@ -246,7 +246,7 @@ try:
                 #label, prob = 0, 0.0
                 #log("IA ERROR:", e)
 
-             BLE (en cada lectura válida)
+            #BLE (en cada lectura válida)
             send_ble(s_spo2, s_bpm, s_temp, label, prob)
 
             # Firebase (rate‑limited)
@@ -254,7 +254,7 @@ try:
 
             last_ble_keepalive_ms = now  # resetea el temporizador
         else:
-             keep‑alive BLE 0,0,0 cada 1 s
+            #keep‑alive BLE 0,0,0 cada 1 s
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS:
                 last_ble_keepalive_ms = now
                 send_ble(0, 0, 0.0)

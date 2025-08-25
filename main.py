@@ -167,7 +167,7 @@ def send_ble(spo2_i, bpm_i, temp_f,label,y):
                 temperature=temp_f,
                 bmp=bpm_i,
                 spo2=spo2_i,     
-                riskScore=label,  
+                riskScore=y,  
                 modelPreccision=y           
             )
             print(f"[BLE] TX -> spo2={spo2} bpm={bpm} temp={temp:.2f} "

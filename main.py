@@ -178,8 +178,8 @@ def send_ble(spo2_i, bpm_i, temp_f, label, prob):
                 temperature=temp_f,
                 bmp=bpm_i,
                 spo2=spo2_i,
-                modelPreccision=round(float(prob), 4),
-                riskScore=int(label)
+                modelPreccision=prob,
+                riskScore=label
             )
             log("[BLE] TX ->", f"{spo2_i},{bpm_i},{temp_f:.2f}")
         except Exception as e:

@@ -114,7 +114,7 @@ log("BLE anunciando como", DEVICE_NAME)
     #api_key=FIREBASE_CONFIG["api_key"],
     #database_url=FIREBASE_CONFIG["database_url"],
     #wifi_config=WIFI_CONFIG
-~#)
+#)
 
 log("Sensor inicializado. Coloque su dedo en el sensor…")
 

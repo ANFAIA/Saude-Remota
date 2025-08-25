@@ -170,8 +170,8 @@ def send_ble(spo2_i, bpm_i, temp_f,label,y):
                 riskScore=label,  
                 modelPreccision=y           
             )
-            print(f"[BLE] TX -> spo2={spo2} bpm={bpm} temp={tC:.2f} "
-                  f"label={'Riesgo' if int(label)==1 else 'No riesgo'} prob={y:.3f}")
+            print(f"[BLE] TX -> spo2={spo2} bpm={bpm} temp={temp:.2f} "
+                  f"label={'Riesgo' if int(label)==1 else 'No riesgo'} y={y:.3f}")
             log("[BLE] TX ->", f"{spo2_i},{bpm_i},{temp_f:.2f}")
         except Exception as e:
             log("[BLE] ERROR notify:", e)
@@ -210,6 +210,13 @@ try:
             s_bpm  = int(clamp(bpm, 30, 220))
             s_temp = float(clamp(temp, 25.0, 45.0))
 
+            # IA: recalcula con medidas válidas
+            try:
+                label, y = predict([s_spo2, s_bpm, s_temp])  # -> (0/1, y)
+            except Exception as e:
+                log("IA ERROR:", e)
+                label, y = 0, 0.0
+
             #BLE (en cada lectura válida)
             send_ble(s_spo2, s_bpm, s_temp, label, y)
             
@@ -218,7 +225,7 @@ try:
             #keep‑alive BLE 0,0,0 cada 1 s
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS:
                 last_ble_keepalive_ms = now
-                send_ble(0, 0, 0.0)
+                send_ble(0, 0, 0.0, 0, 0.0)
 
         # Parada por botón
         if stop_flag:

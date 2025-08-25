@@ -108,13 +108,13 @@ ble = BLERawSender(device_name=DEVICE_NAME, auto_wait_ms=0)
 log("BLE anunciando como", DEVICE_NAME)
 
 # Firebase
-sender = FirebaseRawSender(
-    email=FIREBASE_CONFIG["email"],
-    password=FIREBASE_CONFIG["password"],
-    api_key=FIREBASE_CONFIG["api_key"],
-    database_url=FIREBASE_CONFIG["database_url"],
-    wifi_config=WIFI_CONFIG
-)
+#sender = FirebaseRawSender(
+    #email=FIREBASE_CONFIG["email"],
+    #password=FIREBASE_CONFIG["password"],
+    #api_key=FIREBASE_CONFIG["api_key"],
+    #database_url=FIREBASE_CONFIG["database_url"],
+    #wifi_config=WIFI_CONFIG
+~#)
 
 log("Sensor inicializado. Coloque su dedo en el sensor…")
 
@@ -250,7 +250,7 @@ try:
             send_ble(s_spo2, s_bpm, s_temp, label, prob)
 
             # Firebase (rate‑limited)
-            send_firebase(s_spo2, s_bpm, s_temp, label, prob)
+            #send_firebase(s_spo2, s_bpm, s_temp, label, prob)
 
             last_ble_keepalive_ms = now  # resetea el temporizador
         else:

@@ -173,7 +173,7 @@ def send_ble(spo2_i, bpm_i, temp_f, label, prob):
     """Envío por BLE con protección."""
     if ble.is_connected():
         try:
-             BLERawSender espera 'modelPreccision' (con doble c) por compatibilidad
+            BLERawSender espera 'modelPreccision' (con doble c) por compatibilidad
             ble.send_measurement(
                 temperature=temp_f,
                 bmp=bpm_i,

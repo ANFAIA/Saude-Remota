@@ -171,7 +171,7 @@ def refresh_temperature():
     except Exception:
         temp = 0.0
 
-def send_ble(spo2_i, bpm_i, temp_f, label, prob):
+def send_ble(spo2_i, bpm_i, temp_f):
     """Envío por BLE con protección."""
     if ble.is_connected():
         try:
@@ -180,8 +180,6 @@ def send_ble(spo2_i, bpm_i, temp_f, label, prob):
                 temperature=temp_f,
                 bmp=bpm_i,
                 spo2=spo2_i,
-                modelPreccision=prob,
-                riskScore=label
             )
             log("[BLE] TX ->", f"{spo2_i},{bpm_i},{temp_f:.2f}")
         except Exception as e:
@@ -249,7 +247,7 @@ try:
                 log("IA ERROR:", e)
 
             #BLE (en cada lectura válida)
-            send_ble(s_spo2, s_bpm, s_temp, label, prob)
+            send_ble(s_spo2, s_bpm, s_temp)
 
             # Firebase (rate‑limited)
             #send_firebase(s_spo2, s_bpm, s_temp, label, prob)

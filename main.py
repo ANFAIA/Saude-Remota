@@ -49,6 +49,8 @@ bpm  = 0
 temp = 0.0
 spo2_valid = False
 bpm_valid  = False
+label = 0    # resultado IA (0=sin riesgo, 1=riesgo)
+prob  = 0.0  # probabilidad IA (0.0 a 1.0)
 
 last_ui_ms = time.ticks_ms()
 last_ble_keepalive_ms = time.ticks_ms()
@@ -238,13 +240,13 @@ try:
             s_bpm  = int(clamp(bpm, 30, 220))
             s_temp = float(clamp(temp, 25.0, 45.0))
 
-            #IA
-            #try:
-                #label, prob = predict([s_spo2, s_bpm, s_temp])
-                #log(f"IA: prob={float(prob):.4f} →", ("Riesgo" if int(label)==1 else "No riesgo"))
-            #except Exception as e:
-                #label, prob = 0, 0.0
-                #log("IA ERROR:", e)
+            IA
+            try:
+                label, prob = predict([s_spo2, s_bpm, s_temp])
+                log(f"IA: prob={float(prob):.4f} →", ("Riesgo" if int(label)==1 else "No riesgo"))
+            except Exception as e:
+                label, prob = 0, 0.0
+                log("IA ERROR:", e)
 
             #BLE (en cada lectura válida)
             send_ble(s_spo2, s_bpm, s_temp, label, prob)

@@ -169,7 +169,7 @@ def refresh_temperature():
     except Exception:
         temp = 0.0
 
-def send_ble(spo2_i, bpm_i, temp_f, modelPreccision=0.0, riskScore=0.0):
+def send_ble(spo2_i, bpm_i, temp_f, modelPreccision_=0.0, riskScore_=0.0):
     """Envío por BLE con protección."""
     if ble.is_connected():
         try:
@@ -178,8 +178,8 @@ def send_ble(spo2_i, bpm_i, temp_f, modelPreccision=0.0, riskScore=0.0):
                 temperature=temp_f,
                 bmp=bpm_i,
                 spo2=spo2_i,
-                modelPreccision=modelPreccision,
-                riskScore=riskScore
+                modelPreccision=modelPreccision_,
+                riskScore=riskScore_
             )
             log("[BLE] TX ->", f"{spo2_i},{bpm_i},{temp_f:.2f}")
         except Exception as e:

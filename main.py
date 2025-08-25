@@ -169,23 +169,23 @@ def refresh_temperature():
     except Exception:
         temp = 0.0
 
-#def send_ble(spo2_i, bpm_i, temp_f, label, prob):
-    #"""Envío por BLE con protección."""
-    #if ble.is_connected():
-        #try:
-            # BLERawSender espera 'modelPreccision' (con doble c) por compatibilidad
-            #ble.send_measurement(
-                #temperature=temp_f,
-                #bmp=bpm_i,
-                #spo2=spo2_i,
-                #modelPreccision=prob,
-                #riskScore=label
-            #)
-            #log("[BLE] TX ->", f"{spo2_i},{bpm_i},{temp_f:.2f}")
-        #except Exception as e:
-            #log("[BLE] ERROR notify:", e)
-    #else:
-        #log("[BLE] sin conexión; omitido:", f"{spo2_i},{bpm_i},{temp_f:.2f}")
+def send_ble(spo2_i, bpm_i, temp_f, label, prob):
+    """Envío por BLE con protección."""
+    if ble.is_connected():
+        try:
+             BLERawSender espera 'modelPreccision' (con doble c) por compatibilidad
+            ble.send_measurement(
+                temperature=temp_f,
+                bmp=bpm_i,
+                spo2=spo2_i,
+                modelPreccision=prob,
+                riskScore=label
+            )
+            log("[BLE] TX ->", f"{spo2_i},{bpm_i},{temp_f:.2f}")
+        except Exception as e:
+            log("[BLE] ERROR notify:", e)
+    else:
+        log("[BLE] sin conexión; omitido:", f"{spo2_i},{bpm_i},{temp_f:.2f}")
 
 #def send_firebase(spo2_i, bpm_i, temp_f, label, prob):
     #"""Envío a Firebase con control de frecuencia."""
@@ -238,26 +238,26 @@ try:
             s_bpm  = int(clamp(bpm, 30, 220))
             s_temp = float(clamp(temp, 25.0, 45.0))
 
-            IA
-            try:
-                label, prob = predict([s_spo2, s_bpm, s_temp])
-                log(f"IA: prob={float(prob):.4f} →", ("Riesgo" if int(label)==1 else "No riesgo"))
-            except Exception as e:
-                label, prob = 0, 0.0
-                log("IA ERROR:", e)
+            #IA
+            #try:
+                #label, prob = predict([s_spo2, s_bpm, s_temp])
+                #log(f"IA: prob={float(prob):.4f} →", ("Riesgo" if int(label)==1 else "No riesgo"))
+            #except Exception as e:
+                #label, prob = 0, 0.0
+                #log("IA ERROR:", e)
 
-            # BLE (en cada lectura válida)
-            #send_ble(s_spo2, s_bpm, s_temp, label, prob)
+             BLE (en cada lectura válida)
+            send_ble(s_spo2, s_bpm, s_temp, label, prob)
 
             # Firebase (rate‑limited)
             #send_firebase(s_spo2, s_bpm, s_temp, label, prob)
 
-            #last_ble_keepalive_ms = now  # resetea el temporizador
-        #else:
-            # keep‑alive BLE 0,0,0 cada 1 s
-            #if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS:
-                #last_ble_keepalive_ms = now
-                #send_ble(0, 0, 0.0)
+            last_ble_keepalive_ms = now  # resetea el temporizador
+        else:
+             keep‑alive BLE 0,0,0 cada 1 s
+            if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS:
+                last_ble_keepalive_ms = now
+                send_ble(0, 0, 0.0)
 
         # Parada por botón
         if stop_flag:

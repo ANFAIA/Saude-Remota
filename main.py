@@ -1,16 +1,16 @@
 # ========================= AÑADIDOS (BLE + IA) =========================
-# Se colocan ANTES para no tocar el bucle. Parcheamos time.sleep_ms
-# para ejecutar tareas en "segundo plano" (BLE/IA) cuando el código duerme.
+# Ejecuta tareas BLE/IA en segundo plano usando Timer + micropython.schedule
 
 import sys
 import utime as time
-from machine import I2C, Pin
+from machine import Pin, Timer
+import micropython
 
 # --- BLE (NUS) ---
 from lib.BLERawSender import BLERawSender  
 
 # --- Modelo IA ---
-from lib.predictionModel.modeloIA.pesos_modelo import predict  # retorna (label, y)
+from lib.predictionModel.modeloIA.pesos_modelo import predict  # -> (label, y)
 
 # -------- Config añadida --------
 DEVICE_NAME      = "ESP32-SaudeRemota"
@@ -63,7 +63,7 @@ def _send_ble(spo2_i, bpm_i, temp_f, label_i, y_i):
                 bmp=int(bpm_i),
                 spo2=int(spo2_i),
                 riskScore=float(y_i),
-                modelPreccision=float(y_i)  
+                modelPreccision=float(y_i)  # compat
             )
             _log("[BLE] TX ->",
                  f"spo2={int(spo2_i)} bpm={int(bpm_i)} temp={float(temp_f):.2f} "
@@ -71,15 +71,14 @@ def _send_ble(spo2_i, bpm_i, temp_f, label_i, y_i):
         except Exception as e:
             _log("[BLE] ERROR notify:", e)
 
-# Esta función usará variables definidas en más abajo (spo2, bpm, temperature, etc.)
 def _background_tasks():
+    """Se ejecuta en contexto normal (no IRQ) gracias a micropython.schedule."""
     global _last_ble_send_ms, _last_values, stop_flag
 
-    # Parada por botón sin tocar el bucle
+    # Parada por botón sin tocar tu bucle
     if stop_flag:
         _log("Parada solicitada por botón.")
         try:
-            # display existe en el main; si no está, se ignora
             display.clear()
             try: display.display_text("Programa detenido")
             except: pass
@@ -88,7 +87,7 @@ def _background_tasks():
 
     now = time.ticks_ms()
 
-    # Detectar "medidas válidas" según el propio estado
+    # Validez de medidas usando variables de TU main
     try:
         sv = (finger_present and (len(spo2_ir_buf) == SPO2_BUF_SIZE) and (spo2 > 0))
     except Exception:
@@ -123,27 +122,31 @@ def _background_tasks():
             _send_ble(0, 0, 0.0, 0, 0.0)
             _last_ble_send_ms = now
 
-# Parche de sleep para ejecutar _background_tasks sin tocar el bucle
-_original_sleep_ms = time.sleep_ms
-def _sleep_ms_patched(ms):
-    start = time.ticks_ms()
-    while True:
+# ---------- Temporizador periódico para disparar _background_tasks ----------
+_bg_pending = False
+def _timer_cb(_t):
+    # Ejecutar en contexto normal para poder usar BLE y asignaciones
+    global _bg_pending
+    if _bg_pending:
+        return
+    _bg_pending = True
+    try:
+        micropython.schedule(_run_bg, 0)
+    except:
+        _bg_pending = False
+
+def _run_bg(_):
+    global _bg_pending
+    _bg_pending = False
+    try:
         _background_tasks()
-        elapsed = time.ticks_diff(time.ticks_ms(), start)
-        remaining = ms - elapsed
-        if remaining <= 0:
-            break
-        chunk = 5 if remaining > 5 else remaining
-        _original_sleep_ms(chunk)
+    except Exception as e:
+        _log("BG ERROR:", e)
 
-time.sleep_ms = _sleep_ms_patched
+_timer = Timer(-1)
+# Ejecuta ~cada 100 ms (ajústalo si quieres más/menos frecuencia)
+_timer.init(period=100, mode=Timer.PERIODIC, callback=_timer_cb)
 
-_original_sleep = time.sleep
-def _sleep_patched(s):
-    try: ms = int(s * 1000)
-    except: ms = 0
-    _sleep_ms_patched(ms)
-time.sleep = _sleep_patched
 # ======================= FIN AÑADIDOS (BLE + IA) =====================
 
 from lib.max30102 import MAX30105

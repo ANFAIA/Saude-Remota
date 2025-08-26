@@ -2,7 +2,7 @@
 # Envío BLE continuo (keep‑alive 1 Hz) y, cuando hay medidas válidas, BLE + Firebase + IA.
 
 import sys
-from utime import time
+import utime as time
 from machine import I2C, Pin
 
 # --- Sensores / UI ---

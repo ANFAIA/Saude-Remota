@@ -1,7 +1,17 @@
-
 // /js/utils.js
-// Minimal client: connects to WS, updates the DOM, and shows relative time.
-// Expects messages shaped as: { ts: <ms>, data: { temperature, bmp, spo2, modelPreccision, riskScore } }
+// Cliente WS + DOM + envío a Firebase RTDB (usa config externa).
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+import { getDatabase, ref, push, serverTimestamp as rtdbTs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+// ⬇️ Importa tu configuración desde archivo ignorado en git
+import { firebaseConfig } from "./firebaseConfig.js";
+
+// Inicializa Firebase con config externa
+const app = initializeApp(firebaseConfig);
+const rtdb = getDatabase(app);
+const readingsRef = ref(rtdb, "readings");
+
 (function () {
   const $ = (id) => document.getElementById(id);
 
@@ -23,7 +33,6 @@
     }
   }
 
-  // relative time in Spanish
   function timeAgo(ms) {
     const d = new Date(ms);
     const now = Date.now();
@@ -38,11 +47,10 @@
   }
 
   function riskColor(p) {
-    // p in [0,100]
-    if (p >= 80) return ["#b32020", "#ef6868"]; // high risk (red)
-    if (p >= 50) return ["#c9741c", "#f0b06e"]; // medium (orange)
-    if (p >= 20) return ["#c2c02b", "#f0ec7e"]; // low-moderate (yellow)
-    return ["#2b9c73", "#90e2c3"];               // very low (green)
+    if (p >= 80) return ["#b32020", "#ef6868"]; // high risk
+    if (p >= 50) return ["#c9741c", "#f0b06e"]; // medium
+    if (p >= 20) return ["#c2c02b", "#f0ec7e"]; // low-moderate
+    return ["#2b9c73", "#90e2c3"];              // very low
   }
 
   let lastTs = null;
@@ -60,9 +68,9 @@
   }
 
   function onData(msg) {
-    // If the WS server sends other types (e.g., {"type":"status"}), ignore them
     if (!msg || !msg.data || typeof msg.ts !== "number") return;
     lastTs = msg.ts;
+
     const d = msg.data;
     const t = Number(d.temperature);
     const bpm = Number(d.bmp);
@@ -81,13 +89,27 @@
       setRiskBackground(riskPct);
     }
 
-    if (!agoTimer) {
-      agoTimer = setInterval(updateAgo, 1000);
-    }
+    if (!agoTimer) agoTimer = setInterval(updateAgo, 1000);
     updateAgo();
+
+    // --- Enviar a RTDB ---
+    const rec = {
+      temperature: Number.isFinite(t) ? t : 0,
+      bpm: Number.isFinite(bpm) ? bpm : 0,
+      spo2: Number.isFinite(spo2) ? spo2 : 0,
+      modelPreccision: Number.isFinite(prec) ? prec : 0,
+      riskScore: Number.isFinite(risk) ? risk : 0,
+      ts_ms: msg.ts || null,
+      source: "web-proxy"
+    };
+
+    // Si quieres ignorar keep-alive, descomenta:
+    // if (rec.spo2 === 0 && rec.bpm === 0) return;
+
+    push(readingsRef, { ...rec, createdAt: rtdbTs() })
+      .catch((e) => console.error("RTDB push error:", e));
   }
 
-  // Connect WS
   function startWS() {
     const proto = location.protocol === "https:" ? "wss" : "ws";
     const wsUrl = `${proto}://${location.host}/ws`;
@@ -101,12 +123,11 @@
       try {
         const msg = JSON.parse(ev.data);
         onData(msg);
-      } catch (e) {
+      } catch {
         console.warn("Mensaje no JSON:", ev.data);
       }
     });
 
-    // Reconnect logic
     let closed = false;
     ws.addEventListener("close", () => {
       if (closed) return;

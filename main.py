@@ -72,20 +72,21 @@ def _send_ble(spo2_i, bpm_i, temp_f, label_i, y_i):
             _log("[BLE] ERROR notify:", e)
 
 def _background_tasks():
-    """Se ejecuta en contexto normal (no IRQ) gracias a micropython.schedule."""
-    global _last_ble_send_ms, _last_values, stop_flag
+    global _last_ble_send_ms, _last_values, stop_flag, _timer
 
     # Parada por botón sin tocar tu bucle
     if stop_flag:
         _log("Parada solicitada por botón.")
+        try:
+            _timer.deinit()   # <- detener el Timer
+        except:
+            pass
         try:
             display.clear()
             try: display.display_text("Programa detenido")
             except: pass
         except: pass
         sys.exit()
-
-    now = time.ticks_ms()
 
     # Validez de medidas usando variables de TU main
     try:

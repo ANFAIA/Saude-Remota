@@ -3,8 +3,8 @@
 # para ejecutar tareas en "segundo plano" (BLE/IA) cuando el código duerme.
 
 import sys
-import time
-from machine import Pin
+import utime as time
+from machine import I2C, Pin
 
 # --- BLE (NUS) ---
 from lib.BLERawSender import BLERawSender  
@@ -146,8 +146,6 @@ def _sleep_patched(s):
 time.sleep = _sleep_patched
 # ======================= FIN AÑADIDOS (BLE + IA) =====================
 
-import time
-from machine import I2C, Pin
 from lib.max30102 import MAX30105
 from lib.max30102.heartrate import HeartRate
 from lib.max30102.oxygen import OxygenSaturation

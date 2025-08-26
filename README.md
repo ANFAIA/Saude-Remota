@@ -17,28 +17,66 @@ Y los muestra a través de una pantalla OLED I2C (SSD1306), si está conectada.
 
 ```
 .
+├── docs/
+├── bleServer/  
+│   └── web/
+│       ├── colors.css              # Definición de paletas de colores utilizadas en la web 
+│       ├── reset.css               # Eliminar estilos por defecto de los navegadores
+│       ├── styles.css              # Estilo principal de la web
+│       ├── utils.js                # Cliente WS + DOM + envío a Firebase RTDB
+│       ├── index.html              # Estructura del contenido de la web 
+│       ├── server.py               # Implementar un servidor BLE para una web
+│       ├── README.md               # Archivo con documentacion sobre el uso y funcionalidad
+│       └── LICENSE                 # Archivo de licencia de la librería                    
 ├── lib/
-│   ├── max30102/
-│   │   ├── __init__.py             # Inicialización del paquete del sensor
-│   │   ├── heartrate.py            # Cálculo de BPM a partir de las muestras del sensor
-│   │   ├── max30102.py             # Controlador del sensor MAX30102
-│   │   ├── oxygen.py               # Estimación de SpO₂ (saturación de oxígeno)
-│   │   ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la 
-│   │   └── LICENSE                 # Archivo de licencia de la libreria
-│   │── ssd1306/
-│   │   ├── __init__.py             # Inicialización del paquete OLED
-│   │   │── ssd1306.py              # Controlador de la pantalla OLED (basado en MicroPython)
-│   │   ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la 
-│   │   └── LICENSE                 # Archivo de licencia de la libreria
+│   └── max30102/
+│       ├── __init__.py             # Inicialización del paquete del sensor MAX30102 
+│       ├── heartrate.py            # Cálculo de BPM a partir de las muestras del sensor
+│       ├── max30102.py             # Controlador del sensor MAX30102
+│       ├── oxygen.py               # Estimación de SpO₂ (saturación de oxígeno)
+│       ├── README.md               # Archivo con documentacion sobre el uso y funcionalidad 
+│       └── LICENSE                 # Archivo de licencia de la librería
+│   └── ssd1306/
+│       ├── __init__.py             # Inicialización del paquete OLED
+│       │── ssd1306.py              # Controlador de la pantalla OLED (basado en MicroPython)
+│       └── LICENSE                 # Archivo de licencia de la librería
 │   └── firebase_data_send/
-│       ├── __init__.py             # Inicialización del paquete de envio de datos a Firebase
-│       └── FirebaseRawSender.py    # Clase con funciones para enviar los datos a Firebase
-│       ├── REDME.md                # Archivo con documentacion sobre el uso y funcionalidad de la 
-│       └── LICENSE                 # Archivo de licencia de la libreria
+│       ├── __init__.py             # Inicialización del paquete de envío de datos a Firebase
+│       ├── FirebaseRawSender.py    # Clase con funciones para enviar los datos a Firebase
+│       ├── README.md               # Archivo con documentacion sobre el uso y funcionalidad
+│       └── LICENSE                 # Archivo de licencia de la librería
+│   └── BLERawSender/
+│       ├── __init__.py             # Inicialización del paquete de envío de datos por Bluetooth
+│       ├── BLERawSender.py         # Clase con funciones para enviar los datos por Bluetooth
+│       ├── README.md               # Archivo con documentacion sobre el uso y funcionalidad
+│       └── LICENSE                 # Archivo de licencia de la librería
+│   └── file_store/
+│       ├── __init__.py             # Inicialización del paquete de almacenamiento
+│       └── store.py                # Módulo para guardar datos del sensor MAX30102 en un archivo simulado
+│   └── predictionModel/
+│       ├── compiledModel           # Modelo de IA en formato .tflite
+│       ├── dataset                 # Datasets utilizados para entrenar el modelo
+│       ├── arquitectura.py         # Arquitectura del modelo de IA
+│       ├── combinar_datasets.py    # Combinar los tres datasets reales utilizados para entrenar el modelo
+│       ├── convertir_json.py       # Convertir los pesos y escalas del modelo a formato .json
+│       ├── entrenar_modelo.py      # Entrenamiento del modelo de IA
+│       ├── dataset_sintetico.py    # Creación de un dataset sintético con datos de riesgo tipo 1
+│       ├── pesos_modelo.py         # Utilizar los pesos del modelo para determinar el riesgo
+│       ├── pesos_y_escalas.py      # Captar los pesos y escalas del modelo
+│       ├── procesar_eicu_demo.py   # Procesar el dataset eicu
+│       ├── procesar_human.py       # Procesar el dataset de Kaggle
+│       ├── escala.json             # Escala del modelo en formato .json
+│       ├── pesos.json              # Pesos del modelo en formato .json
+│       ├── pesos.npz               # Pesos del modelo en formato .npz
+│       └── escala.npz              # Escala del modelo en formato .npz
 ├── main.py                         # Script principal de ejecución en el ESP32
 ├── upload.sh                       # Script Bash para subir automáticamente los archivos al ESP32
 ├── LICENSE                         # Archivo de licencia del proyecto
 ├── README.md                       # Este archivo
+├── boot.py                         # Arranque automático del ESP32 con MicroPython
+├── Doxyfile                        # Genera documentación automática a partir de los comentarios del código
+└── requirements.txt                # Dependencias necesarias para ejecutar el proyecto en un entorno
+
 ```
 
 ---

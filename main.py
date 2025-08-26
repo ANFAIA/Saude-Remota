@@ -125,7 +125,7 @@ def _background_tasks():
 # ---------- Temporizador periódico para disparar _background_tasks ----------
 _bg_pending = False
 def _timer_cb(_t):
-    # Ejecutar en contexto normal para poder usar BLE y asignaciones
+    # Lanza _background_tasks en el hilo principal (no IRQ)
     global _bg_pending
     if _bg_pending:
         return
@@ -143,9 +143,17 @@ def _run_bg(_):
     except Exception as e:
         _log("BG ERROR:", e)
 
-_timer = Timer(-1)
-# Ejecuta ~cada 100 ms (ajústalo si quieres más/menos frecuencia)
-_timer.init(period=100, mode=Timer.PERIODIC, callback=_timer_cb)
+# Algunos firmwares no soportan Timer(-1). Probamos con 1 y, si falla, con 0.
+try:
+    _timer = Timer(1)
+except:
+    _timer = Timer(0)
+
+# mode puede no tener la constante; hacemos fallback a 2 (PERIODIC)
+try:
+    _timer.init(period=100, mode=Timer.PERIODIC, callback=_timer_cb)
+except:
+    _timer.init(period=100, mode=2, callback=_timer_cb)
 
 # ======================= FIN AÑADIDOS (BLE + IA) =====================
 

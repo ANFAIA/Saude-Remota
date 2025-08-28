@@ -1,0 +1,165 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Proyecto Saúde Remota — Beca ANFAIA</title>
+  <style>
+    :root{
+      --teal-800:#115e59;
+      --slate-50:#f8fafc;
+      --slate-200:#e2e8f0;
+      --slate-500:#64748b;
+      --slate-600:#475569;
+      --slate-700:#334155;
+      --white:#ffffff;
+    }
+    body{font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+         background: var(--slate-50); color: var(--slate-700); margin:0;}
+    .container{max-width: 800px; margin: 0 auto; padding: 0 1.25rem;}
+    header{padding: 3rem 0 1rem 0; text-align:center;}
+    h1{color:var(--teal-800); font-size: 1.875rem; margin:0;}
+    header p{margin:.5rem 0 0 0; color:var(--slate-600); font-size:.9rem;}
+    section{background:var(--white); border:1px solid var(--slate-200); border-radius:16px; padding:1.25rem; margin:1rem 0; box-shadow: 0 1px 3px rgba(0,0,0,.04)}
+    h2{color:var(--teal-800); font-size:1.125rem; margin:.25rem 0 .5rem 0}
+    p{line-height:1.65; font-size:.95rem;}
+    ul{padding-left:1.25rem; margin:.5rem 0}
+    li{margin:.4rem 0; font-size:.95rem}
+    code{background:#f1f5f9; padding:.1rem .3rem; border-radius:6px}
+    pre{background:#f1f5f9; padding:.75rem; border-radius:12px; overflow:auto; font-size:.85rem; border:1px solid var(--slate-200)}
+    ol{padding-left:1.25rem}
+    a{color:#0f766e; text-decoration:underline}
+    footer{color:var(--slate-500); font-size:.75rem; text-align:center; padding:2rem 0 3rem}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Proyecto Saúde Remota — Beca ANFAIA</h1>
+      <p>Desarrollo de un sistema de monitorización remota de salud (julio–agosto 2025)</p>
+    </header>
+
+    <section>
+      <h2>Descripción general</h2>
+      <p>
+        Este proyecto implementa un sistema de <b>monitorización remota de salud</b> utilizando un
+        microcontrolador <b>ESP32-WROOM-32</b> y un sensor óptico <b>MAX30102</b>.
+        Está desarrollado en <b>Python con MicroPython</b>, lo que permite una ejecución ligera y eficiente
+        directamente en el hardware. El sistema puede leer <b>frecuencia cardíaca</b> (BPM),
+        <b>oxigenación en sangre</b> (SpO₂) y <b>temperatura corporal</b>, mostrar resultados en una pantalla OLED (SSD1306)
+        o enviarlos a una <b>interfaz web</b> mediante Bluetooth y un servidor en PC.
+      </p>
+    </section>
+
+    <section>
+      <h2>Desarrollo y planificación temporal</h2>
+      <p>El desarrollo siguió una planificación organizada en fases, documentada en el roadmap de GitHub.
+         Cada tarea se distribuyó en semanas para asegurar avances constantes:</p>
+      <ul>
+        <li><b>Julio (inicio):</b> investigación sobre el sensor MAX30102, montaje del circuito en protoboard, documentación de la arquitectura inicial, primeros scripts en MicroPython y librerías para el sensor.</li>
+        <li><b>Julio (mitad):</b> diseño y entrenamiento del modelo de IA en Python, búsqueda y preprocesamiento de datasets (MIMIC, eICU, Kaggle), exportación de pesos y escalas para MicroPython.</li>
+        <li><b>Julio (final):</b> pruebas del modelo en el microcontrolador, creación de interfaz web básica y pruebas de envío de datos.</li>
+        <li><b>Agosto (primera quincena):</b> integración de datasets reales adicionales, mejoras en la precisión del modelo y generación de datasets combinados.</li>
+        <li><b>Agosto (segunda quincena):</b> transmisión de datos vía Bluetooth a Google Chrome, consolidación del dashboard y fase de depuración de señales y configuración del sensor.</li>
+      </ul>
+      <p>Esta planificación, junto con el detalle de issues y milestones, se encuentra reflejada en el apartado
+         <b>Projects</b> del repositorio de GitHub.</p>
+    </section>
+
+    <section>
+      <h2>Principales problemas y soluciones</h2>
+      <ul>
+        <li><b>Inicio con ESP32:</b> dificultad por venir de trabajar con microcontroladores PIC. <i>Solución:</i> estudiar MicroPython y ejemplos sencillos hasta ganar soltura.</li>
+        <li><b>Sensores mal soldados:</b> los primeros módulos MAX30102 no funcionaban bien por fallos de soldadura. <i>Solución:</i> conseguir un sensor correctamente montado.</li>
+        <li><b>Compatibilidad con TensorFlow Lite:</b> difícil de usar en MicroPython. <i>Solución:</i> exportar pesos y escalas y ejecutar la inferencia de forma manual en el ESP32.</li>
+        <li><b>Señales ruidosas:</b> las lecturas del sensor variaban demasiado. <i>Solución:</i> aplicar filtros y ajustar la configuración del MAX30102.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Conceptos básicos de IA (explicado fácil)</h2>
+      <p>Para implementar la inteligencia artificial en este proyecto, se usó una red neuronal sencilla:</p>
+      <ul>
+        <li><b>TensorFlow</b>: biblioteca de IA para crear y entrenar modelos.</li>
+        <li><b>Keras</b>: interfaz más sencilla dentro de TensorFlow.</li>
+        <li><b>Capas</b>: bloques que procesan la información (entrada: SpO₂, HR, temperatura; ocultas: cálculos; salida: alerta riesgo sí/no).</li>
+        <li><b>Pesos y bias</b>: números que la red aprende para dar más o menos importancia a cada variable.</li>
+        <li><b>Neuronas</b>: cada unidad que recibe entradas, aplica cálculos y produce salidas.</li>
+      </ul>
+      <p>Así, el modelo toma los valores de SpO₂, frecuencia cardíaca y temperatura, y devuelve si hay una condición de <b>riesgo (1)</b> o <b>no riesgo (0)</b>.</p>
+    </section>
+
+    <section>
+      <h2>Ejecutar el modelo sin TensorFlow Lite (MicroPython puro)</h2>
+      <p>Como TensorFlow Lite no siempre es compatible con MicroPython, se optó por exportar <b>pesos</b> y <b>escalas de normalización</b> y ejecutar la inferencia manualmente en el ESP32.
+         Esto se hace con listas y operaciones matemáticas básicas.</p>
+      <pre>import math
+# Pesos y escalas exportados previamente
+# Funciones auxiliares: relu, sigmoid, standardize
+# predict(features) devuelve (label, prob)</pre>
+      <p style="font-size:.85rem">Este enfoque hace posible usar IA ligera en dispositivos con recursos limitados como el ESP32.</p>
+    </section>
+
+    <section>
+      <h2>Cómo reproducir este proyecto (paso a paso)</h2>
+      <ol>
+        <li><b>Hardware:</b> ESP32-WROOM-32, sensor MAX30102 (I2C) y opcionalmente pantalla OLED SSD1306.</li>
+        <li><b>PC:</b> instala Python 3.9+, crea un entorno virtual y ejecuta <code>pip install -r requirements.txt</code>.</li>
+        <li><b>Flashea MicroPython</b> en el ESP32 y localiza el puerto serie.</li>
+        <li><b>Configura WiFi</b> editando tus credenciales en <code>main.py</code>.</li>
+        <li><b>Sube el código</b> con <code>./upload.sh /dev/tty.usbserial-0001</code>.</li>
+        <li><b>Ejecuta</b> con <code>ampy --port /dev/tty.usbserial-0001 run main.py</code> y verás Temperatura, BPM y SpO₂ en tiempo real.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Umbrales clínicos de referencia</h2>
+      <ul>
+        <li><b>Temperatura:</b> 36.0–37.5 °C (normal). Fuera de rango: &lt;36 °C o &gt;37.5 °C.</li>
+        <li><b>Frecuencia cardíaca:</b> 60–100 lpm (normal). Fuera de rango: &lt;60 o &gt;100 lpm.</li>
+        <li><b>SpO₂:</b> 95–100 % (normal). Fuera de rango: &lt;95 %.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Datos utilizados</h2>
+      <p>El modelo se entrenó con bases de datos abiertas:</p>
+      <ul>
+        <li><b>MIMIC-III/MIMIC-IV</b> (MIT-BIDMC)</li>
+        <li><b>eICU Collaborative Database</b> (Philips)</li>
+        <li><b>Human Vital Sign Dataset</b> (Kaggle)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Flujo del proyecto (cómo funciona)</h2>
+      <p>El sistema completo funciona de esta manera, explicado de forma sencilla:</p>
+      <ol>
+        <li>La persona coloca su dedo en el <b>sensor MAX30102</b>.</li>
+        <li>El sensor capta <b>frecuencia cardíaca</b>, <b>SpO₂</b> y <b>temperatura</b> corporal.</li>
+        <li>El <b>ESP32</b> procesa esas señales y las pasa al <b>modelo de IA</b>.</li>
+        <li>El modelo calcula si la situación es <b>normal</b> o de <b>riesgo</b> (riesgo = 1, no riesgo = 0).</li>
+        <li>Los resultados se muestran en la <b>página web</b> (dashboard con valores y aviso de riesgo).</li>
+        <li>La misma página web reenvía esos datos a <b>Firebase</b>, para que queden guardados y puedan verse de manera remota.</li>
+      </ol>
+      <p>De esta forma, cualquier persona puede entender el recorrido: del dedo en el sensor ➝ al microcontrolador ➝ al modelo de IA ➝ a la web ➝ y finalmente a la nube (Firebase).</p>
+    </section>
+
+    <section>
+      <h2>Enlaces al proyecto</h2>
+      <ul>
+        <li><a href="https://github.com/ANFAIA/Saude-Remota">Repositorio en GitHub</a></li>
+        <li><a href="https://github.com/orgs/ANFAIA/projects/1/views/1">GitHub Projects (planificación)</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Agradecimientos</h2>
+      <p>Proyecto liderado por <b>Irene Gallardo Sierra</b> (becada, Beca ANFAIA) con la colaboración de <b>Alejandro Fernández Rodríguez</b> y una pequeña ayuda de <b>Santiago Palomino Vazquez</b>.</p>
+    </section>
+
+    <footer>Última actualización: 26/08/2025</footer>
+  </main>
+</body>
+</html>

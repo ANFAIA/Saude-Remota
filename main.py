@@ -213,7 +213,6 @@ try:
             refresh_temperature()
 
             # ---- NUEVO: suavizado de temperatura ----
-            global temp_smooth
             if temp_smooth is None:
                 temp_smooth = temp
             else:
@@ -238,7 +237,6 @@ try:
         # Envíos
         if sv and bv:
             # ---- NUEVO: anti-spike rápido ----
-            global last_bpm_for_spike, last_spo2_for_spike
             if last_bpm_for_spike is not None and abs(bpm - last_bpm_for_spike) > MAX_BPM_JUMP:
                 bpm = last_bpm_for_spike
             if last_spo2_for_spike is not None and abs(spo2 - last_spo2_for_spike) > MAX_SPO2_JUMP:
@@ -247,7 +245,6 @@ try:
             last_spo2_for_spike = spo2
 
             # ---- NUEVO: suavizado EMA de spo2/bpm ----
-            global bpm_smooth, spo2_smooth
             if bpm_smooth is None:
                 bpm_smooth = bpm
                 spo2_smooth = spo2

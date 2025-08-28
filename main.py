@@ -1,5 +1,5 @@
 # main.py — MAX3010x + OLED (opcional) + IA + BLE (NUS)
-# Envío BLE continuo (keep‑alive 1 Hz) y, cuando hay medidas válidas, BLE + Firebase + IA.
+# Envío BLE continuo (keep-alive 1 Hz) y, cuando hay medidas válidas, BLE + IA.
 
 import sys
 import utime as time
@@ -16,23 +16,30 @@ from lib.ssd1306.ssd1306 import SSD1306
 from lib.BLERawSender import BLERawSender  # ponlo en /lib/BLERawSender.py
 
 # --- Modelo IA ---
-from lib.predictionModel.modeloIA.pesos_modelo import predict  
+from lib.predictionModel.modeloIA.pesos_modelo import predict
 
 # =========================== CONFIGURACIÓN ===========================
-DEVICE_NAME    = "ESP32-SaudeRemota"  # nombre BLE (corto = más visible)
-I2C_SCL_PIN    = 22
-I2C_SDA_PIN    = 21
-BUTTON_PIN     = 0          # IO0 (BOOT) para parada limpia
+DEVICE_NAME       = "ESP32-SaudeRemota"  # nombre BLE (corto = más visible)
+I2C_SCL_PIN       = 22
+I2C_SDA_PIN       = 21
+BUTTON_PIN        = 0          # IO0 (BOOT) para parada limpia
 
-SAMPLE_RATE    = 400        # Hz
-LED_POWER      = 0x7F
-RESET_THRESH   = 50000      # umbral IR para “hay dedo”
-AMP_MIN        = 15000      # amplitud mínima (ir - min_ir)
-UI_REFRESH_MS  = 500
-BLE_KEEPALIVE_MS = 1000     # envío 0,0,0 cuando no hay válidos
-FIREBASE_MIN_PERIOD_MS = 2000  # no mandar a Firebase más a menudo que esto
+SAMPLE_RATE       = 400        # Hz
+LED_POWER         = 0x7F
+RESET_THRESH      = 50000      # se mantiene, pero ahora usamos histeresis abajo
+AMP_MIN           = 15000      # amplitud mínima (ir - min_ir)
 
-PRINT_SERIAL   = True
+# ---- NUEVO: parámetros de robustez (cambios mínimos) ----
+FINGER_ON         = 52000      # umbral de entrada (más alto)
+FINGER_OFF        = 48000      # umbral de salida (más bajo)
+ALPHA             = 0.25       # suavizado EMA (0.1 más suave, 0.3 más reactivo)
+MAX_BPM_JUMP      = 20         # salto máximo permitido por ciclo (lpm)
+MAX_SPO2_JUMP     = 3          # salto máximo permitido por ciclo (%)
+
+UI_REFRESH_MS     = 500
+BLE_KEEPALIVE_MS  = 1000       # envío 0,0,0 cuando no hay válidos
+
+PRINT_SERIAL      = True
 
 # =========================== ESTADO GLOBAL ===========================
 stop_flag = False
@@ -51,7 +58,14 @@ label, y = predict([spo2, bpm, temp])
 
 last_ui_ms = time.ticks_ms()
 last_ble_keepalive_ms = time.ticks_ms()
-last_fb_send_ms = 0
+
+# ---- NUEVO: estado para suavizado/antispike/voto IA ----
+bpm_smooth = None
+spo2_smooth = None
+temp_smooth = None
+last_bpm_for_spike = None
+last_spo2_for_spike = None
+y_hist = []   # mantendremos últimas 3 predicciones
 
 # =========================== UTILIDADES ==============================
 def clamp(v, lo, hi):
@@ -61,8 +75,10 @@ def clamp(v, lo, hi):
 
 def log(*a):
     if PRINT_SERIAL:
-        try: print(*a)
-        except: pass
+        try:
+            print(*a)
+        except:
+            pass
 
 # =========================== INICIALIZACIÓN ==========================
 # Botón parada
@@ -82,7 +98,7 @@ if not sensor.begin():
 
 sensor.setup(
     powerLevel    = LED_POWER,
-    sampleAverage = 1,
+    sampleAverage = 2,
     ledMode       = 2,          # IR + Rojo (necesario para SpO2)
     sampleRate    = SAMPLE_RATE,
     pulseWidth    = 411,
@@ -105,7 +121,6 @@ SPO2_BUF_SIZE = ox.BUFFER_SIZE
 # BLE
 ble = BLERawSender(device_name=DEVICE_NAME, auto_wait_ms=0)
 log("BLE anunciando como", DEVICE_NAME)
-
 log("Sensor inicializado. Coloque su dedo en el sensor…")
 
 # =========================== LECTURA / CÁLCULO =======================
@@ -116,7 +131,13 @@ def read_and_update():
     ir  = sensor.getIR()
     red = sensor.getRed()
 
-    if ir > RESET_THRESH:
+    # ---- NUEVO: histeresis de dedo (evita parpadeos) ----
+    if finger_present:
+        has_finger = (ir > FINGER_OFF)
+    else:
+        has_finger = (ir > FINGER_ON)
+
+    if has_finger:
         if not finger_present:
             log("Dedo detectado. Midiendo…")
             finger_present = True
@@ -159,18 +180,18 @@ def refresh_temperature():
     except Exception:
         temp = 0.0
 
-def send_ble(spo2_i, bpm_i, temp_f,label,y):
+def send_ble(spo2_i, bpm_i, temp_f, label, y):
     """Envío por BLE con protección."""
     if ble.is_connected():
         try:
             ble.send_measurement(
                 temperature=temp_f,
                 bmp=bpm_i,
-                spo2=spo2_i,     
-                riskScore=y,  
-                modelPreccision=y           
+                spo2=spo2_i,
+                riskScore=y,
+                modelPreccision=y
             )
-            print(f"[BLE] TX -> spo2={spo2} bpm={bpm} temp={temp:.2f} "
+            print(f"[BLE] TX -> spo2={spo2_i} bpm={bpm_i} temp={temp_f:.2f} "
                   f"label={'Riesgo' if int(label)==1 else 'No riesgo'} y={y:.3f}")
             log("[BLE] TX ->", f"{spo2_i},{bpm_i},{temp_f:.2f}")
         except Exception as e:
@@ -180,6 +201,9 @@ def send_ble(spo2_i, bpm_i, temp_f,label,y):
 
 # =========================== BUCLE PRINCIPAL =========================
 try:
+    last_ble_keepalive_ms = time.ticks_ms()
+    last_ui_ms = time.ticks_ms()
+
     while True:
         sv, bv = read_and_update()
 
@@ -188,7 +212,14 @@ try:
             last_ui_ms = now
             refresh_temperature()
 
-            # UI por serie
+            # ---- NUEVO: suavizado de temperatura ----
+            global temp_smooth
+            if temp_smooth is None:
+                temp_smooth = temp
+            else:
+                temp_smooth = (1-ALPHA)*temp_smooth + ALPHA*temp
+
+            # UI por serie (usa válidos actuales sin suavizado para logging rápido)
             if sv or bv:
                 log("SpO2:", (int(spo2) if sv else "-"),
                     " BPM:", (("%.1f" % bpm) if bv else "-"),
@@ -206,23 +237,48 @@ try:
 
         # Envíos
         if sv and bv:
-            s_spo2 = int(clamp(spo2, 0, 100))
-            s_bpm  = int(clamp(bpm, 30, 220))
-            s_temp = float(clamp(temp, 25.0, 45.0))
+            # ---- NUEVO: anti-spike rápido ----
+            global last_bpm_for_spike, last_spo2_for_spike
+            if last_bpm_for_spike is not None and abs(bpm - last_bpm_for_spike) > MAX_BPM_JUMP:
+                bpm = last_bpm_for_spike
+            if last_spo2_for_spike is not None and abs(spo2 - last_spo2_for_spike) > MAX_SPO2_JUMP:
+                spo2 = last_spo2_for_spike
+            last_bpm_for_spike = bpm
+            last_spo2_for_spike = spo2
 
-            # IA: recalcula con medidas válidas
+            # ---- NUEVO: suavizado EMA de spo2/bpm ----
+            global bpm_smooth, spo2_smooth
+            if bpm_smooth is None:
+                bpm_smooth = bpm
+                spo2_smooth = spo2
+            else:
+                bpm_smooth  = (1-ALPHA)*bpm_smooth  + ALPHA*bpm
+                spo2_smooth = (1-ALPHA)*spo2_smooth + ALPHA*spo2
+
+            # Saneado de rangos (con suavizados)
+            s_spo2 = int(clamp(spo2_smooth, 0, 100))
+            s_bpm  = int(clamp(bpm_smooth, 30, 220))
+            s_temp = float(clamp(temp_smooth if temp_smooth is not None else temp, 25.0, 45.0))
+
+            # IA: usa valores suavizados
             try:
-                label, y = predict([s_spo2, s_bpm, s_temp])  # -> (0/1, y)
+                label_raw, y_raw = predict([s_spo2, s_bpm, s_temp])  # -> (0/1, y)
             except Exception as e:
                 log("IA ERROR:", e)
-                label, y = 0, 0.0
+                label_raw, y_raw = 0, 0.0
 
-            #BLE (en cada lectura válida)
+            # ---- NUEVO: media de 3 predicciones ----
+            y_hist.append(y_raw)
+            if len(y_hist) > 3:
+                y_hist.pop(0)
+            y = sum(y_hist) / len(y_hist)
+            label = 1 if y > 0.6 else 0  # umbral un poco más conservador
+
+            # BLE (en cada lectura válida)
             send_ble(s_spo2, s_bpm, s_temp, label, y)
-            
             last_ble_keepalive_ms = now  # resetea el temporizador
         else:
-            #keep‑alive BLE 0,0,0 cada 1 s
+            # keep-alive BLE 0,0,0 cada 1 s
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS:
                 last_ble_keepalive_ms = now
                 send_ble(0, 0, 0.0, 0, 0.0)
@@ -235,14 +291,16 @@ try:
         time.sleep_ms(5)
 
 except KeyboardInterrupt:
-    log("Parada solicitada por Ctrl‑C.")
+    log("Parada solicitada por Ctrl-C.")
 
 finally:
     try:
         if display and display.is_connected():
             display.clear()
-            try: display.display_text("Programa detenido")
-            except: pass
+            try:
+                display.display_text("Programa detenido")
+            except:
+                pass
     except Exception:
         pass
     sys.exit()

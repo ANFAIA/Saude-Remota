@@ -32,13 +32,15 @@ AMP_MIN           = 15000
 UI_REFRESH_MS     = 500
 BLE_KEEPALIVE_MS  = 1000
 
-# --- NUEVO: parámetros de calidad/suavizado ---
-HISTORY_LEN       = 5          # tamaño media móvil (5–10)
-ALPHA_TEMP        = 0.25       # EMA temperatura (0.1 más suave)
-TEMP_OFFSET       = 2.0        # corrección (ajústalo con tu termómetro)
+# --- Mejora de estabilidad ---
+HISTORY_LEN       = 10         # media móvil (BPM/SpO2)
+MED_WIN           = 5          # mediana para BPM (3 o 5)
+MAX_BPM_JUMP      = 12         # anti-spike por ciclo (lpm)
 WARMUP_MS         = 2000       # no usar medidas los 2 s iniciales tras detectar dedo
 
-# Rangos fisiológicos (filtros)
+# Temperatura (offset y suavizado)
+TEMP_OFFSET       = 2.0        # tu caso: ~34 -> ~36 ºC
+ALPHA_TEMP        = 0.25       # EMA para temperatura (0.1 más suave)
 BPM_MIN,  BPM_MAX  = 40, 200
 SPO2_MIN, SPO2_MAX = 70, 100
 
@@ -63,17 +65,22 @@ label, y = predict([spo2, bpm, temp])
 last_ui_ms = time.ticks_ms()
 last_ble_keepalive_ms = time.ticks_ms()
 
-# --- NUEVO: historiales para promediar ---
+# Historiales para suavizado
 SPO2_HISTORY = []
 BPM_HISTORY  = []
 TEMP_HISTORY = []
+BPM_RAW_HISTORY = []  # para mediana
 
-# --- helpers suavizado ---
 def push_and_mean(value, history, maxlen):
     history.append(value)
     if len(history) > maxlen:
         history.pop(0)
     return sum(history) / len(history)
+
+def median(xs):
+    s = sorted(xs)
+    n = len(s)
+    return s[n//2] if n % 2 == 1 else 0.5*(s[n//2-1] + s[n//2-1])
 
 def clamp(v, lo, hi):
     if v < lo: return lo
@@ -144,6 +151,7 @@ def read_and_update():
             spo2_red_buf.clear()
             SPO2_HISTORY.clear()
             BPM_HISTORY.clear()
+            BPM_RAW_HISTORY.clear()
             spo2_valid = bpm_valid = False
 
         if ir < min_ir:
@@ -161,10 +169,17 @@ def read_and_update():
                     spo2_ir_buf, spo2_red_buf
                 )
 
-                # --- NUEVO: filtros fisiológicos antes de aceptar ---
+                # Validación fisiológica previa
                 if bv and (BPM_MIN <= bpm_calc <= BPM_MAX):
                     bpm_valid = True
-                    bpm = bpm_calc
+                    # Anti-spike por salto
+                    if BPM_HISTORY and abs(bpm_calc - BPM_HISTORY[-1]) > MAX_BPM_JUMP:
+                        bpm_calc = BPM_HISTORY[-1]
+                    # Mediana de ventana corta para estabilizar picos
+                    BPM_RAW_HISTORY.append(bpm_calc)
+                    if len(BPM_RAW_HISTORY) > MED_WIN:
+                        BPM_RAW_HISTORY.pop(0)
+                    bpm = median(BPM_RAW_HISTORY)
                 else:
                     bpm_valid = False
 
@@ -174,7 +189,7 @@ def read_and_update():
                 else:
                     spo2_valid = False
 
-                # --- NUEVO: warm-up; invalida si aún es pronto ---
+                # Warm-up inicial
                 if time.ticks_diff(time.ticks_ms(), finger_since_ms) < WARMUP_MS:
                     spo2_valid = False
                     bpm_valid  = False
@@ -193,24 +208,24 @@ def read_and_update():
 def refresh_temperature():
     global temp
     try:
-        t = float(sensor.readTemperature()) + TEMP_OFFSET
-        # --- NUEVO: EMA + media móvil de temperatura ---
-        # primero EMA corto (suaviza picos), luego media de ventana corta
+        raw = float(sensor.readTemperature())
+        corr = raw + TEMP_OFFSET   # offset fijo (tu caso: +2.0)
+        # EMA + media móvil para estabilizar
         if not TEMP_HISTORY:
-            temp_ema = t
+            temp_ema = corr
         else:
-            temp_ema = (1-ALPHA_TEMP) * TEMP_HISTORY[-1] + ALPHA_TEMP * t
+            temp_ema = (1-ALPHA_TEMP) * TEMP_HISTORY[-1] + ALPHA_TEMP * corr
         temp = push_and_mean(temp_ema, TEMP_HISTORY, HISTORY_LEN)
     except Exception:
         temp = 0.0
 
 def send_ble(spo2_i, bpm_i, temp_f, label, y):
-    """Envío por BLE con la API existente (formato que espera el server)."""
+    """Envío por BLE con la API existente (formato que espera el server). No tocar BLE."""
     if ble.is_connected():
         try:
             ble.send_measurement(
                 temperature=temp_f,
-                bmp=bpm_i,                 # la web espera 'bmp'
+                bmp=bpm_i,                 # la web/servidor esperan 'bmp'
                 spo2=spo2_i,
                 riskScore=label,           # 0/1
                 modelPreccision=y          # score 0..1
@@ -231,7 +246,7 @@ try:
             last_ui_ms = now
             refresh_temperature()
 
-            # Mostrar por consola (raw para depurar)
+            # Mostrar por consola
             if sv or bv:
                 log("SpO2:", (int(spo2) if sv else "-"),
                     " BPM:", (("%.1f" % bpm) if bv else "-"),
@@ -247,7 +262,7 @@ try:
                 except Exception:
                     pass
 
-        # --- NUEVO: promediado móvil al usar/mandar ---
+        # Usar promedios al enviar
         if sv and bv:
             spo2_use = push_and_mean(spo2, SPO2_HISTORY, HISTORY_LEN)
             bpm_use  = push_and_mean(bpm,  BPM_HISTORY,  HISTORY_LEN)
@@ -256,7 +271,7 @@ try:
             s_bpm  = int(clamp(bpm_use,  BPM_MIN,  BPM_MAX))
             s_temp = float(clamp(temp, 25.0, 45.0))
 
-            # IA
+            # IA (sin tocar)
             try:
                 label, y = predict([s_spo2, s_bpm, s_temp])  # (0/1, score 0..1)
             except Exception as e:

@@ -39,7 +39,7 @@ MAX_BPM_JUMP      = 12         # anti-spike por ciclo (lpm)
 WARMUP_MS         = 2000       # no usar medidas los 2 s iniciales tras detectar dedo
 
 # Temperatura (offset y suavizado)
-TEMP_OFFSET       = 4.0        
+TEMP_OFFSET       = 4.0        # para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.25       # EMA para temperatura (0.1 más suave)
 
 # Rangos fisiológicos para validación de medidas
@@ -127,7 +127,7 @@ if not sensor.begin():
 
 sensor.setup(
     powerLevel    = LED_POWER,
-    sampleAverage = 1,     # si quieres aún más estabilidad: prueba 2–4
+    sampleAverage = 2,     
     ledMode       = 2,
     sampleRate    = SAMPLE_RATE,
     pulseWidth    = 411,
@@ -227,7 +227,7 @@ def refresh_temperature():
     global temp
     try:
         raw = float(sensor.readTemperature())
-        corr = raw + TEMP_OFFSET   # offset fijo (tu caso: +2.0)
+        corr = raw + TEMP_OFFSET   # offset fijo
         # EMA + media móvil para estabilizar
         if not TEMP_HISTORY:
             temp_ema = corr

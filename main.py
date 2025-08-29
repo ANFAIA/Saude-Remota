@@ -1,5 +1,5 @@
 # main.py — MAX3010x + OLED (opcional) + IA + BLE (NUS)
-# Envío BLE continuo (keep-alive 1 Hz) y, cuando hay medidas válidas, BLE + IA.
+# Envío BLE continuo (keep-alive 1 Hz) y, cuando hay medidas válidas, BLE + IA + REGLAS.
 
 import sys
 import utime as time
@@ -41,8 +41,15 @@ WARMUP_MS         = 2000       # no usar medidas los 2 s iniciales tras detectar
 # Temperatura (offset y suavizado)
 TEMP_OFFSET       = 2.0        # tu caso: ~34 -> ~36 ºC
 ALPHA_TEMP        = 0.25       # EMA para temperatura (0.1 más suave)
+
+# Rangos fisiológicos para validación de medidas
 BPM_MIN,  BPM_MAX  = 40, 200
 SPO2_MIN, SPO2_MAX = 70, 100
+
+# --- Umbrales clínicos (OR lógico) para la decisión por REGLAS ---
+TEMP_LO, TEMP_HI = 36.0, 37.5
+BPM_LO,  BPM_HI  = 60, 100
+SPO2_LO          = 95
 
 PRINT_SERIAL      = True
 
@@ -80,7 +87,7 @@ def push_and_mean(value, history, maxlen):
 def median(xs):
     s = sorted(xs)
     n = len(s)
-    return s[n//2] if n % 2 == 1 else 0.5*(s[n//2-1] + s[n//2-1])
+    return s[n//2] if n % 2 == 1 else 0.5*(s[n//2-1] + s[n//2])
 
 def clamp(v, lo, hi):
     if v < lo: return lo
@@ -91,6 +98,17 @@ def log(*a):
     if PRINT_SERIAL:
         try: print(*a)
         except: pass
+
+# ===== REGLA CLÍNICA: Riesgo si CUALQUIER umbral se incumple (OR) =====
+def rule_risk(spo2_v, bpm_v, temp_v):
+    """(label, score, viols): label=1 si se incumple cualquiera; score=violaciones/3."""
+    viols = []
+    if (temp_v < TEMP_LO) or (temp_v > TEMP_HI): viols.append("temp")
+    if (bpm_v  < BPM_LO)  or (bpm_v  > BPM_HI):  viols.append("bpm")
+    if (spo2_v < SPO2_LO):                        viols.append("spo2")
+    label = 1 if viols else 0
+    score = len(viols) / 3.0
+    return label, score, viols
 
 # =========================== INICIALIZACIÓN ==========================
 def _button_handler(pin):
@@ -271,14 +289,26 @@ try:
             s_bpm  = int(clamp(bpm_use,  BPM_MIN,  BPM_MAX))
             s_temp = float(clamp(temp, 25.0, 45.0))
 
-            # IA (sin tocar)
+            # ======= IA (informativa) =======
             try:
-                label, y = predict([s_spo2, s_bpm, s_temp])  # (0/1, score 0..1)
+                model_label, model_y = predict([s_spo2, s_bpm, s_temp])  # (0/1, 0..1)
             except Exception as e:
                 log("IA ERROR:", e)
-                label, y = 0, 0.0
+                model_label, model_y = 0, 0.0
 
-            send_ble(s_spo2, s_bpm, s_temp, label, y)
+            # ======= REGLAS CLÍNICAS (PRIORIDAD) =======
+            rule_label, rule_score, viols = rule_risk(s_spo2, s_bpm, s_temp)
+
+            if rule_label == 1:
+                final_label = 1
+                final_y = max(model_y, rule_score)  # o usa solo rule_score si prefieres
+                log(f"[RULE] Riesgo por: {','.join(viols)} "
+                    f"(T={s_temp:.2f}°C, BPM={s_bpm}, SpO2={s_spo2}%)")
+            else:
+                final_label = int(model_label)
+                final_y = float(model_y)
+
+            send_ble(s_spo2, s_bpm, s_temp, final_label, final_y)
             last_ble_keepalive_ms = now
         else:
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS:

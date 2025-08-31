@@ -1,0 +1,6 @@
+{
+  "email": "<TU_EMAIL_DE_ACCESO>",
+  "password": "<TU_CLAVE_DE_ACCESO>",
+  "api_key": "<TU_API_KEY>",
+  "database_url": "<URL_DE_LA_BASE_DE_DATOS>/"
+}

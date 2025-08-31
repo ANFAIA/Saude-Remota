@@ -1,12 +1,13 @@
 # Servidor BLE → Web (Saúde Remota)
 
 Este servidor **escucha por Bluetooth Low Energy (BLE)** a tu ESP32 (perfil **UART/NUS**), 
-**difunde los datos en tiempo real al navegador** vía **WebSocket** y **registra** todas las lecturas en **CSV** (y JSONL).
+**difunde los datos en tiempo real al navegador** vía **WebSocket**, **registra** todas las lecturas en **CSV** (y JSONL) y envía las mediciones a una base de datos de tiempo real en **Firebase**.
 
 - BLE mediante [`bleak`](https://github.com/hbldh/bleak)
 - HTTP/WS mediante [`aiohttp`](https://docs.aiohttp.org/)
 - UI estática servida desde `web/` (tu `index.html` y CSS)
 - Logs en `logs/raw_log.csv` y `logs/raw_log.jsonl`
+- Firebase mediante [`requests`]
 
 ---
 
@@ -14,7 +15,7 @@ Este servidor **escucha por Bluetooth Low Energy (BLE)** a tu ESP32 (perfil **UA
 
 - **Python 3.11+** (funciona en 3.13)
 - macOS 12+/Windows 10+/Linux con adaptador **BLE** compatible
-- Paquetes Python: `aiohttp` y `bleak`
+- Paquetes Python: `aiohttp`, `bleak` y `requests`
 
 > **macOS**: si `bleak` lo requiere, instala el extra:  
 > `python -m pip install 'bleak[macos]'`
@@ -65,6 +66,12 @@ bleServer/
 ├─ requirements.txt
 ├─ LICENSE
 ├─ README.md
+├─ firebaseConfig.json
+├─ lib/
+│  ├─ Firebase/
+│  │  ├─ __init__.py
+│  │  ├─ FirebaseSender.py
+│  │  ├─ LICENSE
 ├─ logs/
 │  ├─ raw_log.csv             # log en CSV (append)
 │  └─ raw_log.jsonl           # log en JSONL (append)
@@ -115,6 +122,15 @@ Cada lectura se emite como un JSON con este formato:
 
 Puedes cambiar las rutas editando las constantes `CSV_PATH` y `JSONL_PATH` en `server.py`.
 
+```json
+{
+  "email": "<TU_EMAIL_DE_ACCESO>",
+  "password": "<TU_CLAVE_DE_ACCESO>",
+  "api_key": "<TU_API_KEY>",
+  "database_url": "<URL_DE_LA_BASE_DE_DATOS>/"
+}
+```
+
 ---
 
 ## Opciones de línea de comandos
@@ -125,7 +141,17 @@ python server.py \
   --host 0.0.0.0 \                     # interfaz de red a escuchar (0.0.0.0 = todas)
   --port 8000 \                        # puerto HTTP
   --scan-timeout 8.0                   # tiempo de cada barrido BLE (s)
+  --fb-config firebaseConfig.json     # configuración de acceso a firebase
+
 ```
+
+Es posible desactivar el uso de firebase por medio del argumento **--no-firebase** 
+
+---
+
+## Configuración de acceso a Firebase
+En el archivo firebaseConfig.json se deben añadir las credenciales de acceso a Firebase
+
 
 ---
 

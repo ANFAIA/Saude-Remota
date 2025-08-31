@@ -1,105 +1,89 @@
-
 ## @file server.py
-#  @brief Servidor BLE → Web para Saúde Remota.
+#  @brief Servidor BLE → Web con envío a Firebase usando cola asíncrona y configuración por JSON.
+#
 #  @details
 #  Este módulo implementa un servidor que:
-#   - Descubre y se conecta por **Bluetooth Low Energy (BLE)** a un ESP32 que expone
+#   - Descubre y se conecta por **Bluetooth Low Energy (BLE)** a un ESP32 con
 #     el servicio **Nordic UART Service (NUS)**.
-#   - Recibe mediciones como líneas JSON por notificación BLE, las guarda en **CSV** y **JSONL**.
-#   - Publica en tiempo real cada lectura hacia los navegadores conectados mediante **WebSocket**.
-#   - Sirve la interfaz web (HTML/CSS/JS) desde el directorio `web/`.
+#   - Recibe mediciones como **líneas JSON** vía notificaciones BLE.
+#   - Persiste en **CSV** y **JSONL**.
+#   - Publica cada lectura en tiempo real a navegadores via **WebSocket (aiohttp)**.
+#   - Encola las lecturas y las envía a **Firebase Realtime Database** mediante
+#     un *worker* asíncrono que usa `requests` (bloqueante) sin frenar BLE.
+#   - Permite cargar las credenciales de Firebase desde un **archivo JSON** de configuración.
 #
-#  Arquitectura (alto nivel):
-#   - **Tarea BLE** (`ble_task`): scan → connect → subscribe → parse → log → broadcast.
-#   - **Servidor HTTP/WS** (`aiohttp`): rutas estáticas y endpoint `/ws` para streaming en vivo.
-#   - **Difusión** (`broadcast`): envío concurrente a todos los clientes WebSocket conectados.
+#  Arquitectura:
+#   - **ble_task**: scan → connect → subscribe → parse → persist → broadcast → enqueue(Firebase)
+#   - **firebase_worker**: consume cola → (re)intentos con backoff → sender.send_*
+#   - **Servidor HTTP/WS**: rutas estáticas y `/ws` para streaming (aiohttp)
 #
-#  Requisitos de ejecución:
-#   - Python 3.11+
-#   - Paquetes: `bleak`, `aiohttp` (ver `requirements.txt`)
+#  Configuración de Firebase (prioridad descendente):
+#   1. Argumentos CLI: --fb-email, --fb-password, --fb-api-key, --fb-db-url
+#   2. JSON con --fb-config
+#   3. Variables de entorno: FIREBASE_EMAIL, FIREBASE_PASSWORD, FIREBASE_API_KEY, FIREBASE_DB_URL
 #
-#  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandezLuc
-#  @version 1.0.0
-#  @date 2025-08-21
-#  @copyright Copyright (c) 2025
-#  @license MIT — Consulte el archivo LICENSE para más información.
+#  @author
+#    Alejandro Fernández Rodríguez — github.com/afernandezLuc
+#  @version 1.2.0
+#  @date 2025-08-31
 #  ---------------------------------------------------------------------------
+
+from __future__ import annotations
 
 import asyncio
 import json
 import csv
 import argparse
+import os
 from datetime import datetime
 from pathlib import Path
-from typing import Set
+from typing import Set, Optional, Dict, Any
 
 from aiohttp import web, WSMsgType
 from bleak import BleakScanner, BleakClient
 
-## @defgroup BLE_UUIDs UUIDs BLE (NUS)
-## @{
+from lib.Firebase.FirebaseSender import FirebaseRawSender
 
-## @var UART_SERVICE_UUID
-## @brief UUID del servicio **Nordic UART Service (NUS)** anunciado por el ESP32.
-UART_SERVICE_UUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+# =============================================================================
+#                                CONSTANTES / UUIDs
+# =============================================================================
 
-## @var UART_TX_UUID
-## @brief UUID de la característica TX (notificaciones del periférico hacia el host).
-UART_TX_UUID      = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
-## @}
+UART_SERVICE_UUID: str = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+UART_TX_UUID: str      = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
 
-## @defgroup PATHS Rutas del servidor
-## @{
+# =============================================================================
+#                                 RUTAS / ARCHIVOS
+# =============================================================================
 
-## @var HERE
-## @brief Directorio donde reside este archivo `server.py`.
-HERE = Path(__file__).resolve().parent
-
-## @var WEB_DIR
-## @brief Directorio raíz con los archivos estáticos de la interfaz web.
-WEB_DIR = HERE / "web"
-
-## @var LOG_DIR
-## @brief Directorio de logs (CSV/JSONL).
-LOG_DIR = HERE / "logs"
+HERE: Path = Path(__file__).resolve().parent
+WEB_DIR: Path = HERE / "web"
+LOG_DIR: Path = HERE / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
-## @var CSV_PATH
-## @brief Ruta del fichero CSV con las mediciones acumuladas.
-CSV_PATH = LOG_DIR / "raw_log.csv"
+CSV_PATH: Path   = LOG_DIR / "raw_log.csv"
+JSONL_PATH: Path = LOG_DIR / "raw_log.jsonl"
 
-## @var JSONL_PATH
-## @brief Ruta del fichero JSONL (una lectura JSON por línea).
-JSONL_PATH = LOG_DIR / "raw_log.jsonl"
-## @}
+# =============================================================================
+#                                  ESTADO GLOBAL
+# =============================================================================
 
-## @defgroup STATE Estado del servidor
-## @{
-
-## @var clients
-## @brief Conjunto en memoria con las conexiones WebSocket activas.
 clients: Set[web.WebSocketResponse] = set()
-## @}
+FIREBASE_QUEUE: asyncio.Queue[Dict[str, Any]] = asyncio.Queue(maxsize=1000)
+firebase_sender: Optional[FirebaseRawSender] = None
+ENABLE_FIREBASE: bool = True
 
-## @brief Asegura que el fichero CSV existe y contiene cabecera.
-## @details Crea `CSV_PATH` si no existe y escribe la fila de cabecera con las columnas estándar.
-## @ingroup PATHS
-## @return None
-async def ensure_csv_header():
+# =============================================================================
+#                               UTILIDADES / HELPERS
+# =============================================================================
+
+async def ensure_csv_header() -> None:
     if not CSV_PATH.exists():
-        with open(CSV_PATH, "w", newline="") as f:
+        with open(CSV_PATH, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
             w.writerow(["timestamp_ms","iso_time","temperature","bmp","spo2","modelPreccision","riskScore","json_raw"])
 
-## @brief Difunde un payload JSON a todos los clientes WebSocket conectados.
-## @details Serializa el `payload` y lo envía a cada cliente activo. Conexiones rotas se purgan.
-## @param payload Diccionario serializable a JSON con la lectura a emitir.
-## @ingroup STATE
-## @return None
-async def broadcast(payload: dict):
-    # Send one JSON message to all connected WS clients
-    data = json.dumps(payload)
+async def broadcast(payload: Dict[str, Any]) -> None:
+    data = json.dumps(payload, ensure_ascii=False)
     stale = []
     for ws in clients:
         try:
@@ -109,73 +93,83 @@ async def broadcast(payload: dict):
     for ws in stale:
         clients.discard(ws)
 
-## @brief Tarea principal BLE: escanea, conecta, suscribe notificaciones, parsea y reintenta ante desconexiones.
-## @details
-##   - Escanea por nombre del dispositivo y, si no lo encuentra, por UUID de servicio NUS.
-##   - Al conectar, se suscribe a notificaciones de `UART_TX_UUID`.
-##   - Cada notificación se trata como **línea JSON** terminada en `\\n` → se parsea, se guarda en CSV/JSONL y se difunde por WebSocket.
-##   - Si la conexión se cae, reintenta escaneo y reconexión de forma indefinida.
-## @param device_name Nombre BLE anunciado por el ESP32 (ej.: `"ESP32-SaudeRemota"`).
-## @param scan_timeout Tiempo (s) para cada barrido de escaneo BLE.
-## @ingroup BLE_UUIDs
-## @return None
-## @exception Exception Cualquier error de BLE o parseo se imprime por consola y se reintenta tras breve espera.
-async def ble_task(device_name: str, scan_timeout: float):
-    """Scan, connect and stream notifications to CSV + WS. Reconnect if needed."""
+async def firebase_worker() -> None:
+    if not ENABLE_FIREBASE:
+        while True:
+            _ = await FIREBASE_QUEUE.get()
+            FIREBASE_QUEUE.task_done()
+
+    if firebase_sender is None:
+        print("[FB] Advertencia: firebase_sender es None. El worker descartará lecturas.")
+        while True:
+            _ = await FIREBASE_QUEUE.get()
+            FIREBASE_QUEUE.task_done()
+
+    backoff = 1.0
+    while True:
+        obj = await FIREBASE_QUEUE.get()
+        try:
+            ts = obj.get("ts")
+            data = obj.get("data", {})
+            if all(k in data for k in ("temperature","bmp","spo2")):
+                firebase_sender.send_measurement(
+                    temperature=data.get("temperature",0.0),
+                    bmp=data.get("bmp",0.0),
+                    spo2=data.get("spo2",0.0),
+                    modelPreccision=data.get("modelPreccision",0.0),
+                    riskScore=data.get("riskScore",0.0),
+                    timestamp_ms=ts,
+                )
+            else:
+                firebase_sender.send_raw(obj, timestamp_ms=ts)
+            backoff = 1.0
+        except Exception as e:
+            print(f"[FB] Error enviando a Firebase: {e}. Reintentando en {backoff:.1f}s")
+            await asyncio.sleep(backoff)
+            backoff = min(backoff*2.0, 30.0)
+            await FIREBASE_QUEUE.put(obj)
+        finally:
+            FIREBASE_QUEUE.task_done()
+
+# =============================================================================
+#                                   TAREA BLE
+# =============================================================================
+
+async def ble_task(device_name: str, scan_timeout: float) -> None:
     await ensure_csv_header()
+    loop = asyncio.get_event_loop()
     while True:
         try:
-            print(f"[BLE] Scanning for '{device_name}' (or service {UART_SERVICE_UUID})...")
-            dev = None
             devices = await BleakScanner.discover(timeout=scan_timeout)
-            # 1) by name
-            for d in devices:
-                if d.name == device_name:
-                    dev = d
-                    break
-            # 2) by uuid
+            print(f"[BLE] {len(devices)} dispositivos encontrados.")
+            dev = next((d for d in devices if d.name==device_name), None)
             if not dev:
                 for d in devices:
                     uuids = (d.metadata or {}).get("uuids") or []
                     if any((u or "").lower() == UART_SERVICE_UUID.lower() for u in uuids):
-                        dev = d
-                        break
+                        dev = d; break
             if not dev:
-                print("[BLE] Device not found, retrying scan...")
-                await asyncio.sleep(2)
+                print(f"[BLE] ❌ No se encontró {device_name}. Reintentando...")
+                await asyncio.sleep(2.0)
                 continue
-
-            print(f"[BLE] Connecting to {dev.address} (name={dev.name})")
+            print(f"[BLE] ✔ Encontrado {device_name} ({dev.address}), intentando conectar...")
             async with BleakClient(dev) as client:
-                print("[BLE] Connected, subscribing...")
+                print(f"[BLE] 🔗 Conectado a {dev.address}. Suscribiéndose a notificaciones...")
                 buffer = bytearray()
-
                 def on_notify(_h, data: bytearray):
-                    """!
-                    @brief Callback de notificación BLE (hilo del backend BLE).
-                    @details
-                      - Acumula bytes en un buffer y procesa por líneas delimitadas por `\\n`.
-                      - Por cada línea JSON válida:
-                          1) Parseo a objeto (dict)
-                          2) Persistencia en JSONL y CSV
-                          3) Difusión a clientes WebSocket (planificada en el loop principal)
-                    @param _h Handle/descriptor de la característica (no utilizado).
-                    @param data Bloque de bytes recibido en la notificación.
-                    """
                     nonlocal buffer
                     buffer.extend(data)
                     while b"\n" in buffer:
-                        line, _, rest = buffer.partition(b"\n")
+                        line,_,rest = buffer.partition(b"\n")
                         buffer[:] = rest
                         try:
                             obj = json.loads(line.decode("utf-8"))
                             ts = obj.get("ts")
                             payload = obj.get("data", {})
                             iso = datetime.utcfromtimestamp(ts/1000).isoformat()+"Z" if ts else ""
-                            # write CSV + JSONL
-                            with open(JSONL_PATH, "a", encoding="utf-8") as jf:
-                                jf.write(json.dumps(obj, ensure_ascii=False)+"\n")
-                            with open(CSV_PATH, "a", newline="") as cf:
+                            with open(JSONL_PATH,"a",encoding="utf-8") as jf:
+                                jf.write(json.dumps(obj,ensure_ascii=False)+"\n")
+                            with open(CSV_PATH,"a",newline="",encoding="utf-8") as cf:
                                 csv.writer(cf).writerow([
                                     ts, iso,
                                     payload.get("temperature"),
@@ -183,137 +177,96 @@ async def ble_task(device_name: str, scan_timeout: float):
                                     payload.get("spo2"),
                                     payload.get("modelPreccision"),
                                     payload.get("riskScore"),
-                                    json.dumps(payload, ensure_ascii=False)
+                                    json.dumps(payload,ensure_ascii=False)
                                 ])
-                            # schedule broadcast (thread-safe -> call_soon_threadsafe)
-                            asyncio.get_event_loop().call_soon_threadsafe(asyncio.create_task, broadcast(obj))
+                            loop.call_soon_threadsafe(asyncio.create_task,broadcast(obj))
+                            if ENABLE_FIREBASE:
+                                try:
+                                    loop.call_soon_threadsafe(FIREBASE_QUEUE.put_nowait,obj)
+                                except asyncio.QueueFull:
+                                    print("[FB] Cola llena: lectura descartada.")
                         except Exception as e:
-                            print("[BLE] Parse error:", e)
-
-                await client.start_notify(UART_TX_UUID, on_notify)
-                print("[BLE] Receiving... (will reconnect on disconnect)")
-                while client.is_connected:
-                    await asyncio.sleep(1.0)
-                print("[BLE] Disconnected, will rescan.")
+                            print("[BLE] Parse error:",e)
+                await client.start_notify(UART_TX_UUID,on_notify)
+                print("[BLE] ✅ Suscripción activa.")
+                while client.is_connected: await asyncio.sleep(1.0)
         except Exception as e:
-            print("[BLE] Error:", e)
+            print("[BLE] Error:",e)
             await asyncio.sleep(3.0)
 
-# ---------------- HTTP / WS HANDLERS ----------------
+# =============================================================================
+#                           HTTP / WS HANDLERS
+# =============================================================================
 
-## @brief Sirve el documento principal `index.html`.
-## @param request Petición HTTP.
-## @ingroup PATHS
-## @return web.FileResponse con el HTML.
-async def index(request: web.Request):
-    return web.FileResponse(WEB_DIR / "index.html")
+async def index(request): return web.FileResponse(WEB_DIR/"index.html")
+async def static_css(request): return web.FileResponse(WEB_DIR/"css"/request.match_info["name"])
+async def static_js(request):  return web.FileResponse(WEB_DIR/"js"/request.match_info["name"])
 
-## @brief Sirve archivos CSS desde `web/css/`.
-## @param request Petición HTTP; requiere `request.match_info["name"]`.
-## @ingroup PATHS
-## @return web.FileResponse con el recurso solicitado.
-async def static_css(request: web.Request):
-    fname = request.match_info["name"]
-    path = WEB_DIR / "css" / fname
-    return web.FileResponse(path)
+async def health(request):
+    return web.json_response({"ok":True,"clients":len(clients),"firebase_enabled":ENABLE_FIREBASE,"queue_size":FIREBASE_QUEUE.qsize()})
 
-## @brief Sirve archivos JS desde `web/js/`.
-## @param request Petición HTTP; requiere `request.match_info["name"]`.
-## @ingroup PATHS
-## @return web.FileResponse con el recurso solicitado.
-async def static_js(request: web.Request):
-    fname = request.match_info["name"]
-    path = WEB_DIR / "js" / fname
-    return web.FileResponse(path)
-
-## @brief Endpoint de control de estado del servidor.
-## @param request Petición HTTP.
-## @ingroup STATE
-## @return JSON con `ok` y número de clientes WS conectados.
-async def health(request: web.Request):
-    return web.json_response({"ok": True, "clients": len(clients)})
-
-## @brief Endpoint WebSocket para streaming en tiempo real hacia la UI.
-## @details
-##   - Acepta la conexión, añade el socket a `clients` y envía un mensaje de estado inicial.
-##   - Responde a pings (`"ping" → "pong"`).
-##   - Limpia el socket del conjunto al desconectar o error.
-## @param request Petición HTTP que se actualizará a WebSocket.
-## @ingroup STATE
-## @return web.WebSocketResponse
-async def ws_handler(request: web.Request):
-    ws = web.WebSocketResponse(heartbeat=20)
-    await ws.prepare(request)
-    clients.add(ws)
+async def ws_handler(request):
+    ws=web.WebSocketResponse(heartbeat=20); await ws.prepare(request); clients.add(ws)
     try:
-        # notify status
         await ws.send_str(json.dumps({"type":"status","clients":len(clients)}))
         async for msg in ws:
-            if msg.type == WSMsgType.TEXT:
-                # (optional) accept pings or commands
-                if msg.data == "ping":
-                    await ws.send_str("pong")
-            elif msg.type == WSMsgType.ERROR:
-                break
+            if msg.type==WSMsgType.TEXT and msg.data=="ping":
+                await ws.send_str("pong")
     finally:
         clients.discard(ws)
     return ws
 
-## @brief Arranca el servidor HTTP/WS y la tarea BLE, y mantiene el bucle principal.
-## @details
-##   - Define rutas HTTP/WS (estáticos, `/ws`, `/health`).
-##   - Lanza la tarea `ble_task()` concurrentemente.
-##   - Gestiona apagado ordenado al cancelar/interrumpir.
-## @param args Argumentos CLI parseados (host, port, device_name, scan_timeout).
-## @ingroup PATHS
-## @return None
+# =============================================================================
+#                              MAIN APP
+# =============================================================================
+
 async def main_async(args):
-    app = web.Application()
-    app.add_routes([
-        web.get("/", index),
-        web.get("/health", health),
-        web.get("/ws", ws_handler),
-        web.get("/css/{name}", static_css),
-        web.get("/js/{name}", static_js),
-    ])
-
-    runner = web.AppRunner(app)
-    await runner.setup()
-    site = web.TCPSite(runner, host=args.host, port=args.port)
-    await site.start()
-    print(f"[WEB] Serving on http://{args.host}:{args.port}")
-
-    # Start BLE task
-    ble = asyncio.create_task(ble_task(args.device_name, args.scan_timeout))
-
+    global ENABLE_FIREBASE,firebase_sender
+    ENABLE_FIREBASE=not args.no_firebase
+    config_data={}
+    if args.fb_config:
+        with open(args.fb_config,"r",encoding="utf-8") as f:
+            config_data=json.load(f)
+    if ENABLE_FIREBASE:
+        email=args.fb_email or config_data.get("email") or os.getenv("FIREBASE_EMAIL")
+        password=args.fb_password or config_data.get("password") or os.getenv("FIREBASE_PASSWORD")
+        api_key=args.fb_api_key or config_data.get("api_key") or os.getenv("FIREBASE_API_KEY")
+        db_url=args.fb_db_url or config_data.get("database_url") or os.getenv("FIREBASE_DB_URL")
+        if not all([email,password,api_key,db_url]):
+            raise RuntimeError("Credenciales Firebase incompletas.")
+        firebase_sender=FirebaseRawSender(email=email,password=password,api_key=api_key,database_url=db_url)
+        print("[FB] Envío a Firebase habilitado.")
+    app=web.Application()
+    app.add_routes([web.get("/",index),web.get("/health",health),web.get("/ws",ws_handler),
+                    web.get("/css/{name}",static_css),web.get("/js/{name}",static_js)])
+    runner=web.AppRunner(app); await runner.setup()
+    site=web.TCPSite(runner,host=args.host,port=args.port); await site.start()
+    url = f"http://{args.host}:{args.port}"
+    print(f"[WEB] 🌍 Servidor disponible en {url}")
+    print(f"[WEB] Endpoints: {url}/  {url}/ws  {url}/health")
+    ble=asyncio.create_task(ble_task(args.device_name,args.scan_timeout))
+    fbw=asyncio.create_task(firebase_worker())
     try:
-        while True:
-            await asyncio.sleep(3600)
-    except (asyncio.CancelledError, KeyboardInterrupt):
-        pass
+        while True: await asyncio.sleep(3600)
+    except (asyncio.CancelledError,KeyboardInterrupt): pass
     finally:
-        ble.cancel()
-        await runner.cleanup()
+        ble.cancel(); fbw.cancel(); await runner.cleanup()
 
-## @brief Define y parsea los argumentos de línea de comandos.
-## @details
-##   - `--device-name`: nombre BLE anunciado por el ESP32.
-##   - `--host`: interfaz de red a escuchar (por defecto `127.0.0.1`).
-##   - `--port`: puerto HTTP (por defecto `8000`).
-##   - `--scan-timeout`: segundos por barrido de escaneo BLE.
-## @ingroup PATHS
-## @return argparse.Namespace con los campos `device_name`, `host`, `port`, `scan_timeout`.
 def parse_args():
-    p = argparse.ArgumentParser(description="BLE receiver + Web UI server")
-    p.add_argument("--device-name", default="ESP32-SaudeRemota", help="BLE advertised device name")
-    p.add_argument("--host", default="127.0.0.1")
-    p.add_argument("--port", type=int, default=8000)
-    p.add_argument("--scan-timeout", type=float, default=8.0)
+    p=argparse.ArgumentParser()
+    p.add_argument("--device-name",default="ESP32-SaudeRemota")
+    p.add_argument("--host",default="127.0.0.1")
+    p.add_argument("--port",type=int,default=8000)
+    p.add_argument("--scan-timeout",type=float,default=8.0)
+    p.add_argument("--no-firebase",action="store_true")
+    p.add_argument("--fb-config",default=None)
+    p.add_argument("--fb-email",default=None)
+    p.add_argument("--fb-password",default=None)
+    p.add_argument("--fb-api-key",default=None)
+    p.add_argument("--fb-db-url",default=None)
     return p.parse_args()
 
-if __name__ == "__main__":
-    args = parse_args()
-    try:
-        asyncio.run(main_async(args))
-    except KeyboardInterrupt:
-        pass
+if __name__=="__main__":
+    args=parse_args()
+    try: asyncio.run(main_async(args))
+    except KeyboardInterrupt: pass

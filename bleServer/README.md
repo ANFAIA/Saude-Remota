@@ -7,7 +7,7 @@ Este servidor **escucha por Bluetooth Low Energy (BLE)** a tu ESP32 (perfil **UA
 - HTTP/WS mediante [`aiohttp`](https://docs.aiohttp.org/)
 - UI estática servida desde `web/` (tu `index.html` y CSS)
 - Logs en `logs/raw_log.csv` y `logs/raw_log.jsonl`
-- Firebase mediante [`requests`]
+- Firebase mediante [`requests`](https://pypi.org/project/requests/)
 
 ---
 
@@ -122,15 +122,6 @@ Cada lectura se emite como un JSON con este formato:
 
 Puedes cambiar las rutas editando las constantes `CSV_PATH` y `JSONL_PATH` en `server.py`.
 
-```json
-{
-  "email": "<TU_EMAIL_DE_ACCESO>",
-  "password": "<TU_CLAVE_DE_ACCESO>",
-  "api_key": "<TU_API_KEY>",
-  "database_url": "<URL_DE_LA_BASE_DE_DATOS>/"
-}
-```
-
 ---
 
 ## Opciones de línea de comandos
@@ -152,6 +143,14 @@ Es posible desactivar el uso de firebase por medio del argumento **--no-firebase
 ## Configuración de acceso a Firebase
 En el archivo firebaseConfig.json se deben añadir las credenciales de acceso a Firebase
 
+```json
+{
+  "email": "<TU_EMAIL_DE_ACCESO>",
+  "password": "<TU_CLAVE_DE_ACCESO>",
+  "api_key": "<TU_API_KEY>",
+  "database_url": "<URL_DE_LA_BASE_DE_DATOS>/"
+}
+```
 
 ---
 

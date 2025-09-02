@@ -113,9 +113,9 @@ async def firebase_worker() -> None:
             data = obj.get("data", {})
             if all(k in data for k in ("temperature","bmp","spo2")):
                 firebase_sender.send_measurement(
-                    temperature=data.get("temperature",0.0),
-                    bmp=data.get("bmp",0.0),
-                    spo2=data.get("spo2",0.0),
+                    temperature=print(data.get("temperature",0.0)),
+                    bmp=print(data.get("bmp",0.0)),
+                    spo2=print(data.get("spo2",0.0)),
                     modelPreccision=data.get("modelPreccision",0.0),
                     riskScore=data.get("riskScore",0.0),
                     timestamp_ms=ts,

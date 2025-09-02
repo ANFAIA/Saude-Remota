@@ -1,6 +1,6 @@
 {
-  "email": "<TU_EMAIL_DE_ACCESO>",
-  "password": "<TU_CLAVE_DE_ACCESO>",
-  "api_key": "<TU_API_KEY>",
-  "database_url": "<URL_DE_LA_BASE_DE_DATOS>/"
+  "email": "irenegallardo31@gmail.com",
+  "password": "Violoncello18.",
+  "api_key": "AIzaSyCqcQHQW5vUb37w4-sfr8JJFwuLYI5dBTQ",
+  "database_url": "https://saude-remota-2eaf5-default-rtdb.europe-west1.firebasedatabase.app"
 }

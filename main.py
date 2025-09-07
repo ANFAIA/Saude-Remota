@@ -313,7 +313,6 @@ try:
         else:
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS:
                 last_ble_keepalive_ms = now
-                send_ble(0, 0, 0.0, 0, 0.0)
 
         if stop_flag:
             log("Parada solicitada por botón.")

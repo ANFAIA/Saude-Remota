@@ -2,7 +2,7 @@
 
 ## 🩺 Descripción general
 
-Este proyecto implementa un sistema de **monitorización remota de salud** utilizando un microcontrolador **ESP32-WROOM-32** y un sensor óptico **Max30102**. Está desarrollado en **Python con MicroPython**, lo que permite una ejecución eficiente sobre el hardware embebido.
+Este proyecto implementa un sistema de **monitorización remota de salud** utilizando un microcontrolador **ESP32-WROOM-32** y un sensor óptico **MAX30102**. Está desarrollado en **Python con MicroPython**, lo que permite una ejecución eficiente sobre el hardware embebido.
 
 El sistema permite leer datos de:
 - Frecuencia cardíaca (BPM)
@@ -23,7 +23,7 @@ Y los muestra a través de una pantalla OLED I2C (SSD1306), si está conectada.
 │       ├── colors.css              # Definición de paletas de colores utilizadas en la web 
 │       ├── reset.css               # Eliminar estilos por defecto de los navegadores
 │       ├── styles.css              # Estilo principal de la web
-│       ├── utils.js                # Cliente WS + DOM + envío a Firebase RTDB
+│       ├── utils.js                # Cliente WS + DOM + envío a Firebase RTDB 
 │       ├── index.html              # Estructura del contenido de la web 
 │       ├── server.py               # Implementar un servidor BLE para una web
 │       ├── README.md               # Archivo con documentacion sobre el uso y funcionalidad
@@ -85,7 +85,7 @@ Y los muestra a través de una pantalla OLED I2C (SSD1306), si está conectada.
 
 ### Hardware
 - Microcontrolador **ESP32-WROOM-32**
-- Sensor **Max30102** (conexión I2C)
+- Sensor **MAX30102** (conexión I2C)
 - Pantalla **OLED SSD1306** (opcional)
 
 ### Software en PC
@@ -139,17 +139,17 @@ Este script:
 ```
 ESP32                     MAX30102
 ┌───────────┐             ┌─────────┐
-│ 3V3  ───────────────► VCC │
-│ GND  ───────────────► GND │
-│ GPIO21 (SDA) ───────► SDA │
-│ GPIO22 (SCL) ───────► SCL │
+│ 3V3  ───────────────► VCC         │
+│ GND  ───────────────► GND         │
+│ GPIO21 (SDA) ───────► SDA         │
+│ GPIO22 (SCL) ───────► SCL         │
 └───────────┘             └─────────┘
 
 ```
 
 ## 🩺 Uso
 
-1. Conecta el sensor Max30102 a los pines I2C del ESP32 (por defecto SDA: GPIO21, SCL: GPIO22).
+1. Conecta el sensor MAX30102 a los pines I2C del ESP32 (por defecto SDA: GPIO21, SCL: GPIO22).
 2. (Opcional) Conecta la pantalla OLED SSD1306 al mismo bus I2C.
 3. Abre un monitor serial:
    ```bash
@@ -162,7 +162,7 @@ ESP32                     MAX30102
 
 5. Verás la lectura en tiempo real de:
    ```
-   🌡️ Temperatura: 36.25 °C
+   🌡️ Temperatura: 36.25 °C (por ejemplo)
    ❤️ BPM: 75
    🩸 SpO₂: 98%
    ```

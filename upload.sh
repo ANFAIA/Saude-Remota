@@ -1,73 +1,61 @@
 #!/bin/bash
-
-# -----------------------------------------------------------------------------
 #  @file upload.sh
-#  @brief Script Bash para cargar automáticamente archivos .py a un dispositivo
-#         MicroPython/ESP32 mediante **adafruit‑ampy**.
-#
+#  @brief Script Bash para cargar automáticamente archivos .py a un dispositivo MicroPython/ESP32 mediante **adafruit‑ampy**.
 #  El script realiza estas tareas:
 #    1. Verifica que `ampy` esté instalado en el sistema.
 #    2. Comprueba que se haya proporcionado el puerto serie.
-#    3. Elimina recursivamente todo el contenido existente en el sistema de
-#       archivos del dispositivo (excepto *boot.py*).
-#    4. Sube todos los archivos *.py* presentes en el directorio actual y sus
-#       sub‑carpetas, creando la jerarquía remota necesaria.
+#    3. Elimina recursivamente todo el contenido existente en el sistema de archivos del dispositivo (excepto *boot.py*).
+#    4. Sube todos los archivos *.py* presentes en el directorio actual y sus sub‑carpetas, creando la jerarquía necesaria.
 #    5. Muestra al final un árbol de archivos resultante.
-#
 #  @usage
 #    ./upload.sh <PUERTO_SERIAL>
 #  @example
 #    ./upload.sh /dev/ttyUSB0
-#
 #  @dependencies adafruit‑ampy ≥ 1.1.0 (pip install adafruit‑ampy)
-#  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandez13Uclm
 #  @version 1.0.0
 #  @date 2025‑08‑02
 #  @license MIT
-# -----------------------------------------------------------------------------
 
-set -euo pipefail
+set -euo pipefail #-e: si un comando falla, el script se para; -u: si se usa una variable no definida, el script se para; pipefail: si falla alguno, el fallo no se oculta
 
-if ! command -v ampy &> /dev/null; then
-  echo "El comando 'ampy' no está instalado."
+if ! command -v ampy &> /dev/null; then #comprueba si ampy está instalado y en el PATH 
+  echo "El comando 'ampy' no está instalado"
   echo "Instálalo con: pip install adafruit-ampy"
-  exit 1
+  exit 1 #termina con un error
 fi
 
-if [ -z "${1-}" ]; then
+if [ -z "${1-}" ]; then #si no se pasa el puerto serie
   echo "Uso: $0 <PUERTO_SERIAL>"
   echo "Ejemplo: $0 /dev/ttyUSB0"
   exit 1
 fi
 
-PORT="$1"
+PORT="$1" #guarda el puerto en la variable PORT
 
 borrar_remoto_recursivo() {
-  local path="$1"
-  local entradas
-  entradas=$(ampy --port "$PORT" ls "$path" 2>/dev/null || true)
-  [ -z "$entradas" ] && return
+  local path="$1" #ruta a borrar
+  local entradas #variable para el listado
+  entradas=$(ampy --port "$PORT" ls "$path" 2>/dev/null || true) #2>/dev/null oculta errores y || true fuerza a que no falle, aunque ampy ls falle
+  [ -z "$entradas" ] && return #si entradas está vacío, no hay nada que borrar, entonces sale de la función
 
-  while IFS= read -r entrada; do
+  while IFS= read -r entrada; do #lee línea a línea cada elemento del listado
     entrada=${entrada//$'\r'/}
-    [ -z "$entrada" ] && continue
+    [ -z "$entrada" ] && continue #si la línea está vacía, salta 
     local full_path
     if [ "$path" = "/" ]; then
       full_path="/$entrada"
     else
       full_path="$path/$entrada"
-    fi
-    # No borrar boot.py
+    fi #construye la ruta completa
     if [[ "$full_path" == "/boot.py" ]]; then
       continue
-    fi
-    if ampy --port "$PORT" ls "$full_path" &>/dev/null; then
+    fi #no borrar boot.py
+    if ampy --port "$PORT" ls "$full_path" &>/dev/null; then #distingue si es una carpeta o un archivo
       borrar_remoto_recursivo "$full_path"
       ampy --port "$PORT" rmdir "$full_path" 2>/dev/null || true
     else
       ampy --port "$PORT" rm "$full_path" 2>/dev/null || true
-    fi
+    fi #si no se pudo listar como directorio, se trata como archivo y se borra con rm
   done <<< "$entradas"
 }
 

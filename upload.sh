@@ -61,16 +61,16 @@ borrar_remoto_recursivo() {
 
 listar_remoto_recursivo() {
   local path="$1"
-  local prefix="$2"
+  local prefix="$2" #prefix: sangría para mostrar en árbol
   local entradas
   entradas=$(ampy --port "$PORT" ls "$path" 2>/dev/null || true)
-  [ -z "$entradas" ] && return
+  [ -z "$entradas" ] && return #si el contenido está vacío, sale de la función 
 
   while IFS= read -r item; do
     item=${item//$'\r'/}
     [ -z "$item" ] && continue
 
-    local full_path
+    local full_path #construye la ruta completa 
     if [ "$path" = "/" ]; then
       full_path="/$item"
     else
@@ -81,7 +81,7 @@ listar_remoto_recursivo() {
       echo "${prefix}${item}/"
       listar_remoto_recursivo "$full_path" "  $prefix"
     else
-      echo "${prefix}${item}"
+      echo "${prefix}${item}" #si no es una carpeta, imprime como un archivo 
     fi
   done <<< "$entradas"
 }
@@ -90,30 +90,32 @@ echo "Borrando archivos remotos existentes (excepto /boot.py)..."
 borrar_remoto_recursivo "/"
 
 echo "Iniciando carga a $PORT"
-echo "============================"
+echo "======================="
 
-# Busca *.py y *.json, ignorando directorios comunes que no debemos subir
-# -print0 + read -d '' permite manejar nombres con espacios
-find . \
-  -path "./.git" -prune -o \
+#busca *.py y *.json, ignorando directorios comunes que no se deben de subir
+#-print0 + read -d '' permite manejar nombres con espacios
+find . \ 
+#empieza desde la carpeta actual
+  -path "./.git" -prune -o \ 
+  #-prune = no se entra aquí
   -path "./.venv" -prune -o \
   -path "./venv" -prune -o \
   -path "./__pycache__" -prune -o \
   -path "./.mypy_cache" -prune -o \
   -type f \( -name "*.py" -o -name "*.json" \) -print0 \
-| while IFS= read -r -d '' LOCAL_FILE; do
+| while IFS= read -r -d '' LOCAL_FILE; do #lee cada ruta de archivo usando separador nulo
     # Quita el prefijo "./"
-    REL="${LOCAL_FILE#./}"
-    REMOTE_PATH="/$REL"
+    REL="${LOCAL_FILE#./}" #quita el prefijo ./ para obtener una ruta relativa
+    REMOTE_PATH="/$REL" #ruta destino en el ESP32
     REMOTE_DIR="$(dirname "$REMOTE_PATH")"
 
     echo "Verificando carpeta remota: $REMOTE_DIR"
-    IFS='/' read -r -a PARTS <<< "$REMOTE_DIR"
+    IFS='/' read -r -a PARTS <<< "$REMOTE_DIR" #divide el path por / en un array PARTS
     CURRENT=""
     for part in "${PARTS[@]}"; do
       [ -z "$part" ] && continue
       CURRENT="$CURRENT/$part"
-      ampy --port "$PORT" mkdir "$CURRENT" 2>/dev/null || true
+      ampy --port "$PORT" mkdir "$CURRENT" 2>/dev/null || true #intenta crear cada carpeta (mkdir)
     done
 
     echo -n "Subiendo $REL ... "
@@ -125,10 +127,10 @@ find . \
   done
 
 echo -e "\nListando archivos en el ESP32:"
-echo "============================"
-listar_remoto_recursivo "/" ""
-echo "============================"
+echo "==================================="
+listar_remoto_recursivo "/" "" #llama a la función que lista recursivamente desde /
+echo "======================="
 
-echo -e "\nCarga finalizada."
+echo -e "\nCarga finalizada"
 echo "Puedes ejecutar el programa con:"
 echo "ampy --port $PORT run main.py"

@@ -1,9 +1,9 @@
 
 <!doctype html>
 <html lang="es">
-<head>
+<head> <!--abre el encabezado del documento: aquí van estilos, título, etc...-->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1"> <!--initial-scale=1 = zoom inicial normal-->
   <title>Proyecto Saúde Remota — Beca ANFAIA</title>
   <style>
     :root{
@@ -16,10 +16,9 @@
       --white:#ffffff;
     }
     body{font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
-         background: var(--slate-50); color: var(--slate-700); margin:0;}
-    .container{max-width: 800px; margin: 0 auto; padding: 0 1.25rem;}
+         background: var(--slate-50); color: var(--slate-700); margin:0;} 
     header{padding: 3rem 0 1rem 0; text-align:center;}
-    h1{color:var(--teal-800); font-size: 1.875rem; margin:0;}
+    h1{color:var(--teal-800); font-size: 1.875rem; margin:0;} 
     header p{margin:.5rem 0 0 0; color:var(--slate-600); font-size:.9rem;}
     section{background:var(--white); border:1px solid var(--slate-200); border-radius:16px; padding:1.25rem; margin:1rem 0; box-shadow: 0 1px 3px rgba(0,0,0,.04)}
     h2{color:var(--teal-800); font-size:1.125rem; margin:.25rem 0 .5rem 0}
@@ -33,14 +32,14 @@
     footer{color:var(--slate-500); font-size:.75rem; text-align:center; padding:2rem 0 3rem}
   </style>
 </head>
-<body>
+<body> <!--abre el cuerpo visible de la página web-->
   <main class="container">
     <header>
       <h1>Proyecto Saúde Remota — Beca ANFAIA</h1>
       <p>Desarrollo de un sistema de monitorización remota de salud (julio–agosto 2025)</p>
     </header>
 
-    <section>
+    <section> <!--<b> pone el texto en negrita-->
       <h2>Descripción general</h2>
       <p>
         Este proyecto implementa un sistema de <b>monitorización remota de salud</b> utilizando un
@@ -67,7 +66,7 @@
          <b>Projects</b> del repositorio de GitHub.</p>
     </section>
 
-    <section>
+    <section> <!--<i> pone el texto en cursiva-->
       <h2>Principales problemas y soluciones</h2>
       <ul>
         <li><b>Inicio con ESP32:</b> dificultad por venir de trabajar con microcontroladores PIC. <i>Solución:</i> estudiar MicroPython y ejemplos sencillos hasta ganar soltura.</li>
@@ -90,7 +89,7 @@
       <p>Así, el modelo toma los valores de SpO₂, frecuencia cardíaca y temperatura, y devuelve si hay una condición de <b>riesgo (1)</b> o <b>no riesgo (0)</b>.</p>
     </section>
 
-    <section>
+    <section> <!---<pre> muestra el texto respetando saltos de línea-->
       <h2>Ejecutar el modelo sin TensorFlow Lite (MicroPython puro)</h2>
       <p>Como TensorFlow Lite no siempre es compatible con MicroPython, se optó por exportar <b>pesos</b> y <b>escalas de normalización</b> y ejecutar la inferencia manualmente en el ESP32.
          Esto se hace con listas y operaciones matemáticas básicas.</p>
@@ -113,7 +112,7 @@
       </ol>
     </section>
 
-    <section>
+    <section> <!--&lt; = < y &gt; = >-->
       <h2>Umbrales clínicos de referencia</h2>
       <ul>
         <li><b>Temperatura:</b> 36.0–37.5 °C (normal). Fuera de rango: &lt;36 °C o &gt;37.5 °C.</li>
@@ -146,7 +145,7 @@
       <p>De esta forma, cualquier persona puede entender el recorrido: del dedo en el sensor ➝ al microcontrolador ➝ al modelo de IA ➝ a la web ➝ y finalmente a la nube (Firebase).</p>
     </section>
 
-    <section>
+    <section> <!--<a> crea un enlace-->
       <h2>Enlaces al proyecto</h2>
       <ul>
         <li><a href="https://github.com/ANFAIA/Saude-Remota">Repositorio en GitHub</a></li>

@@ -1,4 +1,4 @@
-## @file server.py
+#  @file server.py
 #  @brief Servidor BLE → Web con envío a Firebase usando cola asíncrona y configuración por JSON.
 #
 #  @details
@@ -21,39 +21,31 @@
 #   1. Argumentos CLI: --fb-email, --fb-password, --fb-api-key, --fb-db-url
 #   2. JSON con --fb-config
 #   3. Variables de entorno: FIREBASE_EMAIL, FIREBASE_PASSWORD, FIREBASE_API_KEY, FIREBASE_DB_URL
-#
-#  @author
-#    Alejandro Fernández Rodríguez — github.com/afernandezLuc
 #  @version 1.2.0
 #  @date 2025-08-31
-#  ---------------------------------------------------------------------------
 
 from __future__ import annotations
 
 import asyncio
 import json
 import csv
-import argparse
-import os
-from datetime import datetime
+import argparse #leer argumentos por terminal
+import os #leer variables de entorno
+from datetime import datetime 
 from pathlib import Path
 from typing import Set, Optional, Dict, Any
 
-from aiohttp import web, WSMsgType
-from bleak import BleakScanner, BleakClient
+from aiohttp import web, WSMsgType #aiohttp.web: servidor HTTP asíncrono
+from bleak import BleakScanner, BleakClient #bleak: BLE en Python
 
 from lib.Firebase.FirebaseSender import FirebaseRawSender
 
-# =============================================================================
-#                                CONSTANTES / UUIDs
-# =============================================================================
+#constantes
 
 UART_SERVICE_UUID: str = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
 UART_TX_UUID: str      = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
 
-# =============================================================================
-#                                 RUTAS / ARCHIVOS
-# =============================================================================
+#rutas/archivos
 
 HERE: Path = Path(__file__).resolve().parent
 WEB_DIR: Path = HERE / "web"
@@ -63,26 +55,22 @@ LOG_DIR.mkdir(exist_ok=True)
 CSV_PATH: Path   = LOG_DIR / "raw_log.csv"
 JSONL_PATH: Path = LOG_DIR / "raw_log.jsonl"
 
-# =============================================================================
-#                                  ESTADO GLOBAL
-# =============================================================================
+#estado global
 
-clients: Set[web.WebSocketResponse] = set()
-FIREBASE_QUEUE: asyncio.Queue[Dict[str, Any]] = asyncio.Queue(maxsize=1000)
+clients: Set[web.WebSocketResponse] = set() #se usa para enviar datos en tiempo real
+FIREBASE_QUEUE: asyncio.Queue[Dict[str, Any]] = asyncio.Queue(maxsize=1000) #se meten lecturas para que un worker las envíe a Firebase sin bloquear BLE/web
 firebase_sender: Optional[FirebaseRawSender] = None
 ENABLE_FIREBASE: bool = True
 
-# =============================================================================
-#                               UTILIDADES / HELPERS
-# =============================================================================
+#utilidades
 
 async def ensure_csv_header() -> None:
     if not CSV_PATH.exists():
-        with open(CSV_PATH, "w", newline="", encoding="utf-8") as f:
+        with open(CSV_PATH, "w", newline="", encoding="utf-8") as f: #se crea el csv y se abre en modo escritura
             w = csv.writer(f)
             w.writerow(["timestamp_ms","iso_time","temperature","bmp","spo2","modelPreccision","riskScore","json_raw"])
 
-async def broadcast(payload: Dict[str, Any]) -> None:
+async def broadcast(payload: Dict[str, Any]) -> None: #envía un diccionario a todos los websockets conectados
     data = json.dumps(payload, ensure_ascii=False)
     stale = []
     for ws in clients:
@@ -91,15 +79,15 @@ async def broadcast(payload: Dict[str, Any]) -> None:
         except Exception:
             stale.append(ws)
     for ws in stale:
-        clients.discard(ws)
+        clients.discard(ws) #elimina websockets muertos
 
 async def firebase_worker() -> None:
     if not ENABLE_FIREBASE:
         while True:
             _ = await FIREBASE_QUEUE.get()
-            FIREBASE_QUEUE.task_done()
+            FIREBASE_QUEUE.task_done() #consume la cola para que no crezca, pero descarta todo
 
-    if firebase_sender is None:
+    if firebase_sender is None: #si no se pudo crear firebase_sender
         print("[FB] Advertencia: firebase_sender es None. El worker descartará lecturas.")
         while True:
             _ = await FIREBASE_QUEUE.get()
@@ -111,7 +99,7 @@ async def firebase_worker() -> None:
         try:
             ts = obj.get("ts")
             data = obj.get("data", {})
-            if all(k in data for k in ("temperature","bmp","spo2")):
+            if all(k in data for k in ("temperature","bmp","spo2")): #si hay campos de medición normales 
                 firebase_sender.send_measurement(
                     temperature=data.get("temperature",0.0),
                     bmp=data.get("bmp",0.0),
@@ -127,15 +115,13 @@ async def firebase_worker() -> None:
             print(f"[FB] Error enviando a Firebase: {e}. Reintentando en {backoff:.1f}s")
             await asyncio.sleep(backoff)
             backoff = min(backoff*2.0, 30.0)
-            await FIREBASE_QUEUE.put(obj)
+            await FIREBASE_QUEUE.put(obj) #reencola el objeto para reintentar
         finally:
             FIREBASE_QUEUE.task_done()
 
-# =============================================================================
-#                                   TAREA BLE
-# =============================================================================
+#tarea BLE
 
-async def ble_task(device_name: str, scan_timeout: float) -> None:
+async def ble_task(device_name: str, scan_timeout: float) -> None: #bucle 
     await ensure_csv_header()
     loop = asyncio.get_event_loop()
     while True:
@@ -149,24 +135,24 @@ async def ble_task(device_name: str, scan_timeout: float) -> None:
                     if any((u or "").lower() == UART_SERVICE_UUID.lower() for u in uuids):
                         dev = d; break
             if not dev:
-                print(f"[BLE] ❌ No se encontró {device_name}. Reintentando...")
+                print(f"[BLE] No se encontró {device_name}. Reintentando...")
                 await asyncio.sleep(2.0)
-                continue
-            print(f"[BLE] ✔ Encontrado {device_name} ({dev.address}), intentando conectar...")
+                continue #vuelve a escanear
+            print(f"[BLE] Encontrado {device_name} ({dev.address}), intentando conectar...")
             async with BleakClient(dev) as client:
-                print(f"[BLE] 🔗 Conectado a {dev.address}. Suscribiéndose a notificaciones...")
-                buffer = bytearray()
-                def on_notify(_h, data: bytearray):
-                    nonlocal buffer
-                    buffer.extend(data)
+                print(f"[BLE] Conectado a {dev.address}. Suscribiéndose a notificaciones...")
+                buffer = bytearray() #crea un buffer para reconstruir mensajes completos (porque BLE puede fragmentar)
+                def on_notify(_h, data: bytearray): #función que se llama cada vez que llega un fragmento
+                    nonlocal buffer #permite modificar el buffer externo
+                    buffer.extend(data) #añade fragmento al buffer
                     while b"\n" in buffer:
                         line,_,rest = buffer.partition(b"\n")
                         buffer[:] = rest
                         try:
                             obj = json.loads(line.decode("utf-8"))
                             ts = obj.get("ts")
-                            payload = obj.get("data", {})
-                            iso = datetime.utcfromtimestamp(ts/1000).isoformat()+"Z" if ts else ""
+                            payload = obj.get("data", {}) #diccionario con mediciones
+                            iso = datetime.utcfromtimestamp(ts/1000).isoformat()+"Z" if ts else "" #convierte ms a segundos
                             with open(JSONL_PATH,"a",encoding="utf-8") as jf:
                                 jf.write(json.dumps(obj,ensure_ascii=False)+"\n")
                             with open(CSV_PATH,"a",newline="",encoding="utf-8") as cf:
@@ -179,24 +165,22 @@ async def ble_task(device_name: str, scan_timeout: float) -> None:
                                     payload.get("riskScore"),
                                     json.dumps(payload,ensure_ascii=False)
                                 ])
-                            loop.call_soon_threadsafe(asyncio.create_task,broadcast(obj))
+                            loop.call_soon_threadsafe(asyncio.create_task,broadcast(obj)) #el callback BLE puede ejecutarse fuera del contexto normal del loop
                             if ENABLE_FIREBASE:
                                 try:
-                                    loop.call_soon_threadsafe(FIREBASE_QUEUE.put_nowait,obj)
+                                    loop.call_soon_threadsafe(FIREBASE_QUEUE.put_nowait,obj) #no bloquea
                                 except asyncio.QueueFull:
                                     print("[FB] Cola llena: lectura descartada.")
                         except Exception as e:
-                            print("[BLE] Parse error:",e)
+                            print("[BLE] Parse error:",e) #si el JSON viene mal o falta algo, se imprime 
                 await client.start_notify(UART_TX_UUID,on_notify)
-                print("[BLE] ✅ Suscripción activa.")
-                while client.is_connected: await asyncio.sleep(1.0)
+                print("[BLE] Suscripción activa.")
+                while client.is_connected: await asyncio.sleep(1.0) #se mantiene el bloque vivo
         except Exception as e:
             print("[BLE] Error:",e)
-            await asyncio.sleep(3.0)
+            await asyncio.sleep(3.0) #vuelve a intentar todo el bucle (reconexión automática)
 
-# =============================================================================
-#                           HTTP / WS HANDLERS
-# =============================================================================
+#HTTP
 
 async def index(request): return web.FileResponse(WEB_DIR/"index.html")
 async def static_css(request): return web.FileResponse(WEB_DIR/"css"/request.match_info["name"])
@@ -216,9 +200,7 @@ async def ws_handler(request):
         clients.discard(ws)
     return ws
 
-# =============================================================================
-#                              MAIN APP
-# =============================================================================
+#main app
 
 async def main_async(args):
     global ENABLE_FIREBASE,firebase_sender

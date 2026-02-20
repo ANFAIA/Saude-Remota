@@ -20,7 +20,7 @@ Este servidor **escucha por Bluetooth Low Energy (BLE)** a tu ESP32 (perfil **UA
 > **macOS**: si `bleak` lo requiere, instala el extra:  
 > `python -m pip install 'bleak[macos]'`
 
-> **Linux/BlueZ**: puede requerir privilegios BLE (o `sudo`). Alternativa recomendada:  
+> **Linux**: puede requerir privilegios BLE (o `sudo`). Alternativa recomendada:  
 > `sudo setcap 'cap_net_raw,cap_net_admin+eip' $(readlink -f $(which python))`
 
 ---
@@ -45,7 +45,7 @@ python -m pip install -r requirements.txt
 
 ## Puesta en marcha
 
-1. Conecta/enciende tu ESP32 y asegúrate de que **está anunciando BLE** (NUS) con el nombre configurado (p. ej. `ESP32-SaudeRemota`).  
+1. Conecta/enciende tu ESP32 y asegúrate de que **está anunciando BLE** con el nombre configurado (p. ej. `ESP32-SaudeRemota`).  
 2. Ejecuta el servidor:
    ```bash
    python server.py --device-name "ESP32-SaudeRemota" --host 127.0.0.1 --port 8000
@@ -89,7 +89,7 @@ bleServer/
 
 ## Interfaz Web (frontend)
 
-- El backend sirve **estático** desde `web/` (ya hemos copiado tus archivos).  
+- El backend sirve **estático** desde `web/` (ya se han copiado tus archivos).  
 - El archivo `web/js/utils.js` abre un **WebSocket** a `/ws` y actualiza los elementos del DOM que ya tienes en tu UI.
 - Si prefieres usar **tu propio** `utils.js`, simplemente reemplázalo por el tuyo y mantén la conexión a `/ws`.
 
@@ -132,7 +132,7 @@ python server.py \
   --host 0.0.0.0 \                     # interfaz de red a escuchar (0.0.0.0 = todas)
   --port 8000 \                        # puerto HTTP
   --scan-timeout 8.0                   # tiempo de cada barrido BLE (s)
-  --fb-config firebaseConfig.json     # configuración de acceso a firebase
+  --fb-config firebaseConfig.json      # configuración de acceso a firebase
 
 ```
 
@@ -206,9 +206,9 @@ WantedBy=multi-user.target
 
 - Este servidor **no implementa autenticación**. Si lo expones fuera de tu red local, añade control de acceso.
 - Múltiples navegadores pueden conectarse simultáneamente al WS; todos reciben las mismas lecturas.
-- Si deseas **simular datos** sin el ESP32, podemos añadir un modo “simulador” que emita lecturas sintéticas.
+- Si deseas **simular datos** sin el ESP32, se puede añadir un modo “simulador” que emita lecturas sintéticas.
 
 ---
 
 
-¡Listo! Abre el servidor, conecta el ESP32, y mira los datos en tu navegador 🎉
+¡Listo! Abre el servidor, conecta el ESP32, y mira los datos en tu navegador 

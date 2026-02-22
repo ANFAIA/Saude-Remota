@@ -184,20 +184,20 @@ async def ble_task(device_name: str, scan_timeout: float) -> None: #bucle
 
 async def index(request): return web.FileResponse(WEB_DIR/"index.html")
 async def static_css(request): return web.FileResponse(WEB_DIR/"css"/request.match_info["name"])
-async def static_js(request):  return web.FileResponse(WEB_DIR/"js"/request.match_info["name"])
+async def static_js(request):  return web.FileResponse(WEB_DIR/"js"/request.match_info["name"]) #match_info["name"] es el nombre capturado en la URL
 
 async def health(request):
     return web.json_response({"ok":True,"clients":len(clients),"firebase_enabled":ENABLE_FIREBASE,"queue_size":FIREBASE_QUEUE.qsize()})
 
 async def ws_handler(request):
-    ws=web.WebSocketResponse(heartbeat=20); await ws.prepare(request); clients.add(ws)
+    ws=web.WebSocketResponse(heartbeat=20); await ws.prepare(request); clients.add(ws) #crea websocket
     try:
-        await ws.send_str(json.dumps({"type":"status","clients":len(clients)}))
-        async for msg in ws:
+        await ws.send_str(json.dumps({"type":"status","clients":len(clients)})) #se conecta
+        async for msg in ws: #lee mensajes entrantes
             if msg.type==WSMsgType.TEXT and msg.data=="ping":
                 await ws.send_str("pong")
     finally:
-        clients.discard(ws)
+        clients.discard(ws) #al salir, se quita del set
     return ws
 
 #main app
@@ -210,13 +210,13 @@ async def main_async(args):
         with open(args.fb_config,"r",encoding="utf-8") as f:
             config_data=json.load(f)
     if ENABLE_FIREBASE:
-        email=args.fb_email or config_data.get("email") or os.getenv("FIREBASE_EMAIL")
+        email=args.fb_email or config_data.get("email") or os.getenv("FIREBASE_EMAIL") #variables de entorno
         password=args.fb_password or config_data.get("password") or os.getenv("FIREBASE_PASSWORD")
         api_key=args.fb_api_key or config_data.get("api_key") or os.getenv("FIREBASE_API_KEY")
         db_url=args.fb_db_url or config_data.get("database_url") or os.getenv("FIREBASE_DB_URL")
         if not all([email,password,api_key,db_url]):
             raise RuntimeError("Credenciales Firebase incompletas.")
-        firebase_sender=FirebaseRawSender(email=email,password=password,api_key=api_key,database_url=db_url)
+        firebase_sender=FirebaseRawSender(email=email,password=password,api_key=api_key,database_url=db_url) #crea el sender
         print("[FB] Envío a Firebase habilitado.")
     app=web.Application()
     app.add_routes([web.get("/",index),web.get("/health",health),web.get("/ws",ws_handler),
@@ -224,15 +224,15 @@ async def main_async(args):
     runner=web.AppRunner(app); await runner.setup()
     site=web.TCPSite(runner,host=args.host,port=args.port); await site.start()
     url = f"http://{args.host}:{args.port}"
-    print(f"[WEB] 🌍 Servidor disponible en {url}")
+    print(f"[WEB] Servidor disponible en {url}")
     print(f"[WEB] Endpoints: {url}/  {url}/ws  {url}/health")
     ble=asyncio.create_task(ble_task(args.device_name,args.scan_timeout))
     fbw=asyncio.create_task(firebase_worker())
     try:
         while True: await asyncio.sleep(3600)
-    except (asyncio.CancelledError,KeyboardInterrupt): pass
+    except (asyncio.CancelledError,KeyboardInterrupt): pass #Ctrl+C
     finally:
-        ble.cancel(); fbw.cancel(); await runner.cleanup()
+        ble.cancel(); fbw.cancel(); await runner.cleanup() #limpia el servidor
 
 def parse_args():
     p=argparse.ArgumentParser()

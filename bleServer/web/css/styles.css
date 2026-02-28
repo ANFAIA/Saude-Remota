@@ -1,10 +1,10 @@
-@keyframes load {
+@keyframes load { /*se define una animación llamada load*/
     0% {
-        opacity: 0;
+        opacity: 0; /*al inicio, el elemento está transparente*/
     }
 
     100% {
-        opacity: 1;
+        opacity: 1; /*al final, está totalmente visible*/
     }
 }
 
@@ -40,7 +40,7 @@ body {
     max-width: 100vw;
     min-height: 100vh;
     background-color: var(--background-light);
-    animation: load 0.5s ease-out 0.2s 1 forwards;
+    animation: load 0.5s ease-out 0.2s 1 forwards; /*empieza tras 0.2s de delay, se ejecuta 1 vez y forwards: se queda con el estado final (opacity 1)*/
 }
 
 .rs-body__header {
@@ -66,7 +66,7 @@ body {
     font-size: 2.5rem;
     line-height: 3.0rem;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 700; /*negrita*/
     color: var(--background-light);
     padding-inline: 10vw;
     padding-top: 20px;
@@ -91,7 +91,7 @@ body {
     font-size: 1.2rem;
     line-height: 1.8rem;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: flex-end; /*coloca su contenido a la derecha*/
 }
 
 .rs-body__header__status>.loading {
@@ -100,7 +100,7 @@ body {
     height: 10px;
     border-radius: 100%;
     background-color: var(--warning);
-    animation: heartbeat 5s ease infinite 0.2s;
+    animation: heartbeat 5s ease infinite 0.2s; /*se repite infinitamente*/
 }
 
 .rs-body__header__status>.error {
@@ -146,7 +146,7 @@ body {
     padding-bottom: 20px;
     background: linear-gradient(to top, var(--linear-gradient-light-1), var(--linear-gradient-light-2));
     transition: background 0.5s ease;
-    -webkit-transition: background 0.5s ease;
+    -webkit-transition: background 0.5s ease; /*compatibilidad con navegadores WebKit (Safari)*/
 }
 
 .rs-body__instant-data__title-container {
@@ -154,7 +154,7 @@ body {
     display: flex;
     flex-direction: row;
     gap: 30px;
-    align-items: flex-start;
+    align-items: flex-start; /*alineados arriba*/
     justify-content: space-between;
 }
 
@@ -179,7 +179,7 @@ body {
     color: var(--background-medium-light);
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: center; /*las tarjetas se estiran para tener alturas similares*/
     gap: 5px;
 }
 
@@ -194,7 +194,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
 
 .rs-body__instant-data__data-container__element {
     background: linear-gradient(to top, var(--linear-gradient-light-1), var(--linear-gradient-light-2));
@@ -225,7 +224,7 @@ body {
     line-height: 4.5rem;
     text-align: center;
     color: var(--background-dark);
-    display: flex;
+    display: flex; /*en fila*/
     flex-direction: row;
     align-items: flex-end;
     justify-content: center;
@@ -242,5 +241,5 @@ body {
 }
 
 .rs-body__risk__data>.unit {
-    color: var(--background-light);
+    color: var(--background-light); /*la unidad del riesgo se verá blanca, para contrastar con el fondo que cambia*/
 }

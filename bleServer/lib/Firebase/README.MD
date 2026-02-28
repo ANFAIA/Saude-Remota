@@ -62,13 +62,13 @@ sender = FirebaseRawSender(
 )
 
 # Envía una medición concreta
-sender.send_measurement(temperature=36.6, bmp=72, spo2=98, modelPreccision = 90.5, riskScore = 0.3)
+sender.send_measurement(temperature=36.6, bmp=72, spo2=98, modelPreccision=90.5, riskScore=0.3)
 
 # O un payload arbitrario
 sender.send_raw({"pressure": 1011, "nota": "prueba"})
 ```
 
-### Nota: Si no se proporciona la configuracion wifi se asume que la conexion ya se ha realizado
+### Nota: Si no se proporciona la configuracion wifi se asume que la conexión ya se ha realizado
 ---
 
 ## Ejemplos avanzados

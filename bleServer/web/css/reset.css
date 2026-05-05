@@ -25,7 +25,7 @@ body {
 }
 
 /**
- * Render the `main` element consistently in IE.
+ * Render (crear imágenes) the `main` element consistently.
  */
 
 main {
@@ -47,7 +47,7 @@ h1 {
 
 /**
  * 1. Add the correct box sizing in Firefox.
- * 2. Show the overflow in Edge and IE.
+ * 2. Show the overflow in Edge.
  */
 
 hr {
@@ -70,7 +70,7 @@ pre {
    ========================================================================== */
 
 /**
- * Remove the gray background on active links in IE 10.
+ * Remove the gray background on active links.
  */
 
 a {
@@ -142,7 +142,7 @@ sup {
    ========================================================================== */
 
 /**
- * Remove the border on images inside links in IE 10.
+ * Remove the border on images inside links.
  */
 
 img {
@@ -169,7 +169,7 @@ textarea {
 }
 
 /**
- * Show the overflow in IE.
+ * Show the overflow.
  * 1. Show the overflow in Edge.
  */
 
@@ -179,7 +179,7 @@ input { /* 1 */
 }
 
 /**
- * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * Remove the inheritance of text transform in Edge and Firefox.
  * 1. Remove the inheritance of text transform in Firefox.
  */
 
@@ -231,8 +231,8 @@ fieldset {
 }
 
 /**
- * 1. Correct the text wrapping in Edge and IE.
- * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 1. Correct the text wrapping in Edge.
+ * 2. Correct the color inheritance from `fieldset` elements.
  * 3. Remove the padding so developers are not caught out when they zero out
  *    `fieldset` elements in all browsers.
  */
@@ -255,7 +255,7 @@ progress {
 }
 
 /**
- * Remove the default vertical scrollbar in IE 10+.
+ * Remove the default vertical scrollbar.
  */
 
 textarea {
@@ -263,9 +263,8 @@ textarea {
 }
 
 /**
- * 1. Add the correct box sizing in IE 10.
- * 2. Remove the padding in IE 10.
- */
+ * 1. Add the correct box sizing.
+ * 2. Remove the padding. */
 
 [type="checkbox"],
 [type="radio"] {
@@ -314,7 +313,7 @@ textarea {
    ========================================================================== */
 
 /*
- * Add the correct display in Edge, IE 10+, and Firefox.
+ * Add the correct display in Edge and Firefox.
  */
 
 details {
@@ -329,11 +328,11 @@ summary {
   display: list-item;
 }
 
-/* Misc
+/* Miscellaneous
    ========================================================================== */
 
 /**
- * Add the correct display in IE 10+.
+ * Add the correct display.
  */
 
 template {
@@ -341,7 +340,7 @@ template {
 }
 
 /**
- * Add the correct display in IE 10.
+ * Add the correct display.
  */
 
 [hidden] {

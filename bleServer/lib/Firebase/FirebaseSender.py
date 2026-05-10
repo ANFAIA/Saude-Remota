@@ -1,14 +1,12 @@
 # @file firebase_raw_sender_pc.py
 # @brief Librería Python (PC) para enviar lecturas a Firebase Realtime Database.
-#
 # Esta versión es equivalente funcionalmente a la versión MicroPython proporcionada,
 # pero pensada para ejecutarse en un PC/servidor:
 #   - Usa `json` en lugar de `ujson`
 #   - Usa `requests` en lugar de `urequests`
 #   - Elimina cualquier lógica de Wi‑Fi/ESP32
-#
-# @author Alejandro Fernández Rodríguez
-# @contact github.com/afernandezLuc
+# @author Irene Gallardo Sierra, Alejandro Fernández Rodríguez
+# @github.com/afernandezLuc
 # @version 1.0.0
 # @date 2025-08-31
 # @copyright Copyright (c) 2025
@@ -19,7 +17,7 @@ from __future__ import annotations
 
 import json
 import time
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional #Dict es diccionario 
 import requests
 
 
@@ -40,7 +38,7 @@ class FirebaseRawSender:
         password: str,
         api_key: str,
         database_url: str,
-        *,  # solo argumentos con nombre a partir de aquí
+        *,  # sólo argumentos con nombre a partir de aquí
         session: Optional[requests.Session] = None,
         request_timeout: float = 10.0,
         user_agent: str = "FirebaseRawSender-PC/1.0",
@@ -53,7 +51,7 @@ class FirebaseRawSender:
         @param api_key Clave de API Web del proyecto Firebase (del panel de Firebase).
         @param database_url URL base de la RTDB (por ejemplo: https://tu-proyecto-default-rtdb.europe-west1.firebasedatabase.app)
                             No debe terminar en '/'. Se recorta automáticamente.
-        @param session (Opcional) requests.Session reutilizable.
+        @param session (Opcional) requests. Session reutilizable.
         @param request_timeout (Opcional) Timeout en segundos para las peticiones HTTP.
         @param user_agent (Opcional) Cabecera User-Agent personalizada.
         """
@@ -86,7 +84,7 @@ class FirebaseRawSender:
         @param spo2 Saturación de oxígeno (%).
         @param modelPreccision Precisión del modelo (0.0 a 1.0).
         @param riskScore Riesgo calculado por el modelo (0.0 a 1.0).
-        @param timestamp_ms Marca temporal en milisegundos desde época Unix.
+        @param timestamp_ms Marca temporal en milisegundos.
         """
         payload = {
             "temperature": round(float(temperature), 2),
@@ -155,13 +153,12 @@ class FirebaseRawSender:
                 timeout=self._timeout,
             )
             if res.status_code == 200:
-                body = res.json()
+                body = res.json() #diccionario de Python con la respuesta JSON
                 self.id_token = body.get("idToken")
                 if not self.id_token:
                     raise RuntimeError("Respuesta de autenticación sin 'idToken'.")
                 print("✔ Autenticado con Firebase.")
             else:
-                # Incluir cuerpo textual para facilitar la depuración
                 raise RuntimeError(f"Error de autenticación: {res.status_code} — {res.text}")
         except requests.RequestException as e:
             raise RuntimeError(f"Excepción de red al autenticar: {e}") from e
@@ -170,4 +167,3 @@ class FirebaseRawSender:
                 res.close()
             except Exception:
                 pass
-

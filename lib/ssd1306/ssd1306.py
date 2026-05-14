@@ -1,5 +1,5 @@
 from machine import I2C, Pin
-import framebuf
+import framebuf #permite dibujar en un buffer gráfico
 import time
 
 # ---------------------  Constantes SSD1306  ---------------------
@@ -41,7 +41,7 @@ class SSD1306:
     def __init__(self, width=128, height=64, i2c=None, addr=SSD1306_I2C_ADDRESS):
         self.width     = width
         self.height    = height
-        self.pages     = height // 8
+        self.pages     = height // 8 # píxeles 
         self.addr      = addr
 
         # --- I²C ---
@@ -55,15 +55,15 @@ class SSD1306:
 
         # Buffer y framebuf se crean siempre; así el código que escribe
         # texto/dibujos no revienta, aunque luego no se envíe a HW
-        self.buffer   = bytearray(self.pages * self.width)
+        self.buffer   = bytearray(self.pages * self.width) # crea una zona de memoria donde se dibuja antes de mandar los datos a la pantalla
         self.framebuf = framebuf.FrameBuffer(self.buffer, self.width,
-                                             self.height, framebuf.MONO_VLSB)
+                                             self.height, framebuf.MONO_VLSB) # crea un objeto gráfico sobre ese buffer
 
         if self.connected:
             self._init_display()
         else:
             # Convertir llamadas críticas en NOP
-            self.write_cmd  = self._noop
+            self.write_cmd  = self._noop # función vacía
             self.write_data = self._noop
             self.show       = self._noop
             # Opcional: avisar 1 sola vez
@@ -78,7 +78,7 @@ class SSD1306:
             # Por ejemplo, si el bus no existe todavía
             return False
 
-    def _noop(self, *_, **__):
+    def _noop(self, *_, **__): # acepta cualquier argumento, pero se usan
         """Función vacía para sustituir I/O cuando no hay pantalla."""
         pass
 
@@ -94,10 +94,10 @@ class SSD1306:
             SSD1306_SETMULTIPLEX, self.height - 1,
             SSD1306_SETDISPLAYOFFSET, 0x00,
             SSD1306_SETSTARTLINE | 0x00,
-            SSD1306_CHARGEPUMP, 0x14,
-            SSD1306_MEMORYMODE, 0x00,
-            SSD1306_SEGREMAP | 0x01,
-            SSD1306_COMSCANDEC,
+            SSD1306_CHARGEPUMP, 0x14, # activa la bomba de carga interna
+            SSD1306_MEMORYMODE, 0x00, # configura el modo de memoria horizontal
+            SSD1306_SEGREMAP | 0x01, # ajusta la orientación horizontal
+            SSD1306_COMSCANDEC, # ajusta la orientación vertical
             SSD1306_SETCOMPINS, 0x12 if self.height == 64 else 0x02,
             SSD1306_SETCONTRAST, 0xCF,
             SSD1306_SETPRECHARGE, 0xF1,
@@ -142,12 +142,11 @@ class SSD1306:
         self.write_cmd(SSD1306_PAGEADDR)
         self.write_cmd(0)
         self.write_cmd(self.pages - 1)
-        self.write_data(self.buffer)
+        self.write_data(self.buffer) # envía todos los píxeles almacenados en el buffer
 
     def text(self, string, x, y, color=1):
         self.framebuf.text(string, x, y, color)
 
-    
     def text_scaled(self, string, x, y, scale=1, color=1):
         """Renderiza texto escalado"""
         for char in string:
@@ -155,7 +154,7 @@ class SSD1306:
             char_width = 8
             char_height = 8
             buf_temp = bytearray(char_width * char_height // 8)
-            fb_temp = framebuf.FrameBuffer(buf_temp, char_width, char_height, framebuf.MONO_VLSB)
+            fb_temp = framebuf.FrameBuffer(buf_temp, char_width, char_height, framebuf.MONO_VLSB) # crea un mini-framebuffer para dibujar sólo ese carácter
             
             # Renderizar caracter
             fb_temp.fill(0)
@@ -170,7 +169,7 @@ class SSD1306:
                             y + py * scale,
                             scale, scale, color)
             
-            x += char_width * scale
+            x += char_width * scale # mueve la posición horizontal para escribir el siguiente carácter
     
     def draw_heart(self, x, y, size=1, color=1):
         """Corazón optimizado"""
@@ -207,12 +206,12 @@ class SSD1306:
             self.draw_oxygen(100, 2)
         
         # Nombre del parámetro
-        param_x = max(0, (self.width - len(param_name) * 8) // 2)
+        param_x = max(0, (self.width - len(param_name) * 8) // 2) # calcula la posición horizontal para centrar el nombre del parámetro
         self.text(param_name, param_x, 16)
         
         # Valor principal (doble tamaño)
         value_str = "{:.1f}".format(value) if isinstance(value, float) else str(value)
-        value_x = max(0, (self.width - len(value_str) * 16) // 2)
+        value_x = max(0, (self.width - len(value_str) * 16) // 2) # calcula dónde poner el valor centrado, teniendo en cuenta que está a escala 2
         self.text_scaled(value_str, value_x, 28, scale=2, color=1)
         
         # Línea divisoria
@@ -245,7 +244,7 @@ class SSD1306:
         self.clear()
         self.text_scaled("Coloque su", 10, 0, scale=2)
         self.text_scaled("DEDO", 40, 20, scale=2)
-        self.text_scaled("en el sensor", 10, 50, scale=2)
+        self.text_scaled("en el sensor", 10, 50, scale=1)
         self.show()
     
     def display_weak_signal(self):

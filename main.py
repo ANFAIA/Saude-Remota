@@ -35,7 +35,7 @@ BLE_KEEPALIVE_MS  = 1000
 #mejora de estabilidad
 HISTORY_LEN       = 10         #media móvil (BPM/SpO2)
 MED_WIN           = 5          #mediana para BPM
-MAX_BPM_JUMP      = 12         #anti-spike por ciclo (lpm)
+MAX_BPM_JUMP      = 6          #anti-spike por ciclo (lpm)
 WARMUP_MS         = 2000       #no usar medidas los 2s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
@@ -43,7 +43,7 @@ TEMP_OFFSET       = 4.0        #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.25       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas
-BPM_MIN,  BPM_MAX  = 40, 200
+BPM_MIN,  BPM_MAX  = 45, 130
 SPO2_MIN, SPO2_MAX = 70, 100
 
 #umbrales clínicos (OR lógico) para la decisión por REGLAS

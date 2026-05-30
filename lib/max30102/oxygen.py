@@ -119,7 +119,8 @@ class OxygenSaturation:
         # mínimo 160 ms entre valles  ⇒ muestras = FreqS * 0.16
         #min_gap = self.FreqS // 6          # ≈0.166 s
         #an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)
-        an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, 4, 15)
+        min_gap = int(self.FreqS * 0.45)
+        an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)
 
         n_npks = len(an_ir_valley_locs)
 

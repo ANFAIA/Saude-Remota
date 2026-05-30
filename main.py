@@ -25,7 +25,7 @@ I2C_SDA_PIN       = 21
 BUTTON_PIN        = 0
 
 SAMPLE_RATE       = 25 
-LED_POWER         = 0x7F
+LED_POWER         = 0x9F
 FINGER_ON         = 52000      #histeresis entrada para evitar parpadeos al colocar el dedo
 FINGER_OFF        = 48000      #histeresis salida
 AMP_MIN           = 15000
@@ -165,7 +165,7 @@ def read_and_update():
             dt = time.ticks_diff(now_beat, last_beat_ms)
             bpm_calc = 60000 / dt
 
-            if 45 <= bpm_calc <= 130:
+            if 40 <= bpm_calc <= 140:
                 bpm_valid = True
                 BPM_RAW_HISTORY.append(bpm_calc)
                 if len(BPM_RAW_HISTORY) > MED_WIN:

@@ -85,7 +85,7 @@ class HeartRate:
             self.IR_AC_Signal_max = 0
 
             delta = self.IR_AC_Max - self.IR_AC_Min
-            if 20 < delta < 1000:
+            if 10 < delta < 2000:
                 beatDetected = True
 
         # Detecta cruce negativo por cero (flanco descendente)

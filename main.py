@@ -55,7 +55,7 @@ PRINT_SERIAL      = True #activa mensajes por consola
 
 #estado global
 stop_flag = False
-
+last_beat_ms = 0
 spo2_ir_buf = []
 spo2_red_buf = []
 finger_present = False
@@ -156,6 +156,24 @@ def read_and_update():
 
     ir  = sensor.getIR()
     red = sensor.getRed()
+
+    global last_beat_ms
+
+    if hr.check_for_beat(ir):
+        now_beat = time.ticks_ms()
+        if last_beat_ms != 0:
+            dt = time.ticks_diff(now_beat, last_beat_ms)
+            bpm_calc = 60000 / dt
+
+            if 45 <= bpm_calc <= 130:
+                bpm_valid = True
+                BPM_RAW_HISTORY.append(bpm_calc)
+                if len(BPM_RAW_HISTORY) > MED_WIN:
+                    BPM_RAW_HISTORY.pop(0)
+                bpm = median(BPM_RAW_HISTORY)
+                log("BPM por HeartRate =", bpm)
+
+        last_beat_ms = now_beat
 
     has_finger = (ir > FINGER_OFF) if finger_present else (ir > FINGER_ON)
 

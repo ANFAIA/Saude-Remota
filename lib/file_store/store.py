@@ -50,4 +50,4 @@ class FileStore:
             os.remove(self.archivo)  # Elimina el archivo
             print("Archivo eliminado con éxito")
         except OSError:
-            print("No se pudo eliminar el archivo (quizá no existe)")
+            print("No se pudo eliminar el archivo")

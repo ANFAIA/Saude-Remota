@@ -24,7 +24,7 @@ I2C_SCL_PIN       = 22
 I2C_SDA_PIN       = 21
 BUTTON_PIN        = 0
 
-SAMPLE_RATE       = 25
+SAMPLE_RATE       = 25 
 LED_POWER         = 0x7F
 FINGER_ON         = 52000      #histeresis entrada para evitar parpadeos al colocar el dedo
 FINGER_OFF        = 48000      #histeresis salida

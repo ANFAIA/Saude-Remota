@@ -94,10 +94,8 @@ echo "======================="
 
 #busca *.py y *.json, ignorando directorios comunes que no se deben de subir
 #-print0 + read -d '' permite manejar nombres con espacios
-find . \ 
-#empieza desde la carpeta actual
-  -path "./.git" -prune -o \ 
-  #-prune = no se entra aquí
+find . \
+  -path "./.git" -prune -o \
   -path "./.venv" -prune -o \
   -path "./venv" -prune -o \
   -path "./__pycache__" -prune -o \

@@ -85,6 +85,7 @@ class HeartRate:
             self.IR_AC_Signal_max = 0
 
             delta = self.IR_AC_Max - self.IR_AC_Min
+            print("DELTA =", delta)
             if 10 < delta < 2000:
                 beatDetected = True
 

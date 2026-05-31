@@ -160,6 +160,7 @@ def read_and_update():
     global last_beat_ms
 
     if hr.check_for_beat(ir):
+        print("LATIDO")
         now_beat = time.ticks_ms()
         if last_beat_ms != 0:
             dt = time.ticks_diff(now_beat, last_beat_ms)

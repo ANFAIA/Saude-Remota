@@ -39,7 +39,7 @@ MAX_BPM_JUMP      = 6          #anti-spike por ciclo (lpm)
 WARMUP_MS         = 2000       #no usar medidas los 2s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
-TEMP_OFFSET       = 6.0        #para corregir las lecturas iniciales más bajas
+TEMP_OFFSET       = 6.5        #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.25       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas

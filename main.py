@@ -165,7 +165,7 @@ def read_and_update():
             dt = time.ticks_diff(now_beat, last_beat_ms)
             bpm_calc = 60000 / dt
 
-            if 45 <= bpm_calc <= 120:
+            if 45 <= bpm_calc <= 100:
                 bpm_valid = True
                 BPM_RAW_HISTORY.append(bpm_calc)
                 if len(BPM_RAW_HISTORY) > MED_WIN:

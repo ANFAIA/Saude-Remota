@@ -127,7 +127,7 @@ if not sensor.begin():
 
 sensor.setup(
     powerLevel    = LED_POWER,
-    sampleAverage = 2,     
+    sampleAverage = 4,     
     ledMode       = 2,
     sampleRate    = SAMPLE_RATE,
     pulseWidth    = 411,
@@ -160,7 +160,6 @@ def read_and_update():
     global last_beat_ms
 
     if hr.check_for_beat(ir):
-        print("LATIDO")
         now_beat = time.ticks_ms()
         if last_beat_ms != 0:
             dt = time.ticks_diff(now_beat, last_beat_ms)

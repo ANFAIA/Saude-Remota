@@ -164,17 +164,17 @@ def read_and_update():
         if last_beat_ms != 0:
             dt = time.ticks_diff(now_beat, last_beat_ms)
             bpm_calc = 60000 / dt
-            log("Latido detectado. BPM calculado =", bpm_calc)
+            print("Latido detectado. BPM calculado =", bpm_calc)
 
-            if 45 <= bpm_calc <= 100:
+            if 50 <= bpm_calc <= 100:
                 bpm_valid = True
                 BPM_RAW_HISTORY.append(bpm_calc)
                 if len(BPM_RAW_HISTORY) > MED_WIN:
                     BPM_RAW_HISTORY.pop(0)
                 bpm = median(BPM_RAW_HISTORY)
-                log("BPM por HeartRate =", bpm)
+                print("BPM por HeartRate =", bpm)
             else:
-                log("BPM detectado fuera de rango:", bpm_calc)
+                print("BPM detectado fuera de rango:", bpm_calc)
 
         last_beat_ms = now_beat
 

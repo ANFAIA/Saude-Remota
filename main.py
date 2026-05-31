@@ -164,6 +164,7 @@ def read_and_update():
         if last_beat_ms != 0:
             dt = time.ticks_diff(now_beat, last_beat_ms)
             bpm_calc = 60000 / dt
+            log("Latido detectado. BPM calculado =", bpm_calc)
 
             if 45 <= bpm_calc <= 100:
                 bpm_valid = True
@@ -172,6 +173,8 @@ def read_and_update():
                     BPM_RAW_HISTORY.pop(0)
                 bpm = median(BPM_RAW_HISTORY)
                 log("BPM por HeartRate =", bpm)
+            else:
+                log("BPM detectado fuera de rango:", bpm_calc)
 
         last_beat_ms = now_beat
 
@@ -188,6 +191,7 @@ def read_and_update():
             SPO2_HISTORY.clear()
             BPM_HISTORY.clear()
             BPM_RAW_HISTORY.clear()
+            last_beat_ms = 0
             spo2_valid = bpm_valid = False
 
         if ir < min_ir:

@@ -24,7 +24,7 @@ I2C_SCL_PIN       = 22
 I2C_SDA_PIN       = 21
 BUTTON_PIN        = 0
 
-SAMPLE_RATE       = 25 
+SAMPLE_RATE       = 50 
 LED_POWER         = 0x9F
 FINGER_ON         = 52000      #histeresis entrada para evitar parpadeos al colocar el dedo
 FINGER_OFF        = 48000      #histeresis salida
@@ -36,10 +36,11 @@ BLE_KEEPALIVE_MS  = 1000
 HISTORY_LEN       = 10         #media móvil (BPM/SpO2)
 MED_WIN           = 5          #mediana para BPM
 MAX_BPM_JUMP      = 6          #anti-spike por ciclo (lpm)
+MAX_SPO2_JUMP     = 2          #anti-spike por ciclo (%)
 WARMUP_MS         = 2000       #no usar medidas los 2s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
-TEMP_OFFSET       = 6.5        #para corregir las lecturas iniciales más bajas
+TEMP_OFFSET       = 4          #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.25       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas
@@ -166,7 +167,7 @@ def read_and_update():
             bpm_calc = 60000 / dt
             print("Latido detectado. BPM calculado =", bpm_calc)
 
-            if 50 <= bpm_calc <= 100:
+            if BPM_MIN <= bpm_calc <= BPM_MAX:
                 bpm_valid = True
                 BPM_RAW_HISTORY.append(bpm_calc)
                 if len(BPM_RAW_HISTORY) > MED_WIN:
@@ -210,22 +211,26 @@ def read_and_update():
                 )
 
                 #validación fisiológica previa
-                if bv and (BPM_MIN <= bpm_calc <= BPM_MAX):
-                    bpm_valid = True
+                #if bv and (BPM_MIN <= bpm_calc <= BPM_MAX):
+                    #bpm_valid = True
                     #anti-spike por salto
-                    if BPM_HISTORY and abs(bpm_calc - BPM_HISTORY[-1]) > MAX_BPM_JUMP:
-                        bpm_calc = BPM_HISTORY[-1] #si salta demasiado respecto al último valor histórico, se recorta al valor anterior
+                    #if BPM_HISTORY and abs(bpm_calc - BPM_HISTORY[-1]) > MAX_BPM_JUMP:
+                        #bpm_calc = BPM_HISTORY[-1] #si salta demasiado respecto al último valor histórico, se recorta al valor anterior
                     #mediana de ventana corta para estabilizar picos
-                    BPM_RAW_HISTORY.append(bpm_calc)
-                    if len(BPM_RAW_HISTORY) > MED_WIN:
-                        BPM_RAW_HISTORY.pop(0)
-                    bpm = median(BPM_RAW_HISTORY)
-                else:
-                    bpm_valid = False
-
+                    #BPM_RAW_HISTORY.append(bpm_calc)
+                    #if len(BPM_RAW_HISTORY) > MED_WIN:
+                        #BPM_RAW_HISTORY.pop(0)
+                    #bpm = median(BPM_RAW_HISTORY)
+                #else:
+                    #bpm_valid = False
+                #no se usa el BPM calculado por oxygen.py porque es menos estable, se calcula arriba con HeartRate()
+                pass
                 if sv and (SPO2_MIN <= spo2_calc <= SPO2_MAX):
-                    spo2_valid = True
-                    spo2 = spo2_calc
+                    if SPO2_HISTORY and abs(spo2_calc - SPO2_HISTORY[-1]) > MAX_SPO2_JUMP:
+                        spo2_valid = False
+                    else:
+                        spo2_valid = True
+                        spo2 = spo2_calc
                 else:
                     spo2_valid = False
 

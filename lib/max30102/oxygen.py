@@ -42,7 +42,7 @@
 #  Incluye detección de picos, filtrado y estimación de SpO2 mediante
 #  la relación de amplitudes AC/DC de las señales IR y RED.
 class OxygenSaturation:
-    FreqS = 25
+    FreqS = 50
     BUFFER_SIZE = FreqS * 4
     MA4_SIZE = 4
 

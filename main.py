@@ -209,7 +209,7 @@ def read_and_update():
                 spo2_calc, sv, bpm_calc, bv = ox.calculate_spo2_and_heart_rate(
                     spo2_ir_buf, spo2_red_buf
                 )
-                print("SPO2 RAW =", spo2_calc, "VALID =", sv)
+
                 #validación fisiológica previa
                 #if bv and (BPM_MIN <= bpm_calc <= BPM_MAX):
                     #bpm_valid = True

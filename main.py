@@ -36,7 +36,7 @@ BLE_KEEPALIVE_MS  = 1000
 HISTORY_LEN       = 10         #media móvil (BPM/SpO2)
 MED_WIN           = 5          #mediana para BPM
 MAX_BPM_JUMP      = 6          #anti-spike por ciclo (lpm)
-MAX_SPO2_JUMP     = 2          #anti-spike por ciclo (%)
+MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
 WARMUP_MS         = 2000       #no usar medidas los 2s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
@@ -128,7 +128,7 @@ if not sensor.begin():
 
 sensor.setup(
     powerLevel    = LED_POWER,
-    sampleAverage = 4,     
+    sampleAverage = 8,     
     ledMode       = 2,
     sampleRate    = SAMPLE_RATE,
     pulseWidth    = 411,
@@ -157,7 +157,7 @@ def read_and_update():
 
     ir  = sensor.getIR()
     red = sensor.getRed()
-
+    print("IR =", ir, "RED =", red)
     global last_beat_ms
 
     if hr.check_for_beat(ir):

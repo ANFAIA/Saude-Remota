@@ -28,7 +28,7 @@ SAMPLE_RATE       = 50
 LED_POWER         = 0x9F
 FINGER_ON         = 52000      #histeresis entrada para evitar parpadeos al colocar el dedo
 FINGER_OFF        = 48000      #histeresis salida
-AMP_MIN           = 15000
+AMP_MIN           = 500
 UI_REFRESH_MS     = 500
 BLE_KEEPALIVE_MS  = 1000
 

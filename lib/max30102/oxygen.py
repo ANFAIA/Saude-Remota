@@ -43,7 +43,7 @@
 #  la relación de amplitudes AC/DC de las señales IR y RED.
 class OxygenSaturation:
     FreqS = 50
-    BUFFER_SIZE = FreqS * 8
+    BUFFER_SIZE = FreqS * 4
     MA4_SIZE = 4
 
     SPO2_TABLE = [

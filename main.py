@@ -33,7 +33,7 @@ UI_REFRESH_MS     = 500
 BLE_KEEPALIVE_MS  = 1000
 
 #mejora de estabilidad
-HISTORY_LEN       = 10         #media móvil (BPM/SpO2)
+HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
 MED_WIN           = 5          #mediana para BPM
 MAX_BPM_JUMP      = 6          #anti-spike por ciclo (lpm)
 MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)

@@ -34,8 +34,8 @@ BLE_KEEPALIVE_MS  = 1000
 
 #mejora de estabilidad
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
-MED_WIN           = 5          #mediana para BPM
-MAX_BPM_JUMP      = 6          #anti-spike por ciclo (lpm)
+MED_WIN           = 7          #mediana para BPM
+MAX_BPM_JUMP      = 12         #anti-spike por ciclo (lpm)
 MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
 WARMUP_MS         = 2000       #no usar medidas los 2s iniciales tras detectar dedo
 
@@ -44,7 +44,7 @@ TEMP_OFFSET       = 0          #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.25       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas
-BPM_MIN,  BPM_MAX  = 45, 130
+BPM_MIN,  BPM_MAX  = 50, 120
 SPO2_MIN, SPO2_MAX = 70, 100
 
 #umbrales clínicos (OR lógico) para la decisión por REGLAS
@@ -57,6 +57,7 @@ PRINT_SERIAL      = True #activa mensajes por consola
 #estado global
 stop_flag = False
 last_beat_ms = 0
+last_good_bpm = 0
 spo2_ir_buf = []
 spo2_red_buf = []
 finger_present = False
@@ -153,7 +154,7 @@ log("Sensor inicializado. Coloque su dedo…")
 #lectura/cálculo
 def read_and_update():
     """Lee IR/Red, actualiza buffers y calcula spo2/bpm si hay ventana completa."""
-    global finger_present, finger_since_ms, min_ir, spo2, bpm, spo2_valid, bpm_valid
+    global finger_present, finger_since_ms, min_ir, spo2, bpm, spo2_valid, bpm_valid, last_good_bpm
 
     ir  = sensor.getIR()
     red = sensor.getRed()
@@ -168,14 +169,25 @@ def read_and_update():
             print("Latido detectado. BPM calculado =", bpm_calc)
 
             if BPM_MIN <= bpm_calc <= BPM_MAX:
-                bpm_valid = True
-                BPM_RAW_HISTORY.append(bpm_calc)
-                if len(BPM_RAW_HISTORY) > MED_WIN:
-                    BPM_RAW_HISTORY.pop(0)
-                bpm = median(BPM_RAW_HISTORY)
-                print("BPM por HeartRate =", bpm)
-            else:
-                print("BPM detectado fuera de rango:", bpm_calc)
+                if last_good_bpm != 0 and abs(bpm_calc - last_good_bpm) > MAX_BPM_JUMP:
+                    print("BPM descartado por salto brusco:", bpm_calc)
+                    return spo2_valid, bpm_valid
+
+            BPM_RAW_HISTORY.append(bpm_calc)
+
+            if len(BPM_RAW_HISTORY) > MED_WIN:
+                BPM_RAW_HISTORY.pop(0)
+
+            bpm_filtrado = median(BPM_RAW_HISTORY)
+
+            bpm_valid = True
+            bpm = bpm_filtrado
+            last_good_bpm = bpm_filtrado
+
+            print("BPM por HeartRate filtrado =", bpm)
+
+    else:
+        print("BPM detectado fuera de rango:", bpm_calc)
 
         last_beat_ms = now_beat
 
@@ -193,6 +205,7 @@ def read_and_update():
             BPM_HISTORY.clear()
             BPM_RAW_HISTORY.clear()
             last_beat_ms = 0
+            last_good_bpm = 0
             spo2_valid = bpm_valid = False
 
         if ir < min_ir:

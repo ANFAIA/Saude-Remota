@@ -161,33 +161,34 @@ def read_and_update():
 
     global last_beat_ms
 
-    #if hr.check_for_beat(ir):
-        #now_beat = time.ticks_ms()
-        #if last_beat_ms != 0:
-            #dt = time.ticks_diff(now_beat, last_beat_ms)
-            #bpm_calc = 60000 / dt
-            #print("Latido detectado. BPM calculado =", bpm_calc)
+    if hr.check_for_beat(ir):
+        now_beat = time.ticks_ms()
+        if last_beat_ms != 0:
+            dt = time.ticks_diff(now_beat, last_beat_ms)
+            print("dt =", dt)
+            bpm_calc = 60000 / dt
+            print("Latido detectado. BPM calculado =", bpm_calc)
 
-            #if BPM_MIN <= bpm_calc <= BPM_MAX:
-                #if last_good_bpm != 0 and abs(bpm_calc - last_good_bpm) > MAX_BPM_JUMP:
-                    #print("BPM descartado por salto brusco:", bpm_calc)
-                #else:
-                    #BPM_RAW_HISTORY.append(bpm_calc)
+            if BPM_MIN <= bpm_calc <= BPM_MAX:
+                if last_good_bpm != 0 and abs(bpm_calc - last_good_bpm) > MAX_BPM_JUMP:
+                    print("BPM descartado por salto brusco:", bpm_calc)
+                else:
+                    BPM_RAW_HISTORY.append(bpm_calc)
 
-                    #if len(BPM_RAW_HISTORY) > MED_WIN:
-                        #BPM_RAW_HISTORY.pop(0)
+                    if len(BPM_RAW_HISTORY) > MED_WIN:
+                        BPM_RAW_HISTORY.pop(0)
 
-                    #bpm_filtrado = median(BPM_RAW_HISTORY)
+                    bpm_filtrado = median(BPM_RAW_HISTORY)
 
-                    #bpm_valid = True
-                    #bpm = bpm_filtrado
-                    #last_good_bpm = bpm_filtrado
+                    bpm_valid = True
+                    bpm = bpm_filtrado
+                    last_good_bpm = bpm_filtrado
 
-                    #print("BPM por HeartRate filtrado =", bpm)
-            #else:
-                #print("BPM detectado fuera de rango:", bpm_calc)
+                    print("BPM por HeartRate filtrado =", bpm)
+            else:
+                print("BPM detectado fuera de rango:", bpm_calc)
 
-        #last_beat_ms = now_beat
+        last_beat_ms = now_beat
 
     has_finger = (ir > FINGER_OFF) if finger_present else (ir > FINGER_ON)
 
@@ -222,18 +223,18 @@ def read_and_update():
                 )
                 print("oxygen BPM =", bpm_calc, "valid =", bv)
                 #validación fisiológica previa
-                if bv and (BPM_MIN <= bpm_calc <= BPM_MAX):
-                    bpm_valid = True
+                #if bv and (BPM_MIN <= bpm_calc <= BPM_MAX):
+                    #bpm_valid = True
                     #anti-spike por salto
-                    if BPM_HISTORY and abs(bpm_calc - BPM_HISTORY[-1]) > MAX_BPM_JUMP:
-                        bpm_calc = BPM_HISTORY[-1] #si salta demasiado respecto al último valor histórico, se recorta al valor anterior
+                    #if BPM_HISTORY and abs(bpm_calc - BPM_HISTORY[-1]) > MAX_BPM_JUMP:
+                        #bpm_calc = BPM_HISTORY[-1] #si salta demasiado respecto al último valor histórico, se recorta al valor anterior
                     #mediana de ventana corta para estabilizar picos
-                    BPM_RAW_HISTORY.append(bpm_calc)
-                    if len(BPM_RAW_HISTORY) > MED_WIN:
-                        BPM_RAW_HISTORY.pop(0)
-                    bpm = median(BPM_RAW_HISTORY)
-                else:
-                    bpm_valid = False
+                    #BPM_RAW_HISTORY.append(bpm_calc)
+                    #if len(BPM_RAW_HISTORY) > MED_WIN:
+                        #BPM_RAW_HISTORY.pop(0)
+                    #bpm = median(BPM_RAW_HISTORY)
+                #else:
+                    #bpm_valid = False
                 #no se usa el BPM calculado por oxygen.py porque es menos estable, se calcula arriba con HeartRate()
                 pass
                 if sv and (SPO2_MIN <= spo2_calc <= SPO2_MAX):

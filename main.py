@@ -171,7 +171,19 @@ def read_and_update():
             if BPM_MIN <= bpm_calc <= BPM_MAX:
                 if last_good_bpm != 0 and abs(bpm_calc - last_good_bpm) > MAX_BPM_JUMP:
                     print("BPM descartado por salto brusco:", bpm_calc)
-                    return spo2_valid, bpm_valid
+                else:
+                    BPM_RAW_HISTORY.append(bpm_calc)
+
+                    if len(BPM_RAW_HISTORY) > MED_WIN:
+                        BPM_RAW_HISTORY.pop(0)
+
+                    bpm_filtrado = median(BPM_RAW_HISTORY)
+
+                    bpm_valid = True
+                    bpm = bpm_filtrado
+                    last_good_bpm = bpm_filtrado
+
+                    print("BPM por HeartRate filtrado =", bpm)
 
             BPM_RAW_HISTORY.append(bpm_calc)
 

@@ -184,22 +184,8 @@ def read_and_update():
                     last_good_bpm = bpm_filtrado
 
                     print("BPM por HeartRate filtrado =", bpm)
-
-            BPM_RAW_HISTORY.append(bpm_calc)
-
-            if len(BPM_RAW_HISTORY) > MED_WIN:
-                BPM_RAW_HISTORY.pop(0)
-
-            bpm_filtrado = median(BPM_RAW_HISTORY)
-
-            bpm_valid = True
-            bpm = bpm_filtrado
-            last_good_bpm = bpm_filtrado
-
-            print("BPM por HeartRate filtrado =", bpm)
-
-    else:
-        print("BPM detectado fuera de rango:", bpm_calc)
+            else:
+                print("BPM detectado fuera de rango:", bpm_calc)
 
         last_beat_ms = now_beat
 

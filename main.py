@@ -44,7 +44,7 @@ TEMP_OFFSET       = 0          #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.25       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas
-BPM_MIN,  BPM_MAX  = 50, 110
+BPM_MIN,  BPM_MAX  = 45, 95
 SPO2_MIN, SPO2_MAX = 70, 100
 
 #umbrales clínicos (OR lógico) para la decisión por REGLAS
@@ -223,7 +223,7 @@ def read_and_update():
                 )
                 print("oxygen BPM =", bpm_calc, "valid =", bv)
                 #validación fisiológica previa
-                if bv and (BPM_MIN <= bpm_calc <= BPM_MAX):
+                if bv and sv and (spo2_calc >= 92) and (BPM_MIN <= bpm_calc <= BPM_MAX):
                     BPM_RAW_HISTORY.append(bpm_calc)
                     if len(BPM_RAW_HISTORY) > MED_WIN:
                         BPM_RAW_HISTORY.pop(0)
@@ -231,6 +231,7 @@ def read_and_update():
                     bpm_valid = True
                     print("BPM filtrado =", bpm)
                 else:
+                    bpm_valid = False
                     print("BPM descartado =", bpm_calc)
 
                 pass

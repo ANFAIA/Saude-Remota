@@ -223,13 +223,29 @@ def read_and_update():
                 )
                 print("oxygen BPM =", bpm_calc, "valid =", bv)
                 #validación fisiológica previa
-                if bv and sv and (spo2_calc >= 92) and (BPM_MIN <= bpm_calc <= BPM_MAX):
-                    BPM_RAW_HISTORY.append(bpm_calc)
-                    if len(BPM_RAW_HISTORY) > MED_WIN:
-                        BPM_RAW_HISTORY.pop(0)
-                    bpm = median(BPM_RAW_HISTORY)
-                    bpm_valid = True
-                    print("BPM filtrado =", bpm)
+                if bv and (BPM_MIN <= bpm_calc <= BPM_MAX):
+                   
+                    if len(BPM_RAW_HISTORY) == 0:
+                        BPM_RAW_HISTORY.append(bpm_calc)
+                        bpm = bpm_calc
+                        bpm_valid = True
+                        print("BPM inicial =", bpm)
+
+                    else:
+                        bpm_actual = median(BPM_RAW_HISTORY)
+
+                        if abs(bpm_calc - bpm_actual) <= 15:
+                            BPM_RAW_HISTORY.append(bpm_calc)
+
+                            if len(BPM_RAW_HISTORY) > 8:
+                                BPM_RAW_HISTORY.pop(0)
+
+                            bpm = median(BPM_RAW_HISTORY)
+                            bpm_valid = True
+                            print("BPM filtrado =", bpm)
+
+                        else:
+                            print("BPM descartado por salto =", bpm_calc)
                 else:
                     bpm_valid = False
                     print("BPM descartado =", bpm_calc)

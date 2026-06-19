@@ -245,20 +245,24 @@ def read_and_update():
                             print("BPM filtrado =", bpm)
 
                         else:
+                            if bpm != 0:
+                                bpm_valid = True
                             print("BPM descartado por salto =", bpm_calc)
                 else:
-                    bpm_valid = False
-                    print("BPM descartado =", bpm_calc)
+                    if bpm != 0:
+                        bpm_valid = True
+                    else:
+                        bpm_valid = False
+                        print("BPM descartado =", bpm_calc)
 
                 pass
                 if sv and (SPO2_MIN <= spo2_calc <= SPO2_MAX):
-                    if SPO2_HISTORY and abs(spo2_calc - SPO2_HISTORY[-1]) > MAX_SPO2_JUMP:
-                        spo2_valid = False
-                    else:
-                        spo2_valid = True
-                        spo2 = spo2_calc
+                    spo2_valid = True
+                    spo2 = spo2_calc
+                    print("SpO2 válida =", spo2)
                 else:
                     spo2_valid = False
+                    print("SpO2 descartada =", spo2_calc)
 
                 #warm-up inicial
                 if time.ticks_diff(time.ticks_ms(), finger_since_ms) < WARMUP_MS:

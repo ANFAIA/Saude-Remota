@@ -31,6 +31,7 @@ FINGER_OFF        = 48000      #histeresis salida
 AMP_MIN           = 500
 UI_REFRESH_MS     = 500
 BLE_KEEPALIVE_MS  = 1000
+BLE_SEND_MS       = 2000
 
 #mejora de estabilidad
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
@@ -338,12 +339,12 @@ try:
                     pass
 
         #usar promedios al enviar
-        if sv and bv:
-            spo2_use = push_and_mean(spo2, SPO2_HISTORY, HISTORY_LEN)
-            bpm_use  = push_and_mean(bpm,  BPM_HISTORY,  HISTORY_LEN)
+        if sv and bv and time.ticks_diff(now, last_ble_keepalive_ms) > BLE_SEND_MS:
+            spo2_use = push_and_mean(spo2, SPO2_HISTORY, 8)
+            bpm_use  = push_and_mean(bpm,  BPM_HISTORY, 10)
 
-            s_spo2 = int(clamp(spo2_use, SPO2_MIN, SPO2_MAX))
-            s_bpm  = int(clamp(bpm_use,  BPM_MIN,  BPM_MAX))
+            s_spo2 = int(round(clamp(spo2_use, SPO2_MIN, SPO2_MAX)))
+            s_bpm = int(round(clamp(bpm_use, BPM_MIN, BPM_MAX)))
             s_temp = float(clamp(temp, 25.0, 45.0))
 
             #IA 

@@ -64,6 +64,7 @@ spo2_red_buf = []
 finger_present = False
 finger_since_ms = 0
 min_ir = 100000
+last_ble_send_ms = 0
 
 spo2 = 0
 bpm  = 0
@@ -74,6 +75,8 @@ label, y = predict([spo2, bpm, temp])
 
 last_ui_ms = time.ticks_ms()
 last_ble_keepalive_ms = time.ticks_ms()
+last_ble_send_ms = time.ticks_ms()
+
 
 #historiales para suavizado
 SPO2_HISTORY = []
@@ -339,7 +342,7 @@ try:
                     pass
 
         #usar promedios al enviar
-        if sv and bv and time.ticks_diff(now, last_ble_keepalive_ms) > BLE_SEND_MS:
+        if sv and bv and time.ticks_diff(now, last_ble_send_ms) > BLE_SEND_MS:
             spo2_use = push_and_mean(spo2, SPO2_HISTORY, 8)
             bpm_use  = push_and_mean(bpm,  BPM_HISTORY, 10)
 
@@ -368,6 +371,7 @@ try:
 
             send_ble(s_spo2, s_bpm, s_temp, final_label, final_y)
             last_ble_keepalive_ms = now
+            last_ble_send_ms = now
         else:
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS: #mantiene un latido temporal
                 last_ble_keepalive_ms = now

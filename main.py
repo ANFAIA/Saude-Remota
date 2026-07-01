@@ -32,6 +32,7 @@ AMP_MIN           = 500
 UI_REFRESH_MS     = 500
 BLE_KEEPALIVE_MS  = 1000
 BLE_SEND_MS       = 2000
+SCREEN_UPDATE_MS  = 2000
 
 #mejora de estabilidad
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
@@ -76,7 +77,7 @@ label, y = predict([spo2, bpm, temp])
 last_ui_ms = time.ticks_ms()
 last_ble_keepalive_ms = time.ticks_ms()
 last_ble_send_ms = time.ticks_ms()
-
+last_screen_update_ms = time.ticks_ms()
 
 #historiales para suavizado
 SPO2_HISTORY = []
@@ -333,13 +334,18 @@ try:
 
             #OLED
             if display and display.is_connected():
-                try:
-                    if sv or bv:
-                        display.display_values(
-                            int(spo2) if sv else None,
-                            int(bpm) if bv else None,
-                            temp
-                        )
+                 try:
+                    if time.ticks_diff(now, last_screen_update_ms) > SCREEN_UPDATE_MS:
+                        if sv or bv:
+                            display.display_values(
+                                int(spo2) if sv else None,
+                                int(bpm) if bv else None,
+                                temp
+                            )
+                        else:
+                            display.display_finger_message()
+
+                        last_screen_update_ms = now
                 except Exception:
                     pass
 

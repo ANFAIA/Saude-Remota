@@ -1,3 +1,5 @@
+from matplotlib import lines
+
 from machine import I2C, Pin
 import framebuf #permite dibujar en un buffer gráfico
 import time
@@ -240,11 +242,17 @@ class SSD1306:
         self.framebuf.text("2", x+8, y+2, 1)
     
     def display_finger_message(self):
-        """Mensaje para colocar dedo en pantalla 128x32."""
-        self.clear()
-        self.text("Saude Remota", 18, 0)
-        self.text("Coloque dedo", 8, 12)
-        self.text("en sensor", 28, 22)
+         self.clear()
+
+        title = "Saude Remota"
+        self.text(title, (self.width - len(title) * 8) // 2, 0)
+
+        line1 = "Coloque dedo"
+        line2 = "en sensor"
+
+        self.text(line1, (self.width - len(line1) * 8) // 2, 12)
+        self.text(line2, (self.width - len(line2) * 8) // 2, 22)
+
         self.show()
 
     def display_weak_signal(self):
@@ -256,15 +264,17 @@ class SSD1306:
         self.show()
     
     def display_values(self, spo2=None, bpm=None, temp=None):
-        """Muestra SpO2, BPM y temperatura en una pantalla 128x32."""
         self.clear()
 
-        spo2_txt = "SpO2: -- %" if spo2 is None else "SpO2: {} %".format(spo2)
-        bpm_txt  = "BPM : --"   if bpm is None  else "BPM : {}".format(bpm)
-        temp_txt = "Temp: --.- C" if temp is None else "Temp: {:.1f} C".format(temp)
+        spo2_txt = "SpO2:{:>3} %".format("--" if spo2 is None else spo2)
+        bpm_txt  = "BPM :{:>3}".format("--" if bpm is None else bpm)
+        temp_txt = "Temp:{:>4.1f} C".format(temp) if temp is not None else "Temp: --.- C"
 
-        self.text(spo2_txt, 0, 10)
-        self.text(bpm_txt, 0, 18)
-        self.text(temp_txt, 0, 26)
+        lines = [spo2_txt, bpm_txt, temp_txt]
+        ys = [10, 18, 26]
+
+        for line, y in zip(lines, ys):
+            x = (self.width - len(line) * 8) // 2
+            self.text(line, x, y)
 
         self.show()

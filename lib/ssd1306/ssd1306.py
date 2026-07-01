@@ -1,5 +1,3 @@
-from matplotlib import lines
-
 from machine import I2C, Pin
 import framebuf #permite dibujar en un buffer gráfico
 import time

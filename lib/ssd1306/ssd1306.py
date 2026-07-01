@@ -244,7 +244,7 @@ class SSD1306:
         self.clear()
         self.text("Saude Remota", 18, 0)
         self.text("Coloque dedo", 8, 12)
-        self.text("no sensor", 28, 22)
+        self.text("en sensor", 28, 22)
         self.show()
 
     def display_weak_signal(self):
@@ -258,8 +258,6 @@ class SSD1306:
     def display_values(self, spo2=None, bpm=None, temp=None):
         """Muestra SpO2, BPM y temperatura en una pantalla 128x32."""
         self.clear()
-
-        self.text("Saude Remota", 18, 0)
 
         spo2_txt = "SpO2: -- %" if spo2 is None else "SpO2: {} %".format(spo2)
         bpm_txt  = "BPM : --"   if bpm is None  else "BPM : {}".format(bpm)

@@ -10,7 +10,7 @@ from lib.max30102 import MAX30105
 from lib.max30102.heartrate import HeartRate
 from lib.max30102.oxygen import OxygenSaturation
 #(opcional) comenta si no tienes pantalla:
-#from lib.ssd1306.ssd1306 import SSD1306
+from lib.ssd1306.ssd1306 import SSD1306
 
 #BLE
 from lib.BLERawSender import BLERawSender 
@@ -41,7 +41,7 @@ MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
 WARMUP_MS         = 2000       #no usar medidas los 2s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
-TEMP_OFFSET       = 4          #para corregir las lecturas iniciales más bajas
+TEMP_OFFSET       = 2          #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.25       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas

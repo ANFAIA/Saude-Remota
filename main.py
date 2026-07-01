@@ -141,7 +141,7 @@ sensor.setup(
 )
 
 try:
-    display = SSD1306(i2c=i2c)
+    display = SSD1306(width=128, height=32, i2c=i2c)
 except Exception:
     display = None
 if display and display.is_connected():
@@ -334,10 +334,12 @@ try:
             #OLED
             if display and display.is_connected():
                 try:
-                    if sv:
-                        display.display_parameter("Oxigeno", int(spo2), "%", icon="oxygen")
-                    elif bv:
-                        display.display_parameter("Ritmo Cardiaco", int(bpm), "bpm", icon="heart")
+                    if sv or bv:
+                        display.display_values(
+                            int(spo2) if sv else None,
+                            int(bpm) if bv else None,
+                            temp
+                        )
                 except Exception:
                     pass
 

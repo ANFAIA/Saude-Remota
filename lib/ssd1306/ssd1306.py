@@ -240,17 +240,33 @@ class SSD1306:
         self.framebuf.text("2", x+8, y+2, 1)
     
     def display_finger_message(self):
-        """Mensaje para colocar dedo"""
+        """Mensaje para colocar dedo en pantalla 128x32."""
         self.clear()
-        self.text_scaled("Coloque su", 10, 0, scale=2)
-        self.text_scaled("DEDO", 40, 20, scale=2)
-        self.text_scaled("en el sensor", 10, 50, scale=1)
+        self.text("Saude Remota", 18, 0)
+        self.text("Coloque dedo", 8, 12)
+        self.text("no sensor", 28, 22)
         self.show()
-    
+
     def display_weak_signal(self):
         """Mensaje de señal débil"""
         self.clear()
         self.text("Señal debil", 25, 10)
         self.text_scaled("AJUSTE", 35, 20, scale=2)
         self.text("la posicion", 25, 45)
+        self.show()
+    
+    def display_values(self, spo2=None, bpm=None, temp=None):
+        """Muestra SpO2, BPM y temperatura en una pantalla 128x32."""
+        self.clear()
+
+        self.text("Saude Remota", 18, 0)
+
+        spo2_txt = "SpO2: -- %" if spo2 is None else "SpO2: {} %".format(spo2)
+        bpm_txt  = "BPM : --"   if bpm is None  else "BPM : {}".format(bpm)
+        temp_txt = "Temp: --.- C" if temp is None else "Temp: {:.1f} C".format(temp)
+
+        self.text(spo2_txt, 0, 10)
+        self.text(bpm_txt, 0, 18)
+        self.text(temp_txt, 0, 26)
+
         self.show()

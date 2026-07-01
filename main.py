@@ -333,8 +333,8 @@ try:
                     " Temp:", ("%.2f°C" % temp))
 
             #OLED
-            if display and display.is_connected():
-                 try:
+        if display and display.is_connected():
+                try:
                     if time.ticks_diff(now, last_screen_update_ms) > SCREEN_UPDATE_MS:
                         if sv or bv:
                             display.display_values(

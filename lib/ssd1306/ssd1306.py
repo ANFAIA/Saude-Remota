@@ -242,7 +242,7 @@ class SSD1306:
         self.framebuf.text("2", x+8, y+2, 1)
     
     def display_finger_message(self):
-         self.clear()
+        self.clear()
 
         title = "Saude Remota"
         self.text(title, (self.width - len(title) * 8) // 2, 0)

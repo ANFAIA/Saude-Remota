@@ -269,7 +269,7 @@ class SSD1306:
         temp_txt = "Temp:{:>4.1f} C".format(temp) if temp is not None else "Temp: --.- C"
 
         lines = [spo2_txt, bpm_txt, temp_txt]
-        ys = [10, 18, 26]
+        ys = [8, 16, 24]
 
         for line, y in zip(lines, ys):
             x = (self.width - len(line) * 8) // 2

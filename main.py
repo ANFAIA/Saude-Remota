@@ -382,7 +382,11 @@ try:
             last_ble_send_ms = now
 
             if display and display.is_connected():
-                display.display_risk(final_label == 1)
+                try:
+                    display.display_risk(final_label == 1)
+                    time.sleep_ms(2000)
+                except Exception as e:
+                    print("OLED riesgo error:", e)
         else:
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS: #mantiene un latido temporal
                 last_ble_keepalive_ms = now

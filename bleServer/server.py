@@ -31,6 +31,7 @@ import json
 import csv
 import argparse #leer argumentos por terminal
 import os #leer variables de entorno
+import time
 from datetime import datetime 
 from pathlib import Path
 from typing import Set, Optional, Dict, Any
@@ -150,7 +151,7 @@ async def ble_task(device_name: str, scan_timeout: float) -> None: #bucle
                         buffer[:] = rest
                         try:
                             obj = json.loads(line.decode("utf-8"))
-                            obj["ts"] = int(datetime.utcnow().timestamp() * 1000)
+                            obj["ts"] = int(time.time() * 1000)
                             ts = obj.get("ts")
                             payload = obj.get("data", {}) #diccionario con mediciones
                             iso = datetime.utcfromtimestamp(ts/1000).isoformat()+"Z" if ts else "" #convierte ms a segundos

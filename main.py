@@ -335,7 +335,7 @@ try:
                     " Temp:", ("%.2f°C" % temp))
 
             #OLED
-         if display and display.is_connected():
+            if display and display.is_connected():
                 try:
                     if time.ticks_diff(now, last_screen_update_ms) > SCREEN_UPDATE_MS:
                         if sv or bv:
@@ -389,12 +389,6 @@ try:
             last_ble_keepalive_ms = now
             last_ble_send_ms = now
 
-            if display and display.is_connected():
-                try:
-                    display.display_risk(final_label == 1)
-                    time.sleep_ms(2000)
-                except Exception as e:
-                    print("OLED riesgo error:", e)
         else:
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS: #mantiene un latido temporal
                 last_ble_keepalive_ms = now

@@ -78,6 +78,8 @@ last_ui_ms = time.ticks_ms()
 last_ble_keepalive_ms = time.ticks_ms()
 last_ble_send_ms = time.ticks_ms()
 last_screen_update_ms = time.ticks_ms()
+screen_mode = 0
+last_risk_label = 0
 
 #historiales para suavizado
 SPO2_HISTORY = []
@@ -333,21 +335,26 @@ try:
                     " Temp:", ("%.2f°C" % temp))
 
             #OLED
-        if display and display.is_connected():
+         if display and display.is_connected():
                 try:
                     if time.ticks_diff(now, last_screen_update_ms) > SCREEN_UPDATE_MS:
                         if sv or bv:
-                            display.display_values(
-                                int(spo2) if sv else None,
-                                int(bpm) if bv else None,
-                                temp
-                            )
+                            if screen_mode == 0:
+                                display.display_values(
+                                    int(spo2) if sv else None,
+                                    int(bpm) if bv else None,
+                                    temp
+                                )
+                                screen_mode = 1
+                            else:
+                                display.display_risk(last_risk_label == 1)
+                                screen_mode = 0
                         else:
                             display.display_finger_message()
 
                         last_screen_update_ms = now
-                except Exception:
-                    pass
+                except Exception as e:
+                    print("OLED error:", e)
 
         #usar promedios al enviar
         if sv and bv and time.ticks_diff(now, last_ble_send_ms) > BLE_SEND_MS:
@@ -376,7 +383,8 @@ try:
             else:
                 final_label = int(model_label)
                 final_y = float(model_y)
-
+            
+            last_risk_label = final_label
             send_ble(s_spo2, s_bpm, s_temp, final_label, final_y)
             last_ble_keepalive_ms = now
             last_ble_send_ms = now

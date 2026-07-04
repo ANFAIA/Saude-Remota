@@ -380,6 +380,9 @@ try:
             send_ble(s_spo2, s_bpm, s_temp, final_label, final_y)
             last_ble_keepalive_ms = now
             last_ble_send_ms = now
+
+            if display and display.is_connected():
+                display.display_risk(final_label == 1)
         else:
             if time.ticks_diff(now, last_ble_keepalive_ms) > BLE_KEEPALIVE_MS: #mantiene un latido temporal
                 last_ble_keepalive_ms = now

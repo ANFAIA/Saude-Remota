@@ -276,3 +276,18 @@ class SSD1306:
             self.text(line, x, y)
 
         self.show()
+
+def display_risk(self, risk=False):
+    self.clear()
+
+    title = "RIESGO"
+    self.text(title, (self.width - len(title) * 8) // 2, 0)
+
+    if risk:
+        msg = "SI"
+    else:
+        msg = "NO"
+
+    self.text_scaled(msg, (self.width - len(msg) * 16) // 2, 12, scale=2)
+
+    self.show()

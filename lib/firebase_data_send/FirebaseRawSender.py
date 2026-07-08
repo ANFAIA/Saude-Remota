@@ -5,16 +5,15 @@
 #  y enviar mediciones o datos arbitrarios a la ruta `raw/` de la base de datos.
 #  Soporta conexión a Wi-Fi para dispositivos ESP32.
 #
-#  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandezLuc
+#  @author Alejandro Fernández Rodríguez, Irene Gallardo Sierra
 #  @version 1.0.0
 #  @date 2025-08-02
-#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez
+#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez, Irene Gallardo Sierra
 #  @license MIT — Consulte el archivo LICENSE para más información.
 #  ---------------------------------------------------------------------------
 
 import ujson as json
-import urequests as requests
+import urequests as requests #permite hacer peticiones HTTP desde el ESP32
 import time
 import network
 
@@ -24,7 +23,7 @@ class FirebaseRawSender:
     @class FirebaseRawSender
     @brief Cliente para enviar datos a Firebase Realtime Database con soporte de conexión Wi-Fi.
     """
-
+#configuración opcional del Wi-Fi, si se pasa, conecta el ESP32 a internet
     def __init__(self, email, password, api_key, database_url, wifi_config=None):
         """
         @brief Constructor de la clase.
@@ -36,13 +35,13 @@ class FirebaseRawSender:
         @param wifi_config Diccionario opcional con {'ssid': str, 'password': str}
         """
         if wifi_config:
-            self._connect_wifi(wifi_config.get('ssid'), wifi_config.get('password'))
+            self._connect_wifi(wifi_config.get('ssid'), wifi_config.get('password')) #ssid es el nombre de la red
 
         self.email = email
         self.password = password
         self.api_key = api_key
         self.database_url = database_url.rstrip("/")
-        self.id_token = None
+        self.id_token = None #inicializa el token de autenticación como vacío
         self._authenticate()
 
     def _connect_wifi(self, ssid, password):
@@ -51,19 +50,19 @@ class FirebaseRawSender:
         @param ssid Nombre de la red Wi-Fi.
         @param password Contraseña de la red Wi-Fi.
         """
-        sta = network.WLAN(network.STA_IF)
+        sta = network.WLAN(network.STA_IF) #el ESP32 se conecta a un router
         if not sta.isconnected():
             print(f"Conectando a Wi-Fi '{ssid}'...")
-            sta.active(True)
+            sta.active(True) #activa la interfaz Wi-Fi
             sta.connect(ssid, password)
 
-            for _ in range(10):  # Esperar hasta 10 segundos
+            for _ in range(10):  #esperar hasta 10 segundos
                 if sta.isconnected():
                     break
                 time.sleep(1)
-
+#comprueba si finalmente se conectó
         if sta.isconnected():
-            print("✔ Wi-Fi conectado. IP:", sta.ifconfig()[0])
+            print("✔ Wi-Fi conectado. IP:", sta.ifconfig()[0]) #enseña la IP asignada al ESP32
         else:
             raise RuntimeError("No se pudo conectar al Wi-Fi.")
 
@@ -76,8 +75,9 @@ class FirebaseRawSender:
         @param spo2 Saturación de oxígeno (%).
         @param modelPreccision Precisión del modelo (0.0 a 1.0).
         @param riskScore Riesgo calculado por el modelo (0.0 a 1.0).
-        @param timestamp_ms Marca temporal en milisegundos desde época Unix.
+        @param timestamp_ms Marca temporal en milisegundos (si no se pasa, el código usa la hora actual).
         """
+        #crea un diccionario con los datos que se van a enviar a Firebase
         payload = {
             "temperature": round(float(temperature), 2),
             "bmp": round(float(bmp), 2),
@@ -104,8 +104,8 @@ class FirebaseRawSender:
         url = f"{self.database_url}/raw/{timestamp_ms}.json?auth={self.id_token}"
 
         try:
-            res = requests.put(url, data=json.dumps(data))
-            res.close()
+            res = requests.put(url, data=json.dumps(data)) #envía los datos a Firebase mediante una petición PUT
+            res.close() #cierra la respuesta para liberar memoria
         except Exception as e:
             print("Error al escribir en Firebase:", e)
 
@@ -114,6 +114,7 @@ class FirebaseRawSender:
         @brief Realiza la autenticación con Firebase Auth y obtiene el ID token.
         """
         url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={self.api_key}"
+        #crea el cuerpo de la petición
         payload = {
             "email": self.email,
             "password": self.password,
@@ -122,7 +123,8 @@ class FirebaseRawSender:
 
         try:
             headers = {'Content-Type': 'application/json'}
-            res = requests.post(url, data=json.dumps(payload), headers=headers)
+            res = requests.post(url, data=json.dumps(payload), headers=headers) #envía una petición POST a Firebase Auth para iniciar sesión
+            #comprueba si la autenticación fue correcta (el código 200 significa éxito)
             if res.status_code == 200:
                 self.id_token = res.json().get("idToken")
                 print("✔ Autenticado con Firebase.")

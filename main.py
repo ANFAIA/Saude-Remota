@@ -68,6 +68,8 @@ min_ir = 100000
 last_ble_send_ms = 0
 last_valid_bpm_ms = 0
 BPM_TIMEOUT_MS = 5000
+CALC_INTERVAL_MS = 500
+last_calc_ms = 0
 
 spo2 = 0
 bpm  = 0
@@ -166,6 +168,7 @@ def read_and_update():
     global finger_present, finger_since_ms, min_ir, spo2, bpm, spo2_valid, bpm_valid, last_good_bpm
     global last_beat_ms
     global last_valid_bpm_ms
+    global last_calc_ms
 
     if not sensor.safeCheck(250):
         return False, False
@@ -221,6 +224,7 @@ def read_and_update():
             last_beat_ms = 0
             last_good_bpm = 0
             last_valid_bpm_ms = 0
+            last_calc_ms = time.ticks_ms()
             
             bpm_valid = False
             spo2_valid = False
@@ -235,7 +239,11 @@ def read_and_update():
             if len(spo2_ir_buf) > SPO2_BUF_SIZE:
                 spo2_ir_buf.pop(0)
                 spo2_red_buf.pop(0) #mantiene el tamaño fijo eliminando el valor más antiguo
-            if len(spo2_ir_buf) == SPO2_BUF_SIZE:
+            if (
+                len(spo2_ir_buf) == SPO2_BUF_SIZE
+                and time.ticks_diff(time.ticks_ms(), last_calc_ms) >= CALC_INTERVAL_MS
+            ):
+                last_calc_ms = time.ticks_ms()
                 spo2_calc, sv, bpm_calc, bv = ox.calculate_spo2_and_heart_rate(
                     spo2_ir_buf, spo2_red_buf
                 )

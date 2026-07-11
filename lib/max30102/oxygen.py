@@ -61,7 +61,7 @@ class OxygenSaturation:
 
     def __init__(self, sample_rate_hz=50):
         self.FreqS = int(sample_rate_hz)
-        self.BUFFER_SIZE = self.FreqS * 4 # 4 s de señal
+        self.BUFFER_SIZE = self.FreqS * 2 # 2 s de señal
         self.MA4_SIZE = max(4, int(round(self.FreqS * 0.04))) # media móvil de unos 40 ms
         pass
 

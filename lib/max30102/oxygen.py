@@ -59,10 +59,10 @@ class OxygenSaturation:
         3, 2, 1
     ]
 
-    def __init__(self, sample_rate_hz=400):
-        #self.FreqS = sample_rate_hz
-        #self.BUFFER_SIZE = self.FreqS * 4        # 4 s de señal
-        #self.MA4_SIZE = sample_rate_hz/10    # 100 ms de media móvil
+    def __init__(self, sample_rate_hz=50):
+        self.FreqS = int(sample_rate_hz)
+        self.BUFFER_SIZE = self.FreqS * 4 # 4 s de señal
+        self.MA4_SIZE = max(4, int(round(self.FreqS * 0.04))) # media móvil de unos 40 ms
         pass
 
     def _mean(self, arr):
@@ -115,30 +115,65 @@ class OxygenSaturation:
         n_th1 = int(self._mean(an_x_ma4[:buffer_length - self.MA4_SIZE]))
         n_th1 = max(30, min(n_th1, 60))
 
+        # Intervalos admisibles según el rango de BPM que se desea detectar
+        HR_MIN = 40
+        HR_MAX = 180
+
         # 4. Detección de valles (picos en señal invertida)
         # mínimo 160 ms entre valles  ⇒ muestras = FreqS * 0.16
         #min_gap = self.FreqS // 6          # ≈0.166 s
         #an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)
-        min_gap = int(self.FreqS * 0.45)
+        min_gap = int((self.FreqS * 60) / HR_MAX)
         an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)
 
         n_npks = len(an_ir_valley_locs)
 
-        # 5. Heart rate
-        if n_npks >= 2:
-            n_peak_interval_sum = 0
-            for k in range(1, n_npks):
-                # Asegurar que los índices estén dentro del rango
-                if (an_ir_valley_locs[k] < buffer_length and 
-                    an_ir_valley_locs[k-1] < buffer_length):
-                    n_peak_interval_sum += (an_ir_valley_locs[k] - an_ir_valley_locs[k-1])
-            if n_peak_interval_sum > 0:
-                n_peak_interval_sum //= (n_npks - 1)
-                heart_rate = int((self.FreqS * 60) / n_peak_interval_sum)
-                hr_valid = 1
+        # 5. Heart rate: cálculo robusto mediante intervalos entre picos
+        peak_intervals = []
+
+        min_interval = int((self.FreqS * 60) / HR_MAX)
+        max_interval = int((self.FreqS * 60) / HR_MIN)
+
+        for k in range(1, n_npks):
+            interval = an_ir_valley_locs[k] - an_ir_valley_locs[k - 1]
+
+            # Ignora separaciones incompatibles con un pulso fisiológico
+            if min_interval <= interval <= max_interval:
+                peak_intervals.append(interval)
+
+        if len(peak_intervals) >= 2:
+            peak_intervals.sort()
+            n = len(peak_intervals)
+
+            if n % 2 == 1:
+                median_interval = peak_intervals[n // 2]
             else:
+                median_interval = (
+                    peak_intervals[n // 2 - 1] +
+                    peak_intervals[n // 2]
+                ) / 2
+
+            heart_rate = int(round(
+                (self.FreqS * 60) / median_interval
+            ))
+
+            # Comprueba que los intervalos no sean excesivamente irregulares
+            interval_mean = sum(peak_intervals) / len(peak_intervals)
+
+            max_deviation = max(
+                abs(interval - median_interval)
+                for interval in peak_intervals
+            )
+
+            relative_deviation = (
+                max_deviation / interval_mean
+                if interval_mean > 0 else 1
+            )
+
+            hr_valid = 1 if relative_deviation <= 0.25 else 0
+
+            if not hr_valid:
                 heart_rate = -999
-                hr_valid = 0
         else:
             heart_rate = -999
             hr_valid = 0

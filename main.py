@@ -46,7 +46,7 @@ TEMP_OFFSET       = 2          #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.25       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas
-BPM_MIN,  BPM_MAX  = 45, 95
+BPM_MIN,  BPM_MAX  = 40, 130
 SPO2_MIN, SPO2_MAX = 70, 100
 
 #umbrales clínicos (OR lógico) para la decisión por REGLAS
@@ -66,6 +66,8 @@ finger_present = False
 finger_since_ms = 0
 min_ir = 100000
 last_ble_send_ms = 0
+last_valid_bpm_ms = 0
+BPM_TIMEOUT_MS = 5000
 
 spo2 = 0
 bpm  = 0
@@ -162,11 +164,15 @@ log("Sensor inicializado. Coloque su dedo…")
 def read_and_update():
     """Lee IR/Red, actualiza buffers y calcula spo2/bpm si hay ventana completa."""
     global finger_present, finger_since_ms, min_ir, spo2, bpm, spo2_valid, bpm_valid, last_good_bpm
-
-    ir  = sensor.getIR()
-    red = sensor.getRed()
-
     global last_beat_ms
+    global last_valid_bpm_ms
+
+    if not sensor.safeCheck(250):
+        return False, False
+
+    sample_index = sensor.head
+    ir = sensor.IR[sample_index]
+    red = sensor.red[sample_index]
 
     #if hr.check_for_beat(ir):
     #    now_beat = time.ticks_ms()
@@ -205,14 +211,19 @@ def read_and_update():
             finger_present = True
             finger_since_ms = time.ticks_ms()
             min_ir = 100000
+
             spo2_ir_buf.clear()
             spo2_red_buf.clear()
             SPO2_HISTORY.clear()
             BPM_HISTORY.clear()
             BPM_RAW_HISTORY.clear()
+
             last_beat_ms = 0
             last_good_bpm = 0
-            spo2_valid = bpm_valid = False
+            last_valid_bpm_ms = 0
+            
+            bpm_valid = False
+            spo2_valid = False
 
         if ir < min_ir:
             min_ir = ir
@@ -236,12 +247,19 @@ def read_and_update():
                         BPM_RAW_HISTORY.append(bpm_calc)
                         bpm = bpm_calc
                         bpm_valid = True
+                        last_valid_bpm_ms = time.ticks_ms()
                         print("BPM inicial =", bpm)
 
                     else:
                         bpm_actual = median(BPM_RAW_HISTORY)
 
-                        if abs(bpm_calc - bpm_actual) <= 15:
+                        allowed_jump = (
+                            20
+                            if len(BPM_RAW_HISTORY) < 3
+                            else MAX_BPM_JUMP
+                        )
+
+                        if abs(bpm_calc - bpm_actual) <= allowed_jump:
                             BPM_RAW_HISTORY.append(bpm_calc)
 
                             if len(BPM_RAW_HISTORY) > 8:
@@ -249,14 +267,18 @@ def read_and_update():
 
                             bpm = median(BPM_RAW_HISTORY)
                             bpm_valid = True
+                            last_valid_bpm_ms = time.ticks_ms()
+
                             print("BPM filtrado =", bpm)
 
                         else:
-                            if bpm != 0:
+                            if (bpm != 0 and time.ticks_diff(time.ticks_ms(), last_valid_bpm_ms) <= BPM_TIMEOUT_MS):
                                 bpm_valid = True
+                            else:
+                                bpm_valid = False
                             print("BPM descartado por salto =", bpm_calc)
                 else:
-                    if bpm != 0:
+                    if (bpm != 0 and time.ticks_diff(time.ticks_ms(), last_valid_bpm_ms) <= BPM_TIMEOUT_MS):
                         bpm_valid = True
                     else:
                         bpm_valid = False

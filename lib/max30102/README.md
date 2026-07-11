@@ -1,4 +1,4 @@
-# MAX30105 MicroPython Driver
+# MAX30102 MicroPython Driver
 
 **Version 1.0.0 – 2 August 2025**
 
@@ -73,7 +73,7 @@ while True:
     ir_buf.append(ir)
     red_buf.append(red)
 
-    if len(ir_buf) == 100:                       # 1 s a 100 Hz
+    if len(ir_buf) == 100: # 1 s a 100 Hz
         spo2, spo2_ok, hr, hr_ok = oxi.calculate_spo2_and_heart_rate(ir_buf, red_buf)
         if spo2_ok:
             print(f"SpO₂: {spo2:.1f} %")
@@ -109,4 +109,4 @@ while True:
 
 ## Licencia
 
-Distribuido bajo la [licencia MIT](LICENSE). © 2025 Alejandro Fernández Rodríguez
+Distribuido bajo la [licencia MIT](LICENSE). © 2025 Alejandro Fernández Rodríguez, Irene Gallardo Sierra

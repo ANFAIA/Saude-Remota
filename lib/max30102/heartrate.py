@@ -2,14 +2,14 @@
 #  @brief Librería en MicroPython para calcular los latidos por minuto del corazón.
 #
 #  Librería para procesar señales de un sensor óptico de frecuencia cardíaca y detectar latidos.
-#  Utiliza un estimador de componente DC y un filtro FIR de paso bajo para aislar la señal AC. La detección de latidos
-#  se basa en el análisis de flancos de cruce por cero y umbrales dinámicos.
-#
-#  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandezLuc
+#  La señal del sensor contiene dos partes: componente DC (ivel medio producido por los tejidos y la luz ambiente), y componente AC (pequeñas variaciones producidas por cada pulsación de la sangre).
+#  Utiliza un estimador de componente DC y un filtro FIR de paso bajo para aislar la señal AC. 
+#  La detección de latidos se basa en el análisis de flancos de cruce por cero y umbrales dinámicos.
+#  Un latido se detecta cuando la señal filtrada pasa de un valor negativo a uno positivo, siempre que la amplitud de la señal sea suficientemente grande.
+#  @author Alejandro Fernández Rodríguez, Irene Gallardo Sierra
 #  @version 1.0.0
 #  @date 2025-08-02
-#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez
+#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez, Irene Gallardo Sierra
 #  @license MIT — Consulte el archivo LICENSE para más información.
 #
 #  ---------------------------------------------------------------------------
@@ -115,7 +115,9 @@ class HeartRate:
         """
         # Emula entero de 32 bits con desplazamientos
         self.ir_avg_reg += (((x << 15) - self.ir_avg_reg) >> 4)
+        # Divide el error entre 16
         return self.ir_avg_reg >> 15
+    # Se utiliza este escalado para trabajar con precisión decimal sin emplear números de coma flotante y se elimina 
 
     ## @brief Filtro FIR pasa bajos simétrico con buffer circular.
     #  @param din Valor de entrada (señal AC sin DC).
@@ -124,14 +126,16 @@ class HeartRate:
         """
         Filtro FIR pasa bajos simétrico de 12 coeficientes con buffer circular de 32.
         """
+        # din significa “data input”
         # Almacena la muestra en buffer
         self.cbuf[self.offset] = din
 
         # Contribución central (coef[11])
         z = self._mul16(self.FIR_COEFFS[11],
                         self.cbuf[(self.offset - 11) & (self.BUF_SIZE-1)])
+        # El índice siempre quede entre 0 y 31
 
-        # Suma simétrica de pares
+        # Suma simétrica de pares del principio y final del buffer
         for i in range(11):
             a = self.cbuf[(self.offset - i) & (self.BUF_SIZE-1)]
             b = self.cbuf[(self.offset - 22 + i) & (self.BUF_SIZE-1)]
@@ -139,6 +143,7 @@ class HeartRate:
 
         # Avanza y envuelve el offset
         self.offset = (self.offset + 1) % self.BUF_SIZE
+        # Cuando llega a la última posición, vuelve a la posición cero
 
         # Escala de vuelta
         return z >> 15
@@ -153,3 +158,4 @@ class HeartRate:
         Multiplicación de enteros de 16 bits, resultado en 32 bits.
         """
         return x * y
+    

@@ -1,1 +1,1 @@
-from BLERawSender.BLERawSender import BLERawSender
+from .BLERawSender import BLERawSender

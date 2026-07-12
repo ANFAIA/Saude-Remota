@@ -37,7 +37,7 @@ SCREEN_UPDATE_MS  = 2000
 #mejora de estabilidad
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
 MED_WIN           = 10         #mediana para BPM
-MAX_BPM_JUMP      = 12         #anti-spike por ciclo (lpm)
+MAX_BPM_JUMP      = 25         #anti-spike por ciclo (lpm)
 MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
 WARMUP_MS         = 3000       #no usar medidas los 3s iniciales tras detectar dedo
 
@@ -141,7 +141,7 @@ if not sensor.begin():
 
 sensor.setup(
     powerLevel    = LED_POWER,
-    sampleAverage = 8,     
+    sampleAverage = 4,     
     ledMode       = 2,
     sampleRate    = SAMPLE_RATE,
     pulseWidth    = 411,

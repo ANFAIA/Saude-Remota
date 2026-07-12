@@ -37,13 +37,13 @@ SCREEN_UPDATE_MS  = 2000
 #mejora de estabilidad
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
 MED_WIN           = 10         #mediana para BPM
-MAX_BPM_JUMP      = 12         #anti-spike por ciclo (lpm)
+MAX_BPM_JUMP      = 20         #anti-spike por ciclo (lpm)
 MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
 WARMUP_MS         = 2000       #no usar medidas los 2s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
-TEMP_OFFSET       = 2          #para corregir las lecturas iniciales más bajas
-ALPHA_TEMP        = 0.25       #filtro exponencial 0.1 más suave
+TEMP_OFFSET       = 2.5        #para corregir las lecturas iniciales más bajas
+ALPHA_TEMP        = 0.1       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas
 BPM_MIN,  BPM_MAX  = 40, 130
@@ -67,7 +67,7 @@ finger_since_ms = 0
 min_ir = 100000
 last_ble_send_ms = 0
 last_valid_bpm_ms = 0
-BPM_TIMEOUT_MS = 5000
+BPM_TIMEOUT_MS = 15000
 CALC_INTERVAL_MS = 500
 last_calc_ms = 0
 
@@ -282,12 +282,14 @@ def read_and_update():
                         else:
                             if (bpm != 0 and time.ticks_diff(time.ticks_ms(), last_valid_bpm_ms) <= BPM_TIMEOUT_MS):
                                 bpm_valid = True
+                                print("BPM no válida, se mantiene el último valor =", bpm)
                             else:
                                 bpm_valid = False
-                            print("BPM descartado por salto =", bpm_calc)
+                                print("BPM descartado =", bpm_calc)
                 else:
                     if (bpm != 0 and time.ticks_diff(time.ticks_ms(), last_valid_bpm_ms) <= BPM_TIMEOUT_MS):
                         bpm_valid = True
+                        print("BPM descartado por salto =", bpm_calc, "| se mantiene =", bpm)
                     else:
                         bpm_valid = False
                         print("BPM descartado =", bpm_calc)
@@ -306,7 +308,17 @@ def read_and_update():
                     spo2_valid = False
                     bpm_valid  = False
         else:
-            spo2_valid = bpm_valid = False
+            #Una muestra aislada con poca amplitud no elimina inmediatamente el último BPM válido
+            if bpm != 0 and time.ticks_diff(time.ticks_ms(), last_valid_bpm_ms) <= BPM_TIMEOUT_MS:
+                bpm_valid = True
+            else:
+                bpm_valid = False
+
+            #Se mantiene la última SpO2 solo si ya existía una lectura válida
+            if spo2 != 0:
+                spo2_valid = True
+            else:
+                spo2_valid = False
     else:
         if finger_present:
             log("Dedo retirado. Coloque su dedo…")

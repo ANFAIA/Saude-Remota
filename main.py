@@ -39,7 +39,7 @@ HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
 MED_WIN           = 10         #mediana para BPM
 MAX_BPM_JUMP      = 12         #anti-spike por ciclo (lpm)
 MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
-WARMUP_MS         = 6000       #no usar medidas los 6s iniciales tras detectar dedo
+WARMUP_MS         = 3000       #no usar medidas los 3s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
 TEMP_OFFSET       = 2.5        #para corregir las lecturas iniciales más bajas
@@ -69,8 +69,8 @@ last_ble_send_ms = 0
 last_valid_bpm_ms = 0
 CALC_INTERVAL_MS = 500
 last_calc_ms = 0
-BPM_BOOTSTRAP_SAMPLES = 4
-BPM_BOOTSTRAP_RANGE = 12
+BPM_BOOTSTRAP_SAMPLES = 3
+BPM_BOOTSTRAP_RANGE = 25
 
 spo2 = 0
 bpm  = 0
@@ -223,11 +223,8 @@ def read_and_update():
                     if BPM_MIN <= bpm_calc_hr <= BPM_MAX:
 
                         #Fase inicial: reunir varios latidos antes de fijar el BPM
-                        if bpm == 0:
+                        if len(BPM_RAW_HISTORY) < BPM_BOOTSTRAP_SAMPLES:
                             BPM_RAW_HISTORY.append(bpm_calc_hr)
-
-                            if len(BPM_RAW_HISTORY) > BPM_BOOTSTRAP_SAMPLES:
-                                BPM_RAW_HISTORY.pop(0)
 
                             print(
                                 "BPM inicial candidato =",
@@ -236,47 +233,43 @@ def read_and_update():
                                 len(BPM_RAW_HISTORY)
                             )
 
-                            if len(BPM_RAW_HISTORY) >= BPM_BOOTSTRAP_SAMPLES:
-                                bpm_minimo = min(BPM_RAW_HISTORY)
-                                bpm_maximo = max(BPM_RAW_HISTORY)
+                            #Mostrar ya el primer BPM fisiológicamente válido para evitar que aparezca --- continuamente
+                            bpm = median(BPM_RAW_HISTORY)
+                            bpm_valid = True
+                            last_good_bpm = bpm
+                            last_valid_bpm_ms = now_beat
 
-                                if bpm_maximo - bpm_minimo <= BPM_BOOTSTRAP_RANGE:
+                            if len(BPM_RAW_HISTORY) >= BPM_BOOTSTRAP_SAMPLES:
+                                bpm_central = median(BPM_RAW_HISTORY)
+
+                                if (max(BPM_RAW_HISTORY) - min(BPM_RAW_HISTORY) > BPM_BOOTSTRAP_RANGE):
+                                    valor_peor = max(
+                                        BPM_RAW_HISTORY,
+                                        key=lambda valor: abs(valor - bpm_central)
+                                    )
+
+                                    BPM_RAW_HISTORY.remove(valor_peor)
                                     bpm = median(BPM_RAW_HISTORY)
-                                    bpm_valid = True
                                     last_good_bpm = bpm
-                                    last_valid_bpm_ms = now_beat
 
                                     print(
-                                        "BPM inicial estabilizado por HeartRate =",
+                                        "BPM inicial anómalo eliminado =",
+                                        valor_peor,
+                                        "| BPM mantenido =",
                                         bpm
                                     )
                             
                                 else:
-                                    bpm_central = median(BPM_RAW_HISTORY)
-
-                                    valor_peor = max(
-                                        BPM_RAW_HISTORY,
-                                        key=lambda valor: abs(
-                                            valor - bpm_central
-                                        )
-                                    )
-
-                                    BPM_RAW_HISTORY.remove(valor_peor)
-                                    bpm_valid = False
-
+                                    
                                     print(
-                                        "BPM inicial inestable. Eliminado =",
-                                        valor_peor
+                                        "BPM inicial estabilizado =",
+                                        bpm
                                     )
-
-                        #Fase estable: ya existe un BPM aceptado
+                        #Fase estable: ya se reunieron las muestras iniciales
                         else:
                             bpm_referencia = median(BPM_RAW_HISTORY)
 
-                            if abs(
-                                bpm_calc_hr - bpm_referencia
-                            ) <= MAX_BPM_JUMP:
-
+                            if abs(bpm_calc_hr - bpm_referencia) <= MAX_BPM_JUMP:
                                 BPM_RAW_HISTORY.append(bpm_calc_hr)
 
                                 if len(BPM_RAW_HISTORY) > MED_WIN:
@@ -293,7 +286,6 @@ def read_and_update():
                                 )
 
                             else:
-                                #Se conserva la última medida estable
                                 bpm_valid = bpm != 0
 
                                 print(
@@ -302,7 +294,7 @@ def read_and_update():
                                     "| se mantiene =",
                                     bpm
                                 )
-
+    
                     else:
                         #Una detección fuera de rango no elimina el BPM anterior
                         bpm_valid = bpm != 0

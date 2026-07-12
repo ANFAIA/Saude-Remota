@@ -37,9 +37,9 @@ SCREEN_UPDATE_MS  = 2000
 #mejora de estabilidad
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
 MED_WIN           = 10         #mediana para BPM
-MAX_BPM_JUMP      = 20         #anti-spike por ciclo (lpm)
+MAX_BPM_JUMP      = 12         #anti-spike por ciclo (lpm)
 MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
-WARMUP_MS         = 2000       #no usar medidas los 2s iniciales tras detectar dedo
+WARMUP_MS         = 6000       #no usar medidas los 6s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
 TEMP_OFFSET       = 2.5        #para corregir las lecturas iniciales más bajas
@@ -67,9 +67,10 @@ finger_since_ms = 0
 min_ir = 100000
 last_ble_send_ms = 0
 last_valid_bpm_ms = 0
-BPM_TIMEOUT_MS = 15000
 CALC_INTERVAL_MS = 500
 last_calc_ms = 0
+BPM_BOOTSTRAP_SAMPLES = 8
+BPM_BOOTSTRAP_RANGE = 12
 
 spo2 = 0
 bpm  = 0
@@ -215,14 +216,15 @@ def read_and_update():
             finger_since_ms = time.ticks_ms()
             min_ir = 100000
 
+            bpm = 0
+            spo2 = 0
+
             spo2_ir_buf.clear()
             spo2_red_buf.clear()
             SPO2_HISTORY.clear()
             BPM_HISTORY.clear()
             BPM_RAW_HISTORY.clear()
 
-            last_beat_ms = 0
-            last_good_bpm = 0
             last_valid_bpm_ms = 0
             last_calc_ms = time.ticks_ms()
             
@@ -250,27 +252,50 @@ def read_and_update():
                 print("oxygen BPM =", bpm_calc, "valid =", bv)
                 #validación fisiológica previa
                 if bv and (BPM_MIN <= bpm_calc <= BPM_MAX):
-                   
-                    if len(BPM_RAW_HISTORY) == 0:
-                        BPM_RAW_HISTORY.append(bpm_calc)
-                        bpm = bpm_calc
-                        bpm_valid = True
-                        last_valid_bpm_ms = time.ticks_ms()
-                        print("BPM inicial =", bpm)
 
+                    #Fase inicial: reunir varias lecturas antes de fijar el BPM
+                    if bpm == 0:
+                        BPM_RAW_HISTORY.append(bpm_calc)
+
+                        if len(BPM_RAW_HISTORY) > BPM_BOOTSTRAP_SAMPLES:
+                            BPM_RAW_HISTORY.pop(0)
+
+                        print("BPM inicial candidato =", bpm_calc,
+                            "| muestras =", BPM_RAW_HISTORY)
+
+                        if len(BPM_RAW_HISTORY) >= BPM_BOOTSTRAP_SAMPLES:
+                            bpm_minimo = min(BPM_RAW_HISTORY)
+                            bpm_maximo = max(BPM_RAW_HISTORY)
+
+                            #Solo se acepta si las lecturas iniciales son suficientemente coherentes
+                            if bpm_maximo - bpm_minimo <= BPM_BOOTSTRAP_RANGE:
+                                bpm = median(BPM_RAW_HISTORY)
+                                bpm_valid = True
+                                last_valid_bpm_ms = time.ticks_ms()
+
+                                print("BPM inicial estabilizado =", bpm)
+                            else:
+                                #Las lecturas son inestables: descartar la más alejada
+                                bpm_central = median(BPM_RAW_HISTORY)
+
+                                valor_peor = max(
+                                    BPM_RAW_HISTORY,
+                                    key=lambda valor: abs(valor - bpm_central)
+                                )
+
+                                BPM_RAW_HISTORY.remove(valor_peor)
+                                bpm_valid = False
+
+                                print("BPM inicial inestable. Eliminado =", valor_peor)
+
+                    #Fase estable: ya existe un BPM aceptado
                     else:
                         bpm_actual = median(BPM_RAW_HISTORY)
 
-                        allowed_jump = (
-                            20
-                            if len(BPM_RAW_HISTORY) < 3
-                            else MAX_BPM_JUMP
-                        )
-
-                        if abs(bpm_calc - bpm_actual) <= allowed_jump:
+                        if abs(bpm_calc - bpm_actual) <= MAX_BPM_JUMP:
                             BPM_RAW_HISTORY.append(bpm_calc)
 
-                            if len(BPM_RAW_HISTORY) > 8:
+                            if len(BPM_RAW_HISTORY) > MED_WIN:
                                 BPM_RAW_HISTORY.pop(0)
 
                             bpm = median(BPM_RAW_HISTORY)
@@ -280,19 +305,22 @@ def read_and_update():
                             print("BPM filtrado =", bpm)
 
                         else:
-                            if (bpm != 0 and time.ticks_diff(time.ticks_ms(), last_valid_bpm_ms) <= BPM_TIMEOUT_MS):
-                                bpm_valid = True
-                                print("BPM no válida, se mantiene el último valor =", bpm)
-                            else:
-                                bpm_valid = False
-                                print("BPM descartado =", bpm_calc)
+                            #No se sustituye el BPM estable por una lectura anómala
+                            bpm_valid = True
+
+                            print(
+                                "BPM descartado por salto =", bpm_calc,
+                                "| se mantiene =", bpm
+                            )   
+
                 else:
-                    if (bpm != 0 and time.ticks_diff(time.ticks_ms(), last_valid_bpm_ms) <= BPM_TIMEOUT_MS):
+                    #Mientras el dedo continúe colocado, conservar el último BPM estable
+                    if bpm != 0:
                         bpm_valid = True
-                        print("BPM descartado por salto =", bpm_calc, "| se mantiene =", bpm)
+                        print("BPM no válido =", bpm_calc, "| se mantiene =", bpm)
                     else:
                         bpm_valid = False
-                        print("BPM descartado =", bpm_calc)
+                        print("Todavía no existe un BPM estable")
 
                 pass
                 if sv and (SPO2_MIN <= spo2_calc <= SPO2_MAX):
@@ -306,19 +334,13 @@ def read_and_update():
                 #warm-up inicial
                 if time.ticks_diff(time.ticks_ms(), finger_since_ms) < WARMUP_MS:
                     spo2_valid = False
-                    bpm_valid  = False
+                    #Durante el calentamiento solo se oculta el BPM si todavía no se ha obtenido uno estable
+                    if bpm == 0:
+                        bpm_valid = False
         else:
             #Una muestra aislada con poca amplitud no elimina inmediatamente el último BPM válido
-            if bpm != 0 and time.ticks_diff(time.ticks_ms(), last_valid_bpm_ms) <= BPM_TIMEOUT_MS:
-                bpm_valid = True
-            else:
-                bpm_valid = False
-
-            #Se mantiene la última SpO2 solo si ya existía una lectura válida
-            if spo2 != 0:
-                spo2_valid = True
-            else:
-                spo2_valid = False
+            bpm_valid = bpm != 0
+            spo2_valid = spo2 != 0
     else:
         if finger_present:
             log("Dedo retirado. Coloque su dedo…")

@@ -67,10 +67,15 @@ finger_since_ms = 0
 min_ir = 100000
 last_ble_send_ms = 0
 last_valid_bpm_ms = 0
-CALC_INTERVAL_MS = 500
 last_calc_ms = 0
+sample_counter = 0
+last_beat_sample = None
+CALC_INTERVAL_MS = 500
 BPM_BOOTSTRAP_SAMPLES = 3
 BPM_BOOTSTRAP_RANGE = 25
+SENSOR_SAMPLE_RATE = 400
+SAMPLE_AVERAGE = 4
+EFFECTIVE_SAMPLE_RATE = SENSOR_SAMPLE_RATE // SAMPLE_AVERAGE
 
 spo2 = 0
 bpm  = 0
@@ -141,9 +146,9 @@ if not sensor.begin():
 
 sensor.setup(
     powerLevel    = LED_POWER,
-    sampleAverage = 4,     
+    sampleAverage = SAMPLE_AVERAGE,     
     ledMode       = 2,
-    sampleRate    = SAMPLE_RATE,
+    sampleRate    = SENSOR_SAMPLE_RATE,
     pulseWidth    = 411,
     adcRange      = 16384
 )
@@ -156,7 +161,7 @@ if display and display.is_connected():
     display.display_finger_message()
 
 hr = HeartRate()
-ox = OxygenSaturation(sample_rate_hz=SAMPLE_RATE)
+ox = OxygenSaturation(sample_rate_hz=EFFECTIVE_SAMPLE_RATE)
 SPO2_BUF_SIZE = ox.BUFFER_SIZE
 
 ble = BLERawSender(device_name=DEVICE_NAME, auto_wait_ms=0)
@@ -170,13 +175,22 @@ def read_and_update():
     global last_beat_ms
     global last_valid_bpm_ms
     global last_calc_ms
+    global sample_counter, last_beat_sample
 
-    if not sensor.safeCheck(250):
-        return False, False
+    #Si el búfer local está vacío, descargar nuevas muestras del FIFO
+    if sensor.available() == 0:
 
-    sample_index = sensor.head
-    ir = sensor.IR[sample_index]
-    red = sensor.red[sample_index]
+        if not sensor.safeCheck(250):
+            return False, False
+
+    #Procesar la muestra pendiente más antigua, no únicamente la última
+    ir = sensor.getFIFOIR()
+    red = sensor.getFIFORed()
+
+    #Marcar la muestra como consumida
+    sensor.nextSample()
+
+    sample_counter += 1
 
     has_finger = (ir > FINGER_OFF) if finger_present else (ir > FINGER_ON)
 
@@ -200,6 +214,9 @@ def read_and_update():
             last_good_bpm = 0
             last_valid_bpm_ms = 0
             last_calc_ms = time.ticks_ms()
+
+            sample_counter = 0
+            last_beat_sample = None
             hr.__init__()
             
             bpm_valid = False
@@ -207,18 +224,27 @@ def read_and_update():
 
         #Cálculo de BPM mediante detección de latidos de HeartRate
         if hr.check_for_beat(ir):
-            now_beat = time.ticks_ms()
 
-            if last_beat_ms != 0:
-                dt = time.ticks_diff(now_beat, last_beat_ms)
+            #El primer latido únicamente establece la referencia
+            if last_beat_sample is None:
+                last_beat_sample = sample_counter
+                print("Primer latido detectado por HeartRate")
+        
+            else: 
+                samples_between_beats = sample_counter - last_beat_sample
+                last_beat_sample = sample_counter
 
-                #Evita divisiones por intervalos anómalos
-                if dt > 0:
-                    bpm_calc_hr = 60000 / dt
+                if samples_between_beats > 0:
+                    bpm_calc_hr = (
+                        60 * EFFECTIVE_SAMPLE_RATE
+                        / samples_between_beats
+                    )
 
                     print(
-                        "HeartRate: dt =", dt,
-                        "| BPM candidato =", bpm_calc_hr
+                        "HeartRate: muestras entre latidos =",
+                        samples_between_beats,
+                        "| BPM candidato =",
+                        bpm_calc_hr
                     )
 
                     if BPM_MIN <= bpm_calc_hr <= BPM_MAX:
@@ -238,9 +264,10 @@ def read_and_update():
                             bpm = median(BPM_RAW_HISTORY)
                             bpm_valid = True
                             last_good_bpm = bpm
-                            last_valid_bpm_ms = now_beat
+                            last_valid_bpm_ms = time.ticks_ms()
 
-                            if len(BPM_RAW_HISTORY) >= BPM_BOOTSTRAP_SAMPLES:
+                            #Comprobar coherencia al completar el inicio
+                            if len(BPM_RAW_HISTORY) == BPM_BOOTSTRAP_SAMPLES:
                                 bpm_central = median(BPM_RAW_HISTORY)
 
                                 if (max(BPM_RAW_HISTORY) - min(BPM_RAW_HISTORY) > BPM_BOOTSTRAP_RANGE):
@@ -279,7 +306,7 @@ def read_and_update():
                                 bpm = median(BPM_RAW_HISTORY)
                                 bpm_valid = True
                                 last_good_bpm = bpm
-                                last_valid_bpm_ms = now_beat
+                                last_valid_bpm_ms = time.ticks_ms()
 
                                 print(
                                     "BPM por HeartRate filtrado =",
@@ -306,8 +333,6 @@ def read_and_update():
                             "| se mantiene =",
                             bpm
                         )
-
-            last_beat_ms = now_beat
 
         if ir < min_ir:
             min_ir = ir

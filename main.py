@@ -141,7 +141,7 @@ if not sensor.begin():
 
 sensor.setup(
     powerLevel    = LED_POWER,
-    sampleAverage = 8,     
+    sampleAverage = 4,     
     ledMode       = 2,
     sampleRate    = SAMPLE_RATE,
     pulseWidth    = 411,
@@ -403,7 +403,7 @@ def read_and_update():
                 pass
                 if sv and (SPO2_MIN <= spo2_calc <= SPO2_MAX):
                     spo2_valid = True
-                    spo2 = push_and_mean(spo2_calc, SPO2_HISTORY, 5)
+                    spo2 = push_and_mean(spo2_calc, SPO2_HISTORY, 8)
                     print("SpO2 válida =", spo2)
                 else:
                     spo2_valid = False

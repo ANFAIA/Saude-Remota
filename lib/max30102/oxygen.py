@@ -113,7 +113,7 @@ class OxygenSaturation:
 
         # 3. Calcula umbral
         n_th1 = int(self._mean(an_x_ma4[:buffer_length - self.MA4_SIZE]))
-        n_th1 = max(45, min(n_th1, 80))
+        n_th1 = max(30, min(n_th1, 60))
 
         # Intervalos admisibles según el rango de BPM que se desea detectar
         HR_MIN = 40

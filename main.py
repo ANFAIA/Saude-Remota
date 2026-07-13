@@ -141,7 +141,7 @@ if not sensor.begin():
 
 sensor.setup(
     powerLevel    = LED_POWER,
-    sampleAverage = 4,     
+    sampleAverage = 8,     
     ledMode       = 2,
     sampleRate    = SAMPLE_RATE,
     pulseWidth    = 411,
@@ -200,6 +200,7 @@ def read_and_update():
             last_good_bpm = 0
             last_valid_bpm_ms = 0
             last_calc_ms = time.ticks_ms()
+            hr.__init__()
             
             bpm_valid = False
             spo2_valid = False
@@ -402,7 +403,7 @@ def read_and_update():
                 pass
                 if sv and (SPO2_MIN <= spo2_calc <= SPO2_MAX):
                     spo2_valid = True
-                    spo2 = spo2_calc
+                    spo2 = push_and_mean(spo2_calc, SPO2_HISTORY, 5)
                     print("SpO2 válida =", spo2)
                 else:
                     spo2_valid = False
@@ -499,7 +500,7 @@ try:
 
         #usar promedios al enviar
         if sv and bv and time.ticks_diff(now, last_ble_send_ms) > BLE_SEND_MS:
-            spo2_use = push_and_mean(spo2, SPO2_HISTORY, 8)
+            spo2_use = spo2
             bpm_use  = push_and_mean(bpm,  BPM_HISTORY, 10)
 
             s_spo2 = int(round(clamp(spo2_use, SPO2_MIN, SPO2_MAX)))

@@ -42,7 +42,7 @@ MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
 WARMUP_MS         = 3000       #no usar medidas los 3s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
-TEMP_OFFSET       = 2.5        #para corregir las lecturas iniciales más bajas
+TEMP_OFFSET       = 2.0        #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.1       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas

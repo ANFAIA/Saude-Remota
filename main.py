@@ -449,6 +449,14 @@ def read_and_update():
             log("Dedo retirado. Coloque su dedo…")
             if display and display.is_connected():
                 display.display_finger_message()
+            #Avisar a la interfaz web de que se ha retirado el dedo
+            if ble.is_connected():
+                try:
+                    ble.send_raw({
+                        "fingerDetected": False
+                    })
+                except Exception as e:
+                    log("[BLE] Error enviando estado de dedo retirado:", e)
         finger_present = False
         spo2_valid = bpm_valid = False
 

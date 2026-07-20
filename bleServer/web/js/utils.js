@@ -62,6 +62,18 @@
     if (!msg || !msg.data || typeof msg.ts !== "number") return;
     lastTs = msg.ts;
     const d = msg.data;
+    if (d.fingerDetected === false) {
+      if (elTemp) elTemp.textContent = "---";
+      if (elBpm) elBpm.textContent = "---";
+      if (elSpo2) elSpo2.textContent = "---";
+      if (elAcc) elAcc.textContent = "---";
+      if (elRisk) elRisk.textContent = "---";
+      if (riskWrapper) {
+        riskWrapper.style.background = "";
+      }
+      updateAgo();
+      return;
+    }
     const t = Number(d.temperature);
     const bpm = Number(d.bmp);
     const spo2 = Number(d.spo2);

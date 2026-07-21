@@ -94,7 +94,7 @@ history = model.fit(
 
 # ---- 7) Evaluar ----
 loss, pr_auc, recall, acc = model.evaluate(X_test, y_test, verbose=0)
-print(f"\nTest  | acc={acc:.3f}  pr_auc={pr_auc:.3f}  recall={rec:.3f}")
+print(f"\nTest  | acc={acc:.3f}  pr_auc={pr_auc:.3f}  recall={recall:.3f}")
 
 y_prob = model.predict(X_test, verbose=0).ravel()
 y_pred = (y_prob >= 0.5).astype(int)

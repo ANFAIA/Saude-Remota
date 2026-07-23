@@ -513,14 +513,16 @@ try:
             if display and display.is_connected():
                 try:
                     if time.ticks_diff(now, last_screen_update_ms) > SCREEN_UPDATE_MS:
-                        if sv or bv:
+                        #Mostrar valores cuando ya exista al menos una medición
+                        if spo2 != 0 or bpm != 0:
                             if screen_mode == 0:
                                 display.display_values(
-                                    int(spo2) if sv else None,
-                                    int(bpm) if bv else None,
+                                    int(spo2) if spo2 != 0 else None,
+                                    int(bpm) if bpm != 0 else None,
                                     temp
                                 )
                                 screen_mode = 1
+                            #Antes de obtener la primera medición
                             else:
                                 display.display_risk(last_risk_label == 1)
                                 screen_mode = 0

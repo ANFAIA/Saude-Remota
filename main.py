@@ -37,7 +37,7 @@ SCREEN_UPDATE_MS  = 2000
 #mejora de estabilidad
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
 MED_WIN           = 10         #mediana para BPM
-MAX_BPM_JUMP      = 20         #anti-spike por ciclo (lpm)
+MAX_BPM_JUMP      = 12         #anti-spike por ciclo (lpm)
 MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
 WARMUP_MS         = 3000       #no usar medidas los 3s iniciales tras detectar dedo
 
@@ -46,7 +46,7 @@ TEMP_OFFSET       = 0.0       #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.1       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas
-BPM_MIN,  BPM_MAX  = 40, 130
+BPM_MIN,  BPM_MAX  = 40, 110
 SPO2_MIN, SPO2_MAX = 70, 100
 
 #umbrales clínicos (OR lógico) para la decisión por REGLAS
@@ -514,12 +514,10 @@ try:
                 try:
                     if time.ticks_diff(now, last_screen_update_ms) > SCREEN_UPDATE_MS:
                         #Mostrar valores cuando ya exista al menos una medición
-                        if spo2 != 0 or bpm != 0:
+                        if finger_present and spo2 != 0 and bpm != 0:
                             if screen_mode == 0:
                                 display.display_values(
-                                    int(spo2) if spo2 != 0 else None,
-                                    int(bpm) if bpm != 0 else None,
-                                    temp
+                                    int(spo2), int(bpm), temp
                                 )
                                 screen_mode = 1
                             #Antes de obtener la primera medición

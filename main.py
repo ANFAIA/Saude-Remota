@@ -36,13 +36,13 @@ SCREEN_UPDATE_MS  = 2000
 
 #mejora de estabilidad
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
-MED_WIN           = 7          #mediana para BPM
+MED_WIN           = 8          #mediana para BPM
 MAX_BPM_JUMP      = 20         #anti-spike por ciclo (lpm)
 MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
 WARMUP_MS         = 3000       #no usar medidas los 3s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
-TEMP_OFFSET       = 1.0       #para corregir las lecturas iniciales más bajas
+TEMP_OFFSET       = 0.5       #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.1       #filtro exponencial 0.1 más suave
 
 #rangos fisiológicos para validación de medidas

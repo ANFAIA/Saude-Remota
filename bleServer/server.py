@@ -127,20 +127,28 @@ async def ble_task(device_name: str, scan_timeout: float) -> None: #bucle
     loop = asyncio.get_event_loop()
     while True:
         try:
-            devices = await BleakScanner.discover(timeout=scan_timeout)
+            devices = await BleakScanner.discover(timeout=scan_timeout, return_adv=True)
             print(f"[BLE] {len(devices)} dispositivos encontrados.")
-            dev = next((d for d in devices if d.name==device_name), None)
+            dev = None
+            for device, advertisement_data in devices.values():
+                advertised_name = advertisement_data.local_name or device.name
+
+                if advertised_name == device_name:
+                    dev = device
+                    break
             if not dev:
-                for d in devices:
-                    uuids = (d.metadata or {}).get("uuids") or []
+                for device, advertisement_data in devices.values():
+                    uuids = advertisement_data.service_uuids or []
                     if any((u or "").lower() == UART_SERVICE_UUID.lower() for u in uuids):
-                        dev = d; break
+                        dev = device; break
             if not dev:
                 print(f"[BLE] No se encontró {device_name}. Reintentando...")
                 await asyncio.sleep(2.0)
                 continue #vuelve a escanear
             print(f"[BLE] Encontrado {device_name} ({dev.address}), intentando conectar...")
-            async with BleakClient(dev) as client:
+            #pequeña espera para que Windows termine de registrar el anuncio BLE
+            await asyncio.sleep(2.0)
+            async with BleakClient( dev, timeout=20.0, winrt={"use_cached_services": False}) as client:
                 print(f"[BLE] Conectado a {dev.address}. Suscribiéndose a notificaciones...")
                 buffer = bytearray() #crea un buffer para reconstruir mensajes completos (porque BLE puede fragmentar)
                 def on_notify(_h, data: bytearray): #función que se llama cada vez que llega un fragmento
@@ -234,7 +242,12 @@ async def main_async(args):
         while True: await asyncio.sleep(3600)
     except (asyncio.CancelledError,KeyboardInterrupt): pass #Ctrl+C
     finally:
-        ble.cancel(); fbw.cancel(); await runner.cleanup() #limpia el servidor
+        print("[SERVER] Cerrando tareas y conexión BLE...")
+        ble.cancel(); fbw.cancel(); 
+        #esperar a que las tareas terminen y Bleak cierre correctamente la conexión.
+        await asyncio.gather(ble, fbw, return_exceptions=True)
+        await runner.cleanup() #limpia el servidor
+        print("[SERVER] Cierre completado.")
 
 def parse_args():
     p=argparse.ArgumentParser()

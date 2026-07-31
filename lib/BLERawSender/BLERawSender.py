@@ -1,11 +1,10 @@
 # @file BLERawSender.py
-# @brief Librería MicroPython para enviar lecturas vía BLE (UART/NUS) a un receptor.
+# @brief Librería MicroPython para enviar lecturas vía BLE (UART/NUS) a un receptor (comunicación serie)
 #
 # Cambios v1.0.4: divide advertising en ADV (flags+UUID) y SCAN RESPONSE (nombre),
 #                 arreglando descubrimiento cuando el payload supera 31 bytes.
 #
-# @author   Alejandro Fernández Rodríguez
-# @contact  github.com/afernandezLuc
+# @author   Alejandro Fernández Rodríguez, Irene Gallardo Sierra
 # @version  1.0.4
 # @date     2025-08-02
 # @copyright Copyright (c) 2025
@@ -19,11 +18,11 @@
 #
 # @par Requisitos
 #   - MicroPython con módulo `ubluetooth` habilitado (ESP32 u otros con BLE).
-#   - Stack BLE que soporte `gap_advertise(...)` con `resp_data` (si no, cae en modo compat).
+#   - Stack BLE que soporte `gap_advertise(...)` con `resp_data` (si no, cae en modo compat, es decir, anuncia solamente el paquete principal).
 #
 # @par Limitaciones
-#   - El tamaño efectivo de cada notificación ATT es MTU-3 bytes.
-#   - El parámetro `preferred_mtu` es una preferencia: la MTU real depende del intercambio.
+#   - El tamaño efectivo de cada notificación ATT (protocolo de atributo) es MTU (unidad de transmisión máxima)-3 bytes.
+#   - El parámetro `preferred_mtu` es una preferencia: la MTU real depende del intercambio entre el ESP32 y el ordenador
 #
 # @par Ejemplo rápido
 # @code{.py}
@@ -33,8 +32,8 @@
 # if ble.is_connected():
 #     ble.send_measurement(temperature=36.55, bmp=72.0, spo2=98.0,
 #                          modelPreccision=0.93, riskScore=0.12)
-# # o datos arbitrarios:
-# ble.send_raw({"sensor":"tmp","value":25.1})
+# o datos arbitrarios:
+# ble.send_raw({"sensor":"tmp","value":25.1}) permite enviar cualquier diccionario, no solo las mediciones biomédicas predefinidas
 # @endcode
 #
 # ---------------------------------------------------------------------------
@@ -42,28 +41,29 @@
 import ujson as json
 import ubluetooth as bt
 import utime as time
+# versiones de MicroPython
 
-# --- Compat eventos BLE ---
+# --- Compatibilidad con eventos BLE ---
 _IRQ_CENTRAL_CONNECT    = getattr(bt, "_IRQ_CENTRAL_CONNECT", 1)
-_IRQ_CENTRAL_DISCONNECT = getattr(bt, "_IRQ_CENTRAL_DISCONNECT", 2)
-_IRQ_GATTS_WRITE        = getattr(bt, "_IRQ_GATTS_WRITE", 3)
+_IRQ_CENTRAL_DISCONNECT = getattr(bt, "_IRQ_CENTRAL_DISCONNECT", 2) # el valor alternativo es 2
+_IRQ_GATTS_WRITE        = getattr(bt, "_IRQ_GATTS_WRITE", 3) # obtiene el evento que ocurre cuando el dispositivo central escribe en una característica del ESP32
 _IRQ_MTU_EXCHANGED      = getattr(bt, "_IRQ_MTU_EXCHANGED", 21)
 
 # --- UUIDs NUS ---
-_UART_SERVICE_UUID = bt.UUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
+_UART_SERVICE_UUID = bt.UUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E")  # identificador único universal
 _UART_RX_UUID      = bt.UUID("6E400002-B5A3-F393-E0A9-E50E24DCCA9E")  # central -> periférico (WRITE)
 _UART_TX_UUID      = bt.UUID("6E400003-B5A3-F393-E0A9-E50E24DCCA9E")  # periférico -> central (NOTIFY)
 
-# --- GATT flags ---
+# --- GATT (general) flags ---
 _FLAG_WRITE = bt.FLAG_WRITE
 _FLAG_WRITE_NO_RESPONSE = bt.FLAG_WRITE_NO_RESPONSE
 _FLAG_NOTIFY = bt.FLAG_NOTIFY
 
 
-def _adv_payload(flags=True, services=None):
-    r"""
-    @brief Construye el payload de publicidad (ADV) con flags y lista de servicios.
-    @param flags     Si `True`, incluye el campo de flags LE General Discoverable y BR/EDR not supported.
+def _adv_payload(flags=True, services=None): # publicidad BLE
+    r""" #la r indica que es una cadena de texto “raw” o cruda
+    @brief Construye el payload de publicidad (ADV) con flags (indicadores básicos) y lista de servicios.
+    @param flags     Si `True`, incluye el campo de flags BLE General Discoverable y Bluetooth not supported.
     @param services  Lista iterable de UUIDs (bt.UUID) a anunciar (16 o 128 bits).
     @return `bytearray` con el ADV listo para `gap_advertise`.
     @note Longitud máxima 31 bytes. No incluye el nombre.
@@ -71,17 +71,17 @@ def _adv_payload(flags=True, services=None):
     payload = bytearray()
 
     def _append(adv_type, value):
-        payload.extend((len(value) + 1, adv_type))
+        payload.extend((len(value) + 1, adv_type)) #se suma 1 porque también debe contarse el byte correspondiente a adv_type
         payload.extend(value)
 
     if flags:
-        _append(0x01, b"\x02\x04")  # LE General Discoverable + BR/EDR not supported
+        _append(0x01, b"\x02\x04")  # BLE General Discoverable + Bluetooth not supported
     if services:
         for uuid in services:
             b = bytes(uuid)
             if len(b) == 16:
                 _append(0x07, b)  # Complete list of 128-bit UUIDs
-            elif len(b) == 2:
+            elif len(b) == 2:     # 16 bits = 2 bytes
                 _append(0x03, b)  # Complete list of 16-bit UUIDs
     return payload
 
@@ -95,7 +95,7 @@ def _scan_resp_payload(name):
     """
     payload = bytearray()
     if name:
-        n = name.encode()
+        n = name.encode() # convierte el texto del nombre en bytes
         if len(n) > 29:  # 31 - (len + type) = 29
             n = n[:29]   # recorta para caber en un solo paquete
         payload.extend((len(n) + 1, 0x09))  # Complete Local Name
@@ -116,12 +116,12 @@ class _BLEUART:
     def __init__(self, name="ESP32-BLERaw", adv_interval_ms=100, preferred_mtu=247):
         r"""
         @brief Constructor del periférico NUS.
-        @param name            Nombre GAP del dispositivo.
+        @param name            Nombre GAP (publicidad y conexiones) del dispositivo.
         @param adv_interval_ms Intervalo de advertising en milisegundos.
         @param preferred_mtu   MTU preferida (se intentará configurar).
         @post Inicia publicidad (ADV + SCAN RESPONSE si el port lo soporta).
         """
-        self._ble = bt.BLE()
+        self._ble = bt.BLE() # Crea el controlador BLE
         self._ble.active(True)
 
         # Opcionales (algunos ports pueden no soportar estas opciones)
@@ -134,18 +134,18 @@ class _BLEUART:
         except Exception:
             pass
 
-        self._ble.irq(self._irq)
+        self._ble.irq(self._irq) # manejador de eventos
 
         # Servicio GATTS
         self._tx = (_UART_TX_UUID, _FLAG_NOTIFY)
-        self._rx = (_UART_RX_UUID, _FLAG_WRITE | _FLAG_WRITE_NO_RESPONSE)
+        self._rx = (_UART_RX_UUID, _FLAG_WRITE | _FLAG_WRITE_NO_RESPONSE) # El operador | combina dos permisos
         self._service = (_UART_SERVICE_UUID, (self._tx, self._rx))
-        ((self._tx_handle, self._rx_handle),) = self._ble.gatts_register_services((self._service,))
+        ((self._tx_handle, self._rx_handle),) = self._ble.gatts_register_services((self._service,)) # Registra el servicio en la tabla GATT del ESP32
 
-        self._conn_handle = None
+        self._conn_handle = None # Identificadores internos: inicialmente no hay ningún ordenador conectado
         self._mtu = 23
         self._name = name
-        self._adv_interval_us = adv_interval_ms * 1000
+        self._adv_interval_us = adv_interval_ms * 1000 # Convierte el intervalo de milisegundos a microsegundos
 
         # Prepara ADV + SCAN_RSP
         self._adv = bytes(_adv_payload(flags=True, services=[_UART_SERVICE_UUID]))
@@ -163,7 +163,7 @@ class _BLEUART:
         """
         if event == _IRQ_CENTRAL_CONNECT:
             conn_handle, addr_type, addr = data
-            self._conn_handle = conn_handle
+            self._conn_handle = conn_handle # Identificador de la conexión
         elif event == _IRQ_CENTRAL_DISCONNECT:
             self._conn_handle = None
             self._start_advertising()
@@ -175,10 +175,10 @@ class _BLEUART:
             except Exception:
                 pass
         elif event == _IRQ_GATTS_WRITE:
-            # RX no utilizado en esta librería.
+            # RX no utilizado en esta librería, los datos recibidos no se procesan
             pass
 
-    # ---- API pública ----
+    # ---- API (Interfaz de Programación de Aplicaciones) pública ----
 
     def is_connected(self):
         r"""
@@ -217,10 +217,10 @@ class _BLEUART:
         """
         if not self.is_connected():
             raise RuntimeError("No hay central BLE conectado.")
-        chunk = self.max_payload()
-        for i in range(0, len(data_bytes), chunk):
-            self._ble.gatts_notify(self._conn_handle, self._tx_handle, data_bytes[i:i+chunk])
-            time.sleep_ms(5)
+        chunk = self.max_payload() # Calcula el tamaño máximo de cada fragmento
+        for i in range(0, len(data_bytes), chunk): # Recorre los datos en bloques.
+            self._ble.gatts_notify(self._conn_handle, self._tx_handle, data_bytes[i:i+chunk]) # Fragmento que se envía
+            time.sleep_ms(5) # Evita la pérdida de fragmentos
 
     # ---- Advertising ----
 
@@ -236,7 +236,7 @@ class _BLEUART:
                 self._ble.gap_advertise(arg)
             except Exception:
                 pass
-        time.sleep_ms(20)
+        time.sleep_ms(20) # Espera 20 ms para dar tiempo a que BLE complete la detención
 
     def _start_advertising(self):
         r"""
@@ -244,10 +244,10 @@ class _BLEUART:
         @exception OSError Re-lanza errores distintos de "advertising ya activo".
         @note Si `resp_data` no es soportado, se anuncia solo ADV (el nombre puede no mostrarse).
         """
-        self._safe_stop_advertising()
-        time.sleep_ms(10)
+        self._safe_stop_advertising() # Se asegura de que no exista otra publicidad activa
+        time.sleep_ms(10) # Espera antes de volver a iniciarla
         try:
-            # En MP recientes: gap_advertise(interval_us, adv_data, *, connectable=True, resp_data=None)
+            # gap_advertise(interval_us, adv_data, *, connectable=True, resp_data=None)
             self._ble.gap_advertise(self._adv_interval_us, self._adv, connectable=True, resp_data=self._scan)
         except TypeError:
             # Fallback si tu port no soporta resp_data: anuncia solo ADV (nombre puede no verse)
@@ -256,7 +256,7 @@ class _BLEUART:
             if getattr(e, "args", [None])[0] == -18:
                 print("BLE: advertising ya activo; continúo.")
             else:
-                raise
+                raise # Si es otro error diferente, lo lanza
 
 
 class BLERawSender:
@@ -310,7 +310,7 @@ class BLERawSender:
         @exception RuntimeError Si no hay una central BLE conectada.
         @post Envía una línea JSON terminada en '\n' vía característica TX (notify).
         """
-        payload = {
+        payload = { # Crea un diccionario con los datos de la medición
             "temperature": round(float(temperature), 2),
             "bmp": round(float(bmp), 2),
             "spo2": round(float(spo2), 2),
@@ -333,10 +333,10 @@ class BLERawSender:
         """
         if timestamp_ms is None:
             try:
-                timestamp_ms = int(time.time() * 1000)
+                timestamp_ms = int(time.time() * 1000) # Se multiplica por 1000 para convertirlo a milisegundos
             except Exception:
-                timestamp_ms = time.ticks_ms()
+                timestamp_ms = time.ticks_ms() # Utiliza el número de milisegundos transcurridos desde que arrancó el ESP32
         if not self._uart.is_connected():
             raise RuntimeError("No hay central BLE conectado. Conéctate desde el ordenador antes de enviar.")
         line = json.dumps({"ts": timestamp_ms, "data": data}) + "\n"
-        self._uart.send(line.encode("utf-8"))
+        self._uart.send(line.encode("utf-8")) # Lo convierte en bytes, que es el formato que necesita Bluetooth

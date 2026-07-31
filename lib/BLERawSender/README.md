@@ -121,5 +121,4 @@ MIT License — see [LICENSE](LICENSE) file.
 
 ## 👤 Author
 
-**Alejandro Fernández Rodríguez**  
-🔗 [GitHub](https://github.com/afernandezLuc)
+**Alejandro Fernández Rodríguez, Irene Gallardo Sierra**  

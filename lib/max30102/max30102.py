@@ -1,24 +1,24 @@
-## @file max30105.py
-#  @brief Librería en MicroPython para el sensor óptico **MAX30105**.
+#  @file max30102.py
+#  @brief Librería en MicroPython para el sensor óptico **MAX30102**.
 #
-#  Esta librería permite configurar el MAX30105, leer las muestras crudas de los
-#  LEDs (rojo, infrarrojo y verde) desde su FIFO, gestionar las interrupciones
+#  Esta librería permite configurar el MAX30102, leer las muestras crudas de los
+#  LEDs (rojo, infrarrojo y verde, el cual no se utiliza en esta aplicación) desde su FIFO, gestionar las interrupciones
 #  internas y obtener la temperatura del chip.
 #
-#  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandezLuc
+#  @author Alejandro Fernández Rodríguez, Irene Gallardo Sierra
+#  @contact github.com
 #  @version 1.0.0
 #  @date 2025-08-02
-#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez
+#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez, Irene Gallardo Sierra
 #  @license MIT — Consulte el archivo LICENSE para más información.
 #
 #  ---- Ejemplo de uso --------------------------------------------------------
 #  @code{.py}
 #  from machine import I2C, Pin
-#  from max30105 import MAX30105
+#  from max30102 import MAX30102
 #
 #  i2c = I2C(1, scl=Pin(27), sda=Pin(26))
-#  sensor = MAX30105(i2c)
+#  sensor = MAX30102(i2c)
 #  if sensor.begin():
 #      sensor.setup(powerLevel=0x1F, sampleAverage=4, ledMode=3,
 #                   sampleRate=100, pulseWidth=411, adcRange=16384)
@@ -66,7 +66,7 @@ MAX30105_DIETEMPINT     = 0x1F
 MAX30105_DIETEMPFRAC    = 0x20
 MAX30105_DIETEMPCONFIG  = 0x21
 
-# ======================= Proximidad y ID del chip ==========================
+# ======================= Proximidad e ID del chip ==========================
 MAX30105_PROXINTTHRESH  = 0x30
 MAX30105_REVISIONID     = 0xFE
 MAX30105_PARTID         = 0xFF
@@ -130,7 +130,7 @@ MAX30105_PULSEWIDTH_118   = 0x01
 MAX30105_PULSEWIDTH_215   = 0x02
 MAX30105_PULSEWIDTH_411   = 0x03
 
-# =========================== Config Slots LEDs ============================
+# =========================== Config slots LEDs ============================
 MAX30105_SLOT1_MASK       = 0xF8
 MAX30105_SLOT2_MASK       = 0x8F
 MAX30105_SLOT3_MASK       = 0xF8
@@ -146,20 +146,20 @@ SLOT_IR_PILOT    = 0x06
 SLOT_GREEN_PILOT = 0x07
 
 STORAGE_SIZE = 32        # FIFO size
-## @class MAX30105
-#  @brief Clase que permite el manejo del sensor óptico MAX30105.
+#  @class MAX30102
+#  @brief Clase que permite el manejo del sensor óptico MAX30102.
 #
 #  Ofrece funcionalidades para configuración, lectura y procesamiento de datos de los LEDs rojo, IR y verde,
 #  control de interrupciones, lectura de temperatura interna y control del FIFO.
 class MAX30105:
-    ## @brief Constructor de la clase MAX30105.
+    ## @brief Constructor de la clase MAX30102.
     #  @param i2c Objeto de interfaz I2C de la clase `machine.I2C`.
     #  @param addr Dirección del dispositivo I2C (por defecto 0x57).
     def __init__(self, i2c, addr=MAX30105_ADDRESS):
         self.i2c = i2c                      #: Interfaz I2C utilizada para la comunicación.
         self.addr = addr                    #: Dirección I2C del sensor.
-        self.revisionID = 0                #: ID de revisión del chip.
-        self.activeLEDs = 0                #: Número de LEDs activos configurados.
+        self.revisionID = 0                 #: ID de revisión del chip.
+        self.activeLEDs = 0                 #: Número de LEDs activos configurados.
 
         # Buffers circulares para los datos de los LEDs
         self.head = 0                      #: Índice de escritura del buffer circular.
@@ -168,7 +168,7 @@ class MAX30105:
         self.IR    = [0]*STORAGE_SIZE              #: Almacena las muestras del LED infrarrojo.
         self.green = [0]*STORAGE_SIZE              #: Almacena las muestras del LED verde.
 
-    ## @brief Inicializa el sensor MAX30105.
+    #  @brief Inicializa el sensor MAX30102.
     #
     #  Verifica que el sensor responda correctamente leyendo su ID de parte,
     #  realiza un soft reset y limpia los buffers FIFO.
@@ -176,7 +176,7 @@ class MAX30105:
     #  @retval False si el sensor no responde o el ID es incorrecto.
     def begin(self):
         if self.readPartID() != MAX_30105_EXPECTEDPARTID:
-            print("MAX30105 no encontrado. Verifica conexión.")
+            print("MAX30102 no encontrado. Verifica conexión.")
             return False
         self.readRevisionID()
 
@@ -186,7 +186,7 @@ class MAX30105:
 
         return True
 
-    ## @brief Lee un byte desde un registro del sensor.
+    #  @brief Lee un byte desde un registro del sensor.
     #  @param reg Dirección del registro a leer.
     #  @return Valor leído del registro (0-255). Si falla, devuelve 0.
     def readRegister(self, reg):
@@ -196,7 +196,7 @@ class MAX30105:
         except:
             return 0
 
-    ## @brief Escribe un byte en un registro del sensor.
+    #  @brief Escribe un byte en un registro del sensor.
     #  @param reg Dirección del registro a escribir.
     #  @param val Valor de 8 bits que se desea escribir.
     #  @return True si la escritura fue exitosa; False si falló.
@@ -207,7 +207,7 @@ class MAX30105:
         except:
             return False
 
-    ## @brief Modifica determinados bits de un registro usando una máscara.
+    #  @brief Modifica determinados bits de un registro usando una máscara.
     #
     #  Realiza una operación de máscara AND y OR sobre un registro para
     #  modificar solo los bits deseados sin afectar el resto.
@@ -220,11 +220,11 @@ class MAX30105:
         self.writeRegister(reg, orig | thing)
 
     ## @brief Lee el valor actual del registro de estado de interrupciones INT1.
-    #  @return Valor del registro MAX30105_INTSTAT1.
+    #  @return Valor del registro MAX30102_INTSTAT1.
     def getINT1(self): return self.readRegister(MAX30105_INTSTAT1)
 
     ## @brief Lee el valor actual del registro de estado de interrupciones INT2.
-    #  @return Valor del registro MAX30105_INTSTAT2.
+    #  @return Valor del registro MAX30102_INTSTAT2.
     def getINT2(self): return self.readRegister(MAX30105_INTSTAT2)
 
     ## @brief Habilita la interrupción cuando el FIFO está lleno (Almost Full).
@@ -242,7 +242,7 @@ class MAX30105:
     ## @brief Habilita la interrupción por desbordamiento de ALC (auto range).
     def enableALCOVF(self):  self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_ALC_OVF_MASK,  MAX30105_INT_ALC_OVF_ENABLE)
 
-    ## @brief Deshabilita la interrupción por desbordamiento de ALC.
+    ## @brief Deshabilita la interrupción por desbordamiento de ALC (Ambient Light Cancellation).
     def disableALCOVF(self): self.bitMask(MAX30105_INTENABLE1, MAX30105_INT_ALC_OVF_MASK,  0)
 
     ## @brief Habilita la interrupción por proximidad.
@@ -261,16 +261,16 @@ class MAX30105:
     # >> Control de energía y reinicio
     # ---------------------------------------------------------------------
 
-    ## @brief Realiza un reinicio por software (*soft‑reset*) del MAX30105.
+    #  @brief Realiza un reinicio por software (*soft‑reset*) del MAX30102.
     #
-    #  Establece el bit **RESET** en `MAX30105_MODECONFIG`; el dispositivo lo borra
+    #  Establece el bit **RESET** en `MAX30102_MODECONFIG`; el dispositivo lo borra
     #  automáticamente una vez completada la secuencia interna (~50 ms). Este
     #  método sondea el registro durante un máximo de 100 ms hasta que el bit se
     #  libere.
     #
     #  @post Tras el reinicio se pierde la configuración volátil; se recomienda
     #        volver a llamar a :pymeth:`setup` o reconfigurar los registros.
-    #  @note Se introduce un retardo de 1 ms entre sondeos para reducir el bus I²C.
+    #  @note Se introduce un retardo de 1 ms entre sondeos.
     def softReset(self):
         self.bitMask(MAX30105_MODECONFIG, MAX30105_RESET_MASK, MAX30105_RESET)
         start = time.ticks_ms()
@@ -279,16 +279,16 @@ class MAX30105:
                 break
             time.sleep_ms(1)
 
-    ## @brief Coloca al sensor en modo de *shutdown* de bajo consumo.
+    #  @brief Coloca al sensor en modo de *shutdown* de bajo consumo.
     #
-    #  Activa el bit **SHDN** en `MAX30105_MODECONFIG`, reduciendo el consumo a
+    #  Activa el bit **SHDN** en `MAX30102_MODECONFIG`, reduciendo el consumo a
     #  ~0.7 µA. El contenido del FIFO y la configuración permanecen intactos.
     #  @see wakeUp()
     def shutDown(self): self.bitMask(MAX30105_MODECONFIG, MAX30105_SHUTDOWN_MASK, MAX30105_SHUTDOWN)
 
-    ## @brief Reactiva el sensor saliendo del modo *shutdown*.
+    #  @brief Reactiva el sensor saliendo del modo *shutdown*.
     #
-    #  Borra el bit **SHDN** en `MAX30105_MODECONFIG` y restaura el funcionamiento
+    #  Borra el bit **SHDN** en `MAX30102_MODECONFIG` y restaura el funcionamiento
     #  normal. Se recomienda un retardo de ≈1 ms antes de acceder a nuevos datos.
     #  @see shutDown()
     def wakeUp(self):   self.bitMask(MAX30105_MODECONFIG, MAX30105_SHUTDOWN_MASK, MAX30105_WAKEUP)
@@ -297,23 +297,23 @@ class MAX30105:
     # >> Parámetros de configuración rápida
     # ---------------------------------------------------------------------
 
-    ## @brief Selecciona cuántos LEDs se activan por ciclo de conversión.
-    #  @param m Modo `MAX30105_MODE_*` (p.ej. ::MAX30105_MODE_MULTILED).
-    #  - ``MAX30105_MODE_REDONLY``   → sólo LED rojo.
-    #  - ``MAX30105_MODE_REDIRONLY`` → LED rojo + IR.
-    #  - ``MAX30105_MODE_MULTILED``  → LED rojo + IR + verde.
+    #  @brief Selecciona cuántos LEDs se activan por ciclo de conversión.
+    #  @param m Modo `MAX30102_MODE_*` (p.ej. ::MAX30102_MODE_MULTILED).
+    #  - ``MAX30102_MODE_REDONLY``   → sólo LED rojo.
+    #  - ``MAX30102_MODE_REDIRONLY`` → LED rojo + IR.
+    #  - ``MAX30102_MODE_MULTILED``  → LED rojo + IR + verde.
     #
-    #  Cambia el campo **MODE[2:0]** de `MAX30105_MODECONFIG`.
+    #  Cambia el campo **MODE[2:0]** de `MAX301052_MODECONFIG`.
     def setLEDMode(self, m):       self.bitMask(MAX30105_MODECONFIG, MAX30105_MODE_MASK, m)
 
-    ## @brief Ajusta el rango de corriente del ADC interno.
-    #  @param r Código ``MAX30105_ADCRANGE_*`` (2048, 4096, 8192, 16384 nA).
-    #  Modifica los bits **ADCRANGE[6:5]** en `MAX30105_PARTICLECONFIG`.
+    #  @brief Ajusta el rango de corriente del ADC interno.
+    #  @param r Código ``MAX30102_ADCRANGE_*`` (2048, 4096, 8192, 16384 nA).
+    #  Modifica los bits **ADCRANGE[6:5]** en `MAX30102_PARTICLECONFIG`.
     def setADCRange(self, r):      self.bitMask(MAX30105_PARTICLECONFIG, MAX30105_ADCRANGE_MASK, r)
 
-    ## @brief Configura la frecuencia de muestreo (Hz).
-    #  @param s Código ``MAX30105_SAMPLERATE_*`` (50 – 3200 Hz).
-    #  Afecta a los bits **SR[4:2]** de `MAX30105_PARTICLECONFIG`.
+    #  @brief Configura la frecuencia de muestreo (Hz).
+    #  @param s Código ``MAX30102_SAMPLERATE_*`` (50 – 3200 Hz).
+    #  Afecta a los bits **SR[4:2]** de `MAX30102_PARTICLECONFIG`.
     def setSampleRate(self, s):    self.bitMask(MAX30105_PARTICLECONFIG, MAX30105_SAMPLERATE_MASK, s)
 
     ## @brief Establece la duración del pulso (anchura) en µs.
@@ -322,23 +322,23 @@ class MAX30105:
     def setPulseWidth(self, pw):   self.bitMask(MAX30105_PARTICLECONFIG, MAX30105_PULSEWIDTH_MASK, pw)
 
     ## @brief Define la amplitud (corriente) del LED rojo.
-    #  @param v Valor de 0–255 (unidad ≈0.2 mA) escrito en `MAX30105_LED1_PULSEAMP`.
+    #  @param v Valor de 0–255 (unidad ≈0.2 mA) escrito en `MAX30102_LED1_PULSEAMP`.
     def setPulseAmplitudeRed(self, v):   self.writeRegister(MAX30105_LED1_PULSEAMP,  v)
 
     ## @brief Define la amplitud del LED infrarrojo.
-    #  @param v Valor de 0–255 escrito en `MAX30105_LED2_PULSEAMP`.
+    #  @param v Valor de 0–255 escrito en `MAX30102_LED2_PULSEAMP`.
     def setPulseAmplitudeIR(self, v):    self.writeRegister(MAX30105_LED2_PULSEAMP,  v)
 
     ## @brief Define la amplitud del LED verde.
-    #  @param v Valor de 0–255 escrito en `MAX30105_LED3_PULSEAMP`.
+    #  @param v Valor de 0–255 escrito en `MAX30102_LED3_PULSEAMP`.
     def setPulseAmplitudeGreen(self, v): self.writeRegister(MAX30105_LED3_PULSEAMP,  v)
 
     ## @brief Define la amplitud del LED dedicado a la función de proximidad.
-    #  @param v Valor de 0–255 escrito en `MAX30105_LED_PROX_AMP`.
+    #  @param v Valor de 0–255 escrito en `MAX30102_LED_PROX_AMP`.
     def setPulseAmplitudeProximity(self, v): self.writeRegister(MAX30105_LED_PROX_AMP, v)
 
     ## @brief Establece el umbral que genera la interrupción de proximidad.
-    #  @param v Valor de 0–255 escrito en `MAX30105_PROXINTTHRESH` (LSB = ~7.8 µA).
+    #  @param v Valor de 0–255 escrito en `MAX30102_PROXINTTHRESH` (LSB = ~7.8 µA).
     def setProximityThreshold(self, v):   self.writeRegister(MAX30105_PROXINTTHRESH, v)
 
     # ---------------------------------------------------------------------
@@ -350,9 +350,9 @@ class MAX30105:
     # >> Configuración avanzada de slots LED y FIFO
     # ---------------------------------------------------------------------
 
-    ## @brief Asigna un dispositivo (LED) a uno de los cuatro *slots* de disparo.
+    #  @brief Asigna un dispositivo (LED) a uno de los cuatro *slots* de disparo.
     #  
-    #  Cada conversión del MAX30105 puede incluir hasta cuatro sub‑pulsos
+    #  Cada conversión del MAX30102 puede incluir hasta cuatro sub‑pulsos
     #  (slots 1‑4). En cada slot se selecciona el LED que se encenderá o si se
     #  utilizará un piloto/fotodiodo de compensación.  
     #  @param num    Slot a configurar (1–4).  
@@ -360,7 +360,7 @@ class MAX30105:
     #  - ``SLOT_RED_LED`` / ``SLOT_IR_LED`` / ``SLOT_GREEN_LED``  
     #  - ``SLOT_RED_PILOT`` / ``SLOT_NONE`` … etc.  
     #  @post Internamente se actualizan los registros
-    #        `MAX30105_MULTILEDCONFIG1/2` aplicando las máscaras correctas.
+    #        `MAX30102_MULTILEDCONFIG1/2` aplicando las máscaras correctas.
     def enableSlot(self, num, device):
         if num==1: self.bitMask(MAX30105_MULTILEDCONFIG1, MAX30105_SLOT1_MASK, device)
         elif num==2: self.bitMask(MAX30105_MULTILEDCONFIG1, MAX30105_SLOT2_MASK, device<<4)
@@ -373,8 +373,8 @@ class MAX30105:
         self.writeRegister(MAX30105_MULTILEDCONFIG2, 0)
 
     # ------------------------------- FIFO ---------------------------------
-    ## @brief Define cuántas muestras se promedian en el FIFO.
-    #  @param n Código ``MAX30105_SAMPLEAVG_*`` (1,2,4,8,16,32).
+    #  @brief Define cuántas muestras se promedian en el FIFO.
+    #  @param n Código ``MAX30102_SAMPLEAVG_*`` (1,2,4,8,16,32).
     def setFIFOAverage(self, n):   self.bitMask(MAX30105_FIFOCONFIG, MAX30105_SAMPLEAVG_MASK, n)
 
     ## @brief Reinicia los punteros de lectura/escritura y el contador overflow.
@@ -399,7 +399,7 @@ class MAX30105:
     def getReadPointer(self):      return self.readRegister(MAX30105_FIFOREADPTR)
 
     # ----------------------------- Temperatura ----------------------------
-    ## @brief Lee la temperatura interna del chip (°C).
+    #  @brief Lee la temperatura interna del chip (°C).
     #  @return Temperatura en °C con resolución de 0.0625 °C.
     def readTemperature(self):
         self.writeRegister(MAX30105_DIETEMPCONFIG, 0x01)
@@ -418,10 +418,10 @@ class MAX30105:
         return t * 1.8 + 32 if t!=-999.0 else t
 
     # ----------------------------- Identificación -------------------------
-    ## @brief Devuelve el identificador de parte (0x15 para MAX30105).
+    # @brief Devuelve el identificador de parte (0x15 para MAX30102).
     def readPartID(self):   return self.readRegister(MAX30105_PARTID)
 
-    ## @brief Almacena en ``self.revisionID`` la revisión de silicio
+    ## @brief Almacena en ``self.revisionID`` la revisión de silicio (versión del chip fabricado).
     def readRevisionID(self): self.revisionID = self.readRegister(MAX30105_REVISIONID)
 
     ## @brief Devuelve la revisión de silicio previamente leída.
@@ -431,10 +431,10 @@ class MAX30105:
     # >> Rutina de configuración
     # ---------------------------------------------------------------------
 
-    ## @brief Configura el sensor con un conjunto coherente de parámetros.
+    #  @brief Configura el sensor con un conjunto coherente de parámetros.
     #  
     #  Esta función realiza todas las llamadas necesarias para dejar el
-    #  MAX30105 listo para comenzar la adquisición de datos con un único paso.
+    #  MAX30102 listo para comenzar la adquisición de datos con un único paso.
     #  Internamente ejecuta las siguientes operaciones:
     #  - *Soft-reset* del dispositivo.
     #  - Ajuste del número de muestras a promediar en FIFO y habilita roll-over.
@@ -516,7 +516,7 @@ class MAX30105:
     # >> Adquisición de datos                                                
     # ---------------------------------------------------------------------
 
-    ## @brief Indica cuántas muestras sin leer hay en el buffer FIFO local.
+    #  @brief Indica cuántas muestras sin leer hay en el buffer FIFO local.
     #  
     #  Calculado como la distancia circular entre ``self.head`` (última muestra
     #  escrita) y ``self.tail`` (siguiente muestra a leer). Si `head < tail`, se
@@ -527,7 +527,7 @@ class MAX30105:
         n = self.head - self.tail
         return n + STORAGE_SIZE if n<0 else n
 
-    ## @brief Obtiene la última muestra del LED rojo.
+    #  @brief Obtiene la última muestra del LED rojo.
     #  
     #  Internamente llama a :pyfunc:`safeCheck` con un tiempo máximo de 250 ms
     #  para asegurarse de que el FIFO contenga datos frescos antes de acceder al
@@ -555,7 +555,7 @@ class MAX30105:
     ## @brief Devuelve la muestra verde en la posición ``tail``.
     def getFIFOGreen(self): return self.green[self.tail]
 
-    ## @brief Avanza el puntero de lectura para procesar la siguiente muestra.
+    #  @brief Avanza el puntero de lectura para procesar la siguiente muestra.
     #  
     #  Debe invocarse después de leer los valores de ``getFIFORed/IR/Green`` para
     #  marcar la muestra como consumida.  
@@ -564,7 +564,7 @@ class MAX30105:
         if self.available():
             self.tail = (self.tail + 1) % STORAGE_SIZE
 
-    ## @brief Vacía el FIFO del sensor y llena los buffers locales con los
+    #  @brief Vacía el FIFO del sensor y llena los buffers locales con los
     #         datos más recientes disponibles.
     #  
     #  Este método sincroniza los punteros de lectura y escritura del FIFO
@@ -637,7 +637,7 @@ class MAX30105:
             to_read -= chunk
         return num
 
-    ## @brief Variante segura de :pyfunc:`check` con tiempo máximo de espera.
+    #  @brief Variante segura de :pyfunc:`check` con tiempo máximo de espera.
     #  
     #  Llama repetidamente a :pyfunc:`check` hasta que se lean datos o expire
     #  ``max_ms``. Esto permite al usuario bloquear la ejecución hasta que el

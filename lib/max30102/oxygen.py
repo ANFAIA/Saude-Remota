@@ -1,7 +1,7 @@
-## @file oxygen.py
+#  @file oxygen.py
 #  @brief Algoritmo en MicroPython para estimar la saturación de oxígeno (SpO2)
 #         y la frecuencia cardiaca usando señales IR y RED provenientes del
-#         sensor MAX30105 (u otros fotopletismógrafos similares).
+#         sensor MAX30102 (u otros fotopletismógrafos similares).
 #  
 #  Implementa la clase :pyclass:`OxygenSaturation`, basada en el famoso
 #  algoritmo de “Maxim Integrated AN-6595”, adaptado para su uso en
@@ -9,19 +9,19 @@
 #  la señal IR, cálculo de pulsos por minuto (bpm) y estimación de SpO2 a partir
 #  de la relación de amplitudes AC/DC de las señales RED e IR.
 #  
-#  @author Alejandro Fernández Rodríguez
-#  @contact github.com/afernandezLuc
+#  @author Alejandro Fernández Rodríguez, Irene Gallardo Sierra
+#  @contact github.com
 #  @version 1.0.0
 #  @date 2025-08-02
-#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez
+#  @copyright Copyright (c) 2025 Alejandro Fernández Rodríguez, Irene Gallardo Sierra
 #  @license MIT — Consulte el archivo LICENSE para más información.
 #  
 #  ---- Ejemplo de uso --------------------------------------------------------
 #  @code{.py}
 #  from oxygen import OxygenSaturation
-#  from max30105 import MAX30105
+#  from max30102 import MAX30102
 #  
-#  # Suponiendo sensor es una instancia MAX30105 configurada previamente
+#  # Suponiendo sensor es una instancia MAX30102 configurada previamente
 #  oxi = OxygenSaturation()
 #  ir_buf  = []  # rellenar con muestras IR
 #  red_buf = []  # rellenar con muestras RED
@@ -33,8 +33,8 @@
 #  @endcode
 #  ---------------------------------------------------------------------------
 
-## @class OxygenSaturation
-#  @brief Clase para calcular la saturación de oxygeno en sangre a partir de los datos del sensor MAX30105.
+#  @class OxygenSaturation
+#  @brief Clase para calcular la saturación de oxygeno en sangre a partir de los datos del sensor MAX30102.
 #
 #  Obrece una api pública para calcular SpO2 y ritmo cardiaco (bpm) a partir de
 #  muestras de luz infrarroja (IR) y roja (RED). Utiliza un algoritmo
@@ -42,9 +42,9 @@
 #  Incluye detección de picos, filtrado y estimación de SpO2 mediante
 #  la relación de amplitudes AC/DC de las señales IR y RED.
 class OxygenSaturation:
-    FreqS = 50
+    FreqS = 50 # sampling frequency
     BUFFER_SIZE = FreqS * 2
-    MA4_SIZE = 4
+    MA4_SIZE = 4 # media móvil
 
     SPO2_TABLE = [
         95, 95, 95, 96, 96, 96, 97, 97, 97, 97, 97, 98, 98, 98, 98, 98, 99, 99, 99, 99,
@@ -57,7 +57,7 @@ class OxygenSaturation:
         49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 31, 30, 29,
         28, 27, 26, 25, 23, 22, 21, 20, 19, 17, 16, 15, 14, 12, 11, 10, 9, 7, 6, 5,
         3, 2, 1
-    ]
+    ] # tabla de conversión entre el cociente calculado a partir de las señales roja e infrarroja y su saturación de oxígeno estimada
 
     def __init__(self, sample_rate_hz=50):
         self.FreqS = int(sample_rate_hz)
@@ -66,12 +66,12 @@ class OxygenSaturation:
         pass
 
     def _mean(self, arr):
-        return sum(arr) / len(arr) if arr else 0
+        return sum(arr) / len(arr) if arr else 0 # para evitar una división entre cero
 
     def _max(self, arr):
         max_val = arr[0]
         max_idx = 0
-        for i, v in enumerate(arr):
+        for i, v in enumerate(arr): # enumerate(arr) proporciona índice y valor almacenado en esa posición
             if v > max_val:
                 max_val = v
                 max_idx = i
@@ -90,7 +90,7 @@ class OxygenSaturation:
     #          - *heart_rate* Frecuencia cardiaca (bpm). ``-999`` si inválida.
     #          - *hr_valid*  ``1`` si *heart_rate* es válida.
     def calculate_spo2_and_heart_rate(self, ir_buffer, red_buffer):
-        """Algoritmo completo descrito en AN‑6595; vermente implementa:
+        """Algoritmo completo descrito en AN‑6595; implementa:
         1. Eliminación de componente DC e inversión de señal IR.
         2. Suavizado con media móvil de 4 puntos.
         3. Cálculo de umbral dinámico y detección de valles.
@@ -120,9 +120,10 @@ class OxygenSaturation:
         HR_MAX = 130
 
         # 4. Detección de valles (picos en señal invertida)
-        # mínimo 160 ms entre valles  ⇒ muestras = FreqS * 0.16
-        #min_gap = self.FreqS // 6          # ≈0.166 s
-        #an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)
+        # mínimo 160 ms entre valles ⇒ muestras = FreqS * 0.16
+        # min_gap = self.FreqS // 6          
+        # ≈ 0.166 s
+        # an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)
         min_gap = int((self.FreqS * 60) / HR_MAX)
         an_ir_valley_locs = self._find_peaks(an_x_ma4, n_th1, min_gap, 15)
 
@@ -189,7 +190,7 @@ class OxygenSaturation:
             loc_k = an_ir_valley_locs[k]
             loc_k1 = an_ir_valley_locs[k+1]
             
-            # Verificar que los índices estén dentro del rango CORRECCIÓN PRINCIPAL
+            # Verificar que los índices estén dentro del rango (CORRECCIÓN PRINCIPAL)
             if (loc_k < buffer_length and loc_k1 < buffer_length and 
                 loc_k1 > loc_k and loc_k1 - loc_k > 3):
                 
@@ -246,7 +247,7 @@ class OxygenSaturation:
     # ------------------------------------------------------------------
     # >> Detección de picos (funciones auxiliares)
     # ------------------------------------------------------------------
-    ## @brief Encuentra hasta *max_num* picos en *x* mayores que *min_height* y separados al menos *min_distance*.
+    #  @brief Encuentra hasta *max_num* picos en *x* mayores que *min_height* y separados al menos *min_distance*.
     #  @return Lista de índices de picos."""
     def _find_peaks(self, x, min_height, min_distance, max_num):
         """
@@ -278,7 +279,7 @@ class OxygenSaturation:
     # ------------------------------------------------------------------
     # >> Detección de picos (funciones auxiliares)
     # ------------------------------------------------------------------
-    ## @brief Encuentra hasta *max_num* picos en *x* mayores que *min_height* y separados al menos *min_distance*.
+    #  @brief Encuentra hasta *max_num* picos en *x* mayores que *min_height* y separados al menos *min_distance*.
     #  @return Lista de índices de picos."""
     def _remove_close_peaks(self, x, peaks, min_distance):
         """

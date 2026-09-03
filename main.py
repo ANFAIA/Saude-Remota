@@ -38,7 +38,8 @@ SCREEN_UPDATE_MS  = 2000
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
 MED_WIN           = 8          #mediana para BPM
 MAX_BPM_JUMP      = 20         #anti-spike por ciclo (lpm)
-MAX_SPO2_JUMP     = 5          #anti-spike por ciclo (%)
+MAX_SPO2_JUMP     = 3          #anti-spike por ciclo (%)
+SPO2_BOOTSTRAP_SAMPLES = 3
 WARMUP_MS         = 3000       #no usar medidas los 3s iniciales tras detectar dedo
 
 #temperatura (offset y suavizado)
@@ -431,12 +432,50 @@ def read_and_update():
 
                 pass
                 if sv and (SPO2_MIN <= spo2_calc <= SPO2_MAX):
-                    spo2_valid = True
-                    spo2 = push_and_mean(spo2_calc, SPO2_HISTORY, 8)
-                    print("SpO2 válida =", spo2)
+                    # Fase inicial: reunir varias lecturas antes de fijar la SpO2
+                    if spo2 == 0:
+
+                        SPO2_HISTORY.append(spo2_calc)
+
+                        # Mantener solo las muestras iniciales necesarias
+                        if len(SPO2_HISTORY) > SPO2_BOOTSTRAP_SAMPLES:
+                            SPO2_HISTORY.pop(0)
+
+                        print("SpO2 inicial candidata =", spo2_calc, "| muestras =", SPO2_HISTORY)
+
+                        # No mostrar todavía hasta tener varias lecturas
+                        if len(SPO2_HISTORY) >= SPO2_BOOTSTRAP_SAMPLES:
+                            spo2 = median(SPO2_HISTORY)
+                            spo2_valid = True
+
+                            print("SpO2 inicial estabilizada =", spo2)
+                        else:
+                            spo2_valid = False
+                    # Fase estable: ya existe una SpO2 aceptada
+                    else:
+                        # Aceptar solo cambios pequeños respecto al valor estable
+                        if abs(spo2_calc - spo2) <= MAX_SPO2_JUMP:
+
+                            spo2 = push_and_mean(spo2_calc, SPO2_HISTORY, 10)
+
+                            spo2_valid = True
+
+                            print("SpO2 filtrada =", spo2)
+                        else:
+                            # No sustituir una medida estable por un salto aislado
+                            spo2_valid = True
+
+                            print("SpO2 descartada por salto =", spo2_calc, "| se mantiene =", spo2)
                 else:
-                    spo2_valid = False
-                    print("SpO2 descartada =", spo2_calc)
+                    # Si hay dedo y ya existe una SpO2 estable, conservar el último valor ante un fallo puntual
+                    if finger_present and spo2 != 0:
+                        spo2_valid = True
+
+                        print("SpO2 no válida =", spo2_calc, "| se mantiene =", spo2)
+                    else:
+                        spo2_valid = False
+
+                        print("SpO2 descartada =", spo2_calc)
 
                 #warm-up inicial
                 if time.ticks_diff(time.ticks_ms(), finger_since_ms) < WARMUP_MS:

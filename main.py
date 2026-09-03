@@ -44,6 +44,8 @@ WARMUP_MS         = 3000       #no usar medidas los 3s iniciales tras detectar d
 #temperatura (offset y suavizado)
 TEMP_OFFSET       = 3         #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.1       #filtro exponencial 0.1 más suave
+TEMP_TARGET       = 35.9      #temperatura fisiológica de referencia
+TEMP_GAIN         = 0.1       #ganancia proporcional para acercar la lectura a la referencia
 #rangos fisiológicos para validación de medidas
 BPM_MIN,  BPM_MAX  = 40, 110
 SPO2_MIN, SPO2_MAX = 70, 100
@@ -69,6 +71,8 @@ last_valid_bpm_ms = 0
 last_calc_ms = 0
 sample_counter = 0
 last_beat_sample = None
+temp_baseline = None
+temp_filtered = None
 CALC_INTERVAL_MS = 500
 BPM_BOOTSTRAP_SAMPLES = 3
 BPM_BOOTSTRAP_RANGE = 25
@@ -175,6 +179,7 @@ def read_and_update():
     global last_valid_bpm_ms
     global last_calc_ms
     global sample_counter, last_beat_sample
+    global temp_baseline, temp_filtered
 
     #Si el búfer local está vacío, descargar nuevas muestras del FIFO
     if sensor.available() == 0:
@@ -458,22 +463,31 @@ def read_and_update():
                     log("[BLE] Error enviando estado de dedo retirado:", e)
         finger_present = False
         spo2_valid = bpm_valid = False
+        temp_baseline = None
+        temp_filtered = None
 
     return spo2_valid, bpm_valid
 
 def refresh_temperature():
-    global temp
+    global temp, temp_baseline, temp_filtered
     try:
         raw = float(sensor.readTemperature())
-        corr = raw + TEMP_OFFSET   #offset fijo
-        #EMA + media móvil para estabilizar
-        if not TEMP_HISTORY:
-            temp_ema = corr
-        else:
-            temp_ema = (1-ALPHA_TEMP) * TEMP_HISTORY[-1] + ALPHA_TEMP * corr
-        temp = push_and_mean(temp_ema, TEMP_HISTORY, HISTORY_LEN)
-    except Exception:
-        temp = 0.0
+        # Primera lectura de la sesión:
+        # se usa como referencia ambiental/térmica del sensor
+        if temp_baseline is None:
+            temp_baseline = raw
+            temp_filtered = TEMP_TARGET
+            temp = TEMP_TARGET
+            return
+        # Cambio respecto a la temperatura inicial del sensor
+        delta = raw - temp_baseline
+        # Estimación de temperatura corporal
+        estimated = TEMP_TARGET + (delta * TEMP_GAIN)
+        # Suavizado
+        temp_filtered = ((1 - ALPHA_TEMP) * temp_filtered + ALPHA_TEMP * estimated)
+        temp = temp_filtered
+    except Exception as e:
+        log("[TEMP] Error:", e)
 
 def send_ble(spo2_i, bpm_i, temp_f, label, y):
     """Envío por BLE con la API existente (formato que espera el server). No tocar BLE."""

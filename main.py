@@ -36,8 +36,8 @@ SCREEN_UPDATE_MS  = 2000
 
 #mejora de estabilidad
 HISTORY_LEN       = 5          #media móvil (BPM/SpO2)
-MED_WIN           = 8          #mediana para BPM
-MAX_BPM_JUMP      = 20         #anti-spike por ciclo (lpm)
+MED_WIN           = 10          #mediana para BPM
+MAX_BPM_JUMP      = 12         #anti-spike por ciclo (lpm)
 MAX_SPO2_JUMP     = 3          #anti-spike por ciclo (%)
 SPO2_BOOTSTRAP_SAMPLES = 3
 WARMUP_MS         = 3000       #no usar medidas los 3s iniciales tras detectar dedo
@@ -75,8 +75,8 @@ last_beat_sample = None
 temp_baseline = None
 temp_filtered = None
 CALC_INTERVAL_MS = 500
-BPM_BOOTSTRAP_SAMPLES = 3
-BPM_BOOTSTRAP_RANGE = 25
+BPM_BOOTSTRAP_SAMPLES = 4
+BPM_BOOTSTRAP_RANGE = 15
 SENSOR_SAMPLE_RATE = 400
 SAMPLE_AVERAGE = 4
 EFFECTIVE_SAMPLE_RATE = SENSOR_SAMPLE_RATE // SAMPLE_AVERAGE

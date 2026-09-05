@@ -75,6 +75,8 @@ last_beat_sample = None
 temp_baseline = None
 temp_filtered = None
 bpm_display = 0
+spo2_display = 0
+SPO2_DISPLAY_STEP = 1.0
 CALC_INTERVAL_MS = 500
 BPM_BOOTSTRAP_SAMPLES = 3
 BPM_BOOTSTRAP_RANGE = 25
@@ -104,6 +106,8 @@ BPM_RAW_HISTORY = []  #para mediana
 BPM_STABLE_HISTORY = []
 SPO2_PENDING_HISTORY = []
 BPM_PENDING_HISTORY = []
+BPM_DISPLAY_STEP = 4
+bpm_smooth_display = 0
 BPM_STABLE_WIN = 5
 BPM_MAX_DEVIATION = 15
 
@@ -140,6 +144,57 @@ def stabilize_bpm_output(value):
 
     # Si aparece un valor anómalo, se conserva la mediana estable
     return median(BPM_STABLE_HISTORY)
+
+def smooth_bpm_display(value):
+
+    global bpm_smooth_display
+
+    if value <= 0:
+        return bpm_smooth_display
+
+    # Primera medida
+    if bpm_smooth_display == 0:
+        bpm_smooth_display = value
+        return bpm_smooth_display
+
+    diff = value - bpm_smooth_display
+
+    if diff > BPM_DISPLAY_STEP:
+        bpm_smooth_display += BPM_DISPLAY_STEP
+
+    elif diff < -BPM_DISPLAY_STEP:
+        bpm_smooth_display -= BPM_DISPLAY_STEP
+
+    else:
+        bpm_smooth_display = value
+
+    return bpm_smooth_display
+
+def stabilize_spo2_display(value):
+
+    global spo2_display
+
+    if value <= 0:
+        return spo2_display
+
+    # Primera medida
+    if spo2_display == 0:
+        spo2_display = value
+        return spo2_display
+
+    diff = value - spo2_display
+
+    # Limitar cuánto puede cambiar cada actualización
+    if diff > SPO2_DISPLAY_STEP:
+        spo2_display += SPO2_DISPLAY_STEP
+
+    elif diff < -SPO2_DISPLAY_STEP:
+        spo2_display -= SPO2_DISPLAY_STEP
+
+    else:
+        spo2_display = value
+
+    return spo2_display
 
 def clamp(v, lo, hi):
     if v < lo: return lo
@@ -210,7 +265,7 @@ def read_and_update():
     global last_calc_ms
     global sample_counter, last_beat_sample
     global temp_baseline, temp_filtered
-    global bpm_display
+    global bpm_display, bpm_smooth_display, spo2_display
 
     #Si el búfer local está vacío, descargar nuevas muestras del FIFO
     if sensor.available() == 0:
@@ -248,6 +303,8 @@ def read_and_update():
             SPO2_PENDING_HISTORY.clear()
             BPM_PENDING_HISTORY.clear()
             bpm_display = 0
+            bpm_smooth_display = 0
+            spo2_display = 0
             
 
             last_beat_ms = 0
@@ -637,7 +694,10 @@ try:
 
         now = time.ticks_ms()
         if bpm_valid and bpm > 0:
-            bpm_display = stabilize_bpm_output(bpm)
+            bpm_stable = stabilize_bpm_output(bpm)
+            bpm_display = smooth_bpm_display(bpm_stable)
+        if spo2_valid and spo2 > 0:
+            spo2_display = stabilize_spo2_display(spo2)
         if time.ticks_diff(now, last_ui_ms) > UI_REFRESH_MS:
             last_ui_ms = now
             refresh_temperature()
@@ -656,7 +716,7 @@ try:
                         if finger_present and spo2 != 0 and bpm != 0:
                             if screen_mode == 0:
                                 display.display_values(
-                                    int(spo2), int(bpm_display), temp
+                                    int(round(spo2_display)), int(bpm_display), temp
                                 )
                                 screen_mode = 1
                             #Antes de obtener la primera medición
@@ -672,7 +732,7 @@ try:
 
         #usar promedios al enviar
         if sv and bv and time.ticks_diff(now, last_ble_send_ms) > BLE_SEND_MS:
-            spo2_use = spo2
+            spo2_use = spo2_display
             bpm_use  = bpm_display
 
             s_spo2 = int(round(clamp(spo2_use, SPO2_MIN, SPO2_MAX)))

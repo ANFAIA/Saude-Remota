@@ -102,6 +102,8 @@ BPM_HISTORY  = []
 TEMP_HISTORY = []
 BPM_RAW_HISTORY = []  #para mediana
 BPM_STABLE_HISTORY = []
+SPO2_PENDING_HISTORY = []
+BPM_PENDING_HISTORY = []
 BPM_STABLE_WIN = 5
 BPM_MAX_DEVIATION = 15
 
@@ -243,6 +245,8 @@ def read_and_update():
             BPM_HISTORY.clear()
             BPM_RAW_HISTORY.clear()
             BPM_STABLE_HISTORY.clear()
+            SPO2_PENDING_HISTORY.clear()
+            BPM_PENDING_HISTORY.clear()
             bpm_display = 0
             
 
@@ -338,6 +342,7 @@ def read_and_update():
 
                             if abs(bpm_calc_hr - bpm_referencia) <= MAX_BPM_JUMP:
                                 BPM_RAW_HISTORY.append(bpm_calc_hr)
+                                BPM_PENDING_HISTORY.clear()
 
                                 if len(BPM_RAW_HISTORY) > MED_WIN:
                                     BPM_RAW_HISTORY.pop(0)
@@ -353,14 +358,42 @@ def read_and_update():
                                 )
 
                             else:
-                                bpm_valid = bpm != 0
+                                # El candidato está lejos de la referencia actual.
+                                # Comprobar si varios candidatos consecutivos confirman que el BPM real ha cambiado de nivel
+                                BPM_PENDING_HISTORY.append(bpm_calc_hr)
 
-                                print(
-                                    "BPM HeartRate descartado por salto =",
-                                    bpm_calc_hr,
-                                    "| se mantiene =",
-                                    bpm
-                                )
+                                if len(BPM_PENDING_HISTORY) > 3:
+                                    BPM_PENDING_HISTORY.pop(0)
+
+                                if len(BPM_PENDING_HISTORY) == 3:
+
+                                    if max(BPM_PENDING_HISTORY) - min(BPM_PENDING_HISTORY) <= 8:
+
+                                        bpm = median(BPM_PENDING_HISTORY)
+
+                                        BPM_RAW_HISTORY.clear()
+                                        BPM_RAW_HISTORY.extend(BPM_PENDING_HISTORY)
+
+                                        BPM_STABLE_HISTORY.clear()
+                                        BPM_STABLE_HISTORY.append(bpm)
+
+                                        bpm_display = bpm
+
+                                        BPM_PENDING_HISTORY.clear()
+
+                                        bpm_valid = True
+                                        last_good_bpm = bpm
+                                        last_valid_bpm_ms = time.ticks_ms()
+
+                                        print("BPM reajustado por nueva referencia =", bpm)
+
+                                    else:
+                                        bpm_valid = bpm != 0
+
+                                        print("BPM salto no confirmado =", bpm_calc_hr, "| se mantiene =", bpm)
+
+                                else:
+                                    bpm_valid = bpm != 0
     
                     else:
                         #Una detección fuera de rango no elimina el BPM anterior
@@ -494,12 +527,30 @@ def read_and_update():
 
                             spo2_valid = True
 
-                            print("SpO2 filtrada =", spo2)
-                        else:
-                            # No sustituir una medida estable por un salto aislado
-                            spo2_valid = True
+                            SPO2_PENDING_HISTORY.clear()
 
-                            print("SpO2 descartada por salto =", spo2_calc, "| se mantiene =", spo2)
+                            print("SpO2 filtrada =", spo2)
+
+                        else:
+                            # El valor está lejos del actual: comprobar si se trata de un nuevo nivel estable y no de un artefacto aislado
+                            SPO2_PENDING_HISTORY.append(spo2_calc)
+
+                            if len(SPO2_PENDING_HISTORY) > 3:
+                                SPO2_PENDING_HISTORY.pop(0)
+
+                            if len(SPO2_PENDING_HISTORY) == 3:
+                                if max(SPO2_PENDING_HISTORY) - min(SPO2_PENDING_HISTORY) <= 2:
+                                    spo2 = median(SPO2_PENDING_HISTORY)
+
+                                    SPO2_HISTORY.clear()
+                                    SPO2_HISTORY.append(spo2)
+                                    SPO2_PENDING_HISTORY.clear()
+
+                                    print("SpO2 reajustada =", spo2)
+                                else:
+                                    print("SpO2 salto no confirmado =", spo2_calc, "| se mantiene =", spo2)
+
+                            spo2_valid = True
                 else:
                     # Si hay dedo y ya existe una SpO2 estable, conservar el último valor ante un fallo puntual
                     if finger_present and spo2 != 0:

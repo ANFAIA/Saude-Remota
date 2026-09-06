@@ -112,6 +112,8 @@ BPM_STABLE_WIN = 5
 BPM_MAX_DEVIATION = 15
 BPM_REBASE_SAMPLES = 3
 BPM_LOW_REBASE_SAMPLES = 5
+BPM_DISPLAY_MIN = 60
+BPM_DISPLAY_MAX = 100
 
 def push_and_mean(value, history, maxlen):
     history.append(value)
@@ -708,7 +710,16 @@ try:
         now = time.ticks_ms()
         if bpm_valid and bpm > 0:
             bpm_stable = stabilize_bpm_output(bpm)
-            bpm_display = smooth_bpm_display(bpm_stable)
+            # Solo aceptar para visualización valores dentro del rango normal establecido para la demo
+            if BPM_DISPLAY_MIN <= bpm_stable <= BPM_DISPLAY_MAX:
+
+                bpm_display = smooth_bpm_display(bpm_stable)
+
+            else:
+                # Si ya existe un BPM válido previo, conservarlo
+                # No mostrar un valor anómalo aislado
+                if bpm_display > 0:
+                    bpm_display = bpm_display
         if spo2_valid and spo2 > 0:
             spo2_display = stabilize_spo2_display(spo2)
         if time.ticks_diff(now, last_ui_ms) > UI_REFRESH_MS:
@@ -726,7 +737,7 @@ try:
                 try:
                     if time.ticks_diff(now, last_screen_update_ms) > SCREEN_UPDATE_MS:
                         #Mostrar valores cuando ya exista al menos una medición
-                        if finger_present and spo2 != 0 and bpm != 0:
+                        if finger_present and spo2 != 0 and bpm_display != 0:
                             if screen_mode == 0:
                                 display.display_values(
                                     int(round(spo2_display)), int(bpm_display), temp
@@ -744,7 +755,7 @@ try:
                     print("OLED error:", e)
 
         #usar promedios al enviar
-        if sv and bv and time.ticks_diff(now, last_ble_send_ms) > BLE_SEND_MS:
+        if sv and bv and bpm_display > 0 and time.ticks_diff(now, last_ble_send_ms) > BLE_SEND_MS:
             spo2_use = spo2_display
             bpm_use  = bpm_display
 

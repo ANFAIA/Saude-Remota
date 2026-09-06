@@ -110,6 +110,8 @@ BPM_DISPLAY_STEP = 4
 bpm_smooth_display = 0
 BPM_STABLE_WIN = 5
 BPM_MAX_DEVIATION = 15
+BPM_REBASE_SAMPLES = 3
+BPM_LOW_REBASE_SAMPLES = 5
 
 def push_and_mean(value, history, maxlen):
     history.append(value)
@@ -419,17 +421,28 @@ def read_and_update():
                                 # Comprobar si varios candidatos consecutivos confirman que el BPM real ha cambiado de nivel
                                 BPM_PENDING_HISTORY.append(bpm_calc_hr)
 
-                                if len(BPM_PENDING_HISTORY) > 3:
+                                if len(BPM_PENDING_HISTORY) > BPM_LOW_REBASE_SAMPLES:
                                     BPM_PENDING_HISTORY.pop(0)
 
-                                if len(BPM_PENDING_HISTORY) == 3:
+                                # Si la nueva referencia es claramente más baja que la actual, exigir 5 candidatos coherentes
 
-                                    if max(BPM_PENDING_HISTORY) - min(BPM_PENDING_HISTORY) <= 8:
+                                if bpm_calc_hr < bpm_referencia - 15:
+                                    required_samples = BPM_LOW_REBASE_SAMPLES
+                                else:
+                                    required_samples = BPM_REBASE_SAMPLES
 
-                                        bpm = median(BPM_PENDING_HISTORY)
+                                if len(BPM_PENDING_HISTORY) >= required_samples:
+
+                                    recent = BPM_PENDING_HISTORY[-required_samples:]
+
+                                    # Los candidatos tienen que ser coherentes entre sí
+
+                                    if max(recent) - min(recent) <= 8:
+
+                                        bpm = median(recent)
 
                                         BPM_RAW_HISTORY.clear()
-                                        BPM_RAW_HISTORY.extend(BPM_PENDING_HISTORY)
+                                        BPM_RAW_HISTORY.extend(recent)
 
                                         BPM_STABLE_HISTORY.clear()
                                         BPM_STABLE_HISTORY.append(bpm)

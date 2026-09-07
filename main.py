@@ -740,7 +740,7 @@ try:
                         if finger_present and spo2 != 0 and bpm_display != 0:
                             if screen_mode == 0:
                                 display.display_values(
-                                    int(round(spo2_display)), int(bpm_display), temp
+                                    int(round(spo2_display)), int(round(bpm_display)), temp
                                 )
                                 screen_mode = 1
                             #Antes de obtener la primera medición

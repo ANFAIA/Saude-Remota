@@ -127,28 +127,18 @@ async def ble_task(device_name: str, scan_timeout: float) -> None: #bucle
     loop = asyncio.get_event_loop()
     while True:
         try:
-            devices = await BleakScanner.discover(timeout=scan_timeout, return_adv=True)
-            print(f"[BLE] {len(devices)} dispositivos encontrados.")
-            dev = None
-            for device, advertisement_data in devices.values():
-                advertised_name = advertisement_data.local_name or device.name
-
-                if advertised_name == device_name:
-                    dev = device
-                    break
-            if not dev:
-                for device, advertisement_data in devices.values():
-                    uuids = advertisement_data.service_uuids or []
-                    if any((u or "").lower() == UART_SERVICE_UUID.lower() for u in uuids):
-                        dev = device; break
-            if not dev:
-                print(f"[BLE] No se encontró {device_name}. Reintentando...")
+            ESP32_ADDRESS = "94:3C:C6:32:F0:6A"
+            print(f"[BLE] Buscando directamente ESP32 en {ESP32_ADDRESS}...")
+            dev = await BleakScanner.find_device_by_address(ESP32_ADDRESS, timeout=20.0)
+            if dev is None:
+                print("[BLE] ESP32 no encontrado. Reintentando...")
                 await asyncio.sleep(2.0)
-                continue #vuelve a escanear
+                continue
+            print(f"[BLE] ESP32 encontrado: {dev.address}")
             print(f"[BLE] Encontrado {device_name} ({dev.address}), intentando conectar...")
             #pequeña espera para que Windows termine de registrar el anuncio BLE
             await asyncio.sleep(2.0)
-            async with BleakClient( dev, timeout=20.0, winrt={"use_cached_services": False}) as client:
+            async with BleakClient( dev, timeout=30.0) as client:
                 print(f"[BLE] Conectado a {dev.address}. Suscribiéndose a notificaciones...")
                 buffer = bytearray() #crea un buffer para reconstruir mensajes completos (porque BLE puede fragmentar)
                 def on_notify(_h, data: bytearray): #función que se llama cada vez que llega un fragmento
@@ -187,7 +177,7 @@ async def ble_task(device_name: str, scan_timeout: float) -> None: #bucle
                 print("[BLE] Suscripción activa.")
                 while client.is_connected: await asyncio.sleep(1.0) #se mantiene el bloque vivo
         except Exception as e:
-            print("[BLE] Error:",e)
+            print(f"[BLE] Error: {type(e).__name__}: {repr(e)}")
             await asyncio.sleep(3.0) #vuelve a intentar todo el bucle (reconexión automática)
 
 #HTTP

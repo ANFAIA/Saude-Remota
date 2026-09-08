@@ -3,6 +3,7 @@
 
 import sys #sys: utilidades del sistema
 import utime as time #módulo de tiempo de MicroPython, renombrado a time
+import ujson as json #json: para codificar/decodificar datos en formato JSON
 from machine import I2C, Pin
 
 #sensores
@@ -685,6 +686,21 @@ def refresh_temperature():
     except Exception as e:
         log("[TEMP] Error:", e)
 
+def send_serial(spo2_i, bpm_i, temp_f, label, y):
+    try:
+        payload = {
+            "temperature": float(temp_f),
+            "bmp": int(bpm_i),
+            "spo2": int(spo2_i),
+            "riskScore": int(label),
+            "modelPreccision": float(y)
+        }
+
+        print("SERIAL_DATA:" + json.dumps(payload))
+
+    except Exception as e:
+        log("[SERIAL] Error:", e)
+
 def send_ble(spo2_i, bpm_i, temp_f, label, y):
     """Envío por BLE con la API existente (formato que espera el server). No tocar BLE."""
     if ble.is_connected():
@@ -783,6 +799,7 @@ try:
                 final_y = float(model_y)
             
             last_risk_label = final_label
+            send_serial(s_spo2, s_bpm, s_temp, final_label, final_y)
             send_ble(s_spo2, s_bpm, s_temp, final_label, final_y)
             last_ble_keepalive_ms = now
             last_ble_send_ms = now

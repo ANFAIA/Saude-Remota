@@ -164,7 +164,9 @@ class _BLEUART:
         if event == _IRQ_CENTRAL_CONNECT:
             conn_handle, addr_type, addr = data
             self._conn_handle = conn_handle # Identificador de la conexión
+            print("BLE: central conectado, handle =", conn_handle)
         elif event == _IRQ_CENTRAL_DISCONNECT:
+            print("BLE: central desconectado")
             self._conn_handle = None
             self._start_advertising()
         elif event == _IRQ_MTU_EXCHANGED:
@@ -231,12 +233,11 @@ class _BLEUART:
             Algunos ports aceptan `gap_advertise(None)` y otros `gap_advertise(0)`.
             Esta rutina prueba ambos silenciosamente.
         """
-        for arg in (None, 0):
-            try:
-                self._ble.gap_advertise(arg)
-            except Exception:
-                pass
-        time.sleep_ms(20) # Espera 20 ms para dar tiempo a que BLE complete la detención
+        try:
+            self._ble.gap_advertise(None)
+        except Exception:
+            pass
+        time.sleep_ms(100) # Espera 100 ms para dar tiempo a que BLE complete la detención
 
     def _start_advertising(self):
         r"""
@@ -244,14 +245,14 @@ class _BLEUART:
         @exception OSError Re-lanza errores distintos de "advertising ya activo".
         @note Si `resp_data` no es soportado, se anuncia solo ADV (el nombre puede no mostrarse).
         """
-        self._safe_stop_advertising() # Se asegura de que no exista otra publicidad activa
-        time.sleep_ms(10) # Espera antes de volver a iniciarla
         try:
             # gap_advertise(interval_us, adv_data, *, connectable=True, resp_data=None)
-            self._ble.gap_advertise(self._adv_interval_us, self._adv, connectable=True, resp_data=self._scan)
+            self._ble.gap_advertise(self._adv_interval_us, adv_data=self._adv, connectable=True, resp_data=self._scan)
+            print("BLE: advertising iniciado")
         except TypeError:
             # Fallback si tu port no soporta resp_data: anuncia solo ADV (nombre puede no verse)
-            self._ble.gap_advertise(self._adv_interval_us, self._adv)
+            self._ble.gap_advertise(self._adv_interval_us, adv_data=self._adv,connectable=True)
+            print("BLE: advertising iniciado sin scan response")
         except OSError as e:
             if getattr(e, "args", [None])[0] == -18:
                 print("BLE: advertising ya activo; continúo.")

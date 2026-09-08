@@ -45,7 +45,7 @@ WARMUP_MS         = 3000       #no usar medidas los 3s iniciales tras detectar d
 #temperatura (offset y suavizado)
 TEMP_OFFSET       = 3         #para corregir las lecturas iniciales más bajas
 ALPHA_TEMP        = 0.1       #filtro exponencial 0.1 más suave
-TEMP_TARGET       = 35.9      #temperatura fisiológica de referencia
+TEMP_TARGET       = 36.1      #temperatura fisiológica de referencia
 TEMP_GAIN         = 0.1       #ganancia proporcional para acercar la lectura a la referencia
 #rangos fisiológicos para validación de medidas
 BPM_MIN,  BPM_MAX  = 40, 110
